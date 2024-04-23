@@ -14,7 +14,7 @@ import { ResourceIF } from '@repo/types/general';
 
 const AdminApp = () => {
   return (
-    <Admin dataProvider={dataProvider} authProvider={authProvider} requireAuth>
+    <Admin dataProvider={dataProvider} authProvider={authProvider}>
       {(permission: Permission) => {
         return Resources.map((resource: ResourceIF) => {
           const actions: Actions = permission[resource.resource] as Actions;
