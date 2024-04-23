@@ -1,0 +1,39 @@
+{
+  "name": "react-admin",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint . --max-warnings 0",
+    "prisma-generate": "prisma generate",
+    "prisma-migrate": "prisma migrate dev"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.9.1"
+  },
+  "devDependencies": {
+    "@next/eslint-plugin-next": "^14.1.1",
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "@repo/types": "*",
+    "@repo/utils": "*",
+    "@repo/consts": "*",
+    "@repo/ui": "*",
+    "@repo/lib": "*",
+    "@repo/assets": "*",
+    "@types/eslint": "^8.56.5",
+    "@types/node": "^20.11.24",
+    "@types/react": "^18.2.61",
+    "@types/react-dom": "^18.2.19",
+    "eslint": "^8.57.0",
+    "typescript": "^5.3.3",
+    "@types/jsonwebtoken": "^9.0.5",
+    "eslint-config-next": "14.0.4",
+    "ts-node": "^10.9.2"
+  }
+}
