@@ -16,33 +16,40 @@ const UserCreate = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
 
   return (
-    <Create redirect="list">
+    <Create redirect="list" title="管理ユーザー管理　新规作成">
       <CustomForm
         pathTo={resourcePath}
         validate={validateUserCreation}
-        showDeleteButton={false}
+        showSaveButton={true}
+        showCancelButton={true}
       >
-        <div style={{ display: 'flex', alignItems: 'center', columnGap: 20 }}>
-          <TextInput source="username" isRequired />
-          <BooleanInput source="enabled" label="Enable" defaultValue={true} />
-        </div>
-        <PasswordInput source="password" fullWidth isRequired />
-        <PasswordInput source="confirmPassword" fullWidth isRequired />
+        <TextInput
+          source="cmsId"
+          label="管理ユーザーID "
+          isRequired
+          fullWidth
+        />
+
         <SelectInput
           source="role"
           choices={userRoles}
           isRequired
           defaultValue={'USER'}
+          label="椎限"
         />
-        <TextInput source="name" fullWidth isRequired />
-        <TextInput source="email" fullWidth isRequired />
-        <AutocompleteInput
-          source="country"
-          choices={countryList}
-          optionValue="code"
+        <TextInput source="email" label="メールアドレス" fullWidth isRequired />
+        <PasswordInput
+          source="password"
+          label="パスワード"
           fullWidth
+          isRequired
         />
-        <TextInput source="address" fullWidth multiline />
+        <PasswordInput
+          source="confirmPassword"
+          label="バスワード辟涊"
+          fullWidth
+          isRequired
+        />
       </CustomForm>
     </Create>
   );

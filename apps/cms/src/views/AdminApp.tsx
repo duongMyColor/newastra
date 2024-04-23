@@ -64,6 +64,7 @@ const AdminApp = () => {
                 props,
               })}
               icon={icon}
+              options={{ label: resource.label }}
             />
           );
         });
