@@ -4,6 +4,8 @@ import DeleteButtonFlexEnd from './DeleteButtonFlexEnd';
 import { Link } from 'react-router-dom';
 import { Stack, Button } from '@mui/material';
 import { RecordValue } from '@repo/types/general';
+import EditButtonFlexEnd from './EditButtonFlexEnd';
+import ReferenceButtonFlexEnd from './ReferenceButtonFlexEnd';
 
 /**
  * Create CustomForm component with delete, save and cancel buttons
@@ -21,9 +23,11 @@ const CustomForm = ({
   children,
   handleSave,
   pathTo,
-  showDeleteButton = true,
-  showSaveButton = true,
-  showCancelButton = true,
+  showDeleteButton = false,
+  showSaveButton = false,
+  showCancelButton = false,
+  showEditButton = false,
+  showReferenceButton = false,
   validate,
   ...props
 }: {
@@ -32,6 +36,9 @@ const CustomForm = ({
   showDeleteButton?: boolean;
   showSaveButton?: boolean;
   showCancelButton?: boolean;
+  showEditButton?: boolean;
+  showReferenceButton?: boolean;
+
   pathTo: string;
   validate?: ValidateForm;
   props?: RecordValue;
@@ -43,7 +50,20 @@ const CustomForm = ({
       toolbar={false}
       validate={validate}
     >
-      {showDeleteButton ? <DeleteButtonFlexEnd /> : null}
+      <Stack
+        direction="row"
+        justifyContent="flex-end"
+        width="100%"
+        gap={3}
+        alignItems="center"
+      >
+        {showDeleteButton ? (
+          <DeleteButtonFlexEnd label="アカウント削除" />
+        ) : null}
+        {showSaveButton ? <SaveButton label="保存" /> : null}
+        {showEditButton ? <EditButtonFlexEnd label="編集" /> : null}
+        {showReferenceButton ? <ReferenceButtonFlexEnd label="参照" /> : null}
+      </Stack>
 
       {children}
       <Stack
@@ -60,11 +80,10 @@ const CustomForm = ({
         }}
         {...props}
       >
-        {showSaveButton ? <SaveButton /> : null}
         {showCancelButton ? (
           <Link to={pathTo}>
             <Button type="button" variant="contained" color="error">
-              Cancel
+              戻る
             </Button>
           </Link>
         ) : null}

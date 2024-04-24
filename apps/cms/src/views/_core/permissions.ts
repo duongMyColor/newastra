@@ -4,44 +4,24 @@ import { createElement, FunctionComponent } from 'react';
 
 const ADMIN: Permission = {
   users: '*',
-  products: '*',
-  product_charts: '*',
-  animal_classifications: '*',
-  animals: '*',
-  memos: '*',
-  realtime_chart: '*',
-  img_rec_selections: '*',
-  terms_and_conditions: '*',
+
 };
-const USER: Permission = {
-  users: [],
-  products: ['list', 'create', 'edit', 'delete', 'show'],
-  product_charts: ['list', 'create', 'edit', 'delete', 'show'],
-  animal_classifications: ['list', 'create', 'edit', 'delete', 'show'],
-  animals: ['list', 'create', 'edit', 'delete', 'show'],
-  memos: ['list', 'create', 'edit', 'delete', 'show'],
-  realtime_chart: ['list', 'create', 'edit', 'delete', 'show'],
-  img_rec_selections: ['list', 'create', 'edit', 'delete', 'show'],
-  terms_and_conditions: ['list', 'create', 'edit', 'delete', 'show'],
+const GENERAL: Permission = {
+  users: ['list', 'show'],
+  // products: ['list', 'create', 'edit', 'delete', 'show'],
+
 };
-const VIEW: Permission = {
+const READ_ONLY: Permission = {
   users: [],
-  products: ['show', 'list'],
-  product_charts: ['show', 'list'],
-  animal_classifications: ['show', 'list'],
-  animals: ['show', 'list'],
-  memos: ['show', 'list'],
-  realtime_chart: ['show', 'list'],
-  img_rec_selections: ['show', 'list'],
-  terms_and_conditions: ['show', 'list'],
+
 };
 
 const ROLES_MAP: {
   [key: string]: Permission;
 } = {
   ADMIN,
-  USER,
-  VIEW,
+  GENERAL,
+  READ_ONLY,
 };
 
 /**
@@ -55,12 +35,12 @@ const generateRole = (role: string) => {
 
 /**
  *
- * @param role role to check
+ * @param action role to check
  * @param actions actions of pemission to check
  * @returns boolean role is valid or not
  */
-const validRole = (role: string, actions: Actions): boolean => {
-  return actions === '*' || actions.includes(role);
+const validRole = (action: string, actions: Actions): boolean => {
+  return actions === '*' || actions.includes(action);
 };
 
 /**
