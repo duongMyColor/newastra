@@ -18,6 +18,7 @@ export interface ResourceIF {
   resource: string;
   defaultProp?: boolean;
   name?: string;
+  label?: string
 }
 
 export interface ResourceMapIF {

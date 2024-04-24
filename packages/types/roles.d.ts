@@ -1,7 +1,7 @@
 import { ComponentType, ReactElement } from 'react';
 import { ReactComponent } from '@repo/types/general';
 
-export type Actions = string | string[];
+export type Actions = string | acceptedRole[];
 export interface RolesIF {
   actions: Actions;
   resource: string;
@@ -19,7 +19,7 @@ export interface PermissionProps {
 
 export interface RoleCheckingProps {
   actions: Actions;
-  action: string;
+  action: string | acceptedRole;
   component: ReactComponent;
   props: RecordValue;
 }
