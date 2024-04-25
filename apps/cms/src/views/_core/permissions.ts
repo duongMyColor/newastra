@@ -4,16 +4,16 @@ import { createElement, FunctionComponent } from 'react';
 
 const ADMIN: Permission = {
   users: '*',
-
+  'application-masters': '*',
 };
 const GENERAL: Permission = {
   users: ['list', 'show'],
+  'application-masters': [],
   // products: ['list', 'create', 'edit', 'delete', 'show'],
-
 };
 const READ_ONLY: Permission = {
   users: [],
-
+  'application-masters': [],
 };
 
 const ROLES_MAP: {

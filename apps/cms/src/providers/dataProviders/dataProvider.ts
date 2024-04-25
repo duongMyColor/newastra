@@ -3,6 +3,7 @@ import { withLifecycleCallbacks } from 'react-admin';
 import baseDataProvider from './baseDataProvider';
 import fakeProvider from './fakeDataProvider';
 import userCallbackHandler from './userCallbackHandlers';
+import applicationMasterCallbackHandler from './applicationMasterCallbackHandlers';
 
 /**
  * NOTE:Limitation of withLifecycleCallbacks
@@ -11,6 +12,7 @@ import userCallbackHandler from './userCallbackHandlers';
  */
 const dataProvider = withLifecycleCallbacks(fakeProvider, [
   userCallbackHandler,
+  applicationMasterCallbackHandler,
 ]);
 
 export default dataProvider;

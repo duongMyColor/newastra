@@ -17,6 +17,13 @@ import {
   UserShow,
 } from '@repo/ui/src/views/Users';
 
+import {
+  ApplicationMasterList,
+  ApplicationMasterEdit,
+  ApplicationMasterCreate,
+  ApplicationMasterShow,
+} from '@repo/ui/src/views/ApplicationMasters';
+
 const Resources: ResourceIF[] = [
   {
     list: UserList,
@@ -26,6 +33,15 @@ const Resources: ResourceIF[] = [
     icon: Group,
     resource: 'users',
     label: '管理ユーザー管理 ',
+  },
+  {
+    list: ApplicationMasterList,
+    edit: ApplicationMasterEdit,
+    create: ApplicationMasterCreate,
+    show: ApplicationMasterShow,
+    icon: Group,
+    resource: 'application-masters',
+    label: 'アプリケーションマスタ',
   },
 ];
 

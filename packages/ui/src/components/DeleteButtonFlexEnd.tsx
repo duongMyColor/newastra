@@ -14,7 +14,12 @@ const DeleteButtonFlexEnd = ({ label }: { label: string }) => (
       width: 'fit-content',
     }}
   >
-    <DeleteWithConfirmButton label={label}></DeleteWithConfirmButton>
+    <DeleteWithConfirmButton
+      confirmContent="よろしいですか?"
+      confirmTitle="論理削除します"
+
+      label={label}
+    ></DeleteWithConfirmButton>
   </Stack>
 );
 
