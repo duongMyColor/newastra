@@ -4,6 +4,7 @@ import baseDataProvider from './baseDataProvider';
 import fakeProvider from './fakeDataProvider';
 import userCallbackHandler from './userCallbackHandlers';
 import applicationMasterCallbackHandler from './applicationMasterCallbackHandlers';
+import axtaManagementCallbackHandler from './axtaManagementCallbackHandlers';
 
 /**
  * NOTE:Limitation of withLifecycleCallbacks
@@ -13,6 +14,7 @@ import applicationMasterCallbackHandler from './applicationMasterCallbackHandler
 const dataProvider = withLifecycleCallbacks(fakeProvider, [
   userCallbackHandler,
   applicationMasterCallbackHandler,
+  axtaManagementCallbackHandler,
 ]);
 
 export default dataProvider;

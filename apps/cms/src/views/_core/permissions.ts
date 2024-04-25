@@ -5,15 +5,19 @@ import { createElement, FunctionComponent } from 'react';
 const ADMIN: Permission = {
   users: '*',
   'application-masters': '*',
+  'axta-management': '*',
 };
 const GENERAL: Permission = {
   users: ['list', 'show'],
   'application-masters': [],
+  'axta-management': [],
+
   // products: ['list', 'create', 'edit', 'delete', 'show'],
 };
 const READ_ONLY: Permission = {
   users: [],
   'application-masters': [],
+  'axta-management': [],
 };
 
 const ROLES_MAP: {
