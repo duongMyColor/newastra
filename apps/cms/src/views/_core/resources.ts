@@ -23,6 +23,12 @@ import {
   ApplicationMasterCreate,
   ApplicationMasterShow,
 } from '@repo/ui/src/views/ApplicationMasters';
+import {
+  AxtaManagementShowList,
+  AxtaManagementCreate,
+  AxtaManagementEdit,
+  AxtaManagementShow,
+} from '@repo/ui/src/views/AxtaManagement';
 
 const Resources: ResourceIF[] = [
   {
@@ -42,6 +48,15 @@ const Resources: ResourceIF[] = [
     icon: Group,
     resource: 'application-masters',
     label: 'アプリケーションマスタ',
+  },
+  {
+    list: AxtaManagementShowList,
+    edit: AxtaManagementEdit,
+    create: AxtaManagementCreate,
+    show: AxtaManagementShow,
+    icon: Group,
+    resource: 'axta-management',
+    label: 'アクスタ管理',
   },
 ];
 

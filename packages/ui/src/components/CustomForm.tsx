@@ -23,6 +23,7 @@ const CustomForm = ({
   children,
   handleSave,
   pathTo,
+  moveScanRange,
   showDeleteButton = false,
   showSaveButton = false,
   showCancelButton = false,
@@ -38,6 +39,7 @@ const CustomForm = ({
   showCancelButton?: boolean;
   showEditButton?: boolean;
   showReferenceButton?: boolean;
+  moveScanRange?: () => void;
 
   pathTo: string;
   validate?: ValidateForm;
@@ -82,7 +84,12 @@ const CustomForm = ({
       >
         {showCancelButton ? (
           <Link to={pathTo}>
-            <Button type="button" variant="contained" color="error">
+            <Button
+              type="button"
+              variant="contained"
+              color="error"
+              onClick={moveScanRange}
+            >
               戻る
             </Button>
           </Link>
