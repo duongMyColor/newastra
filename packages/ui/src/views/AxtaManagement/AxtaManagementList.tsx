@@ -6,28 +6,14 @@ import {
   TopToolbar,
   CreateButton,
   DeleteWithConfirmButton,
-  BooleanField,
-  useRecordContext,
 } from 'react-admin';
 import { BaseComponentProps } from '@repo/types/general';
 import { validRole } from '../_core/permissions';
+import { StatusChipField } from '@repo/ui/src/components/CustomField/StatusChipField';
 
 const ToolBarAxtaManagement = ({ isShowCreate }: { isShowCreate: boolean }) => (
   <TopToolbar>{isShowCreate && <CreateButton label="新规作成" />}</TopToolbar>
 );
-
-const StatusTextField = ({ source }: { source: string }) => {
-  const record = useRecordContext();
-  return (
-    <>
-      {record && record[source] === 'active' ? (
-        <span style={{ color: 'green' }}>アクティブ</span>
-      ) : (
-        <span style={{ color: 'red' }}>非アクティブ</span>
-      )}
-    </>
-  );
-};
 
 const AxtaManagementList = ({ actions, resource }: BaseComponentProps) => {
   return (
@@ -42,7 +28,7 @@ const AxtaManagementList = ({ actions, resource }: BaseComponentProps) => {
         <TextField source="managementName" label="管理名" />
         <TextField source="acstaName" label="アクスタ名称" />
         <TextField source="acstaId" label="アクスタID" />
-        <StatusTextField source="status"></StatusTextField>
+        <StatusChipField source="status" label="ステータス"></StatusChipField>
 
         <TextField source="dateStart" label="公開開始日" />
         <TextField source="dateEnd" label="公開終了日" />
