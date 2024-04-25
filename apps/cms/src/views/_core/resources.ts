@@ -30,6 +30,13 @@ import {
   AxtaManagementShow,
 } from '@repo/ui/src/views/AxtaManagement';
 
+import {
+  PerformanceTypeMasterList,
+  PerformanceTypeMasterCreate,
+  PerformanceTypeMasterEdit,
+  PerformanceTypeMasterShow,
+} from '@repo/ui/src/views/PerformanceTypeMaster';
+
 const Resources: ResourceIF[] = [
   {
     list: UserList,
@@ -57,6 +64,15 @@ const Resources: ResourceIF[] = [
     icon: Group,
     resource: 'axta-management',
     label: 'アクスタ管理',
+  },
+  {
+    list: PerformanceTypeMasterList,
+    edit: PerformanceTypeMasterEdit,
+    create: PerformanceTypeMasterCreate,
+    show: PerformanceTypeMasterShow,
+    icon: Group,
+    resource: 'performance-type-master',
+    label: '演出種別マスタ',
   },
 ];
 
