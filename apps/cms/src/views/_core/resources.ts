@@ -49,6 +49,11 @@ import {
   TermsOfUseManagementCreate,
   TermsOfUseManagementShow,
 } from '@repo/ui/src/views/TermsOfUseManagement';
+import {
+  LicenseManagementList,
+  LicenseManagementCreate,
+  LicenseManagementShow,
+} from '@repo/ui/src/views/LicenseManagement';
 
 const Resources: ResourceIF[] = [
   {
@@ -99,6 +104,13 @@ const Resources: ResourceIF[] = [
     show: TermsOfUseManagementShow,
     resource: 'term-of-use-managements',
     label: '利用規約管理',
+  },
+  {
+    list: LicenseManagementList,
+    create: LicenseManagementCreate,
+    show: LicenseManagementShow,
+    resource: 'license-managements',
+    label: 'ライセンス管理',
   },
 ];
 

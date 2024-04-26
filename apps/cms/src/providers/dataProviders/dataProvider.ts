@@ -8,6 +8,7 @@ import axtaManagementCallbackHandler from './axtaManagementCallbackHandlers';
 import PerformanceTypeMasterCallbackHandler from './performanceTypeMasterCallbackHandlers';
 import performanceManagementCallbackHandlers from './performanceManagementCallbackHandlers';
 import termOfUseManagementCallbackHandlers from './termOfUseManagementCallbackHandlers';
+import licenseManagementCallbackHandlers from './licenseManagementCallbackHandlers';
 
 /**
  * NOTE:Limitation of withLifecycleCallbacks
@@ -21,6 +22,7 @@ const dataProvider = withLifecycleCallbacks(fakeProvider, [
   PerformanceTypeMasterCallbackHandler,
   performanceManagementCallbackHandlers,
   termOfUseManagementCallbackHandlers,
+  licenseManagementCallbackHandlers,
 ]);
 
 export default dataProvider;
