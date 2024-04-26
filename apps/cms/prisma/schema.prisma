@@ -11,7 +11,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 // stores allowed values for user roles
 // enum : ['ADMIN', 'READ_ONLY', 'GENERAL']
 model UserRole {
@@ -30,5 +29,5 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  role      UserRole @relation(fields: [roleId], references: [id])
+  role UserRole @relation(fields: [roleId], references: [id])
 }

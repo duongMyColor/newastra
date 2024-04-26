@@ -1,6 +1,6 @@
 'use strict';
 
-import { logger } from '@repo/lib/logger';
+// import { logger } from '@repo/lib/logger';
 import { StatusCodes, ReasonPhrases } from './httpStatusCode';
 import { ResponseIF } from '@repo/types/response';
 
@@ -16,7 +16,7 @@ class SuccessResponse implements ResponseIF {
     this.reason = reason ?? ReasonPhrases.OK;
     this.metadata = metadata || {};
 
-    logger.info(`${status} - ${message}`);
+    // logger.info(`${status} - ${message}`);
   }
 }
 

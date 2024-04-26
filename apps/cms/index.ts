@@ -7,14 +7,14 @@ export interface Env {
 
 export default {
   async fetch(request, env, ctx): Promise<Response> {
-    console.log({ env });
+    console.log('db', env.DB);
 
     const adapter = new PrismaD1(env.DB);
     const prisma = new PrismaClient({ adapter });
 
     const users = await prisma.userRole.findMany();
     const result = JSON.stringify(users);
-    console.log({ result });
+    // console.log({ result });
     return new Response(result);
   },
 } satisfies ExportedHandler<Env>;

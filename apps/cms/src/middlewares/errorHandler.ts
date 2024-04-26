@@ -1,5 +1,5 @@
 import statusCodes from '@/app/api/_core/statusCodes';
-import { logger } from '@repo/lib/logger';
+// import { logger } from '@repo/lib/logger';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
@@ -16,11 +16,11 @@ function errorHandlerMiddleware(fn: Function) {
     } catch (error: ErrorIF | any) {
       const status = error.status ?? statusCodes.INTERNAL_SERVER_ERROR;
 
-      logger.error(
-        `${status} - ${error.message} - ${request.method} - ${request.url}
-        ${error.stack}
-        `
-      );
+      // logger.error(
+      //   `${status} - ${error.message} - ${request.method} - ${request.url}
+      //   ${error.stack}
+      //   `
+      // );
 
       return new NextResponse(error.message, {
         status: status,
