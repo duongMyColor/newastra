@@ -94,7 +94,6 @@ const AxtaManagementShow = ({ actions, resource }: BaseComponentProps) => {
           ) : (
             <CustomForm
               pathTo={resourcePath}
-              showDeleteButton={validRole('delete', actions)}
               showEditButton={validRole('edit', actions)}
               showCancelButton={true}
             >
