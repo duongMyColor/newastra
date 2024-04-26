@@ -7,12 +7,14 @@ const ADMIN: Permission = {
   'application-masters': '*',
   'axta-management': '*',
   'performance-type-master': '*',
+  'performance-management': '*',
 };
 const GENERAL: Permission = {
   users: ['list', 'show'],
   'application-masters': [],
   'axta-management': [],
   'performance-type-master': [],
+  'performance-management': [],
 
   // products: ['list', 'create', 'edit', 'delete', 'show'],
 };
@@ -21,6 +23,7 @@ const READ_ONLY: Permission = {
   'application-masters': [],
   'axta-management': [],
   'performance-type-master': [],
+  'performance-management': [],
 };
 
 const ROLES_MAP: {

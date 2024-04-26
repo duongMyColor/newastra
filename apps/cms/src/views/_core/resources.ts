@@ -37,6 +37,13 @@ import {
   PerformanceTypeMasterShow,
 } from '@repo/ui/src/views/PerformanceTypeMaster';
 
+import {
+  PerformanceManagementList,
+  PerformanceManagementCreate,
+  PerformanceManagementEdit,
+  PerformanceManagementShow,
+} from '@repo/ui/src/views/PerformanceManagement';
+
 const Resources: ResourceIF[] = [
   {
     list: UserList,
@@ -73,6 +80,15 @@ const Resources: ResourceIF[] = [
     icon: Group,
     resource: 'performance-type-master',
     label: '演出種別マスタ',
+  },
+  {
+    list: PerformanceManagementList,
+    edit: PerformanceManagementEdit,
+    create: PerformanceManagementCreate,
+    show: PerformanceManagementShow,
+    icon: Group,
+    resource: 'performance-management',
+    label: '演出管理',
   },
 ];
 
