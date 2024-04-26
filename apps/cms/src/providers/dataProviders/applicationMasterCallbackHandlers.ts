@@ -38,7 +38,6 @@ const applicationMasterCallbackHandler = {
   ): Promise<GetOneResult> => {
     // const { classificationId } = response.data;
 
-    console.log('affterGetOne', response);
 
     let fake = {
       id: '1',

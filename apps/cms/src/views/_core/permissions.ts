@@ -5,25 +5,28 @@ import { createElement, FunctionComponent } from 'react';
 const ADMIN: Permission = {
   users: '*',
   'application-masters': '*',
-  'axta-management': '*',
-  'performance-type-master': '*',
-  'performance-management': '*',
+  'axta-managements': '*',
+  'performance-type-masters': '*',
+  'performance-managements': '*',
+  'term-of-use-managements': '*',
 };
 const GENERAL: Permission = {
   users: ['list', 'show'],
   'application-masters': [],
-  'axta-management': [],
-  'performance-type-master': [],
-  'performance-management': [],
+  'axta-managements': [],
+  'performance-type-masters': [],
+  'performance-managements': [],
+  'term-of-use-managements': [],
 
   // products: ['list', 'create', 'edit', 'delete', 'show'],
 };
 const READ_ONLY: Permission = {
   users: [],
   'application-masters': [],
-  'axta-management': [],
-  'performance-type-master': [],
-  'performance-management': [],
+  'axta-managements': [],
+  'performance-type-masters': [],
+  'performance-managements': [],
+  'term-of-use-managements': [],
 };
 
 const ROLES_MAP: {

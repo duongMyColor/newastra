@@ -9,24 +9,13 @@ import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps } from '@repo/types/general';
 import { Box } from '@mui/material';
 import { validRole } from '../_core/permissions';
+import { bgColorDisiable, boxStyles } from '@repo/styles';
 
 const MasterShow = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
 
   return (
-    <Box
-      sx={{
-        backgroundColor: '#fff',
-        color: 'rgba(0, 0, 0, 0.87)',
-        WebkitTransition: 'box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-        transition: 'box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-        borderRadius: '4px',
-        boxShadow:
-          '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
-        overflow: 'hidden',
-        marginTop: '1em',
-      }}
-    >
+    <Box sx={{ boxStyles }}>
       <ShowBase>
         <>
           <Title title="アプリケーションマスタ　参照" />
@@ -36,45 +25,66 @@ const MasterShow = ({ actions, resource }: BaseComponentProps) => {
             showEditButton={validRole('edit', actions)}
             showCancelButton={true}
           >
-            <TextInput source="appId" label="アプリケーションID" disabled />
+            <TextInput
+              source="appId"
+              label="アプリケーションID"
+              disabled
+              sx={bgColorDisiable}
+            />
 
-            <TextInput source="appName" label="アプリケーション名" disabled />
+            <TextInput
+              source="appName"
+              label="アプリケーション名"
+              disabled
+              sx={bgColorDisiable}
+            />
             <TextInput
               source="packageName"
               label="バンドルID/パッケージ名"
               disabled
+              sx={bgColorDisiable}
             />
 
-            <TextInput source="termsOfUseID" label="利用規約ID" disabled />
-            <TextInput source="licenseID" label="ライセンスID" disabled />
+            <TextInput
+              source="termsOfUseID"
+              label="利用規約ID"
+              disabled
+              sx={bgColorDisiable}
+            />
+            <TextInput
+              source="licenseID"
+              label="ライセンスID"
+              disabled
+              sx={bgColorDisiable}
+            />
 
-            <TextInput source="date" label="登録日時" disabled />
+            <TextInput
+              source="date"
+              label="登録日時"
+              disabled
+              sx={bgColorDisiable}
+            />
 
-            <SimpleShowLayout
-              spacing={3}
-              // sx={{
-              //   // display:'flex',
-              //   // flexDirection: 'column',
-              //   gap: 10,
-              //   lineHeight: '20px',
-              // }}
-            >
+            <SimpleShowLayout spacing={3}>
               <TextField
                 source="assetBundleIOS"
                 label="iOS用共通アセットバンドル"
                 disabled
+                sx={bgColorDisiable}
               />
 
               <TextField
                 source="assetBundleAndroid"
                 label="Android用共通アセットバンドル"
                 disabled
+                sx={bgColorDisiable}
               />
 
               <TextField
                 source="outlineUrl"
                 label="アクスタ枠データパス"
                 disabled
+                sx={bgColorDisiable}
               />
             </SimpleShowLayout>
           </CustomForm>
