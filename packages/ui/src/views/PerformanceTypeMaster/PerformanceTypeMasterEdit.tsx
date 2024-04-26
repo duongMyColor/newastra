@@ -18,7 +18,7 @@ const PerformanceTypeMasterEdit = ({
   console.log({ actions });
 
   return (
-    <Box sx={{ boxStyles }}>
+    <Box sx={boxStyles}>
       <EditBase>
         <Title title="演出種別マスタ　編集" />
         <CustomForm

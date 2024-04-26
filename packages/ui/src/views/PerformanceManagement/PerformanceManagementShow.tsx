@@ -9,7 +9,7 @@ import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps } from '@repo/types/general';
 import { Box } from '@mui/material';
 import { validRole } from '../_core/permissions';
-import { bgColorDisiable, boxStyles } from '@repo/styles';
+import { disabledInputBackgroundStyle, boxStyles } from '@repo/styles';
 
 const PerformanceManagementShow = ({
   actions,
@@ -18,7 +18,7 @@ const PerformanceManagementShow = ({
   const resourcePath = `/${resource}`;
 
   return (
-    <Box sx={boxStyles }>
+    <Box sx={boxStyles}>
       <ShowBase>
         <>
           <Title title="演出管理　参照" />
@@ -32,20 +32,20 @@ const PerformanceManagementShow = ({
               source="productId"
               label="演出ID"
               disabled
-              sx={bgColorDisiable}
+              sx={disabledInputBackgroundStyle}
             />
 
             <TextInput
               source="performanceName"
               label="演出名"
               disabled
-              sx={bgColorDisiable}
+              sx={disabledInputBackgroundStyle}
             />
             <TextInput
               source="performanceTypeId"
               label="演出種別ID"
               disabled
-              sx={bgColorDisiable}
+              sx={disabledInputBackgroundStyle}
             />
 
             <SimpleShowLayout spacing={3}>
@@ -53,13 +53,13 @@ const PerformanceManagementShow = ({
                 source="assetBundleIOS"
                 label="アセットバンドルデータ (iOS)"
                 disabled
-                sx={bgColorDisiable}
+                sx={disabledInputBackgroundStyle}
               />
               <TextField
                 source="assetBundleAndroid"
                 label="アセットバンドルデータ (Android)"
                 disabled
-                sx={bgColorDisiable}
+                sx={disabledInputBackgroundStyle}
               />
             </SimpleShowLayout>
 
@@ -67,7 +67,7 @@ const PerformanceManagementShow = ({
               source="axtaId"
               label="アクスタ ID"
               disabled
-              sx={bgColorDisiable}
+              sx={disabledInputBackgroundStyle}
             />
           </CustomForm>
         </>

@@ -26,7 +26,7 @@ const UserEdit = ({ actions, resource }: BaseComponentProps) => {
   console.log({ actions });
 
   return (
-    <Box sx={{ boxStyles }}>
+    <Box sx={boxStyles}>
       <EditBase>
         <Title title="管理ユーザー管理　編集" />
         <CustomForm

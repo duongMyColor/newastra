@@ -9,13 +9,13 @@ import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps } from '@repo/types/general';
 import { Box } from '@mui/material';
 import { validRole } from '../_core/permissions';
-import { bgColorDisiable, boxStyles } from '@repo/styles';
+import { disabledInputBackgroundStyle, boxStyles } from '@repo/styles';
 
 const MasterShow = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
 
   return (
-    <Box sx={{ boxStyles }}>
+    <Box sx={boxStyles}>
       <ShowBase>
         <>
           <Title title="アプリケーションマスタ　参照" />
@@ -29,40 +29,40 @@ const MasterShow = ({ actions, resource }: BaseComponentProps) => {
               source="appId"
               label="アプリケーションID"
               disabled
-              sx={bgColorDisiable}
+              sx={disabledInputBackgroundStyle}
             />
 
             <TextInput
               source="appName"
               label="アプリケーション名"
               disabled
-              sx={bgColorDisiable}
+              sx={disabledInputBackgroundStyle}
             />
             <TextInput
               source="packageName"
               label="バンドルID/パッケージ名"
               disabled
-              sx={bgColorDisiable}
+              sx={disabledInputBackgroundStyle}
             />
 
             <TextInput
               source="termsOfUseID"
               label="利用規約ID"
               disabled
-              sx={bgColorDisiable}
+              sx={disabledInputBackgroundStyle}
             />
             <TextInput
               source="licenseID"
               label="ライセンスID"
               disabled
-              sx={bgColorDisiable}
+              sx={disabledInputBackgroundStyle}
             />
 
             <TextInput
               source="date"
               label="登録日時"
               disabled
-              sx={bgColorDisiable}
+              sx={disabledInputBackgroundStyle}
             />
 
             <SimpleShowLayout spacing={3}>
@@ -70,21 +70,21 @@ const MasterShow = ({ actions, resource }: BaseComponentProps) => {
                 source="assetBundleIOS"
                 label="iOS用共通アセットバンドル"
                 disabled
-                sx={bgColorDisiable}
+                sx={disabledInputBackgroundStyle}
               />
 
               <TextField
                 source="assetBundleAndroid"
                 label="Android用共通アセットバンドル"
                 disabled
-                sx={bgColorDisiable}
+                sx={disabledInputBackgroundStyle}
               />
 
               <TextField
                 source="outlineUrl"
                 label="アクスタ枠データパス"
                 disabled
-                sx={bgColorDisiable}
+                sx={disabledInputBackgroundStyle}
               />
             </SimpleShowLayout>
           </CustomForm>

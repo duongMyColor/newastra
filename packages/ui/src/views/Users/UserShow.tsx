@@ -4,7 +4,7 @@ import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps } from '@repo/types/general';
 import { Box } from '@mui/material';
 import { validRole } from '../_core/permissions';
-import { bgColorDisiable, boxStyles } from '@repo/styles';
+import { disabledInputBackgroundStyle, boxStyles } from '@repo/styles';
 
 const UserShow = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
@@ -25,7 +25,7 @@ const UserShow = ({ actions, resource }: BaseComponentProps) => {
               label="管理ユーザーID  "
               fullWidth
               disabled
-              sx={bgColorDisiable}
+              sx={disabledInputBackgroundStyle}
             />
 
             <TextInput
@@ -33,14 +33,14 @@ const UserShow = ({ actions, resource }: BaseComponentProps) => {
               label="植限"
               fullWidth
               disabled
-              sx={bgColorDisiable}
+              sx={disabledInputBackgroundStyle}
             />
             <TextInput
               source="email"
               label="メールアドレス  "
               fullWidth
               disabled
-              sx={bgColorDisiable}
+              sx={disabledInputBackgroundStyle}
             />
 
             <TextInput
@@ -48,7 +48,7 @@ const UserShow = ({ actions, resource }: BaseComponentProps) => {
               label="最新ログイン"
               fullWidth
               disabled
-              sx={bgColorDisiable}
+              sx={disabledInputBackgroundStyle}
             />
           </CustomForm>
         </>

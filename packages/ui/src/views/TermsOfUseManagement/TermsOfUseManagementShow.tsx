@@ -3,7 +3,11 @@ import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps } from '@repo/types/general';
 import { Box } from '@mui/material';
 import { useState } from 'react';
-import { boxStyles, bgColorDisiable } from '@repo/styles';
+import {
+  boxStyles,
+  disabledInputBackgroundStyle,
+  textareaStyles,
+} from '@repo/styles';
 
 const TermsOfUseManagementShow = ({
   actions,
@@ -11,7 +15,6 @@ const TermsOfUseManagementShow = ({
 }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
   const { record } = useShowContext();
-  console.log('record', record);
   const [fileContent, setFileContent] = useState('');
 
   return (
@@ -25,33 +28,24 @@ const TermsOfUseManagementShow = ({
               label="利用規約ID"
               fullWidth
               disabled
-              sx={bgColorDisiable}
+              sx={disabledInputBackgroundStyle}
             />
             <TextInput
               source="version"
               label="バージョン"
               disabled
               fullWidth
-              sx={bgColorDisiable}
+              sx={disabledInputBackgroundStyle}
             />
             <TextInput
               source="memo"
               label="メモ"
               disabled
               fullWidth
-              sx={bgColorDisiable}
+              sx={disabledInputBackgroundStyle}
             />
             <textarea
-              style={{
-                width: '100%',
-                height: 300,
-                padding: '12px 20px',
-                boxSizing: 'border-box',
-                borderRadius: 4,
-                backgroundColor: '#f8f8f8',
-                fontSize: 16,
-                resize: 'none',
-              }}
+              style={textareaStyles}
               value={fileContent}
               disabled
             ></textarea>
@@ -60,14 +54,14 @@ const TermsOfUseManagementShow = ({
               label="公開開始日"
               disabled
               fullWidth
-              sx={bgColorDisiable}
+              sx={disabledInputBackgroundStyle}
             />
             <TextInput
               source="dateRegistration"
               label="登録日時"
               disabled
               fullWidth
-              sx={bgColorDisiable}
+              sx={disabledInputBackgroundStyle}
             />
           </CustomForm>
         </>

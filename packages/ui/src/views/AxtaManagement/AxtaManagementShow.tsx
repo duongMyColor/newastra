@@ -16,7 +16,7 @@ import { validRole } from '../_core/permissions';
 import { useState } from 'react';
 import { StatusTextField } from '@repo/ui/src/components/CustomField/StatusTextField';
 import { ScanDataField } from '@repo/ui/src/components/CustomField/ScanDataField';
-import { bgColorDisiable, boxStyles } from '@repo/styles';
+import { disabledInputBackgroundStyle, boxStyles } from '@repo/styles';
 const AxtaManagementShow = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
 
@@ -86,34 +86,34 @@ const AxtaManagementShow = ({ actions, resource }: BaseComponentProps) => {
                 source="acstaId"
                 label="アクスタ ID"
                 disabled
-                sx={bgColorDisiable}
+                sx={disabledInputBackgroundStyle}
               />
 
               <TextInput
                 source="managementName"
                 label="管理名"
                 disabled
-                sx={bgColorDisiable}
+                sx={disabledInputBackgroundStyle}
               />
               <TextInput
                 source="acstaName"
                 label="アクスタ名"
                 disabled
-                sx={bgColorDisiable}
+                sx={disabledInputBackgroundStyle}
               />
 
               <TextInput
                 source="appId"
                 label="利用規約ID"
                 disabled
-                sx={bgColorDisiable}
+                sx={disabledInputBackgroundStyle}
               />
               <SimpleShowLayout spacing={3}>
                 <TextField
                   source="acstaThumbnail"
                   label="アクスタサムネイル"
                   disabled
-                  sx={bgColorDisiable}
+                  sx={disabledInputBackgroundStyle}
                 />
               </SimpleShowLayout>
               <ScanDataField
@@ -127,27 +127,27 @@ const AxtaManagementShow = ({ actions, resource }: BaseComponentProps) => {
                 source="dateStart"
                 label="公開開始日"
                 disabled
-                sx={bgColorDisiable}
+                sx={disabledInputBackgroundStyle}
               />
 
               <TextInput
                 source="dateEnd"
                 label="公開終了日"
                 disabled
-                sx={bgColorDisiable}
+                sx={disabledInputBackgroundStyle}
               />
               <TextInput
                 source="dataRegistration"
                 label="登録日時"
                 disabled
-                sx={bgColorDisiable}
+                sx={disabledInputBackgroundStyle}
               />
 
               <TextInput
                 source="SumoId"
                 label="力士基本情報ID"
                 disabled
-                sx={bgColorDisiable}
+                sx={disabledInputBackgroundStyle}
               />
             </CustomForm>
           )}

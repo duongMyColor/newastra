@@ -18,7 +18,7 @@ const AxtaManagementEdit = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
 
   return (
-    <Box sx={{ boxStyles }}>
+    <Box sx={boxStyles}>
       <EditBase>
         <Title title="アクスタ管理　編集" />
         <CustomForm

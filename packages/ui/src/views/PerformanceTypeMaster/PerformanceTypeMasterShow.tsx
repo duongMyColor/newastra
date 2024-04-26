@@ -3,7 +3,7 @@ import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps } from '@repo/types/general';
 import { Box } from '@mui/material';
 import { validRole } from '../_core/permissions';
-import { bgColorDisiable, boxStyles } from '@repo/styles';
+import { disabledInputBackgroundStyle, boxStyles } from '@repo/styles';
 
 const PerformanceTypeMasterShow = ({
   actions,
@@ -25,14 +25,14 @@ const PerformanceTypeMasterShow = ({
               source="performanceTypeID"
               label="演出種別ID"
               disabled
-              sx={{ ...bgColorDisiable, width: '50%' }}
+              sx={{ ...disabledInputBackgroundStyle, width: '50%' }}
             />
 
             <TextInput
               source="performanceTypeName"
               label="演出種別名"
               disabled
-              sx={{ ...bgColorDisiable, width: '50%' }}
+              sx={{ ...disabledInputBackgroundStyle, width: '50%' }}
             />
           </CustomForm>
         </>

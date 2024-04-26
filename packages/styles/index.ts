@@ -1,6 +1,6 @@
 export const boxStyles = {
   backgroundColor: '#fff',
-  color: 'rgba(0, 0, 0, 0.87)',
+  color: '#000000de',
   WebkitTransition: 'box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
   transition: 'box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
   borderRadius: '4px',
@@ -10,7 +10,7 @@ export const boxStyles = {
   marginTop: '1em',
 };
 
-export const bgColorDisiable = {
+export const disabledInputBackgroundStyle = {
   '& .MuiFilledInput-input': {
     background: '#f4f4f5c4',
   },
@@ -19,4 +19,13 @@ export const bgColorDisiable = {
   },
 };
 
-
+export const textareaStyles = {
+  width: '100%',
+  height: 300,
+  padding: '12px 20px',
+  boxStyles: 'border-box',
+  borderRadius: 4,
+  background: '#f8f8f8',
+  fontSize: 16,
+  resizeTo: 'none',
+};

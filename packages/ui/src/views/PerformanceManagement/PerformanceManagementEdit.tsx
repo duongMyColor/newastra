@@ -22,7 +22,7 @@ const PerformanceManagementEdit = ({
   const resourcePath = `/${resource}`;
 
   return (
-    <Box sx={{ boxStyles }}>
+    <Box sx={boxStyles}>
       <EditBase>
         <Title title="演出管理　編集" />
         <CustomForm
