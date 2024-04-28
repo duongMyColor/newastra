@@ -1,12 +1,10 @@
 import { userRoles } from '@repo/consts/user';
-import {
-  TextInput,
-  Create,
-} from 'react-admin';
+import { TextInput, Create } from 'react-admin';
 
 import { validateUserCreation } from './formValidator';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps } from '@repo/types/general';
+import { REDIRECT_ROUTE } from '@repo/consts/general';
 
 const PerformanceTypeMasterCreate = ({
   actions,
@@ -15,7 +13,7 @@ const PerformanceTypeMasterCreate = ({
   const resourcePath = `/${resource}`;
 
   return (
-    <Create redirect="list" title="演出種別マスタ　新规作成">
+    <Create redirect={REDIRECT_ROUTE.list} title="演出種別マスタ　新规作成">
       <CustomForm
         pathTo={resourcePath}
         validate={validateUserCreation}

@@ -1,5 +1,5 @@
 import PerformanceTypeMasterList from './PerformanceTypeMasterList';
-import PerformanceTypeMasterCreate from './PerformanceTypeMasterCreat';
+import PerformanceTypeMasterCreate from './PerformanceTypeMasterCreate';
 import PerformanceTypeMasterEdit from './PerformanceTypeMasterEdit';
 import PerformanceTypeMasterShow from './PerformanceTypeMasterShow';
 

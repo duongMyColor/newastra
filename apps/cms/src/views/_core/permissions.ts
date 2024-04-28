@@ -5,25 +5,31 @@ import { createElement, FunctionComponent } from 'react';
 const ADMIN: Permission = {
   users: '*',
   'application-masters': '*',
-  'axta-management': '*',
-  'performance-type-master': '*',
-  'performance-management': '*',
+  'axta-managements': '*',
+  'performance-type-masters': '*',
+  'performance-managements': '*',
+  'term-of-use-managements': '*',
+  'license-managements': '*',
 };
 const GENERAL: Permission = {
   users: ['list', 'show'],
-  'application-masters': [],
-  'axta-management': [],
-  'performance-type-master': [],
-  'performance-management': [],
+  'application-masters': ['create', 'list', 'show', 'edit', 'delete'],
+  'axta-managements': ['create', 'list', 'show', 'edit', 'delete'],
+  'performance-type-masters': ['create', 'list', 'show', 'edit', 'delete'],
+  'performance-managements': ['create', 'list', 'show', 'edit', 'delete'],
+  'term-of-use-managements': ['create', 'list', 'show'],
+  'license-managements': ['create', 'list', 'show'],
 
   // products: ['list', 'create', 'edit', 'delete', 'show'],
 };
 const READ_ONLY: Permission = {
-  users: [],
-  'application-masters': [],
-  'axta-management': [],
-  'performance-type-master': [],
-  'performance-management': [],
+  users: ['list', 'show'],
+  'application-masters': ['list', 'show'],
+  'axta-managements': ['list', 'show'],
+  'performance-type-masters': ['list', 'show'],
+  'performance-managements': ['list', 'show'],
+  'term-of-use-managements': ['list', 'show'],
+  'license-managements': ['list', 'show'],
 };
 
 const ROLES_MAP: {

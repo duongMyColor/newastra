@@ -10,6 +10,7 @@ import {
 import { validateUserCreation } from './formValidator';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps } from '@repo/types/general';
+import { REDIRECT_ROUTE } from '@repo/consts/general';
 
 const PerformanceManagementCreate = ({
   actions,
@@ -18,7 +19,7 @@ const PerformanceManagementCreate = ({
   const resourcePath = `/${resource}`;
 
   return (
-    <Create redirect="list" title="演出管理　新规作成">
+    <Create redirect={REDIRECT_ROUTE.list} title="演出管理　新规作成">
       <CustomForm
         pathTo={resourcePath}
         validate={validateUserCreation}
