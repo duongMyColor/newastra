@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import termsAndConditionsController from '../../_controllers/termsAndConditions.controller';
+import termsAndConditionsController from '../../_controllers/termOfUse.controller';
 import errorHandlerMiddleware from '@/middlewares/errorHandler';
 
 export const GET = errorHandlerMiddleware(
@@ -13,7 +13,9 @@ export const GET = errorHandlerMiddleware(
 export const PUT = errorHandlerMiddleware(
   async (request: NextRequest, { params }: { params: { id: string } }) => {
     const id = Number(params.id);
-    return NextResponse.json(await termsAndConditionsController.update(request, id));
+    return NextResponse.json(
+      await termsAndConditionsController.update(request, id)
+    );
   }
 );
 

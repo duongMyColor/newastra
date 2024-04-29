@@ -2,7 +2,7 @@ import type { DataProvider, GetListResult, GetOneResult } from 'react-admin';
 
 import dayjs from 'dayjs';
 const licenseManagementCallbackHandlers = {
-  resource: 'license-managements',
+  resource: 'licenses',
 
   afterGetList: async (
     response: GetListResult,

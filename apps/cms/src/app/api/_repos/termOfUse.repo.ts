@@ -1,13 +1,10 @@
-import {
-  TermsAndConditionsPostIF,
-  TermsAndConditionsResponselIF,
-} from '@repo/types/termAndConditions';
+import { TermOfUsePostIF } from '@repo/types/termOfUse';
 import { prisma } from '@/lib/prisma';
 import { BaseRepo } from './base/base.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
 
-const model = prisma.termsAndConditions;
+const model = prisma.termsOfUse;
 
 const getAll = async () => {
   return await new BaseRepo(model).getAll();
@@ -28,11 +25,11 @@ const getOneById = async (id: number) => {
   return await new BaseRepo(model).getOneById(id);
 };
 
-const insert = async (payload: TermsAndConditionsPostIF) => {
+const insert = async (payload: TermOfUsePostIF) => {
   return await new BaseRepo(model).insert(payload);
 };
 
-const insertMany = async (body: TermsAndConditionsPostIF[]) => {
+const insertMany = async (body: TermOfUsePostIF[]) => {
   return await new BaseRepo(model).insertMany(body);
 };
 
@@ -41,12 +38,12 @@ const updateById = async ({
   payload,
 }: {
   id: number;
-  payload: TermsAndConditionsPostIF;
+  payload: TermOfUsePostIF;
 }) => {
   return await new BaseRepo(model).updateById({ id, payload });
 };
 
-const updateManyById = async (updates: TermsAndConditionsPostIF[]) => {
+const updateManyById = async (updates: TermOfUsePostIF[]) => {
   return await new BaseRepo(model).updateManyById(updates);
 };
 

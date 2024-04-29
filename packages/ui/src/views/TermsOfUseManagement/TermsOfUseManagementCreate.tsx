@@ -27,20 +27,17 @@ const TermsOfUseManagementCreate = ({
         showCancelButton={true}
       >
         <TextInput
-          source="termOfUseId"
+          source="id"
           label="利用規約ID"
           isRequired
           fullWidth
+          disabled
         />
         <TextInput source="version" label="バージョン" isRequired fullWidth />
-        <TextInput source="memo" label="メモ" isRequired fullWidth />
-        <DateInput source="dateStart" fullWidth label="公開開始日" />
+        <TextInput source="memo" label="メモ" fullWidth multiline />
+        <DateInput source="publishedDate" fullWidth label="公開開始日" />
 
-        <FileInput
-          source="fileConditionTerms"
-          label="規約本文"
-          placeholder="アップロード"
-        >
+        <FileInput source="content" label="規約本文" placeholder="アップロード">
           <FileField source="src" title="title" />
         </FileInput>
       </CustomForm>

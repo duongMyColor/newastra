@@ -1,7 +1,7 @@
-import TermsAndConditionsService from '../_services/termsAndConditions.service';
+import TermsAndConditionsService from '../_services/termOfUse.service';
 import { OK, CREATED } from '../_core/success.response';
 
-import { TermsAndConditionsPostIF } from '@repo/types/termAndConditions';
+import { TermOfUsePostIF } from '@repo/types/termAndConditions';
 import type { NextRequest } from 'next/server';
 import { parseParams, parseSearchParams } from '@repo/utils/parseParams';
 
@@ -18,7 +18,7 @@ class AnimalController {
   };
 
   createMany = async (request: NextRequest) => {
-    const payload: TermsAndConditionsPostIF[] = await request.json();
+    const payload: TermOfUsePostIF[] = await request.json();
 
     return new CREATED({
       message: 'created batch Animal OK!',
@@ -50,7 +50,11 @@ class AnimalController {
 
     return new OK({
       message: 'get all TermsAndConditions success!',
-      metadata: await TermsAndConditionsService.getAllWithQuery({ filter, range, sort }),
+      metadata: await TermsAndConditionsService.getAllWithQuery({
+        filter,
+        range,
+        sort,
+      }),
     });
   };
 
@@ -74,7 +78,7 @@ class AnimalController {
   };
 
   updateMany = async (request: NextRequest) => {
-    const payload: TermsAndConditionsPostIF[] = await request.json();
+    const payload: TermOfUsePostIF[] = await request.json();
 
     return new OK({
       message: 'updated batch Animal OK!',

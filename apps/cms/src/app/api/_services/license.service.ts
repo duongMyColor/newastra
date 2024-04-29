@@ -1,6 +1,6 @@
 import {
-  TermsAndConditionsPostIF,
-  TermsAndConditionsResponselIF,
+  TermOfUsePostIF,
+  TermOfUseResponselIF,
 } from '@repo/types/termAndConditions';
 import {
   getAll,
@@ -14,7 +14,7 @@ import {
   getAllWithQuery,
   getAllWithFilters,
   getManyReference,
-} from '../_repos/termsAndConditions.repo';
+} from '../_repos/termOfUse.repo';
 import { convertFormDataToObject } from '@repo/utils/objectUtils';
 import path from 'path';
 import { baseUploadFolder } from '@repo/consts/general';
@@ -29,12 +29,10 @@ class AnimalFactory {
 
     const body = await new UploadFileService(payload).uploadFile();
 
-    return await new TermsAndConditions(
-      body as TermsAndConditionsPostIF
-    ).create();
+    return await new TermsAndConditions(body as TermOfUsePostIF).create();
   }
 
-  static async createMany(body: TermsAndConditionsPostIF[]) {
+  static async createMany(body: TermOfUsePostIF[]) {
     const payload = body.map(
       (terms_and_conditions) => new TermsAndConditions(terms_and_conditions)
     );
@@ -65,13 +63,11 @@ class AnimalFactory {
     const body = await new UploadFileService(payload).uploadFile();
 
     return this.responseAnimal(
-      await new TermsAndConditions(body as TermsAndConditionsPostIF).updateById(
-        { id }
-      )
+      await new TermsAndConditions(body as TermOfUsePostIF).updateById({ id })
     );
   }
 
-  static async updateMany(updates: TermsAndConditionsPostIF[]) {
+  static async updateMany(updates: TermOfUsePostIF[]) {
     const payload = updates.map((update) => new TermsAndConditions(update));
 
     return await updateManyById(payload);
@@ -85,17 +81,17 @@ class AnimalFactory {
     return await deleteManyById(ids);
   }
 
-  static async responseAnimal(response: TermsAndConditionsResponselIF) {
+  static async responseAnimal(response: TermOfUseResponselIF) {
     return this.readFileLocal(response);
   }
 
-  static async readFileLocal(response: TermsAndConditionsResponselIF) {
+  static async readFileLocal(response: TermOfUseResponselIF) {
     let temp = { ...response };
     temp.fileUrl = await readFileToBase64(response.filePath as string);
     return temp;
   }
 
-  static async addPresignedUrl(response: TermsAndConditionsResponselIF) {
+  static async addPresignedUrl(response: TermOfUseResponselIF) {
     let temp = { ...response };
     temp.filePath = await createGetPresignedUrlWithClient(
       response.filePath as string
@@ -104,20 +100,14 @@ class AnimalFactory {
   }
 }
 
-class TermsAndConditions implements TermsAndConditionsPostIF {
+class TermsAndConditions implements TermOfUsePostIF {
   public id?: number;
   public name: string;
   public filePath: string;
   public version: string;
   public memo: string;
 
-  public constructor({
-    id,
-    name,
-    filePath,
-    version,
-    memo,
-  }: TermsAndConditionsPostIF) {
+  public constructor({ id, name, filePath, version, memo }: TermOfUsePostIF) {
     this.id = id;
     this.name = name;
     this.filePath = filePath as string;
@@ -126,13 +116,13 @@ class TermsAndConditions implements TermsAndConditionsPostIF {
   }
 
   public async create() {
-    const payload: TermsAndConditionsPostIF = this;
+    const payload: TermOfUsePostIF = this;
     // TODO: validate payload
     return await insert(payload);
   }
 
   public async updateById({ id }: { id: number }) {
-    const payload: TermsAndConditionsPostIF = this;
+    const payload: TermOfUsePostIF = this;
     // TODO: validate payload
     return await updateById({ id, payload });
   }

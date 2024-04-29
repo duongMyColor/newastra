@@ -157,13 +157,14 @@ const baseDataProvider: DataProvider = {
     const url = `${apiUrl}/${resource}/${params.id}`;
 
     let body;
+
     if (params.data instanceof FormData) {
       body = params.data;
     } else {
       body = JSON.stringify(
         exclude(removeEmptyProperties(params.data), [
-          'created',
-          'updated',
+          'createdAt',
+          'updatedAt',
           'id',
         ])
       );

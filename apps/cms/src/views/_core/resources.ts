@@ -78,7 +78,7 @@ const Resources: ResourceIF[] = [
     edit: AxtaManagementEdit,
     create: AxtaManagementCreate,
     show: AxtaManagementShow,
-    resource: 'axta-managements',
+    resource: 'acstas',
     label: 'アクスタ管理',
   },
   {
@@ -94,7 +94,7 @@ const Resources: ResourceIF[] = [
     edit: PerformanceManagementEdit,
     create: PerformanceManagementCreate,
     show: PerformanceManagementShow,
-    resource: 'performance-managements',
+    resource: 'performances',
     label: '演出管理',
   },
   {
@@ -102,14 +102,14 @@ const Resources: ResourceIF[] = [
     // edit: '',
     create: TermsOfUseManagementCreate,
     show: TermsOfUseManagementShow,
-    resource: 'term-of-use-managements',
+    resource: 'term-of-uses',
     label: '利用規約管理',
   },
   {
     list: LicenseManagementList,
     create: LicenseManagementCreate,
     show: LicenseManagementShow,
-    resource: 'license-managements',
+    resource: 'licenses',
     label: 'ライセンス管理',
   },
 ];
