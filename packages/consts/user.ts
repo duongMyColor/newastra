@@ -1,67 +1,28 @@
 import { hashPassword } from '../utils/password';
 import { Country, RoleSelectInput, UserIF } from '@repo/types/user';
 import countries from '@repo/assets/json/countries.json';
-import { ProductPostIF } from '@repo/types/product';
-import { AnimalClassificationPostIF } from '@repo/types/animal';
 
 const defaultUsers: UserIF[] = [
   {
-    username: 'superadmin',
-    name: 'superadmin',
+    username: 'SuperAdmin',
     email: 'superadmin@mycolor.com',
     role: 'ADMIN',
-    password: hashPassword('superadmin@12345'),
-    enabled: true,
-  },
-  {
-    username: 'trungpham',
-    name: 'Trung Pham',
-    email: 'trungpham@mycolor.com',
-    role: 'GENERAL',
-    password: hashPassword('trungpham@12345'),
+    password: hashPassword('Superadmin@12345'),
     enabled: true,
   },
 ];
 
-const defaultProducts: ProductPostIF[] = [
-  {
-    name: 'Product1',
-  },
-  {
-    name: 'Product2',
-  },
-  {
-    name: 'Product3',
-  },
-  {
-    name: 'Product4',
-  },
-  {
-    name: 'Product5',
-  },
-];
+console.log(hashPassword('Superadmin@12345'));
 
-const defaultAnimalClass: AnimalClassificationPostIF[] = [
+const defaultRoles = [
   {
-    name: 'Mammal',
+    id: 'ADMIN',
   },
   {
-    name: 'Bird',
+    id: 'GENERAL',
   },
   {
-    name: 'Fish',
-  },
-  {
-    name: 'Reptiles',
-  },
-  {
-    name: 'Amphibians',
-  },
-  {
-    name: 'Insects',
-  },
-  {
-    name: 'Crustaceans',
+    id: 'READ_ONLY',
   },
 ];
 
@@ -97,6 +58,5 @@ export {
   countryList,
   userRoles,
   userContentLength,
-  defaultProducts,
-  defaultAnimalClass,
+  defaultRoles,
 };
