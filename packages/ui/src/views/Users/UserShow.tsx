@@ -21,7 +21,7 @@ const UserShow = ({ actions, resource }: BaseComponentProps) => {
             showCancelButton={true}
           >
             <TextInput
-              source="cmsId"
+              source="username"
               label="管理ユーザーID  "
               fullWidth
               disabled

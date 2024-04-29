@@ -21,7 +21,7 @@ const UserList = ({ actions, resource }: BaseComponentProps) => {
     >
       <Datagrid rowClick="show">
         <TextField source="id" label="No" />
-        <TextField source="cmsId" label="CMS-ID" />
+        <TextField source="username" label="CMS-ID" />
         <TextField source="date" label="最縤ログイン" />
         <TextField source="role" label="筧昭" />
         <TextField source="email" label="メールアドレス" />

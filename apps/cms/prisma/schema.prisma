@@ -20,8 +20,8 @@ model UserRole {
 
 model User {
   id        Int      @id @default(autoincrement())
-  cmsId     String   @unique
-  roleId    String   @default("READ_ONLY")
+  username  String   @unique
+  role      String   @default("READ_ONLY")
   enabled   Boolean  @default(true)
   email     String   @unique
   password  String
@@ -29,5 +29,5 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  role UserRole @relation(fields: [roleId], references: [id])
+  userRole UserRole @relation(fields: [role], references: [id])
 }

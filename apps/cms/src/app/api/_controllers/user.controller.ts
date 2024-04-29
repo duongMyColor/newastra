@@ -21,7 +21,7 @@ class UserController {
     });
   };
 
-  getAll = async ({ filter, range, sort }: GetAllQueryIF) => {
+  getAll = async () => {
     return new OK({
       message: 'get all Users success!',
       metadata: await UserService.getAll(),

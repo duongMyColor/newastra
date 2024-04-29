@@ -23,3 +23,5 @@ export const DELETE = errorHandlerMiddleware(
     return NextResponse.json(await userController.delete(id));
   }
 );
+
+export const runtime = 'edge';

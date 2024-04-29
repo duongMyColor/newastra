@@ -25,7 +25,7 @@ const UserCreate = ({ actions, resource }: BaseComponentProps) => {
         showCancelButton={true}
       >
         <TextInput
-          source="cmsId"
+          source="username"
           label="管理ユーザーID "
           isRequired
           fullWidth
@@ -35,7 +35,7 @@ const UserCreate = ({ actions, resource }: BaseComponentProps) => {
           source="role"
           choices={userRoles}
           isRequired
-          defaultValue={'USER'}
+          defaultValue={'GENERAL'}
           label="椎限"
         />
         <TextInput source="email" label="メールアドレス" fullWidth isRequired />

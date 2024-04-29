@@ -31,14 +31,14 @@ const UserEdit = ({ actions, resource }: BaseComponentProps) => {
         <Title title="管理ユーザー管理　編集" />
         <CustomForm
           pathTo={resourcePath}
-          validate={validateUserCreation}
+          validate={validateUserEdition}
           showDeleteButton={validRole('delete', actions)}
           showSaveButton={true}
           showReferenceButton={true}
           showCancelButton={true}
         >
           <TextInput
-            source="cmsId"
+            source="username"
             label="管理ユーザーID "
             isRequired
             fullWidth
@@ -48,7 +48,7 @@ const UserEdit = ({ actions, resource }: BaseComponentProps) => {
             source="role"
             choices={userRoles}
             isRequired
-            defaultValue={'USER'}
+            defaultValue={'GENERAL'}
             label="椎限"
           />
           <TextInput

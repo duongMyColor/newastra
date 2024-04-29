@@ -1,19 +1,16 @@
-type Role = 'ADMIN' | 'USER' | 'VIEW';
+type Role = 'ADMIN' | 'GENERAL' | 'READ_ONLY';
 
 export interface UserIF {
   id?: number;
   username: string;
-  name: string;
   role: Role;
   enabled: boolean;
   email: string;
   password: string;
   newPassword?: string;
-  country: string;
-  address: string;
   isDeleted?: boolean;
-  created?: Date;
-  updated?: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface Country {

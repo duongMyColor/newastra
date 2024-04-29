@@ -9,7 +9,7 @@ const editionRules: ValidationRule[] = [
     required: true,
   },
   {
-    field: 'name',
+    field: 'username',
     required: true,
     minLength: userContentLength.name.min,
     maxLength: userContentLength.name.max,
@@ -46,12 +46,6 @@ const creationRules: ValidationRule[] = [
   {
     field: 'role',
     required: true,
-  },
-  {
-    field: 'name',
-    required: true,
-    minLength: userContentLength.name.min,
-    maxLength: userContentLength.name.max,
   },
   {
     field: 'email',

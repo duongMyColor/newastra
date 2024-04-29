@@ -11,18 +11,14 @@ const defaultUsers: UserIF[] = [
     email: 'superadmin@mycolor.com',
     role: 'ADMIN',
     password: hashPassword('superadmin@12345'),
-    country: 'US',
-    address: '123 Main St',
     enabled: true,
   },
   {
     username: 'trungpham',
     name: 'Trung Pham',
     email: 'trungpham@mycolor.com',
-    role: 'USER',
+    role: 'GENERAL',
     password: hashPassword('trungpham@12345'),
-    country: 'VN',
-    address: 'Nam Tu Liem, Ha Noi',
     enabled: true,
   },
 ];
@@ -73,8 +69,8 @@ const countryList: Country[] = countries;
 
 const userRoles: RoleSelectInput[] = [
   { id: 'ADMIN', name: 'ADMIN' },
-  { id: 'USER', name: 'USER' },
-  { id: 'VIEW', name: 'VIEW' },
+  { id: 'GENERAL', name: 'GENERAL' },
+  { id: 'READ_ONLY', name: 'READ_ONLY' },
 ];
 
 const userContentLength = {
