@@ -24,7 +24,8 @@ class AccessController {
   };
 
   login = async (request: NextRequest) => {
-    const payload = await request.json();
+    const payload: { username: string; password: string } =
+      await request.json();
 
     return new OK({
       metadata: await AccessService.login(payload),

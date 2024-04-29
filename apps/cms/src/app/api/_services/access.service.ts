@@ -6,7 +6,6 @@ import keyTokenService from './keyToken.service';
 import {
   authentication,
   createTokenPair,
-  getKeyStore,
   getUserIdFromCookies,
 } from '../_auth/authUtils';
 import {
@@ -18,6 +17,7 @@ import userService from './user.service';
 import { hashPassword } from '@repo/utils/password';
 import { cookies } from 'next/headers';
 import { HEADER } from '@repo/consts/access';
+import { CreateTokenPayload, KeyStore } from '@repo/types/auth';
 
 class AccessService {
   /**

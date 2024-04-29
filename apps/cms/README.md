@@ -2,39 +2,30 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 Note: Create .env file base on .sample.env
 
-# 1. Run app in local machine with Docker
-
-## Make sure you install [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/)
-
-(Optional) Remove current MySQL container and `/mysql` folder if existed
-
-## Run docker-compose At `react-admin` folder
-
-`$ docker-compose -f docker-compose.local.yml up -d`
-
 # 2. Run app in local machine without Docker
 
-## Create DB (at `/react-admin` folder)
-
-`$ docker-compose -f docker-compose.mysql.yml up -d`
-
-`$ docker-compose -f docker-compose.arm64.mysql.yml up -d` (For Mac pc with M chip)
-
-## Migrate DB (at `/react-admin` folder)
+## Generate DB (at `/cms` folder)
 
 `$ npx prisma generate`
 
-`$ npx prisma migrate dev`
 
-## Add seed
+## Add seed local
 
-`$ yarn prisma db seed`
+- db_name: see `apps/cms/wrangler.toml`
+- `npx wrangler d1 execute <db_name> --local --file=./prisma/seed.sql `
 
-## Run app (at `/react-admin` folder)
+ex: 
 
-`$ yarn install`
+`npx wrangler d1 execute da-acstar-db --local --file=./prisma/seed.sql`
 
-`$ yarn dev`
+## Add seed remote
+
+- db_name: see `apps/cms/wrangler.toml`
+- `npx wrangler d1 execute <db_name> --remote --file=./prisma/seed.sql `
+
+ex: 
+
+`npx wrangler d1 execute da-acstar-db --remote --file=./prisma/seed.sql`
 
 # 3. App URL
 

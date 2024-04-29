@@ -7,16 +7,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --max-warnings 0",
-    "prisma-generate": "prisma generate",
-    "prisma-migrate": "prisma migrate dev"
-  },
-  "prisma": {
-    "seed": "ts-node prisma/seed.ts"
+    "db:migrate": "npx tsx prisma/migrate.mts"
   },
   "dependencies": {
+    "@clack/prompts": "^0.7.0",
     "@prisma/adapter-d1": "^5.13.0",
     "@prisma/client": "^5.13.0",
-    "dayjs": "^1.11.10"
+    "dayjs": "^1.11.10",
+    "js-sha256": "^0.11.0",
+    "tiny-parse-argv": "^2.4.0",
+    "toml": "^3.0.0"
   },
   "devDependencies": {
     "@cloudflare/next-on-pages": "^1.11.1",
@@ -26,11 +26,11 @@
     "@repo/consts": "*",
     "@repo/eslint-config": "*",
     "@repo/lib": "*",
+    "@repo/styles": "*",
     "@repo/types": "*",
     "@repo/typescript-config": "*",
     "@repo/ui": "*",
     "@repo/utils": "*",
-    "@repo/styles": "*",
     "@types/eslint": "^8.56.5",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/node": "^20.11.24",

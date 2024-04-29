@@ -13,7 +13,7 @@
       "@/*": ["./src/*"]
     },
 
-    "types": ["@cloudflare/workers-types"]
+    "types": ["@cloudflare/workers-types", "node"]
   },
   "include": [
     "next-env.d.ts",
@@ -24,7 +24,8 @@
     "src/app/api/_core/success.response.ts",
     "src/utils/excludeKey.js",
     "src/app/_memo/page.tsx",
-    "src/app/chart/dataFetcher.js"
-  ],
+    "src/app/chart/dataFetcher.js",
+    "prisma/migrate.mts"
+, "password.js"  ],
   "exclude": ["node_modules"]
 }

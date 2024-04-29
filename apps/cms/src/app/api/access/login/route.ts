@@ -4,5 +4,6 @@ import accessController from '../../_controllers/access.controller';
 
 export const POST = errorHandlerMiddleware(async (request: NextRequest) => {
   return NextResponse.json(await accessController.login(request));
-
 });
+
+export const runtime = 'edge';

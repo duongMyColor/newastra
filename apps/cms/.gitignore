@@ -47,3 +47,6 @@ migration_lock.toml
 
 # local uploaded files
 _uploads/
+
+# wrangler
+.wrangler/

@@ -1,8 +1,7 @@
-// import * as crypto from 'crypto';
+import { sha256 } from 'js-sha256';
 
 export const hashPassword = (password: string) => {
-  // return crypto.createHash('sha256').update(password).digest('hex');
-  return 'OK';
+  return sha256(password);
 };
 
 export const validatePassword = (password: string): boolean => {
