@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-import productDetailController from '../_controllers/productDetail.controller';
+import productDetailController from '../_controllers/performance.controller';
 import errorHandlerMiddleware from '@/middlewares/errorHandler'; // Import the errorHandlerMiddleware
 
 export const GET = errorHandlerMiddleware(async () => {
@@ -11,3 +11,5 @@ export const GET = errorHandlerMiddleware(async () => {
 export const POST = errorHandlerMiddleware(async (request: NextRequest) => {
   return NextResponse.json(await productDetailController.create(request));
 });
+
+export const runtime = 'edge';

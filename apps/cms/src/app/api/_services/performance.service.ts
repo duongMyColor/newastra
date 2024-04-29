@@ -1,4 +1,4 @@
-import { ProductDetailPostIF } from '@repo/types/product';
+import { PerformancePostIF } from '@repo/types/product';
 import {
   getAll,
   getOneById,
@@ -8,14 +8,14 @@ import {
   updateManyById,
   deleteById,
   deleteManyById,
-} from '../_repos/productDetail.repo';
+} from '../_repos/performance.repo';
 
 class ProductDetailFactory {
-  static async create({ payload }: { payload: ProductDetailPostIF }) {
+  static async create({ payload }: { payload: PerformancePostIF }) {
     return await new ProductDetail(payload).create();
   }
 
-  static async createMany(products: ProductDetailPostIF[]) {
+  static async createMany(products: PerformancePostIF[]) {
     const payload = products.map((product) => new ProductDetail(product));
     return await insertMany(payload);
   }
@@ -33,12 +33,12 @@ class ProductDetailFactory {
     payload,
   }: {
     id: number;
-    payload: ProductDetailPostIF;
+    payload: PerformancePostIF;
   }) {
     return await new ProductDetail(payload).updateById({ id });
   }
 
-  static async updateMany(updates: ProductDetailPostIF[]) {
+  static async updateMany(updates: PerformancePostIF[]) {
     const payload = updates.map((update) => new ProductDetail(update));
 
     return await updateManyById(payload);
@@ -53,27 +53,38 @@ class ProductDetailFactory {
   }
 }
 
-class ProductDetail implements ProductDetailPostIF {
+class ProductDetail implements PerformancePostIF {
   public id?: number;
-  public detailName: string;
-  public id: number;
-  public count: number;
+  public name: string;
+  public performanceTypeMasterID: number;
+  public assetBundleIOS: string;
+  public acstaID: number;
+  public assetBundleAndroid: string;
+  public updatedAt: string | Date;
 
-  public constructor({ id, detailName, id, count }: ProductDetailPostIF) {
-    this.detailName = detailName;
-    this.id = id;
-    this.count = count;
-    this.id = id;
+  public constructor({
+    name,
+    performanceTypeMasterID,
+    assetBundleIOS,
+    acstaID,
+    assetBundleAndroid,
+  }: PerformancePostIF) {
+    this.name = name;
+    this.performanceTypeMasterID = performanceTypeMasterID;
+    this.assetBundleIOS = assetBundleIOS;
+    this.acstaID = acstaID;
+    this.assetBundleAndroid = assetBundleAndroid;
+    this.updatedAt = new Date();
   }
 
   public async create() {
-    const payload: ProductDetailPostIF = this;
+    const payload: PerformancePostIF = this;
     // TODO: validate payload
     return await insert(payload);
   }
 
   public async updateById({ id }: { id: number }) {
-    const payload: ProductDetailPostIF = this;
+    const payload: PerformancePostIF = this;
     // TODO: validate payload
     return await updateById({ id, payload });
   }

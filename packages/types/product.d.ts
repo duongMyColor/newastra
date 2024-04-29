@@ -5,7 +5,7 @@ export interface ProductResponseIF {
   subCategory?: number;
   created: string;
   updated: string;
-  ProductDetail?: ProductDetaiResponselIF[];
+  ProductDetail?: PerformanceResponseIF[];
 }
 
 export interface ProductPostIF {
@@ -15,21 +15,25 @@ export interface ProductPostIF {
 }
 
 export interface ProductPostFormIF extends ProductPostIF {
-  ProductDetail: ProductDetailPostIF[];
+  ProductDetail: PerformancePostIF[];
 }
 
-export interface ProductDetaiResponselIF {
+export interface PerformanceResponseIF {
   id: id;
-  id: number;
-  count: number;
-  detailName: string;
-  created: string;
-  updated: string;
+  name: string;
+  performanceTypeMasterID: number;
+  assetBundleIOS: string;
+  acstaID: number;
+  assetBundleAndroid: string;
+  createdAt: string | Date;
+  updatedAt: string | Date;
 }
 
-export interface ProductDetailPostIF {
-  id?: number;
-  id: number;
-  count: number;
-  detailName: string;
+export interface PerformancePostIF {
+  id?: id;
+  name: string;
+  performanceTypeMasterID: number;
+  assetBundleIOS: string;
+  acstaID: number;
+  assetBundleAndroid: string;
 }
