@@ -14,12 +14,12 @@ const licenseManagementCallbackHandlers = {
       {
         id: '1',
         licenseId: '4',
-        termOfUseId:'2',
+        termOfUseId: '2',
         memo: 'duong abc',
         version: '1',
-        performanceTypeId: '2',
+        performanceTypeMasterID: '2',
         dateStart: dayjs(new Date()).format('YYYY.MM.DD HH:mm'),
-        dateRegistration: dayjs(new Date()).format('YYYY.MM.DD HH:mm'),
+        createdAt: dayjs(new Date()).format('YYYY.MM.DD HH:mm'),
         fileConditionTerms: 'tearn-of-use.html',
       },
     ];
@@ -39,12 +39,12 @@ const licenseManagementCallbackHandlers = {
     let fake = {
       id: '1',
       licenseId: '3',
-      termOfUseId:'4',
+      termOfUseId: '4',
       memo: 'duong abc',
       version: '1',
-      performanceTypeId: '2',
+      performanceTypeMasterID: '2',
       dateStart: dayjs(new Date()).format('YYYY.MM.DD HH:mm'),
-      dateRegistration: dayjs(new Date()).format('YYYY.MM.DD HH:mm'),
+      createdAt: dayjs(new Date()).format('YYYY.MM.DD HH:mm'),
       fileConditionTerms: 'tearn-of-use.html',
     };
 

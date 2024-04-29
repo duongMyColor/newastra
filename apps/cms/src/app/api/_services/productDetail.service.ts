@@ -56,17 +56,12 @@ class ProductDetailFactory {
 class ProductDetail implements ProductDetailPostIF {
   public id?: number;
   public detailName: string;
-  public productId: number;
+  public id: number;
   public count: number;
 
-  public constructor({
-    id,
-    detailName,
-    productId,
-    count,
-  }: ProductDetailPostIF) {
+  public constructor({ id, detailName, id, count }: ProductDetailPostIF) {
     this.detailName = detailName;
-    this.productId = productId;
+    this.id = id;
     this.count = count;
     this.id = id;
   }

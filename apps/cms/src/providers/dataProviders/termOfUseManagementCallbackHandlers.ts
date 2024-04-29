@@ -16,9 +16,9 @@ const termOfUseManagementCallbackHandlers = {
         termOfUseId: '3',
         memo: 'duong abc',
         version: '1',
-        performanceTypeId: '2',
+        performanceTypeMasterID: '2',
         dateStart: dayjs(new Date()).format('YYYY.MM.DD HH:mm'),
-        dateRegistration: dayjs(new Date()).format('YYYY.MM.DD HH:mm'),
+        createdAt: dayjs(new Date()).format('YYYY.MM.DD HH:mm'),
         fileConditionTerms: 'tearn-of-use.html',
       },
     ];
@@ -40,9 +40,9 @@ const termOfUseManagementCallbackHandlers = {
       termOfUseId: '3',
       memo: 'duong abc',
       version: '1',
-      performanceTypeId: '2',
-      dateStart: dayjs(new Date()).format('YYYY.MM.DD HH:mm'),
-      dateRegistration: dayjs(new Date()).format('YYYY.MM.DD HH:mm'),
+      performanceTypeMasterID: '2',
+      publishedDate: dayjs(new Date()).format('YYYY.MM.DD HH:mm'),
+      createdAt: dayjs(new Date()).format('YYYY.MM.DD HH:mm'),
       fileConditionTerms: 'tearn-of-use.html',
     };
 

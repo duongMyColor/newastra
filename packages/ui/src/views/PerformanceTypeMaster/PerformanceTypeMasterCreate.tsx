@@ -20,12 +20,7 @@ const PerformanceTypeMasterCreate = ({
         showSaveButton={true}
         showCancelButton={true}
       >
-        <TextInput
-          source="performanceTypeName"
-          label="演出種別名"
-          isRequired
-          fullWidth
-        />
+        <TextInput source="typeName" label="演出種別名" isRequired fullWidth />
       </CustomForm>
     </Create>
   );

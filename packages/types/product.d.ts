@@ -20,7 +20,7 @@ export interface ProductPostFormIF extends ProductPostIF {
 
 export interface ProductDetaiResponselIF {
   id: id;
-  productId: number;
+  id: number;
   count: number;
   detailName: string;
   created: string;
@@ -29,7 +29,7 @@ export interface ProductDetaiResponselIF {
 
 export interface ProductDetailPostIF {
   id?: number;
-  productId: number;
+  id: number;
   count: number;
   detailName: string;
 }

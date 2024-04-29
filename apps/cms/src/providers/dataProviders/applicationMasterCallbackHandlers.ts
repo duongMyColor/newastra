@@ -21,7 +21,7 @@ const applicationMasterCallbackHandler = {
     let fake = {
       id: '1',
       appName: 'duong',
-      date: dayjs(new Date()).format('YYYY.MM.DD HH:MM'),
+      createdAt: dayjs(new Date()).format('YYYY.MM.DD HH:MM'),
       appId: 'USER',
       packageName: 'com.example.myapp',
     };
@@ -38,21 +38,19 @@ const applicationMasterCallbackHandler = {
   ): Promise<GetOneResult> => {
     // const { classificationId } = response.data;
 
-
     let fake = {
       id: '1',
       appName: 'duong',
-      date: dayjs(new Date()).format('YYYY.MM.DD HH:MM'),
-      appId: '1',
+      createdAt: dayjs(new Date()).format('YYYY.MM.DD HH:MM'),
       packageName: 'com.example.myapp',
       termsOfUseID: 'USER',
       licenseID: 'USER',
       assetBundleIOS: 'acsta_anime_ios',
       assetBundleAndroid: 'acsta_anime_ios',
-      outlineUrl: 'acstar-waku.png',
+      outlineUrl: 'acsta-waku.png',
       assetDataIOS: { src: 'acsta_anime_ios' },
       assetDataAndroid: { src: 'acsta_anime_ios' },
-      assetOutlineUrl: { src: 'acstar-waku.png' },
+      assetOutlineUrl: { src: 'acsta-waku.png' },
     };
 
     return {

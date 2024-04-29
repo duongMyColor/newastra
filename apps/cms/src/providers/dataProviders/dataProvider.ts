@@ -17,12 +17,12 @@ import licenseManagementCallbackHandlers from './licenseManagementCallbackHandle
  */
 const dataProvider = withLifecycleCallbacks(baseDataProvider, [
   // userCallbackHandler,
-  applicationMasterCallbackHandler,
-  axtaManagementCallbackHandler,
-  PerformanceTypeMasterCallbackHandler,
-  performanceManagementCallbackHandlers,
-  termOfUseManagementCallbackHandlers,
-  licenseManagementCallbackHandlers,
+  // applicationMasterCallbackHandler,
+  // axtaManagementCallbackHandler,
+  // PerformanceTypeMasterCallbackHandler,
+  // performanceManagementCallbackHandlers,
+  // termOfUseManagementCallbackHandlers,
+  // licenseManagementCallbackHandlers,
 ]);
 
 export default dataProvider;

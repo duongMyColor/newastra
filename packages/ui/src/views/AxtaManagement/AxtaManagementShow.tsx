@@ -137,7 +137,7 @@ const AxtaManagementShow = ({ actions, resource }: BaseComponentProps) => {
                 sx={disabledInputBackgroundStyle}
               />
               <TextInput
-                source="dataRegistration"
+                source="createdAt"
                 label="登録日時"
                 disabled
                 sx={disabledInputBackgroundStyle}

@@ -23,7 +23,7 @@ const LicenseManagementList = ({ actions, resource }: BaseComponentProps) => {
         <TextField source="memo" label="メモ" />
         <TextField source="version" label="バージョン" />
         <TextField source="dateStart" label="公開開始日" />
-        <TextField source="dateRegistration" label="登録日" />
+        <TextField source="createdAt" label="登録日" />
       </Datagrid>
     </List>
   );

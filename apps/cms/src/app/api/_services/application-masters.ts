@@ -17,7 +17,7 @@ import {
   getAllWithQuery,
   getAllWithFilters,
   getManyReference,
-} from '../_repos/animal.repo';
+} from '../_repos/application-masters';
 import { convertFormDataToObject } from '@repo/utils/objectUtils';
 import path from 'path';
 import { baseUploadFolder } from '@repo/consts/general';

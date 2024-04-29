@@ -22,14 +22,14 @@ const PerformanceTypeMasterShow = ({
             showCancelButton={true}
           >
             <TextInput
-              source="performanceTypeID"
+              source="id"
               label="演出種別ID"
               disabled
               sx={{ ...disabledInputBackgroundStyle, width: '50%' }}
             />
 
             <TextInput
-              source="performanceTypeName"
+              source="typeName"
               label="演出種別名"
               disabled
               sx={{ ...disabledInputBackgroundStyle, width: '50%' }}

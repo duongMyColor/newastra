@@ -54,7 +54,7 @@ const LicenseManagementShow = ({ actions, resource }: BaseComponentProps) => {
               sx={disabledInputBackgroundStyle}
             />
             <TextInput
-              source="dateRegistration"
+              source="createdAt"
               label="登録日時"
               disabled
               fullWidth

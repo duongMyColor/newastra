@@ -4,8 +4,8 @@ compatibility_flags = ["nodejs_compat"]
 
 [[d1_databases]]
 binding = "DB" # i.e. available in your Worker on env.DB
-database_name = "da-acstar-db"
-database_id = "88c71a18-9127-4a9f-bd85-82b4c8b592fd"
+database_name = "da-acsta-db"
+database_id = "010bc5b5-c591-4ef7-ac09-00ccf739c274"
 migrations_dir = "./prisma/migrations" # Customize this value to rename the `migrations` folder
 
 

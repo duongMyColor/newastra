@@ -29,20 +29,20 @@ const PerformanceManagementShow = ({
             showCancelButton={true}
           >
             <TextInput
-              source="productId"
+              source="id"
               label="演出ID"
               disabled
               sx={disabledInputBackgroundStyle}
             />
 
             <TextInput
-              source="performanceName"
+              source="name"
               label="演出名"
               disabled
               sx={disabledInputBackgroundStyle}
             />
             <TextInput
-              source="performanceTypeId"
+              source="performanceTypeMasterID"
               label="演出種別ID"
               disabled
               sx={disabledInputBackgroundStyle}
@@ -64,7 +64,7 @@ const PerformanceManagementShow = ({
             </SimpleShowLayout>
 
             <TextInput
-              source="axtaId"
+              source="acstaID"
               label="アクスタ ID"
               disabled
               sx={disabledInputBackgroundStyle}

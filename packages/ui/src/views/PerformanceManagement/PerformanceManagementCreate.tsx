@@ -26,7 +26,7 @@ const PerformanceManagementCreate = ({
         showSaveButton={true}
         showCancelButton={true}
       >
-        <TextInput source="productId" label="演出ID" isRequired fullWidth />
+        <TextInput source="id" label="演出ID" isRequired fullWidth />
         <TextInput
           source="managementName"
           label="管理名"
@@ -34,14 +34,9 @@ const PerformanceManagementCreate = ({
           isRequired
         />
 
-        <TextInput
-          source="performanceName"
-          label="演出名"
-          fullWidth
-          isRequired
-        />
+        <TextInput source="name" label="演出名" fullWidth isRequired />
         <SelectInput
-          source="performanceTypeId"
+          source="performanceTypeMasterID"
           choices={userRoles}
           fullWidth
           isRequired
@@ -64,7 +59,7 @@ const PerformanceManagementCreate = ({
           <FileField source="src" title="title" />
         </FileInput>
         <SelectInput
-          source="axtaId"
+          source="acstaID"
           choices={userRoles}
           fullWidth
           isRequired

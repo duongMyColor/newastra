@@ -20,11 +20,11 @@ const PerformanceManagementList = ({
     >
       <Datagrid rowClick="show">
         <TextField source="id" label="No" />
-        <TextField source="performanceName" label="演出名" />
-        <TextField source="productId" label="演出ID" />
-        <TextField source="performanceTypeId" label="演出種別ID" />
+        <TextField source="name" label="演出名" />
+        <TextField source="id" label="演出ID" />
+        <TextField source="performanceTypeMasterID" label="演出種別ID" />
 
-        <TextField source="dateRegistration" label="登録日" />
+        <TextField source="createdAt" label="登録日" />
         {validRole('delete', actions) && (
           <DeleteWithConfirmButton label="アカウント削除"></DeleteWithConfirmButton>
         )}

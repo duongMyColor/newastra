@@ -1,4 +1,4 @@
-import AnimalService from '../_services/animal.service';
+import AnimalService from '../_services/application-masters';
 import { OK, CREATED } from '../_core/success.response';
 
 import { AnimalPostIF } from '@repo/types/animal';

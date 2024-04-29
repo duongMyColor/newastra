@@ -25,7 +25,7 @@ const AxtaManagementList = ({ actions, resource }: BaseComponentProps) => {
 
         <TextField source="dateStart" label="公開開始日" />
         <TextField source="dateEnd" label="公開終了日" />
-        <TextField source="dataRegistration" label="登録日" />
+        <TextField source="createdAt" label="登録日" />
         {validRole('delete', actions) && (
           <DeleteWithConfirmButton label="アカウント削除"></DeleteWithConfirmButton>
         )}

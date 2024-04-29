@@ -32,16 +32,11 @@ const PerformanceManagementEdit = ({
           showReferenceButton={true}
           showCancelButton={true}
         >
-          <TextInput source="productId" label="演出ID" isRequired fullWidth />
-          <TextInput
-            source="performanceName"
-            label="演出名"
-            fullWidth
-            isRequired
-          />
+          <TextInput source="id" label="演出ID" isRequired fullWidth />
+          <TextInput source="name" label="演出名" fullWidth isRequired />
 
           <SelectInput
-            source="performanceTypeId"
+            source="performanceTypeMasterID"
             choices={userRoles}
             defaultValue={'USER'}
             fullWidth
@@ -66,7 +61,7 @@ const PerformanceManagementEdit = ({
           </FileInput>
 
           <SelectInput
-            source="axtaId"
+            source="acstaID"
             choices={userRoles}
             defaultValue={'USER'}
             fullWidth
