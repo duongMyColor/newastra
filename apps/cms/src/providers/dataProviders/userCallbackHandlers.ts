@@ -20,9 +20,9 @@ const userCallbackHandler = {
 
     let fake = {
       id: '1',
-      cmsId: 'duong',
+      username: 'duong',
       date: dayjs(new Date()).format('YYYY.MM.DD HH:MM'),
-      role: 'USER',
+      role: 'GENERAL',
       email: 'susdoidfjsd@gmail.com',
     };
 
@@ -41,11 +41,10 @@ const userCallbackHandler = {
     let fake = {
       id: '1',
 
-      cmsId: 'duong',
+      username: 'duong',
       date: dayjs(new Date()).format('YYYY.MM.DD HH:MM'),
-      role: 'USER',
+      role: 'GENERAL',
       email: 'susdoidfjsd@gmail.com',
-
     };
 
     return {

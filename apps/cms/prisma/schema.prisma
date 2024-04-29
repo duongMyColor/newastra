@@ -3,139 +3,31 @@
 
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["fullTextSearch", "fullTextIndex"]
-  output          = "../node_modules/.prisma/client"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  USER
-  ADMIN
-  VIEW
+// stores allowed values for user roles
+// enum : ['ADMIN', 'READ_ONLY', 'GENERAL']
+model UserRole {
+  id    String @id
+  users User[]
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  username  String    @unique
-  name      String
-  role      Role
-  enabled   Boolean   @default(true)
-  email     String    @unique
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  role      String   @default("READ_ONLY")
+  enabled   Boolean  @default(true)
+  email     String   @unique
   password  String
-  created   DateTime  @default(now())
-  updated   DateTime  @updatedAt
-  country   String?
-  address   String?
-  isDeleted Boolean   @default(false)
-  keyToken  KeyToken?
-}
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-model Product {
-  id             Int             @id @default(autoincrement())
-  name           String          @unique
-  masterCategory Int?
-  subCategory    Int?
-  created        DateTime        @default(now())
-  updated        DateTime        @updatedAt
-  ProductDetail  ProductDetail[]
-
-  @@fulltext([name])
-}
-
-model ProductDetail {
-  id         Int      @id @default(autoincrement())
-  productId  Int
-  detailName String
-  count      Int
-  created    DateTime @default(now())
-  updated    DateTime @updatedAt
-  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  // @@index([id], name: "productId")
-}
-
-model AnimalClassification {
-  id          Int      @id @default(autoincrement())
-  name        String   @unique
-  animalCount Int?     @default(0)
-  created     DateTime @default(now())
-  updated     DateTime @updatedAt
-  animals     Animal[]
-}
-
-model Memo {
-  id       Int      @id @default(autoincrement())
-  animalId Int      @unique
-  content  String   @db.Text
-  created  DateTime @default(now())
-  updated  DateTime @updatedAt
-  animal   Animal   @relation(fields: [animalId], references: [id], onDelete: Cascade)
-}
-
-enum UploadType {
-  DB
-  LOCAL
-  S3
-}
-
-model Animal {
-  id               Int        @id @default(autoincrement())
-  // Pull down
-  classificationId Int
-  name             String
-  thumbImg         String     @db.Text
-  thumbImgName     String
-  uploadType       UploadType @default(LOCAL)
-  // combo box
-  continent        Int
-  // boolean box
-  extinction       Boolean
-  // radio group
-  gender           Int?
-  // feed type: carnivore | omnivore | herbivore
-  // Pull down hard code
-  feedType         Int?
-
-  created DateTime @default(now())
-  updated DateTime @updatedAt
-
-  classification AnimalClassification @relation(fields: [classificationId], references: [id], onDelete: Cascade)
-  memo           Memo?
-}
-
-model KeyToken {
-  id                Int      @id @default(autoincrement())
-  userId            Int      @unique
-  publicKey         String?  @unique
-  privateKey        String?  @unique
-  refreshToken      String?  @unique
-  refreshTokensUsed Json?
-  created           DateTime @default(now())
-  updated           DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model ImgRecSelection {
-  id      Int      @id @default(autoincrement())
-  name    String
-  imgPath String
-  data    Json?
-  created DateTime @default(now())
-  updated DateTime @updatedAt
-
-  @@fulltext([name])
-}
-
-model TermsAndConditions {
-  id       Int      @id @default(autoincrement())
-  name     String
-  filePath String
-  version  String
-  memo     String   @db.Text
-  created  DateTime @default(now())
-  updated  DateTime @updatedAt
+  userRole UserRole @relation(fields: [role], references: [id])
 }

@@ -67,35 +67,28 @@ class UserFactory {
 
 class User implements UserIF {
   public username: string;
-  public name: string;
   public role: Role;
   public enabled: boolean;
   public email: string;
   public password!: string;
-  public country: string;
-  public address: string;
   public isDeleted: boolean;
+  public updatedAt: Date;
 
   public constructor({
     username,
-    name,
     role,
-    enabled,
+    enabled = true,
     email,
     password,
-    country,
-    address,
     newPassword,
     isDeleted = false,
   }: UserIF) {
     this.username = username;
-    this.name = name;
     this.role = role;
     this.enabled = enabled;
     this.email = email;
-    this.country = country;
-    this.address = address;
     this.isDeleted = isDeleted;
+    this.updatedAt = new Date();
 
     if (password) {
       this.password = newPassword

@@ -36,6 +36,8 @@ const baseDataProvider: DataProvider = {
     resource: string,
     params: GetListParams
   ): Promise<GetListResult> => {
+    console.log('getList');
+
     const { page, perPage } = params.pagination;
     const { field, order } = params.sort;
     const query = {

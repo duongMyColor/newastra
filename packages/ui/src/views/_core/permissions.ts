@@ -16,7 +16,7 @@ const ADMIN: Permission[] = [
   { actions: '*', resource: 'img_rec_selections' },
 ];
 
-const USER: Permission[] = [
+const GENERAL: Permission[] = [
   { actions: [], resource: 'users' },
   {
     actions: ['list', 'create', 'edit', 'delete', 'show'],
@@ -45,7 +45,7 @@ const USER: Permission[] = [
   },
 ];
 
-const VIEW: Permission[] = [
+const READ_ONLY: Permission[] = [
   { actions: [], resource: 'users' },
   {
     actions: ['show', 'list'],
@@ -72,8 +72,8 @@ const ROLES_MAP: {
   [key: string]: Permission[];
 } = {
   ADMIN,
-  USER,
-  VIEW,
+  GENERAL,
+  READ_ONLY,
 };
 
 /**

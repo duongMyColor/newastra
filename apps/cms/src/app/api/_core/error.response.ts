@@ -1,6 +1,6 @@
 'use strict';
 
-import { logger } from '@repo/lib/logger';
+// import { logger } from '@repo/lib/logger';
 
 const { StatusCodes, ReasonPhrases } = require('./httpStatusCode');
 
@@ -11,7 +11,7 @@ class ErrorResponse extends Error {
     super(message);
     this.status = status;
 
-    logger.error(`${status} - ${message}`);
+    // logger.error(`${status} - ${message}`);
   }
 }
 

@@ -34,7 +34,7 @@
     "socket.io-client": "^4.7.4",
     "swr": "^2.2.4",
     "winston": "^3.11.0",
-    "prisma": "^5.8.1",
+    "prisma": "^5.12.1",
     "crypto-js": "^4.1.1"
   },
   "devDependencies": {
