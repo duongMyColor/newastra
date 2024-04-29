@@ -44,6 +44,17 @@ import {
   PerformanceManagementShow,
 } from '@repo/ui/src/views/PerformanceManagement';
 
+import {
+  TermsOfUseManagementList,
+  TermsOfUseManagementCreate,
+  TermsOfUseManagementShow,
+} from '@repo/ui/src/views/TermsOfUseManagement';
+import {
+  LicenseManagementList,
+  LicenseManagementCreate,
+  LicenseManagementShow,
+} from '@repo/ui/src/views/LicenseManagement';
+
 const Resources: ResourceIF[] = [
   {
     list: UserList,
@@ -59,7 +70,6 @@ const Resources: ResourceIF[] = [
     edit: ApplicationMasterEdit,
     create: ApplicationMasterCreate,
     show: ApplicationMasterShow,
-    icon: Group,
     resource: 'application-masters',
     label: 'アプリケーションマスタ',
   },
@@ -68,8 +78,7 @@ const Resources: ResourceIF[] = [
     edit: AxtaManagementEdit,
     create: AxtaManagementCreate,
     show: AxtaManagementShow,
-    icon: Group,
-    resource: 'axta-management',
+    resource: 'axta-managements',
     label: 'アクスタ管理',
   },
   {
@@ -77,8 +86,7 @@ const Resources: ResourceIF[] = [
     edit: PerformanceTypeMasterEdit,
     create: PerformanceTypeMasterCreate,
     show: PerformanceTypeMasterShow,
-    icon: Group,
-    resource: 'performance-type-master',
+    resource: 'performance-type-masters',
     label: '演出種別マスタ',
   },
   {
@@ -86,9 +94,23 @@ const Resources: ResourceIF[] = [
     edit: PerformanceManagementEdit,
     create: PerformanceManagementCreate,
     show: PerformanceManagementShow,
-    icon: Group,
-    resource: 'performance-management',
+    resource: 'performance-managements',
     label: '演出管理',
+  },
+  {
+    list: TermsOfUseManagementList,
+    // edit: '',
+    create: TermsOfUseManagementCreate,
+    show: TermsOfUseManagementShow,
+    resource: 'term-of-use-managements',
+    label: '利用規約管理',
+  },
+  {
+    list: LicenseManagementList,
+    create: LicenseManagementCreate,
+    show: LicenseManagementShow,
+    resource: 'license-managements',
+    label: 'ライセンス管理',
   },
 ];
 

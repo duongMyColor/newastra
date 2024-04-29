@@ -1,4 +1,4 @@
-import { countryList, userRoles } from '@repo/consts/user';
+import { userRoles } from '@repo/consts/user';
 import {
   TextInput,
   Create,
@@ -11,12 +11,13 @@ import {
 import { validateUserCreation } from './formValidator';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps } from '@repo/types/general';
+import {REDIRECT_ROUTE} from '@repo/consts/general'
 
 const AxtaManagementCreate = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
 
   return (
-    <Create redirect="list" title="アクスタ管理　新规作成">
+    <Create redirect={REDIRECT_ROUTE.list} title="アクスタ管理　新规作成">
       <CustomForm
         pathTo={resourcePath}
         validate={validateUserCreation}

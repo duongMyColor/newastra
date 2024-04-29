@@ -11,7 +11,7 @@ import type {
 
 import dayjs from 'dayjs';
 const AxtaManagementCallbackHandler = {
-  resource: 'axta-management',
+  resource: 'axta-managements',
 
   afterGetList: async (
     response: GetListResult,

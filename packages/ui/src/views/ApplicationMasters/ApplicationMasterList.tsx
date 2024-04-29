@@ -3,21 +3,16 @@ import {
   Datagrid,
   TextField,
   EditButton,
-  TopToolbar,
-  CreateButton,
 } from 'react-admin';
 import { BaseComponentProps } from '@repo/types/general';
 import { validRole } from '../_core/permissions';
-
-const ToolBarMaster = ({ isShowCreate }: { isShowCreate: boolean }) => (
-  <TopToolbar>{isShowCreate && <CreateButton label="新规作成" />}</TopToolbar>
-);
+import { ListToolBar } from '@repo/ui/src/components/ListToolBar';
 
 const MasterList = ({ actions, resource }: BaseComponentProps) => {
   return (
     <List
       title="アプリケーションマスタ　一覧"
-      actions={<ToolBarMaster isShowCreate={validRole('create', actions)} />}
+      actions={<ListToolBar isShowCreate={validRole('create', actions)} />}
     >
       <Datagrid rowClick="show">
         <TextField source="id" label="No" />

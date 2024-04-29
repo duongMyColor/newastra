@@ -3,25 +3,18 @@ import {
   Datagrid,
   TextField,
   EditButton,
-  TopToolbar,
-  CreateButton,
   DeleteWithConfirmButton,
 } from 'react-admin';
 import { BaseComponentProps } from '@repo/types/general';
 import { validRole } from '../_core/permissions';
 import { StatusChipField } from '@repo/ui/src/components/CustomField/StatusChipField';
-
-const ToolBarAxtaManagement = ({ isShowCreate }: { isShowCreate: boolean }) => (
-  <TopToolbar>{isShowCreate && <CreateButton label="新规作成" />}</TopToolbar>
-);
+import { ListToolBar } from '@repo/ui/src/components/ListToolBar';
 
 const AxtaManagementList = ({ actions, resource }: BaseComponentProps) => {
   return (
     <List
       title="アクスタ管理　一覧"
-      actions={
-        <ToolBarAxtaManagement isShowCreate={validRole('create', actions)} />
-      }
+      actions={<ListToolBar isShowCreate={validRole('create', actions)} />}
     >
       <Datagrid rowClick="show">
         <TextField source="id" label="No" />

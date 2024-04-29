@@ -1,8 +1,8 @@
 import type { DataProvider, GetListResult, GetOneResult } from 'react-admin';
 
 import dayjs from 'dayjs';
-const performanceManagementCallbackHandlers = {
-  resource: 'performance-managements',
+const licenseManagementCallbackHandlers = {
+  resource: 'license-managements',
 
   afterGetList: async (
     response: GetListResult,
@@ -13,13 +13,14 @@ const performanceManagementCallbackHandlers = {
     let fake = [
       {
         id: '1',
-        performanceName: 'duong',
-        axtaId: '1',
-        productId: '1',
+        licenseId: '4',
+        termOfUseId:'2',
+        memo: 'duong abc',
+        version: '1',
         performanceTypeId: '2',
+        dateStart: dayjs(new Date()).format('YYYY.MM.DD HH:mm'),
         dateRegistration: dayjs(new Date()).format('YYYY.MM.DD HH:mm'),
-        assetBundleIOS: 'acsta_anime_ios',
-        assetBundleAndroid: 'acsta_anime_ios',
+        fileConditionTerms: 'tearn-of-use.html',
       },
     ];
 
@@ -37,15 +38,14 @@ const performanceManagementCallbackHandlers = {
 
     let fake = {
       id: '1',
-      performanceName: 'duong',
-      axtaId: '1',
-      productId: '1',
+      licenseId: '3',
+      termOfUseId:'4',
+      memo: 'duong abc',
+      version: '1',
       performanceTypeId: '2',
-      assetBundleIOS: 'acsta_anime_ios',
-      assetBundleAndroid: 'acsta_anime_ios',
+      dateStart: dayjs(new Date()).format('YYYY.MM.DD HH:mm'),
       dateRegistration: dayjs(new Date()).format('YYYY.MM.DD HH:mm'),
-      assetDataIOS: { src: 'acsta_anime_ios' },
-      assetDataAndroid: { src: 'acsta_anime_ios' },
+      fileConditionTerms: 'tearn-of-use.html',
     };
 
     return {
@@ -54,4 +54,4 @@ const performanceManagementCallbackHandlers = {
   },
 };
 
-export default performanceManagementCallbackHandlers;
+export default licenseManagementCallbackHandlers;

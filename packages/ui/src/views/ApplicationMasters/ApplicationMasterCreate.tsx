@@ -1,4 +1,4 @@
-import { countryList, userRoles } from '@repo/consts/user';
+import {userRoles } from '@repo/consts/user';
 import {
   TextInput,
   Create,
@@ -10,12 +10,13 @@ import {
 import { validateUserCreation } from './formValidator';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps } from '@repo/types/general';
+import { REDIRECT_ROUTE } from '@repo/consts/general';
 
 const MasterCreate = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
 
   return (
-    <Create redirect="list" title="アプリケーションマスタ　新规作成">
+    <Create redirect={REDIRECT_ROUTE.list} title="アプリケーションマスタ　新规作成">
       <CustomForm
         pathTo={resourcePath}
         validate={validateUserCreation}
@@ -41,7 +42,7 @@ const MasterCreate = ({ actions, resource }: BaseComponentProps) => {
           choices={userRoles}
           isRequired
           defaultValue={'USER'}
-          label="椎ライセンスID限"
+          label="ライセンスID"
         />
         <TextInput
           source="packageName"
