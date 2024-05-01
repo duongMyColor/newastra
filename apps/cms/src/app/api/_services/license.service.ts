@@ -1,7 +1,4 @@
-import {
-  TermOfUsePostIF,
-  TermOfUseResponselIF,
-} from '@repo/types/termAndConditions';
+import { LicensePostIF } from '@repo/types/license';
 import {
   getAll,
   getOneById,
@@ -14,33 +11,31 @@ import {
   getAllWithQuery,
   getAllWithFilters,
   getManyReference,
-} from '../_repos/termOfUse.repo';
-import { convertFormDataToObject } from '@repo/utils/objectUtils';
-import path from 'path';
-import { baseUploadFolder } from '@repo/consts/general';
-import { readFileToBase64, saveFile } from '@repo/lib/fileUpload';
-import { createGetPresignedUrlWithClient } from '@repo/lib/aws-s3';
+} from '../_repos/license.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
-
-class AnimalFactory {
+import { convertFormDataToObject } from '@repo/utils/objectUtils';
+import { putObject } from '@/lib/cloudflare-r2';
+class LicenseFactory {
   static async create({ payload }: { payload: FormData }) {
-    console.log('::: payloadFormData', payload);
+    const paylodObj = convertFormDataToObject(payload);
 
-    const body = await new UploadFileService(payload).uploadFile();
+    const body = await new UploadFileService(
+      paylodObj as LicensePostIF
+    ).uploadFile();
 
-    return await new TermsAndConditions(body as TermOfUsePostIF).create();
+    return await new License(body).create();
   }
 
-  static async createMany(body: TermOfUsePostIF[]) {
+  static async createMany(body: LicensePostIF[]) {
     const payload = body.map(
-      (terms_and_conditions) => new TermsAndConditions(terms_and_conditions)
+      (terms_and_conditions) => new License(terms_and_conditions)
     );
     return await insertMany(payload);
   }
 
   static async getOneById(id: number) {
-    return await this.responseAnimal(await getOneById(id));
+    return await getOneById(id);
   }
 
   static async getAll() {
@@ -60,15 +55,17 @@ class AnimalFactory {
   }
 
   static async updateById({ id, payload }: { id: number; payload: FormData }) {
-    const body = await new UploadFileService(payload).uploadFile();
+    const paylodObj = convertFormDataToObject(payload);
 
-    return this.responseAnimal(
-      await new TermsAndConditions(body as TermOfUsePostIF).updateById({ id })
-    );
+    const body = await new UploadFileService(
+      paylodObj as LicensePostIF
+    ).uploadFile();
+
+    return await new License(body).updateById({ id });
   }
 
-  static async updateMany(updates: TermOfUsePostIF[]) {
-    const payload = updates.map((update) => new TermsAndConditions(update));
+  static async updateMany(updates: LicensePostIF[]) {
+    const payload = updates.map((update) => new License(update));
 
     return await updateManyById(payload);
   }
@@ -80,81 +77,65 @@ class AnimalFactory {
   static async deleteManyById(ids: number[]) {
     return await deleteManyById(ids);
   }
-
-  static async responseAnimal(response: TermOfUseResponselIF) {
-    return this.readFileLocal(response);
-  }
-
-  static async readFileLocal(response: TermOfUseResponselIF) {
-    let temp = { ...response };
-    temp.fileUrl = await readFileToBase64(response.filePath as string);
-    return temp;
-  }
-
-  static async addPresignedUrl(response: TermOfUseResponselIF) {
-    let temp = { ...response };
-    temp.filePath = await createGetPresignedUrlWithClient(
-      response.filePath as string
-    );
-    return temp;
-  }
 }
 
-class TermsAndConditions implements TermOfUsePostIF {
+class License implements LicensePostIF {
   public id?: number;
-  public name: string;
-  public filePath: string;
-  public version: string;
   public memo: string;
+  public version: string;
+  public content: string;
+  public publishedDate: string | Date;
+  public updatedAt: string;
 
-  public constructor({ id, name, filePath, version, memo }: TermOfUsePostIF) {
-    this.id = id;
-    this.name = name;
-    this.filePath = filePath as string;
+  public constructor({ version, content, memo, publishedDate }: LicensePostIF) {
     this.version = version.toString();
+    this.content = content as string;
     this.memo = memo.toString();
+    this.publishedDate = new Date(publishedDate).toISOString();
+    this.updatedAt = new Date().toISOString();
   }
 
   public async create() {
-    const payload: TermOfUsePostIF = this;
-    // TODO: validate payload
+    const payload: LicensePostIF = this;
     return await insert(payload);
   }
 
   public async updateById({ id }: { id: number }) {
-    const payload: TermOfUsePostIF = this;
-    // TODO: validate payload
+    const payload: LicensePostIF = this;
     return await updateById({ id, payload });
   }
 }
 
 class UploadFileService {
-  private formData: FormData;
+  private object: LicensePostIF;
 
-  constructor(formData: FormData) {
-    this.formData = formData;
+  constructor(object: LicensePostIF) {
+    this.object = object;
   }
 
-  private async uploadToLocalFile() {
-    const file = this.formData.get('filePath');
-    if (!file) return convertFormDataToObject(this.formData);
+  private async uploadToR2() {
+    for (const key in this.object) {
+      console.log('::: key', typeof this.object[key]);
 
-    const fileName = this.formData.get('filePathName');
-    const folderPath = path.join(baseUploadFolder, 'terms_and_conditions');
+      if (typeof this.object[key] == 'object') {
+        const file = this.object[key];
+        const fileName = file?.name;
+        console.log('::: fileName', fileName);
 
-    const { filePath } = await saveFile(
-      file as File,
-      fileName as string,
-      folderPath
-    );
-    this.formData.set('filePath', filePath);
-    const body = convertFormDataToObject(this.formData);
-    return body;
+        const objKey = `term-of-use/${fileName}`;
+        const buffer = await file.arrayBuffer();
+        console.log('::: buffer', buffer);
+
+        this.object[key] = await putObject(objKey, buffer);
+      }
+    }
+
+    return this.object;
   }
 
   public uploadFile() {
-    return this.uploadToLocalFile();
+    return this.uploadToR2();
   }
 }
 
-export default AnimalFactory;
+export default LicenseFactory;

@@ -1,35 +1,35 @@
-import TermsAndConditionsService from '../_services/termOfUse.service';
+import LicenseService from '../_services/license.service';
 import { OK, CREATED } from '../_core/success.response';
 
-import { TermOfUsePostIF } from '@repo/types/termAndConditions';
+import { LicensePostIF } from '@repo/types/license';
 import type { NextRequest } from 'next/server';
 import { parseParams, parseSearchParams } from '@repo/utils/parseParams';
 
-class AnimalController {
+class LicenseController {
   create = async (request: NextRequest) => {
     const payload: FormData = await request.formData();
 
     return new CREATED({
-      message: 'created Animal OK!',
-      metadata: await TermsAndConditionsService.create({
+      message: 'created License OK!',
+      metadata: await LicenseService.create({
         payload: payload,
       }),
     });
   };
 
   createMany = async (request: NextRequest) => {
-    const payload: TermOfUsePostIF[] = await request.json();
+    const payload: LicensePostIF[] = await request.json();
 
     return new CREATED({
-      message: 'created batch Animal OK!',
-      metadata: await TermsAndConditionsService.createMany(payload),
+      message: 'created batch License OK!',
+      metadata: await LicenseService.createMany(payload),
     });
   };
 
   getAll = async () => {
     return new OK({
-      message: 'get all TermsAndConditions success!',
-      metadata: await TermsAndConditionsService.getAll(),
+      message: 'get all License success!',
+      metadata: await LicenseService.getAll(),
     });
   };
 
@@ -38,8 +38,8 @@ class AnimalController {
     const params = parseParams(searchParams);
 
     return new OK({
-      message: 'get all TermsAndConditions success!',
-      metadata: await TermsAndConditionsService.getManyReference(params),
+      message: 'get all License success!',
+      metadata: await LicenseService.getManyReference(params),
     });
   };
 
@@ -49,8 +49,8 @@ class AnimalController {
     const { filter, range, sort } = parseSearchParams(searchParams);
 
     return new OK({
-      message: 'get all TermsAndConditions success!',
-      metadata: await TermsAndConditionsService.getAllWithQuery({
+      message: 'get all License success!',
+      metadata: await LicenseService.getAllWithQuery({
         filter,
         range,
         sort,
@@ -60,8 +60,8 @@ class AnimalController {
 
   getOneById = async (id: number) => {
     return new OK({
-      message: 'get Animal success!',
-      metadata: await TermsAndConditionsService.getOneById(id),
+      message: 'get License success!',
+      metadata: await LicenseService.getOneById(id),
     });
   };
 
@@ -69,8 +69,8 @@ class AnimalController {
     const payload: FormData = await request.formData();
 
     return new OK({
-      message: 'updated Animal OK!',
-      metadata: await TermsAndConditionsService.updateById({
+      message: 'updated License OK!',
+      metadata: await LicenseService.updateById({
         id: id,
         payload: payload,
       }),
@@ -78,18 +78,18 @@ class AnimalController {
   };
 
   updateMany = async (request: NextRequest) => {
-    const payload: TermOfUsePostIF[] = await request.json();
+    const payload: LicensePostIF[] = await request.json();
 
     return new OK({
-      message: 'updated batch Animal OK!',
-      metadata: await TermsAndConditionsService.updateMany(payload),
+      message: 'updated batch License OK!',
+      metadata: await LicenseService.updateMany(payload),
     });
   };
 
   delete = async (id: number) => {
     return new OK({
-      message: 'deleted Animal OK!',
-      metadata: await TermsAndConditionsService.deleteById(id),
+      message: 'deleted License OK!',
+      metadata: await LicenseService.deleteById(id),
     });
   };
 
@@ -97,11 +97,11 @@ class AnimalController {
     const payload: number[] = await request.json();
 
     return new OK({
-      message: 'deleted batch Animal OK!',
-      metadata: await TermsAndConditionsService.deleteManyById(payload),
+      message: 'deleted batch License OK!',
+      metadata: await LicenseService.deleteManyById(payload),
     });
   };
 }
 
-const userController = new AnimalController();
-export default userController;
+const licenseController = new LicenseController();
+export default licenseController;

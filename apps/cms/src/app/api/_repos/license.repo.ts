@@ -1,13 +1,10 @@
-import {
-  TermOfUsePostIF,
-  TermOfUseResponselIF,
-} from '@repo/types/termAndConditions';
+import { TermOfUsePostIF } from '@repo/types/termOfUse';
 import { prisma } from '@/lib/prisma';
 import { BaseRepo } from './base/base.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
 
-const model = prisma.termsOfUse;
+const model = prisma.license;
 
 const getAll = async () => {
   return await new BaseRepo(model).getAll();
