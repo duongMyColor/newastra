@@ -17,9 +17,11 @@ export interface TermOfUseResponselIF {
 }
 
 export interface TermOfUsePostIF {
+  [key: string]: any;
   id?: number;
   memo: string;
   version: string;
-  content: string | Buffer;
+  content: string | Buffer | File;
   publishedDate: string | Date;
+  updatedAt?: string | Date;
 }

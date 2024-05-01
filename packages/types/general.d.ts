@@ -18,7 +18,7 @@ export interface ResourceIF {
   resource: string;
   defaultProp?: boolean;
   name?: string;
-  label?: string
+  label?: string;
 }
 
 export interface ResourceMapIF {
@@ -30,4 +30,10 @@ type RecordValue = Record<string, any>;
 export interface BaseComponentProps extends RolesIF {
   dataProvider: DataProvider;
   authProvider: AuthProvider;
+}
+
+export interface RAFile {
+  rawFile: File;
+  src: string;
+  title: string;
 }

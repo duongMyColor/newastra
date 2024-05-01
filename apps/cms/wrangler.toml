@@ -13,5 +13,5 @@ migrations_dir = "./prisma/migrations" # Customize this value to rename the `mig
 
 
 [[r2_buckets]]
-binding = 'MY_BUCKET' # <~ valid JavaScript variable name
+binding = 'BUCKET' # <~ valid JavaScript variable name
 bucket_name = 'da-acsta'

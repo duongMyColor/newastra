@@ -242,40 +242,12 @@ const baseDataProvider: DataProvider = {
     };
   },
 
-  getPutPresignedUrl: async (
-    resource: string,
-    params: GetPutPresignedUrlparams
-  ) => {
-    const url = `${apiUrl}/${resource}`;
-    const body = JSON.stringify(params.data);
+  getObject: async (params: { key: string }) => {
+    const url = `${apiUrl}/upload/get-object`;
 
     const response = await httpClient(url, {
       method: 'POST',
-      body,
-    });
-
-    const {
-      json: { presignedUrl },
-    } = response;
-
-    return {
-      data: { presignedUrl },
-    };
-  },
-
-  putObjectViaPresignedUrl: async (
-    resource: string,
-    params: PutObjectViaPresignedUrlParams
-  ) => {
-    const url = `${resource}`;
-    const { body, type } = params;
-
-    const response = await fetch(url, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': type,
-      },
-      body,
+      body: JSON.stringify(params),
     });
     console.log(':::response', response);
 

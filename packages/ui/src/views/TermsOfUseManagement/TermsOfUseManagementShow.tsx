@@ -2,12 +2,23 @@ import { TextInput, ShowBase, Title, useShowContext } from 'react-admin';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps } from '@repo/types/general';
 import { Box } from '@mui/material';
-import { useState } from 'react';
 import {
   boxStyles,
   disabledInputBackgroundStyle,
   textareaStyles,
 } from '@repo/styles';
+
+const TermsOfUseManagementPreview = () => {
+  const { record } = useShowContext();
+  console.log(':::record', record);
+
+  return (
+    <div
+      style={textareaStyles}
+      dangerouslySetInnerHTML={{ __html: record?.content }}
+    />
+  );
+};
 
 const TermsOfUseManagementShow = ({
   actions,
@@ -15,7 +26,7 @@ const TermsOfUseManagementShow = ({
 }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
   const { record } = useShowContext();
-  const [fileContent, setFileContent] = useState('');
+  console.log(':::record', record);
 
   return (
     <Box sx={boxStyles}>
@@ -44,13 +55,9 @@ const TermsOfUseManagementShow = ({
               fullWidth
               sx={disabledInputBackgroundStyle}
             />
-            <textarea
-              style={textareaStyles}
-              value={fileContent}
-              disabled
-            ></textarea>
+            <TermsOfUseManagementPreview />
             <TextInput
-              source="dateStart"
+              source="publishedDate"
               label="公開開始日"
               disabled
               fullWidth

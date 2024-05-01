@@ -12,17 +12,19 @@ import {
   getAllWithFilters,
   getManyReference,
 } from '../_repos/termOfUse.repo';
-import { createGetPresignedUrlWithClient } from '@repo/lib/aws-s3';
 import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
-
+import { convertFormDataToObject } from '@repo/utils/objectUtils';
+import { putObject, getObject } from '@/lib/cloudflare-r2';
 class TermOfUseFactory {
   static async create({ payload }: { payload: FormData }) {
-    console.log('::: payloadFormData', payload);
+    const paylodObj = convertFormDataToObject(payload);
 
-    const body = await new UploadFileService(payload).uploadFile();
+    const body = await new UploadFileService(
+      paylodObj as TermOfUsePostIF
+    ).uploadFile();
 
-    return await new TermOfUse(body as TermOfUsePostIF).create();
+    return await new TermOfUse(body).create();
   }
 
   static async createMany(body: TermOfUsePostIF[]) {
@@ -33,7 +35,7 @@ class TermOfUseFactory {
   }
 
   static async getOneById(id: number) {
-    return await this.responseTermOfUse(await getOneById(id));
+    return await getOneById(id);
   }
 
   static async getAll() {
@@ -53,11 +55,13 @@ class TermOfUseFactory {
   }
 
   static async updateById({ id, payload }: { id: number; payload: FormData }) {
-    const body = await new UploadFileService(payload).uploadFile();
+    const paylodObj = convertFormDataToObject(payload);
 
-    return this.responseTermOfUse(
-      await new TermOfUse(body as TermOfUsePostIF).updateById({ id })
-    );
+    const body = await new UploadFileService(
+      paylodObj as TermOfUsePostIF
+    ).uploadFile();
+
+    return await new TermOfUse(body).updateById({ id });
   }
 
   static async updateMany(updates: TermOfUsePostIF[]) {
@@ -73,18 +77,6 @@ class TermOfUseFactory {
   static async deleteManyById(ids: number[]) {
     return await deleteManyById(ids);
   }
-
-  static async responseTermOfUse(response: TermOfUseResponselIF) {
-    return this.addPresignedUrl(response);
-  }
-
-  static async addPresignedUrl(response: TermOfUseResponselIF) {
-    let temp = { ...response };
-    temp.content = await createGetPresignedUrlWithClient(
-      response.content as string
-    );
-    return temp;
-  }
 }
 
 class TermOfUse implements TermOfUsePostIF {
@@ -96,53 +88,54 @@ class TermOfUse implements TermOfUsePostIF {
   public updatedAt: string;
 
   public constructor({
-    id,
     version,
     content,
     memo,
     publishedDate,
   }: TermOfUsePostIF) {
-    this.id = id;
-    this.version = version;
+    this.version = version.toString();
     this.content = content as string;
     this.memo = memo.toString();
-    this.publishedDate = publishedDate;
+    this.publishedDate = new Date(publishedDate).toISOString();
     this.updatedAt = new Date().toISOString();
   }
 
   public async create() {
     const payload: TermOfUsePostIF = this;
-    // TODO: validate payload
     return await insert(payload);
   }
 
   public async updateById({ id }: { id: number }) {
     const payload: TermOfUsePostIF = this;
-    // TODO: validate payload
     return await updateById({ id, payload });
   }
 }
 
 class UploadFileService {
-  private formData: FormData;
+  private object: TermOfUsePostIF;
 
-  constructor(formData: FormData) {
-    this.formData = formData;
+  constructor(object: TermOfUsePostIF) {
+    this.object = object;
   }
 
   private async uploadToR2() {
-    // const file = this.formData.get('filePath');
-    // if (!file) return convertFormDataToObject(this.formData);
-    // const fileName = this.formData.get('filePathName');
-    // const folderPath = path.join(baseUploadFolder, 'terms_and_conditions');
-    // const { filePath } = await saveFile(
-    //   file as File,
-    //   fileName as string,
-    //   folderPath
-    // );
-    // this.formData.set('filePath', filePath);
-    // const body = convertFormDataToObject(this.formData);
-    // return body;
+    for (const key in this.object) {
+      console.log('::: key', typeof this.object[key]);
+
+      if (typeof this.object[key] == 'object') {
+        const file = this.object[key];
+        const fileName = file?.name;
+        console.log('::: fileName', fileName);
+
+        const objKey = `term-of-use/${fileName}`;
+        const buffer = await file.arrayBuffer();
+        console.log('::: buffer', buffer);
+
+        this.object[key] = await putObject(objKey, buffer);
+      }
+    }
+
+    return this.object;
   }
 
   public uploadFile() {

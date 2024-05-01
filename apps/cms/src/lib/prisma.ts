@@ -2,7 +2,7 @@ import { getRequestContext } from '@cloudflare/next-on-pages';
 import { PrismaD1 } from '@prisma/adapter-d1';
 import { PrismaClient } from '@prisma/client';
 
-export interface Env extends CloudflareEnv {
+interface Env extends CloudflareEnv {
   DB: D1Database;
 }
 
