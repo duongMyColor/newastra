@@ -21,11 +21,10 @@ export const disabledInputBackgroundStyle = {
 
 export const textareaStyles = {
   width: '100%',
-  height: 300,
-  padding: '12px 20px',
-  boxStyles: 'border-box',
+  height: 500,
+  padding: '20px',
   borderRadius: 4,
   background: '#f8f8f8',
   fontSize: 16,
-  resizeTo: 'none',
+  overflow: 'auto',
 };

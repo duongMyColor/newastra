@@ -28,14 +28,9 @@ const PerformanceTypeMasterEdit = ({
           showReferenceButton={true}
           showCancelButton={true}
         >
+          <TextInput source="id" label="演出種別ID" isRequired fullWidth />
           <TextInput
-            source="performanceTypeID"
-            label="演出種別ID"
-            isRequired
-            fullWidth
-          />
-          <TextInput
-            source="performanceTypeName"
+            source="typeName"
             label="演出種別名"
             isRequired
             fullWidth

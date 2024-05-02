@@ -2,7 +2,7 @@ import type { DataProvider, GetListResult, GetOneResult } from 'react-admin';
 
 import dayjs from 'dayjs';
 const performanceManagementCallbackHandlers = {
-  resource: 'performance-managements',
+  resource: 'performances',
 
   afterGetList: async (
     response: GetListResult,
@@ -13,11 +13,10 @@ const performanceManagementCallbackHandlers = {
     let fake = [
       {
         id: '1',
-        performanceName: 'duong',
-        axtaId: '1',
-        productId: '1',
-        performanceTypeId: '2',
-        dateRegistration: dayjs(new Date()).format('YYYY.MM.DD HH:mm'),
+        name: 'duong',
+        acstaID: '1',
+        performanceTypeMasterID: '2',
+        createdAt: dayjs(new Date()).format('YYYY.MM.DD HH:mm'),
         assetBundleIOS: 'acsta_anime_ios',
         assetBundleAndroid: 'acsta_anime_ios',
       },
@@ -37,13 +36,12 @@ const performanceManagementCallbackHandlers = {
 
     let fake = {
       id: '1',
-      performanceName: 'duong',
-      axtaId: '1',
-      productId: '1',
-      performanceTypeId: '2',
+      name: 'duong',
+      acstaID: '1',
+      performanceTypeMasterID: '2',
       assetBundleIOS: 'acsta_anime_ios',
       assetBundleAndroid: 'acsta_anime_ios',
-      dateRegistration: dayjs(new Date()).format('YYYY.MM.DD HH:mm'),
+      createdAt: dayjs(new Date()).format('YYYY.MM.DD HH:mm'),
       assetDataIOS: { src: 'acsta_anime_ios' },
       assetDataAndroid: { src: 'acsta_anime_ios' },
     };

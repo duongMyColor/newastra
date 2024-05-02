@@ -16,9 +16,3 @@ export interface ImgRecSelectionPostIF {
   imgPath?: string;
   data?: JSON | string;
 }
-
-export type RAFile = {
-  rawFile: File;
-  src: string;
-  title: string;
-};

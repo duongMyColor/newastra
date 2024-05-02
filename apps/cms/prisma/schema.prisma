@@ -35,7 +35,7 @@ model User {
 
 model KeyToken {
   id                Int      @id @default(autoincrement())
-  userId            Int      @unique
+  userID            Int      @unique
   publicKey         String?  @unique
   privateKey        String?  @unique
   refreshToken      String?  @unique
@@ -45,5 +45,94 @@ model KeyToken {
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userID], references: [id], onDelete: Cascade)
+}
+
+model AplicationMaster {
+  id                 Int      @id @default(autoincrement())
+  appName            String   @unique
+  packageName        String
+  termsOfUseID       Int      @unique
+  licenseID          Int      @unique
+  assetBundleIOS     String
+  assetBundleAndroid String
+  outlineUrl         String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  termOfUse TermsOfUse @relation(fields: [termsOfUseID], references: [id])
+  license   License?   @relation(fields: [licenseID], references: [id])
+
+  acsta AcstaManagement[]
+}
+
+model AcstaManagement {
+  id               Int      @id @default(autoincrement())
+  managementName   String
+  acstaName        String
+  status           String
+  applicationID    Int
+  thumbnailUrl     String
+  scanImageUrl     String
+  acstaBasicInfoID Int?
+  scanOriginX      Float
+  scanOriginY      Float
+  scanWidth        Float
+  scanHeight       Float
+  scanColors       String
+  modeId           Int?
+  dateStart        DateTime
+  dateEnd          DateTime
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  application AplicationMaster       @relation(fields: [applicationID], references: [id], onDelete: Cascade)
+  performace  PerformaceManagement[]
+}
+
+model PerformaceTypeMaster {
+  id        Int      @id @default(autoincrement())
+  typeName  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  performances PerformaceManagement[]
+}
+
+model PerformaceManagement {
+  id                      Int      @id @default(autoincrement())
+  name                    String
+  performanceTypeMasterID Int
+  assetBundleIOS          String
+  acstaID                 Int
+  assetBundleAndroid      String
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  performanceTypeMaster PerformaceTypeMaster @relation(fields: [performanceTypeMasterID], references: [id])
+  acsta                 AcstaManagement      @relation(fields: [acstaID], references: [id])
+}
+
+model TermsOfUse {
+  id            Int      @id @default(autoincrement())
+  memo          String
+  version       String
+  content       String
+  publishedDate DateTime
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  applications AplicationMaster[]
+}
+
+model License {
+  id            Int      @id @default(autoincrement())
+  memo          String
+  version       String
+  content       String
+  publishedDate DateTime
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  applications AplicationMaster[]
 }

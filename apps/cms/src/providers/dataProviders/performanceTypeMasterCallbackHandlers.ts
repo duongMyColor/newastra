@@ -13,9 +13,8 @@ const PerformanceTypeMasterCallbackHandler = {
     let fake = [
       {
         id: '1',
-        performanceTypeName: 'duong',
-        date: dayjs(new Date()).format('YYYY.MM.DD HH:MM'),
-        performanceTypeID: '1',
+        typeName: 'duong',
+        createdAt: dayjs(new Date()).format('YYYY.MM.DD HH:MM'),
       },
     ];
 
@@ -33,9 +32,8 @@ const PerformanceTypeMasterCallbackHandler = {
 
     let fake = {
       id: '1',
-      performanceTypeName: 'duong',
-      date: dayjs(new Date()).format('YYYY.MM.DD HH:MM'),
-      performanceTypeID: '1',
+      typeName: 'duong',
+      createdAt: dayjs(new Date()).format('YYYY.MM.DD HH:MM'),
     };
 
     return {

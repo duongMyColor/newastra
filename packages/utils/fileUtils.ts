@@ -1,4 +1,4 @@
-import { RAFile } from '@repo/types/imgRecSelection';
+import { RAFile } from '@repo/types/general';
 import CryptoJS from 'crypto-js';
 
 const convertFileToBase64 = (file: { rawFile: Blob }) =>
@@ -54,7 +54,7 @@ const convertRAFiles = async (pictures: RAFile[], isRaw = false) => {
   const uploadedPictures = [
     ...base64Pictures.map((dataUrl, index) => ({
       src: dataUrl,
-      title: generateFileName(newPictures[index].title),
+      title: generateFileName(newPictures[index]?.title ?? ''), // Fix: Added nullish coalescing operator to provide a default value
     })),
     ...formerPictures,
   ];
@@ -99,7 +99,6 @@ const convertBase64ToObjectUrl = (base64: string) => {
 };
 
 const encryptFile = (file: File, password: string): Promise<string> => {
-
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
 

@@ -15,14 +15,14 @@ import licenseManagementCallbackHandlers from './licenseManagementCallbackHandle
  * Ref: https://marmelab.com/react-admin/withLifecycleCallbacks.html#limitations
  * For some cases, withLifecycleCallbacks is hard to handle errors and can not guarantee data consistency. If needed, we can change business logic to handleSave function of Form: See `src\views\Animals\AnimalEdit.tsx`
  */
-const dataProvider = withLifecycleCallbacks(fakeProvider, [
-  userCallbackHandler,
-  applicationMasterCallbackHandler,
-  axtaManagementCallbackHandler,
-  PerformanceTypeMasterCallbackHandler,
-  performanceManagementCallbackHandlers,
+const dataProvider = withLifecycleCallbacks(baseDataProvider, [
+  // userCallbackHandler,
+  // applicationMasterCallbackHandler,
+  // axtaManagementCallbackHandler,
+  // PerformanceTypeMasterCallbackHandler,
+  // performanceManagementCallbackHandlers,
   termOfUseManagementCallbackHandlers,
-  licenseManagementCallbackHandlers,
+  // licenseManagementCallbackHandlers,
 ]);
 
 export default dataProvider;
