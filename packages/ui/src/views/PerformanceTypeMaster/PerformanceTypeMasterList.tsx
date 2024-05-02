@@ -20,7 +20,7 @@ const PerformanceTypeMasterList = ({
       title="演出種別マスタ　一覧"
       actions={<ListToolBar isShowCreate={validRole('create', actions)} />}
     >
-      <Datagrid rowClick="show">
+      <Datagrid rowClick="show" bulkActionButtons={false}>
         <TextField source="id" label="No" />
         <TextField source="typeName" label="演出種別名" />
         <TextField source="id" label="演出種別ID" />

@@ -16,7 +16,7 @@ const AxtaManagementList = ({ actions, resource }: BaseComponentProps) => {
       title="アクスタ管理　一覧"
       actions={<ListToolBar isShowCreate={validRole('create', actions)} />}
     >
-      <Datagrid rowClick="show">
+      <Datagrid rowClick="show" bulkActionButtons={false}>
         <TextField source="id" label="No" />
         <TextField source="managementName" label="管理名" />
         <TextField source="acstaName" label="アクスタ名称" />

@@ -18,7 +18,7 @@ const PerformanceManagementList = ({
       title="演出管理　一覧"
       actions={<ListToolBar isShowCreate={validRole('create', actions)} />}
     >
-      <Datagrid rowClick="show">
+      <Datagrid rowClick="show" bulkActionButtons={false}>
         <TextField source="id" label="No" />
         <TextField source="name" label="演出名" />
         <TextField source="id" label="演出ID" />
