@@ -1,12 +1,13 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 Note: Create .env file base on .sample.env
+`npx wrangler login`
 
 # 2. Run app in local machine without Docker
 
 ## Generate DB (at `/cms` folder)
 
-`$ npx prisma generate`
+`$ yarn db:migrate apply`
 
 
 ## Add seed local
