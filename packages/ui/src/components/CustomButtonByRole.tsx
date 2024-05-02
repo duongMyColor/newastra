@@ -1,12 +1,13 @@
-import { useRecordContext } from "react-admin";
+import { useRecordContext } from 'react-admin';
 
-export const CustomButtonByRole = ({
-    label,
-  children,
-}: {
-    label?:string
+interface CustomButtonByRoleProps {
+  label?: string;
   children: JSX.Element | JSX.Element[];
-}) => {
+}
+export const CustomButtonByRole = ({
+  label,
+  children,
+}: CustomButtonByRoleProps) => {
   const record = useRecordContext();
-  return <>{record.role !== 'ADMIN' && <div>{children}</div>}</>;
+  return <>{record.role !== 'ADMIN' && children && <div>{children}</div>}</>;
 };
