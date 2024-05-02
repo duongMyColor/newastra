@@ -1,13 +1,14 @@
-import ProductService from '../_services/performanceMaster.service';
+import ProductService from '../_services/performanceTypeMaster.service';
 import { OK, CREATED } from '../_core/success.response';
 
-import { PerformanceMasterPostIF } from '@repo/types/performanceMaster';
+import { PerformanceTypeMasterPostIF } from '@repo/types/performanceTypeMaster';
+import { count } from '../_repos/performanceTypeMaster.repo';
 import type { NextRequest } from 'next/server';
 import { parseSearchParams } from '@repo/utils/parseParams';
 
 class ProductController {
   create = async (request: NextRequest) => {
-    const payload: PerformanceMasterPostIF = await request.json();
+    const payload: PerformanceTypeMasterPostIF = await request.json();
 
     return new CREATED({
       message: 'created Product OK!',
@@ -21,6 +22,7 @@ class ProductController {
     return new OK({
       message: 'get all Products success!',
       metadata: await ProductService.getAll(),
+      count: await count(),
     });
   };
 
@@ -32,6 +34,7 @@ class ProductController {
     return new OK({
       message: 'get all Products success!',
       metadata: await ProductService.getAllWithQuery({ filter, range, sort }),
+      count: await count(),
     });
   };
 
@@ -50,7 +53,7 @@ class ProductController {
   };
 
   update = async (request: NextRequest, id: number) => {
-    const payload: PerformanceMasterPostIF = await request.json();
+    const payload: PerformanceTypeMasterPostIF = await request.json();
 
     return new OK({
       message: 'updated Product OK!',

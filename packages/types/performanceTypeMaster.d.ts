@@ -1,11 +1,11 @@
-export interface PerformanceMasterResponseIF {
+export interface PerformanceTypeMasterResponseIF {
   id: number;
   typeName: string;
   createdAt: string;
   updatedAt: string;
 }
 
-export interface PerformanceMasterPostIF {
+export interface PerformanceTypeMasterPostIF {
   id?: number;
   typeName: string;
 }

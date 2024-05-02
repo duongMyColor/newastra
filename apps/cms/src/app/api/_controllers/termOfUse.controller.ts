@@ -2,6 +2,7 @@ import TermOfUseService from '../_services/termOfUse.service';
 import { OK, CREATED } from '../_core/success.response';
 
 import { TermOfUsePostIF } from '@repo/types/termOfUse';
+import { count } from '../_repos/termOfUse.repo';
 import type { NextRequest } from 'next/server';
 import { parseParams, parseSearchParams } from '@repo/utils/parseParams';
 
@@ -30,6 +31,7 @@ class TeamOfUseController {
     return new OK({
       message: 'get all Term Of Use success!',
       metadata: await TermOfUseService.getAll(),
+      count: await count(),
     });
   };
 
@@ -55,6 +57,7 @@ class TeamOfUseController {
         range,
         sort,
       }),
+      count: await count(),
     });
   };
 

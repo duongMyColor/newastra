@@ -1,4 +1,4 @@
-import { PerformanceMasterPostIF } from '@repo/types/performanceMaster';
+import { PerformanceTypeMasterPostIF } from '@repo/types/performanceTypeMaster';
 import {
   getAll,
   getOneById,
@@ -9,12 +9,12 @@ import {
   deleteManyById,
   deleteWithRelation,
   getAllWithQuery,
-} from '../_repos/performanceMaster.repo';
+} from '../_repos/performanceTypeMaster.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 
-class PerformanceMasterFactory {
-  static async create({ payload }: { payload: PerformanceMasterPostIF }) {
-    return await new PerformanceMaster(payload).create();
+class PerformanceTypeMasterFactory {
+  static async create({ payload }: { payload: PerformanceTypeMasterPostIF }) {
+    return await new PerformanceTypeMaster(payload).create();
   }
 
   static async getOneById(id: number) {
@@ -28,6 +28,7 @@ class PerformanceMasterFactory {
   static async getAll() {
     return await getAll();
   }
+  
   static async getAllWithQuery({ filter, range, sort }: GetAllQueryIF) {
     return await getAllWithQuery({ filter, range, sort });
   }
@@ -37,9 +38,9 @@ class PerformanceMasterFactory {
     payload,
   }: {
     id: number;
-    payload: PerformanceMasterPostIF;
+    payload: PerformanceTypeMasterPostIF;
   }) {
-    return await new PerformanceMaster(payload).updateById({ id });
+    return await new PerformanceTypeMaster(payload).updateById({ id });
   }
 
   static async deleteById(id: number) {
@@ -55,26 +56,26 @@ class PerformanceMasterFactory {
   }
 }
 
-class PerformanceMaster implements PerformanceMasterPostIF {
+class PerformanceTypeMaster implements PerformanceTypeMasterPostIF {
   public typeName: string;
   public updatedAt: string | Date;
 
-  public constructor({ typeName }: PerformanceMasterPostIF) {
+  public constructor({ typeName }: PerformanceTypeMasterPostIF) {
     this.typeName = typeName;
     this.updatedAt = new Date().toISOString();
   }
 
   public async create() {
-    const payload: PerformanceMasterPostIF = this;
+    const payload: PerformanceTypeMasterPostIF = this;
     // TODO: validate payload
     return await insert(payload);
   }
 
   public async updateById({ id }: { id: number }) {
-    const payload: PerformanceMasterPostIF = this;
+    const payload: PerformanceTypeMasterPostIF = this;
     // TODO: validate payload
     return await updateById({ id, payload });
   }
 }
 
-export default PerformanceMasterFactory;
+export default PerformanceTypeMasterFactory;

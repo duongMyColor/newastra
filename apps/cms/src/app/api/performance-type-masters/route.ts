@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-import performanceMasterController from '../_controllers/performanceMaster.controller';
+import performanceMasterController from '../_controllers/performanceTypeMaster.controller';
 import errorHandlerMiddleware from '@/middlewares/errorHandler'; // Import the errorHandlerMiddleware
 
 export const GET = errorHandlerMiddleware(async (request: NextRequest) => {

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import performanceMasterController from '../../_controllers/performanceMaster.controller';
+import performanceMasterController from '../../_controllers/performanceTypeMaster.controller';
 import errorHandlerMiddleware from '@/middlewares/errorHandler';
 
 export const DELETE = errorHandlerMiddleware(async (request: NextRequest) => {

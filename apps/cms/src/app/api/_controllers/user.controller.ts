@@ -1,9 +1,9 @@
 import UserService from '../_services/user.service';
 import { OK, CREATED } from '../_core/success.response';
+import { count } from '../_repos/user.repo';
 
 import { UserIF } from '@repo/types/user';
 import type { NextRequest } from 'next/server';
-import { GetAllQueryIF } from '@repo/types/response';
 import { getServerCookieValue } from '@repo/utils/server_actions/cookies';
 import { HEADER } from '@repo/consts/access';
 import { parseSearchParams } from '@repo/utils/parseParams';
@@ -25,6 +25,7 @@ class UserController {
     return new OK({
       message: 'get all Users success!',
       metadata: await UserService.getAll(),
+      count: await count(),
     });
   };
   getAllWithQuery = async (request: NextRequest) => {
@@ -34,6 +35,7 @@ class UserController {
     return new OK({
       message: 'get all Users success!',
       metadata: await UserService.getAllWithQuery({ filter, range, sort }),
+      count: await count(),
     });
   };
 

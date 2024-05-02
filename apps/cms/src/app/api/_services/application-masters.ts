@@ -23,7 +23,7 @@ import path from 'path';
 import { baseUploadFolder } from '@repo/consts/general';
 import { readFileToBase64, saveFile } from '@repo/lib/fileUpload';
 import { convertFileToBase64Server } from '@repo/utils/server_actions/converFileToBase64Server';
-import { createGetPresignedUrlWithClient } from '@repo/lib/aws-s3';
+// import { createGetPresignedUrlWithClient } from '@repo/lib/aws-s3';
 import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
 
@@ -96,8 +96,8 @@ class AnimalFactory {
         return animalResponse;
       case 'LOCAL':
         return this.readFileLocal(animalResponse);
-      case 'S3':
-        return this.addPresignedUrl(animalResponse);
+      // case 'S3':
+      //   return this.addPresignedUrl(animalResponse);
       default:
         break;
     }
@@ -109,13 +109,13 @@ class AnimalFactory {
     return temp;
   }
 
-  static async addPresignedUrl(animalResponse: AnimalResponselIF) {
-    let temp = { ...animalResponse };
-    temp.thumbImg = await createGetPresignedUrlWithClient(
-      animalResponse.thumbImg as string
-    );
-    return temp;
-  }
+  // static async addPresignedUrl(animalResponse: AnimalResponselIF) {
+  //   let temp = { ...animalResponse };
+  //   temp.thumbImg = await createGetPresignedUrlWithClient(
+  //     animalResponse.thumbImg as string
+  //   );
+  //   return temp;
+  // }
 }
 
 class Animal implements AnimalPostIF {

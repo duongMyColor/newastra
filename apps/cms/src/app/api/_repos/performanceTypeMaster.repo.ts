@@ -1,4 +1,4 @@
-import { PerformanceMasterPostIF } from '@repo/types/performanceMaster';
+import { PerformanceTypeMasterPostIF } from '@repo/types/performanceTypeMaster';
 import { prisma } from '@/lib/prisma';
 import { BaseRepo } from './base/base.repo';
 import { GetAllQueryIF } from '@repo/types/response';
@@ -8,6 +8,10 @@ const relationFieldName = 'ProductDetail';
 
 const getAll = async () => {
   return await new BaseRepo(model).getAll();
+};
+
+const count = async () => {
+  return await new BaseRepo(model).count();
 };
 
 const getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
@@ -30,11 +34,11 @@ const getOneById = async (id: number) => {
 //   return product;
 // };
 
-const insert = async (payload: PerformanceMasterPostIF) => {
+const insert = async (payload: PerformanceTypeMasterPostIF) => {
   return await new BaseRepo(model).insert(payload);
 };
 
-const insertMany = async (products: PerformanceMasterPostIF[]) => {
+const insertMany = async (products: PerformanceTypeMasterPostIF[]) => {
   return await new BaseRepo(model).insertMany(products);
 };
 
@@ -43,13 +47,13 @@ const updateById = async ({
   payload,
 }: {
   id: number;
-  payload: PerformanceMasterPostIF;
+  payload: PerformanceTypeMasterPostIF;
 }) => {
   return await new BaseRepo(model).updateById({ id, payload });
 };
 
 const updateManyById = async (
-  updates: { id: number; data: PerformanceMasterPostIF }[]
+  updates: { id: number; data: PerformanceTypeMasterPostIF }[]
 ) => {
   return await new BaseRepo(model).updateManyById(updates);
 };
@@ -78,4 +82,5 @@ export {
   getAllWithQuery,
   deleteManyById,
   deleteWithRelation,
+  count,
 };

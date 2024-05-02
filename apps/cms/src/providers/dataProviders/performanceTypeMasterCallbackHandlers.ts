@@ -2,7 +2,7 @@ import type { DataProvider, GetListResult, GetOneResult } from 'react-admin';
 
 import dayjs from 'dayjs';
 const PerformanceTypeMasterCallbackHandler = {
-  resource: 'performance-masters',
+  resource: 'performance-type-masters',
 
   afterGetList: async (
     response: GetListResult,
