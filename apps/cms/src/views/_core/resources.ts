@@ -86,7 +86,7 @@ const Resources: ResourceIF[] = [
     edit: PerformanceTypeMasterEdit,
     create: PerformanceTypeMasterCreate,
     show: PerformanceTypeMasterShow,
-    resource: 'performance-type-masters',
+    resource: 'performance-masters',
     label: '演出種別マスタ',
   },
   {

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import productController from '../../../_controllers/product.controller';
+import productController from '../../../_controllers/performanceMaster.controller';
 import errorHandlerMiddleware from '@/middlewares/errorHandler';
 
 export const GET = errorHandlerMiddleware(
@@ -9,3 +9,5 @@ export const GET = errorHandlerMiddleware(
     return NextResponse.json(await productController.getByIdWithDetail(id));
   }
 );
+
+export const runtime = 'edge';

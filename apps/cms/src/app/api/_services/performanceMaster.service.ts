@@ -1,29 +1,29 @@
-import { ProductPostIF } from '@repo/types/product';
+import { PerformanceMasterPostIF } from '@repo/types/performanceMaster';
 import {
   getAll,
   getOneById,
   insert,
   updateById,
   deleteById,
-  getByIdWithDetail,
+  // getByIdWithDetail,
   deleteManyById,
   deleteWithRelation,
   getAllWithQuery,
-} from '../_repos/product.repo';
+} from '../_repos/performanceMaster.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 
-class ProductFactory {
-  static async create({ payload }: { payload: ProductPostIF }) {
-    return await new Product(payload).create();
+class PerformanceMasterFactory {
+  static async create({ payload }: { payload: PerformanceMasterPostIF }) {
+    return await new PerformanceMaster(payload).create();
   }
 
   static async getOneById(id: number) {
     return await getOneById(id);
   }
 
-  static async getByIdWithDetail(id: number) {
-    return await getByIdWithDetail(id);
-  }
+  // static async getByIdWithDetail(id: number) {
+  //   return await getByIdWithDetail(id);
+  // }
 
   static async getAll() {
     return await getAll();
@@ -37,9 +37,9 @@ class ProductFactory {
     payload,
   }: {
     id: number;
-    payload: ProductPostIF;
+    payload: PerformanceMasterPostIF;
   }) {
-    return await new Product(payload).updateById({ id });
+    return await new PerformanceMaster(payload).updateById({ id });
   }
 
   static async deleteById(id: number) {
@@ -55,28 +55,26 @@ class ProductFactory {
   }
 }
 
-class Product implements ProductPostIF {
-  public name: string;
-  public masterCategory: number;
-  public subCategory: number;
+class PerformanceMaster implements PerformanceMasterPostIF {
+  public typeName: string;
+  public updatedAt: string | Date;
 
-  public constructor({ name, masterCategory, subCategory }: ProductPostIF) {
-    this.name = name;
-    this.masterCategory = masterCategory;
-    this.subCategory = subCategory;
+  public constructor({ typeName }: PerformanceMasterPostIF) {
+    this.typeName = typeName;
+    this.updatedAt = new Date().toISOString();
   }
 
   public async create() {
-    const payload: ProductPostIF = this;
+    const payload: PerformanceMasterPostIF = this;
     // TODO: validate payload
     return await insert(payload);
   }
 
   public async updateById({ id }: { id: number }) {
-    const payload: ProductPostIF = this;
+    const payload: PerformanceMasterPostIF = this;
     // TODO: validate payload
     return await updateById({ id, payload });
   }
 }
 
-export default ProductFactory;
+export default PerformanceMasterFactory;

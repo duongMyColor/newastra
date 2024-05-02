@@ -1,9 +1,9 @@
-import { ProductPostIF } from '@repo/types/product';
+import { PerformanceMasterPostIF } from '@repo/types/performanceMaster';
 import { prisma } from '@/lib/prisma';
 import { BaseRepo } from './base/base.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 
-const model = prisma.product;
+const model = prisma.performaceTypeMaster;
 const relationFieldName = 'ProductDetail';
 
 const getAll = async () => {
@@ -18,23 +18,23 @@ const getOneById = async (id: number) => {
   return await new BaseRepo(model).getOneById(id);
 };
 
-const getByIdWithDetail = async (id: number) => {
-  const product = await prisma.product.findUnique({
-    where: {
-      id: id,
-    },
-    include: {
-      ProductDetail: true,
-    },
-  });
-  return product;
-};
+// const getByIdWithDetail = async (id: number) => {
+//   const product = awai tmodel.findUnique({
+//     where: {
+//       id: id,
+//     },
+//     include: {
+//       ProductDetail: true,
+//     },
+//   });
+//   return product;
+// };
 
-const insert = async (payload: ProductPostIF) => {
+const insert = async (payload: PerformanceMasterPostIF) => {
   return await new BaseRepo(model).insert(payload);
 };
 
-const insertMany = async (products: ProductPostIF[]) => {
+const insertMany = async (products: PerformanceMasterPostIF[]) => {
   return await new BaseRepo(model).insertMany(products);
 };
 
@@ -43,13 +43,13 @@ const updateById = async ({
   payload,
 }: {
   id: number;
-  payload: ProductPostIF;
+  payload: PerformanceMasterPostIF;
 }) => {
   return await new BaseRepo(model).updateById({ id, payload });
 };
 
 const updateManyById = async (
-  updates: { id: number; data: ProductPostIF }[]
+  updates: { id: number; data: PerformanceMasterPostIF }[]
 ) => {
   return await new BaseRepo(model).updateManyById(updates);
 };
@@ -72,7 +72,7 @@ export {
   insert,
   updateById,
   deleteById,
-  getByIdWithDetail,
+  // getByIdWithDetail,
   updateManyById,
   insertMany,
   getAllWithQuery,

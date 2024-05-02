@@ -1,13 +1,13 @@
-import ProductService from '../_services/product.service';
+import ProductService from '../_services/performanceMaster.service';
 import { OK, CREATED } from '../_core/success.response';
 
-import { ProductPostIF } from '@repo/types/product';
+import { PerformanceMasterPostIF } from '@repo/types/performanceMaster';
 import type { NextRequest } from 'next/server';
 import { parseSearchParams } from '@repo/utils/parseParams';
 
 class ProductController {
   create = async (request: NextRequest) => {
-    const payload: ProductPostIF = await request.json();
+    const payload: PerformanceMasterPostIF = await request.json();
 
     return new CREATED({
       message: 'created Product OK!',
@@ -38,19 +38,19 @@ class ProductController {
   getOneById = async (id: number) => {
     return new OK({
       message: 'get Product success!',
-      metadata: await ProductService.getByIdWithDetail(id),
+      metadata: await ProductService.getOneById(id),
     });
   };
 
   getByIdWithDetail = async (id: number) => {
     return new OK({
       message: 'get Product with detail success!',
-      metadata: await ProductService.getByIdWithDetail(id),
+      metadata: await ProductService.getOneById(id),
     });
   };
 
   update = async (request: NextRequest, id: number) => {
-    const payload: ProductPostIF = await request.json();
+    const payload: PerformanceMasterPostIF = await request.json();
 
     return new OK({
       message: 'updated Product OK!',
