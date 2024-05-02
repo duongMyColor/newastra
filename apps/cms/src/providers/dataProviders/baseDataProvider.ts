@@ -26,6 +26,7 @@ import {
   GetPutPresignedUrlparams,
   PutObjectViaPresignedUrlParams,
 } from '@repo/types/dataProvider';
+import { RecordValue } from '@repo/types/general';
 
 const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api`;
 const httpClient = fetchUtils.fetchJson;
@@ -52,8 +53,13 @@ const baseDataProvider: DataProvider = {
     } = await httpClient(url);
     console.log('metadata: ', metadata?.length);
 
+    let newMetaData = metadata.map((value: RecordValue, idx: number) => {
+      value['no'] = (page - 1) * perPage + idx + 1;
+      return value;
+    });
+
     return {
-      data: metadata,                                                                                                 
+      data: newMetaData,
       total: count,
     };
   },

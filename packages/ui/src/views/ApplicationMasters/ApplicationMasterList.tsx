@@ -10,7 +10,7 @@ const MasterList = ({ actions, resource }: BaseComponentProps) => {
       actions={<ListToolBar isShowCreate={validRole('create', actions)} />}
     >
       <Datagrid rowClick="show" bulkActionButtons={false}>
-        <TextField source="id" label="No" />
+        <TextField source="no" label="No" />
         <TextField source="appName" label="アプリケーション名" />
         <TextField source="appId" label="アプリケーションID" />
         <TextField source="packageName" label="バンドルID/パッケージ名" />

@@ -1,4 +1,4 @@
-import { TextInput, ShowBase, Show, Title } from 'react-admin';
+import { TextInput, ShowBase, Show, Title, useShowContext, useRecordContext } from 'react-admin';
 import { countryList, userRoles } from '@repo/consts/user';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps } from '@repo/types/general';
@@ -8,7 +8,9 @@ import { disabledInputBackgroundStyle, boxStyles } from '@repo/styles';
 
 const UserShow = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
+  const record = useRecordContext();
 
+  console.log({ record });
   return (
     <Box sx={boxStyles}>
       <ShowBase>

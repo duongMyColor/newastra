@@ -58,13 +58,13 @@ const UserEdit = ({ actions, resource }: BaseComponentProps) => {
             isRequired
           />
           <PasswordInput
-            source="password"
+            source="newPassword"
             label="パスワード"
             fullWidth
             isRequired
           />
           <PasswordInput
-            source="confirmPassword"
+            source="confirmNewPassword"
             label="バスワード辟涊"
             fullWidth
             isRequired

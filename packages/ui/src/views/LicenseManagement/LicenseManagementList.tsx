@@ -18,7 +18,7 @@ const LicenseManagementList = ({ actions, resource }: BaseComponentProps) => {
       actions={<ListToolBar isShowCreate={validRole('create', actions)} />}
     >
       <Datagrid rowClick="show" bulkActionButtons={false}>
-        <TextField source="id" label="No" />
+        <TextField source="no" label="No" />
         <TextField source="licenseId" label="ライセンスID" />
         <TextField source="memo" label="メモ" />
         <TextField source="version" label="バージョン" />

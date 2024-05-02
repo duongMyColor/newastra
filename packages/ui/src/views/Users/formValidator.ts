@@ -22,16 +22,16 @@ const editionRules: ValidationRule[] = [
   },
   {
     field: 'newPassword',
-    required: true,
-    minLength: userContentLength.password.min,
-    maxLength: userContentLength.password.max,
+    required: false,
+    minLength: userContentLength.newPassword.min,
+    maxLength: userContentLength.newPassword.max,
   },
   {
     field: 'confirmNewPassword',
-    required: true,
-    minLength: userContentLength.password.min,
-    maxLength: userContentLength.password.max,
-    match: 'password',
+    required: false,
+    minLength: userContentLength.newPassword.min,
+    maxLength: userContentLength.newPassword.max,
+    match: 'newPassword',
     unMatchMessage: 'Password does not match',
   },
 ];
@@ -84,9 +84,15 @@ const validateUserCreation = (values: RecordValue): RecordValue => {
 };
 
 const validateUserEdition = (values: RecordValue): RecordValue => {
+  console.log('edit validate', values);
   const baseValidation = validateForm(values, editionRules);
 
-  const validPassword = validatePassword(values.newPassword);
+  console.log({ baseValidation });
+
+  const validPassword =
+    values.newPassword && values.confirmNewPassword
+      ? validatePassword(values.newPassword)
+      : true;
 
   return validPassword
     ? baseValidation

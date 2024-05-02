@@ -51,6 +51,10 @@ const userContentLength = {
     min: 8,
     max: 20,
   },
+  newPassword:{
+    min:0,
+    max:0
+  }
 };
 
 export {

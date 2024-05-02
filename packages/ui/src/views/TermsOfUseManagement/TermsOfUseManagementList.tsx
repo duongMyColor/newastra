@@ -24,7 +24,7 @@ const TermsOfUseManagementList = ({
       actions={<ListToolBar isShowCreate={validRole('create', actions)} />}
     >
       <Datagrid rowClick="show" bulkActionButtons={false}>
-        <TextField source="id" label="No" />
+        <TextField source="no" label="No" />
         <TextField source="id" label="利用規約ID" />
         <TextField source="memo" label="メモ" />
         <TextField source="version" label="バージョン" />

@@ -17,7 +17,7 @@ const AxtaManagementList = ({ actions, resource }: BaseComponentProps) => {
       actions={<ListToolBar isShowCreate={validRole('create', actions)} />}
     >
       <Datagrid rowClick="show" bulkActionButtons={false}>
-        <TextField source="id" label="No" />
+        <TextField source="no" label="No" />
         <TextField source="managementName" label="管理名" />
         <TextField source="acstaName" label="アクスタ名称" />
         <TextField source="acstaId" label="アクスタID" />
@@ -27,7 +27,12 @@ const AxtaManagementList = ({ actions, resource }: BaseComponentProps) => {
         <TextField source="dateEnd" label="公開終了日" />
         <TextField source="createdAt" label="登録日" />
         {validRole('delete', actions) && (
-          <DeleteWithConfirmButton label="アカウント削除"></DeleteWithConfirmButton>
+          <DeleteWithConfirmButton
+            confirmContent="よろしいですか?"
+            confirmTitle="論理削除します"
+            label="データ削除"
+            confirmColor="warning"
+          ></DeleteWithConfirmButton>
         )}
         {validRole('edit', actions) && <EditButton label="編集"></EditButton>}
       </Datagrid>

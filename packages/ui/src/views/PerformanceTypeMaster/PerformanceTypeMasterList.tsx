@@ -21,7 +21,7 @@ const PerformanceTypeMasterList = ({
       actions={<ListToolBar isShowCreate={validRole('create', actions)} />}
     >
       <Datagrid rowClick="show" bulkActionButtons={false}>
-        <TextField source="id" label="No" />
+        <TextField source="no" label="No" />
         <TextField source="typeName" label="演出種別名" />
         <TextField source="id" label="演出種別ID" />
 
@@ -36,7 +36,7 @@ const PerformanceTypeMasterList = ({
           <DeleteWithConfirmButton
             confirmContent="よろしいですか?"
             confirmTitle="論理削除します"
-            label="削除"
+            label="データ削除"
             confirmColor="warning"
           ></DeleteWithConfirmButton>
         )}
