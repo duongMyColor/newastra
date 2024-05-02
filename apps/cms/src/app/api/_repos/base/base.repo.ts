@@ -11,6 +11,10 @@ class BaseRepo {
     this.tableModel = tableModel;
   }
 
+  count = async () => {
+    return await this.tableModel.count();
+  };
+
   getAll = async () => {
     return await this.tableModel.findMany();
   };

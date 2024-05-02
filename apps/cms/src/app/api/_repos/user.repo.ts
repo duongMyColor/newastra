@@ -15,6 +15,10 @@ const getAll = async () => {
   return res;
 };
 
+const count = async () => {
+  return await new BaseRepo(model).count();
+};
+
 const getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
   const res = (
     await new BaseRepo(model).getAllWithQueryAndSafety({ sort, range, filter })
@@ -93,4 +97,5 @@ export {
   getPermission,
   safetyDeleteById,
   safetyDeleteManyById,
+  count,
 };

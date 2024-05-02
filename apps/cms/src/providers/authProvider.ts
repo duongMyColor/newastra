@@ -43,7 +43,6 @@ const authProvider: AuthProvider = {
   checkError: (error) => Promise.resolve(/* ... */),
   checkAuth: async () => {
     return Promise.resolve();
-
   },
   // checkAuth: async () => {
   //   const request = new Request(`${apiUrl}/access/auth`, {
@@ -78,9 +77,9 @@ const authProvider: AuthProvider = {
   // },
   getIdentity: async () => {
     return Promise.resolve({
-        id: "1",
-        fullName: "admin",
-      });
+      id: '1',
+      fullName: 'admin',
+    });
   },
   // getIdentity: async () => {
   //   const userId = getClientCookieValue(HEADER.CLIENT_ID);

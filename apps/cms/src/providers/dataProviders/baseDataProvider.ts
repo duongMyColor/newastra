@@ -48,13 +48,13 @@ const baseDataProvider: DataProvider = {
     const url = `${apiUrl}/${resource}?${JSON.stringify(query)}`;
 
     const {
-      json: { metadata },
+      json: { metadata, count },
     } = await httpClient(url);
-    console.log('metadata: ', metadata);
+    console.log('metadata: ', metadata?.length);
 
     return {
-      data: metadata,
-      total: parseInt(metadata?.length, 10),
+      data: metadata,                                                                                                 
+      total: count,
     };
   },
   // get a single record by id

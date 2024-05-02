@@ -5,6 +5,7 @@ export interface ResponseIF {
   status?: number;
   reason?: string;
   metadata: RecordValue;
+  count?: number;
 }
 
 export interface GetAllQueryIF {

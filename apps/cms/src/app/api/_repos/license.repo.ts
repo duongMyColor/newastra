@@ -10,6 +10,10 @@ const getAll = async () => {
   return await new BaseRepo(model).getAll();
 };
 
+const count = async () => {
+  return await new BaseRepo(model).count();
+};
+
 const getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
   return await new BaseRepo(model).getAllWithQuery({ sort, range, filter });
 };
@@ -67,4 +71,5 @@ export {
   deleteManyById,
   getAllWithFilters,
   getManyReference,
+  count,
 };
