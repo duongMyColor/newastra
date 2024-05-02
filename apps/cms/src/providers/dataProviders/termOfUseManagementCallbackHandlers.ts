@@ -23,7 +23,7 @@ import type { DataProvider, GetListResult, GetOneResult } from 'react-admin';
 
 import dayjs from 'dayjs';
 const termOfUseManagementCallbackHandlers = {
-  resource: 'term-of-use-managements',
+  resource: 'term-of-uses',
 
   afterGetList: async (
     response: GetListResult,

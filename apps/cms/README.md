@@ -1,7 +1,6 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+https://github.com/saco-team/da-acstar-cms.gitThis is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 Note: Create .env file base on .sample.env
-`npx wrangler login`
 
 # 2. Run app in local machine without Docker
 
@@ -17,16 +16,16 @@ Note: Create .env file base on .sample.env
 
 ex: 
 
-`npx wrangler d1 execute da-acstar-db --local --file=./prisma/seed.sql`
+`npx wrangler d1 execute da-acsta-db --local --file=./prisma/seed.sql`
 
-## Add seed remote
+## Add seed remote (for deployment)
 
 - db_name: see `apps/cms/wrangler.toml`
 - `npx wrangler d1 execute <db_name> --remote --file=./prisma/seed.sql `
 
 ex: 
 
-`npx wrangler d1 execute da-acstar-db --remote --file=./prisma/seed.sql`
+`npx wrangler d1 execute da-acsta-db --remote --file=./prisma/seed.sql`
 
 # 3. App URL
 

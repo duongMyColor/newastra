@@ -12,8 +12,6 @@ const defaultUsers: UserIF[] = [
   },
 ];
 
-console.log(hashPassword('Superadmin@12345'));
-
 const defaultRoles = [
   {
     id: 'ADMIN',
