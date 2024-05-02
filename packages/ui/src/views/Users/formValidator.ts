@@ -23,6 +23,7 @@ const editionRules: ValidationRule[] = [
   {
     field: 'newPassword',
     required: false,
+    match: 'confirmNewPassword',
     minLength: userContentLength.newPassword.min,
     maxLength: userContentLength.newPassword.max,
   },
@@ -87,7 +88,6 @@ const validateUserEdition = (values: RecordValue): RecordValue => {
   console.log('edit validate', values);
   const baseValidation = validateForm(values, editionRules);
 
-  console.log({ baseValidation });
 
   const validPassword =
     values.newPassword && values.confirmNewPassword
