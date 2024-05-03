@@ -7,4 +7,11 @@ const REDIRECT_ROUTE = {
   edit: 'edit',
 };
 
-export { baseUploadFolder, REDIRECT_ROUTE };
+const MAP_RESOURE :Record<string, string> = {
+  'term-of-uses': 'termsOfUse',
+  'acstas': 'acstaManagement',
+  'license': 'license',
+  'performances': 'performaceManagement',
+};
+
+export { baseUploadFolder, REDIRECT_ROUTE, MAP_RESOURE };

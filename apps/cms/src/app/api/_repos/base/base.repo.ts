@@ -172,6 +172,23 @@ class BaseRepo {
     });
     return res;
   };
+  getOneByIdLastest = async () => {
+    try {
+      const res = await this.tableModel.findMany({
+        orderBy: {
+          id: 'desc',
+        },
+        take: 1,
+      });
+
+      return res;
+    } catch (error) {
+      const notFind = [{ id: 0 }];
+
+      console.log({ error });
+      return notFind;
+    }
+  };
 
   insert = async (payload: RecordValue) => {
     const data = removeEmptyProperties(payload);

@@ -2,11 +2,13 @@ import { userRoles } from '@repo/consts/user';
 import {
   TextInput,
   Create,
-  DateInput,
   FileInput,
   FileField,
   useNotify,
   useCreate,
+  useRecordContext,
+  useDataProvider,
+  DateTimeInput,
 } from 'react-admin';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,6 +17,8 @@ import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps, RecordValue } from '@repo/types/general';
 import { REDIRECT_ROUTE } from '@repo/consts/general';
 import { convertToFormData, logFormData } from '@repo/utils/formData';
+import { TextField } from '@mui/material';
+import { useEffect, useState } from 'react';
 
 const TermsOfUseManagementCreate = ({
   actions,
@@ -24,6 +28,9 @@ const TermsOfUseManagementCreate = ({
   const notify = useNotify();
   const navigate = useNavigate();
   const [create] = useCreate();
+  const dataProvider = useDataProvider();
+
+  const [idTermOfUse, setIdTermOfUse] = useState<string>('');
 
   const handleSave = async (values: RecordValue) => {
     try {
@@ -40,6 +47,15 @@ const TermsOfUseManagementCreate = ({
     }
   };
 
+  const fetchIdLastest = async () => {
+    const response = await dataProvider.getIdLastest(resource);
+    let nextId = response.data[0].id + 1;
+    setIdTermOfUse(`${nextId}`);
+  };
+  useEffect(() => {
+    fetchIdLastest();
+  }, []);
+
   return (
     <Create redirect={REDIRECT_ROUTE.list} title="利用規約管理　新规作成">
       <CustomForm
@@ -49,18 +65,24 @@ const TermsOfUseManagementCreate = ({
         showCancelButton={true}
         handleSave={handleSave}
       >
-        <TextInput source="id" label="利用規約ID" fullWidth disabled />
+        <TextField
+          id="filled-basic"
+          label="利用規約ID"
+          variant="filled"
+          value={idTermOfUse}
+          disabled
+        />
         <TextInput source="version" label="バージョン" isRequired fullWidth />
         <TextInput source="memo" label="メモ" fullWidth multiline />
-        <DateInput source="publishedDate" label="公開開始日" isRequired />
-
+        <DateTimeInput source="publishedDate" label="公開開始日" isRequired />
         <FileInput
           source="content"
           label="規約本文"
           placeholder="アップロード"
           isRequired
+          accept="text/html,.txt,.htm"
         >
-          <FileField source="src" title="title" />
+          <FileField source="src" target="_blank" title="title" />
         </FileInput>
       </CustomForm>
     </Create>

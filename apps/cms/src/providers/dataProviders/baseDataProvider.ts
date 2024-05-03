@@ -27,6 +27,7 @@ import {
   PutObjectViaPresignedUrlParams,
 } from '@repo/types/dataProvider';
 import { RecordValue } from '@repo/types/general';
+import { MAP_RESOURE } from '@repo/consts/general';
 
 const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api`;
 const httpClient = fetchUtils.fetchJson;
@@ -259,6 +260,18 @@ const baseDataProvider: DataProvider = {
 
     return {
       data: response,
+    };
+  },
+  getIdLastest: async (resource: string) => {
+    const url = `${apiUrl}/id-lastest?source=${MAP_RESOURE[resource]}`;
+    const {
+      json: { metadata },
+    } = await httpClient(url);
+
+    console.log(':::response', metadata);
+
+    return {
+      data: metadata,
     };
   },
 };
