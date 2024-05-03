@@ -49,7 +49,7 @@ const TermsOfUseManagementCreate = ({
 
   const fetchIdLastest = async () => {
     const response = await dataProvider.getIdLastest(resource);
-    let nextId = response.data[0].id + 1;
+    const nextId = response.data.length > 0 ? response.data[0].id + 1 : 1;
     setIdTermOfUse(`${nextId}`);
   };
   useEffect(() => {
