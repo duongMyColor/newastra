@@ -38,3 +38,9 @@ export const resumeMultipartUpload = async ({
 export const deleteObject = async (key: string) => {
   return BUCKET.delete(key);
 };
+
+export const uploadObjectMultipart = (file: File, keyPrefix: string) => {
+
+  
+
+};
