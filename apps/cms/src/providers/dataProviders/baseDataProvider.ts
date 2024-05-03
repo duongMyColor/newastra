@@ -112,6 +112,8 @@ const baseDataProvider: DataProvider = {
     resource: string,
     params: CreateParams
   ): Promise<CreateResult> => {
+
+    console.log({resource,params});
     const url = `${apiUrl}/${resource}`;
 
     let body;
@@ -263,6 +265,7 @@ const baseDataProvider: DataProvider = {
     };
   },
   getIdLastest: async (resource: string) => {
+    console.log({resource});
     const url = `${apiUrl}/id-lastest?source=${MAP_RESOURE[resource]}`;
     const {
       json: { metadata },

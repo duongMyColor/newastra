@@ -22,7 +22,7 @@ const dataProvider = withLifecycleCallbacks(baseDataProvider, [
   // PerformanceTypeMasterCallbackHandler,
   // performanceManagementCallbackHandlers,
   termOfUseManagementCallbackHandlers,
-  // licenseManagementCallbackHandlers,
+  licenseManagementCallbackHandlers,
 ]);
 
 export default dataProvider;

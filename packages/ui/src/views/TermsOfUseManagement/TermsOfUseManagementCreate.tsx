@@ -29,6 +29,7 @@ const TermsOfUseManagementCreate = ({
   const navigate = useNavigate();
   const [create] = useCreate();
   const dataProvider = useDataProvider();
+  const [oldDate, setOldDate] = useState<Date>();
 
   const [idTermOfUse, setIdTermOfUse] = useState<string>('');
 
@@ -40,7 +41,7 @@ const TermsOfUseManagementCreate = ({
         data: formData,
       });
 
-      // navigate(resourcePath);
+      navigate(resourcePath);
       notify('Success: Create Term of use successffuly', { type: 'success' });
     } catch (error) {
       notify('Error: Create Term of use failed: ' + error, { type: 'warning' });
@@ -50,7 +51,11 @@ const TermsOfUseManagementCreate = ({
   const fetchIdLastest = async () => {
     const response = await dataProvider.getIdLastest(resource);
     const nextId = response.data.length > 0 ? response.data[0].id + 1 : 1;
+    const formatDate = new Date(response.data[0].publishedDate);
+
     setIdTermOfUse(`${nextId}`);
+
+    setOldDate(formatDate);
   };
   useEffect(() => {
     fetchIdLastest();
@@ -74,7 +79,13 @@ const TermsOfUseManagementCreate = ({
         />
         <TextInput source="version" label="バージョン" isRequired fullWidth />
         <TextInput source="memo" label="メモ" fullWidth multiline />
-        <DateTimeInput source="publishedDate" label="公開開始日" isRequired />
+        <DateTimeInput
+          source="publishedDate"
+          label="公開開始日"
+          defaultValue={oldDate}
+          fullWidth
+          isRequired
+        />
         <FileInput
           source="content"
           label="規約本文"
