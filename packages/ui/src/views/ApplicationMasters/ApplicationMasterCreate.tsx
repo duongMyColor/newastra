@@ -1,20 +1,53 @@
-import { userRoles } from '@repo/consts/user';
 import {
   TextInput,
   Create,
   SelectInput,
   FileInput,
   FileField,
-  DateTimeInput,
 } from 'react-admin';
 
+import { TermOfUseResponseIF } from '@repo/types/termOfUse';
+import { LicenseResponseIF } from '@repo/types/license';
 import { validateUserCreation } from './formValidator';
 import CustomForm from '@repo/ui/src/components/CustomForm';
-import { BaseComponentProps } from '@repo/types/general';
+import { BaseComponentProps, RecordValue } from '@repo/types/general';
 import { REDIRECT_ROUTE } from '@repo/consts/general';
+import { useEffect, useState } from 'react';
 
-const MasterCreate = ({ actions, resource }: BaseComponentProps) => {
+const MasterCreate = ({
+  actions,
+  resource,
+  dataProvider,
+}: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
+
+  const [termsOfUseIDs, setTermsOfUseIDs] = useState([]);
+  const [licenseIDs, setLicenseIDs] = useState([]);
+
+  const handleSave = async (values: RecordValue) => {
+    console.log({ values });
+  };
+
+  useEffect(() => {
+    const getTermOfUseAndLicense = async () => {
+      const termsOfUses = await dataProvider.getAll('term-of-uses');
+      const licenses = await dataProvider.getAll('licenses');
+
+      setTermsOfUseIDs(
+        termsOfUses.map(({ id, version }: TermOfUseResponseIF) => {
+          return { id, name: `${id} : バージョン${version}` };
+        })
+      );
+
+      setLicenseIDs(
+        licenses.map(({ id, version }: LicenseResponseIF) => {
+          return { id, name: `${id} : バージョン${version}` };
+        })
+      );
+    };
+
+    getTermOfUseAndLicense();
+  }, []);
 
   return (
     <Create
@@ -26,9 +59,10 @@ const MasterCreate = ({ actions, resource }: BaseComponentProps) => {
         validate={validateUserCreation}
         showSaveButton={true}
         showCancelButton={true}
+        handleSave={handleSave}
       >
         <TextInput
-          source="id"
+          source="appName"
           label="アプリケーション名"
           isRequired
           fullWidth
@@ -36,16 +70,14 @@ const MasterCreate = ({ actions, resource }: BaseComponentProps) => {
 
         <SelectInput
           source="termsOfUseID"
-          choices={userRoles}
+          choices={termsOfUseIDs}
           isRequired
-          defaultValue={'USER'}
           label="利用規約ID"
         />
         <SelectInput
           source="licenseID"
-          choices={userRoles}
+          choices={licenseIDs}
           isRequired
-          defaultValue={'USER'}
           label="ライセンスID"
         />
         <TextInput

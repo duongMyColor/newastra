@@ -1,4 +1,4 @@
-export interface TermOfUseResponselIF {
+export interface TermOfUseResponseIF {
   id?: number;
   memo: string;
   content:

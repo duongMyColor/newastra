@@ -1,106 +1,75 @@
-import { userContentLength } from '@repo/consts/user';
 import validateForm, { ValidationRule } from '@repo/utils/formValidator';
 import { validatePassword } from '@repo/utils/password';
 import { RecordValue } from '@repo/types/general';
 
 const editionRules: ValidationRule[] = [
   {
-    field: 'role',
+    field: 'appName',
     required: true,
   },
   {
-    field: 'name',
+    field: 'termsOfUseID',
     required: true,
-    minLength: userContentLength.name.min,
-    maxLength: userContentLength.name.max,
   },
   {
-    field: 'email',
+    field: 'licenseID',
     required: true,
-    minLength: userContentLength.email.min,
-    maxLength: userContentLength.email.max,
   },
   {
-    field: 'newPassword',
+    field: 'packageName',
     required: true,
-    minLength: userContentLength.password.min,
-    maxLength: userContentLength.password.max,
   },
   {
-    field: 'confirmNewPassword',
+    field: 'assetBundleIOS',
     required: true,
-    minLength: userContentLength.password.min,
-    maxLength: userContentLength.password.max,
-    match: 'password',
-    unMatchMessage: 'Password does not match',
+  },
+  {
+    field: 'assetBundleAndroid',
+    required: true,
+  },
+  {
+    field: 'outlineUrl',
+    required: true,
   },
 ];
 
 const creationRules: ValidationRule[] = [
   {
-    field: 'username',
-    required: true,
-    minLength: userContentLength.username.min,
-    maxLength: userContentLength.username.max,
-  },
-  {
-    field: 'role',
+    field: 'appName',
     required: true,
   },
   {
-    field: 'name',
+    field: 'termsOfUseID',
     required: true,
-    minLength: userContentLength.name.min,
-    maxLength: userContentLength.name.max,
   },
   {
-    field: 'email',
+    field: 'licenseID',
     required: true,
-    minLength: userContentLength.email.min,
-    maxLength: userContentLength.email.max,
   },
   {
-    field: 'password',
+    field: 'packageName',
     required: true,
-    minLength: userContentLength.password.min,
-    maxLength: userContentLength.password.max,
   },
   {
-    field: 'confirmPassword',
+    field: 'assetBundleIOS',
     required: true,
-    minLength: userContentLength.password.min,
-    maxLength: userContentLength.password.max,
-    match: 'password',
-    unMatchMessage: 'Password does not match',
+  },
+  {
+    field: 'assetBundleAndroid',
+    required: true,
+  },
+  {
+    field: 'outlineUrl',
+    required: true,
   },
 ];
 
 const validateUserCreation = (values: RecordValue): RecordValue => {
-  const baseValidation = validateForm(values, creationRules);
-
-  const validPassword = validatePassword(values.password);
-
-  return validPassword
-    ? baseValidation
-    : {
-        ...baseValidation,
-        password:
-          'Password must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number',
-      };
+  return validateForm(values, creationRules);
 };
 
 const validateUserEdition = (values: RecordValue): RecordValue => {
-  const baseValidation = validateForm(values, editionRules);
-
-  const validPassword = validatePassword(values.newPassword);
-
-  return validPassword
-    ? baseValidation
-    : {
-        ...baseValidation,
-        newPassword:
-          'Password must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number',
-      };
+  return validateForm(values, editionRules);
 };
 
 export { validateUserCreation, validateUserEdition };

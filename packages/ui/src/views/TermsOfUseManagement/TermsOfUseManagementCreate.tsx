@@ -8,13 +8,12 @@ import {
   useNotify,
   useCreate,
 } from 'react-admin';
-import { useNavigate } from 'react-router-dom';
 
 import { validateUserCreation } from './formValidator';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps, RecordValue } from '@repo/types/general';
 import { REDIRECT_ROUTE } from '@repo/consts/general';
-import { convertToFormData, logFormData } from '@repo/utils/formData';
+import { convertToFormData } from '@repo/utils/formData';
 
 const TermsOfUseManagementCreate = ({
   actions,
@@ -22,18 +21,16 @@ const TermsOfUseManagementCreate = ({
 }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
   const notify = useNotify();
-  const navigate = useNavigate();
   const [create] = useCreate();
 
   const handleSave = async (values: RecordValue) => {
     try {
       const formData = convertToFormData(values, ['content']);
 
-      await create('term-of-uses', {
+      await create(resource, {
         data: formData,
       });
 
-      // navigate(resourcePath);
       notify('Success: Create Term of use successffuly', { type: 'success' });
     } catch (error) {
       notify('Error: Create Term of use failed: ' + error, { type: 'warning' });

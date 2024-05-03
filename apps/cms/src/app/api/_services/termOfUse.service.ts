@@ -1,4 +1,4 @@
-import { TermOfUsePostIF, TermOfUseResponselIF } from '@repo/types/termOfUse';
+import { TermOfUsePostIF } from '@repo/types/termOfUse';
 import {
   getAll,
   getOneById,
@@ -15,7 +15,7 @@ import {
 import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
 import { convertFormDataToObject } from '@repo/utils/objectUtils';
-import { putObject, getObject } from '@/lib/cloudflare-r2';
+import { putObject } from '@/lib/cloudflare-r2';
 class TermOfUseFactory {
   static async create({ payload }: { payload: FormData }) {
     const paylodObj = convertFormDataToObject(payload);

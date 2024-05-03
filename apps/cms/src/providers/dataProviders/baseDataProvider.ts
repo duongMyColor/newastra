@@ -42,8 +42,6 @@ const baseDataProvider: DataProvider = {
     resource: string,
     params: GetListParams
   ): Promise<GetListResult> => {
-    console.log('getList');
-
     const { page, perPage } = params.pagination;
     const { field, order } = params.sort;
     const query = {
@@ -105,6 +103,15 @@ const baseDataProvider: DataProvider = {
     const query = JSON.stringify(params);
 
     const url = `${apiUrl}/${resource}/refer?${query}`;
+    const {
+      json: { metadata },
+    } = await httpClient(url);
+
+    return metadata;
+  },
+
+  getAll: async (resource: string) => {
+    const url = `${apiUrl}/${resource}/batch`;
     const {
       json: { metadata },
     } = await httpClient(url);
