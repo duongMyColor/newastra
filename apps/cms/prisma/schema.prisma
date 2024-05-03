@@ -61,7 +61,7 @@ model AplicationMaster {
   updatedAt          DateTime @updatedAt
 
   termOfUse TermsOfUse @relation(fields: [termsOfUseID], references: [id])
-  license   License?   @relation(fields: [licenseID], references: [id])
+  license   License    @relation(fields: [licenseID], references: [id])
 
   acsta AcstaManagement[]
 }

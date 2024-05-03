@@ -27,6 +27,11 @@ import {
   PutObjectViaPresignedUrlParams,
 } from '@repo/types/dataProvider';
 import { RecordValue } from '@repo/types/general';
+import {
+  MultipartUploadActions,
+  MultipartUploadAllowMethods,
+  MultipartUploadBody,
+} from '@repo/types/upload';
 
 const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api`;
 const httpClient = fetchUtils.fetchJson;
@@ -256,6 +261,34 @@ const baseDataProvider: DataProvider = {
       body: JSON.stringify(params),
     });
     console.log(':::response', response);
+
+    return {
+      data: response,
+    };
+  },
+
+  multipartUpload: async (
+    method: MultipartUploadAllowMethods,
+    action: MultipartUploadActions,
+    params: { body: MultipartUploadBody | FormData }
+  ) => {
+    const url = `${apiUrl}/upload/multipart/${action}`;
+
+    if (method === 'PUT') {
+      const response = await httpClient(url, {
+        method: method,
+        body: params.body as FormData,
+      });
+
+      return {
+        data: response,
+      };
+    }
+
+    const response = await httpClient(url, {
+      method: method,
+      body: JSON.stringify(params),
+    });
 
     return {
       data: response,

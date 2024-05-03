@@ -1,10 +1,11 @@
-import {userRoles } from '@repo/consts/user';
+import { userRoles } from '@repo/consts/user';
 import {
   TextInput,
   Create,
   SelectInput,
   FileInput,
   FileField,
+  DateTimeInput,
 } from 'react-admin';
 
 import { validateUserCreation } from './formValidator';
@@ -16,7 +17,10 @@ const MasterCreate = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
 
   return (
-    <Create redirect={REDIRECT_ROUTE.list} title="アプリケーションマスタ　新规作成">
+    <Create
+      redirect={REDIRECT_ROUTE.list}
+      title="アプリケーションマスタ　新规作成"
+    >
       <CustomForm
         pathTo={resourcePath}
         validate={validateUserCreation}
@@ -24,7 +28,7 @@ const MasterCreate = ({ actions, resource }: BaseComponentProps) => {
         showCancelButton={true}
       >
         <TextInput
-          source="appName"
+          source="id"
           label="アプリケーション名"
           isRequired
           fullWidth
