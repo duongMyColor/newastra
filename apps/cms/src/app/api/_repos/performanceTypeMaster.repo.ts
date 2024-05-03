@@ -1,13 +1,17 @@
-import { ProductPostIF } from '@repo/types/product';
+import { PerformanceTypeMasterPostIF } from '@repo/types/performanceTypeMaster';
 import { prisma } from '@/lib/prisma';
 import { BaseRepo } from './base/base.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 
-const model = prisma.product;
+const model = prisma.performaceTypeMaster;
 const relationFieldName = 'ProductDetail';
 
 const getAll = async () => {
   return await new BaseRepo(model).getAll();
+};
+
+const count = async () => {
+  return await new BaseRepo(model).count();
 };
 
 const getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
@@ -18,23 +22,23 @@ const getOneById = async (id: number) => {
   return await new BaseRepo(model).getOneById(id);
 };
 
-const getByIdWithDetail = async (id: number) => {
-  const product = await prisma.product.findUnique({
-    where: {
-      id: id,
-    },
-    include: {
-      ProductDetail: true,
-    },
-  });
-  return product;
-};
+// const getByIdWithDetail = async (id: number) => {
+//   const product = awai tmodel.findUnique({
+//     where: {
+//       id: id,
+//     },
+//     include: {
+//       ProductDetail: true,
+//     },
+//   });
+//   return product;
+// };
 
-const insert = async (payload: ProductPostIF) => {
+const insert = async (payload: PerformanceTypeMasterPostIF) => {
   return await new BaseRepo(model).insert(payload);
 };
 
-const insertMany = async (products: ProductPostIF[]) => {
+const insertMany = async (products: PerformanceTypeMasterPostIF[]) => {
   return await new BaseRepo(model).insertMany(products);
 };
 
@@ -43,13 +47,13 @@ const updateById = async ({
   payload,
 }: {
   id: number;
-  payload: ProductPostIF;
+  payload: PerformanceTypeMasterPostIF;
 }) => {
   return await new BaseRepo(model).updateById({ id, payload });
 };
 
 const updateManyById = async (
-  updates: { id: number; data: ProductPostIF }[]
+  updates: { id: number; data: PerformanceTypeMasterPostIF }[]
 ) => {
   return await new BaseRepo(model).updateManyById(updates);
 };
@@ -72,10 +76,11 @@ export {
   insert,
   updateById,
   deleteById,
-  getByIdWithDetail,
+  // getByIdWithDetail,
   updateManyById,
   insertMany,
   getAllWithQuery,
   deleteManyById,
   deleteWithRelation,
+  count,
 };

@@ -6,6 +6,7 @@ import { Stack, Button } from '@mui/material';
 import { RecordValue } from '@repo/types/general';
 import EditButtonFlexEnd from './EditButtonFlexEnd';
 import ReferenceButtonFlexEnd from './ReferenceButtonFlexEnd';
+import { CustomButtonByRole } from '@repo/ui/src/components/CustomButtonByRole';
 
 /**
  * Create CustomForm component with delete, save and cancel buttons
@@ -60,7 +61,9 @@ const CustomForm = ({
         alignItems="center"
       >
         {showDeleteButton ? (
-          <DeleteButtonFlexEnd label="アカウント削除" />
+          <CustomButtonByRole>
+            <DeleteButtonFlexEnd label="データ削除" />
+          </CustomButtonByRole>
         ) : null}
         {showSaveButton ? <SaveButton label="保存" /> : null}
         {showEditButton ? <EditButtonFlexEnd label="編集" /> : null}

@@ -1,9 +1,4 @@
-import {
-  List,
-  Datagrid,
-  TextField,
-  EditButton,
-} from 'react-admin';
+import { List, Datagrid, TextField, EditButton } from 'react-admin';
 import { BaseComponentProps } from '@repo/types/general';
 import { validRole } from '../_core/permissions';
 import { ListToolBar } from '@repo/ui/src/components/ListToolBar';
@@ -14,8 +9,8 @@ const MasterList = ({ actions, resource }: BaseComponentProps) => {
       title="アプリケーションマスタ　一覧"
       actions={<ListToolBar isShowCreate={validRole('create', actions)} />}
     >
-      <Datagrid rowClick="show">
-        <TextField source="id" label="No" />
+      <Datagrid rowClick="show" bulkActionButtons={false}>
+        <TextField source="no" label="No" />
         <TextField source="appName" label="アプリケーション名" />
         <TextField source="appId" label="アプリケーションID" />
         <TextField source="packageName" label="バンドルID/パッケージ名" />

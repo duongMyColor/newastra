@@ -1,17 +1,13 @@
-export interface ProductResponseIF {
-  id: id;
-  name: string;
-  masterCategory?: number;
-  subCategory?: number;
-  created: string;
-  updated: string;
-  ProductDetail?: PerformanceResponseIF[];
+export interface PerformanceTypeMasterResponseIF {
+  id: number;
+  typeName: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
-export interface ProductPostIF {
-  name: string;
-  masterCategory?: number;
-  subCategory?: number;
+export interface PerformanceTypeMasterPostIF {
+  id?: number;
+  typeName: string;
 }
 
 export interface ProductPostFormIF extends ProductPostIF {

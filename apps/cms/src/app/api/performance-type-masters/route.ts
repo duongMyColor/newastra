@@ -1,13 +1,17 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-import productController from '../_controllers/product.controller';
+import performanceMasterController from '../_controllers/performanceTypeMaster.controller';
 import errorHandlerMiddleware from '@/middlewares/errorHandler'; // Import the errorHandlerMiddleware
 
 export const GET = errorHandlerMiddleware(async (request: NextRequest) => {
-  return NextResponse.json(await productController.getAllWithQuery(request));
+  return NextResponse.json(
+    await performanceMasterController.getAllWithQuery(request)
+  );
 });
 
 export const POST = errorHandlerMiddleware(async (request: NextRequest) => {
-  return NextResponse.json(await productController.create(request));
+  return NextResponse.json(await performanceMasterController.create(request));
 });
+
+export const runtime = 'edge';

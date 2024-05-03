@@ -4,10 +4,12 @@ import {
   TextField,
   EditButton,
   DeleteWithConfirmButton,
+  FunctionField,
 } from 'react-admin';
 import { BaseComponentProps } from '@repo/types/general';
 import { validRole } from '../_core/permissions';
 import { ListToolBar } from '@repo/ui/src/components/ListToolBar';
+import { formatDateAcstar } from '@repo/utils/dateFormat';
 
 const PerformanceTypeMasterList = ({
   actions,
@@ -18,13 +20,25 @@ const PerformanceTypeMasterList = ({
       title="演出種別マスタ　一覧"
       actions={<ListToolBar isShowCreate={validRole('create', actions)} />}
     >
-      <Datagrid rowClick="show">
-        <TextField source="id" label="No" />
+      <Datagrid rowClick="show" bulkActionButtons={false}>
+        <TextField source="no" label="No" />
         <TextField source="typeName" label="演出種別名" />
         <TextField source="id" label="演出種別ID" />
-        <TextField source="date" label="登録日" />
+
+        <FunctionField
+          label="登録日"
+          render={({ createdAt }: { createdAt: string }) => {
+            return formatDateAcstar(createdAt);
+          }}
+        />
+
         {validRole('delete', actions) && (
-          <DeleteWithConfirmButton label="アカウント削除"></DeleteWithConfirmButton>
+          <DeleteWithConfirmButton
+            confirmContent="よろしいですか?"
+            confirmTitle="論理削除します"
+            label="データ削除"
+            confirmColor="warning"
+          ></DeleteWithConfirmButton>
         )}
         {validRole('edit', actions) && <EditButton label="編集"></EditButton>}
       </Datagrid>

@@ -7,6 +7,7 @@ import authProvider from '../providers/authProvider';
 import { Actions, Permission } from '@repo/types/roles';
 import React from 'react';
 import { checkRole } from '@repo/ui/src/views/_core/permissions';
+import { i18nProvider } from '@/providers/i18nProvider';
 
 // Define resources
 import Resources from './_core/resources';
@@ -14,7 +15,11 @@ import { ResourceIF } from '@repo/types/general';
 
 const AdminApp = () => {
   return (
-    <Admin dataProvider={dataProvider} authProvider={authProvider}>
+    <Admin
+      dataProvider={dataProvider}
+      authProvider={authProvider}
+      i18nProvider={i18nProvider}
+    >
       {(permission: Permission) => {
         return Resources.map((resource: ResourceIF) => {
           const actions: Actions = permission[resource.resource] as Actions;

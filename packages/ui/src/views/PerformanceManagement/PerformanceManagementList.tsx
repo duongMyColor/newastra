@@ -18,15 +18,20 @@ const PerformanceManagementList = ({
       title="演出管理　一覧"
       actions={<ListToolBar isShowCreate={validRole('create', actions)} />}
     >
-      <Datagrid rowClick="show">
-        <TextField source="id" label="No" />
+      <Datagrid rowClick="show" bulkActionButtons={false}>
+        <TextField source="no" label="No" />
         <TextField source="name" label="演出名" />
         <TextField source="id" label="演出ID" />
         <TextField source="performanceTypeMasterID" label="演出種別ID" />
 
         <TextField source="createdAt" label="登録日" />
         {validRole('delete', actions) && (
-          <DeleteWithConfirmButton label="アカウント削除"></DeleteWithConfirmButton>
+          <DeleteWithConfirmButton
+            confirmContent="よろしいですか?"
+            confirmTitle="論理削除します"
+            label="データ削除"
+            confirmColor="warning"
+          ></DeleteWithConfirmButton>
         )}
         {validRole('edit', actions) && <EditButton label="編集"></EditButton>}
       </Datagrid>
