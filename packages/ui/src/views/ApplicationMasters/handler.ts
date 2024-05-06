@@ -3,14 +3,14 @@ import dataProvider from '../../../../../apps/cms/src/providers/dataProviders/da
 import { UPLOAD_FOLDER_MAP } from '@repo/consts/general';
 const CHUNK_SIZE = 5 * 1024 * 1024; // 5MB in bytes
 
-export const tempUploadMultipart = async (file: File, encryptKey: string) => {
+export const uploadMuiltpart = async (file: File, encryptKey: string) => {
   const encryptedFile = await encryptFile(file, encryptKey);
   const timeStamp = new Date().getTime();
   const key = `${UPLOAD_FOLDER_MAP.applicationMaster}/${timeStamp}/${file.name}`;
   return key;
 };
 
-export const uploadMuiltpart = async (file: File, encryptKey: string) => {
+export const tempUploadMuiltpart = async (file: File, encryptKey: string) => {
   const encryptedFile = await encryptFile(file, encryptKey);
   const timeStamp = new Date().getTime();
   const key = `${UPLOAD_FOLDER_MAP.applicationMaster}/${timeStamp}/${file.name}`;

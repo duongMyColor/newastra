@@ -16,7 +16,7 @@ import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps, RAFile, RecordValue } from '@repo/types/general';
 import { REDIRECT_ROUTE } from '@repo/consts/general';
 import { useEffect, useState } from 'react';
-import { tempUploadMultipart, uploadMuiltpart } from './handler';
+import { uploadMuiltpart } from './handler';
 import { convertToFormData } from '@repo/utils/formData';
 
 const MasterCreate = ({
@@ -43,9 +43,8 @@ const MasterCreate = ({
     const assetBundleIOSFile = extractFile(assetBundleIOS);
     const assetBundleAndroidFile = extractFile(assetBundleAndroid);
 
-    const keyIOS = await tempUploadMultipart(assetBundleIOSFile, encryptKey);
-    console.log('encryptedIOS', keyIOS);
-    const keyAndroid = await tempUploadMultipart(
+    const keyIOS = await uploadMuiltpart(assetBundleIOSFile, encryptKey);
+    const keyAndroid = await uploadMuiltpart(
       assetBundleAndroidFile,
       encryptKey
     );

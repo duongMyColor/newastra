@@ -1,5 +1,4 @@
 import validateForm, { ValidationRule } from '@repo/utils/formValidator';
-import { validatePassword } from '@repo/utils/password';
 import { RecordValue } from '@repo/types/general';
 
 const editionRules: ValidationRule[] = [
@@ -17,18 +16,6 @@ const editionRules: ValidationRule[] = [
   },
   {
     field: 'packageName',
-    required: true,
-  },
-  {
-    field: 'assetBundleIOS',
-    required: true,
-  },
-  {
-    field: 'assetBundleAndroid',
-    required: true,
-  },
-  {
-    field: 'outlineUrl',
     required: true,
   },
 ];
