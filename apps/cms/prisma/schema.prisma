@@ -56,12 +56,13 @@ model AplicationMaster {
   licenseID          Int      @unique
   assetBundleIOS     String
   assetBundleAndroid String
+  encryptKey         String
   outlineUrl         String
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 
   termOfUse TermsOfUse @relation(fields: [termsOfUseID], references: [id])
-  license   License?   @relation(fields: [licenseID], references: [id])
+  license   License    @relation(fields: [licenseID], references: [id])
 
   acsta AcstaManagement[]
 }
@@ -106,6 +107,7 @@ model PerformaceManagement {
   assetBundleIOS          String
   acstaID                 Int
   assetBundleAndroid      String
+  encryptKey              String
   createdAt               DateTime @default(now())
   updatedAt               DateTime @updatedAt
 

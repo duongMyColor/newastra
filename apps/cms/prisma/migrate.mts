@@ -110,19 +110,33 @@ if (command === 'create') {
     `npx wrangler d1 migrations create ${database} "${migrationName}"`
   );
 
+  console.log({ result });
+
   s.stop('Creating migration');
 
   const resultLines = result.trim().split('\n');
+
+  console.log({ resultLines });
+
   let pathIndex = resultLines.findIndex((line) => line.endsWith('.sql'));
   if (pathIndex === -1) {
     log.error('Could not find migration path');
     process.exit(1);
   }
 
+  console.log({ pathIndex });
+
   let migrationPath = '';
 
-  while (pathIndex >= 0 && !migrationPath.startsWith('/')) {
+  while (
+    pathIndex >= 0 &&
+    !migrationPath.startsWith('/') &&
+    !resultLines[pathIndex]?.includes('editing here')
+  ) {
+    console.log({ pathIndex, migrationPath });
+
     migrationPath = resultLines[pathIndex--] + migrationPath;
+    console.log({ pathIndex, migrationPath });
   }
 
   if (!migrationPath) {
@@ -131,6 +145,8 @@ if (command === 'create') {
   }
 
   s.start('Generating migration diff from Prisma schema');
+
+  console.log({ migrationPath });
 
   await asyncExec(
     `npx prisma migrate diff --from-local-d1 --to-schema-datamodel ${

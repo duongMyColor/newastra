@@ -15,4 +15,8 @@ export const DELETE = errorHandlerMiddleware(async (request: NextRequest) => {
   return NextResponse.json(await licenseController.deleteMany(request));
 });
 
+export const GET = errorHandlerMiddleware(async (request: NextRequest) => {
+  return NextResponse.json(await licenseController.getAll());
+});
+
 export const runtime = 'edge';

@@ -26,7 +26,7 @@ const MasterShow = ({ actions, resource }: BaseComponentProps) => {
             showCancelButton={true}
           >
             <TextInput
-              source="appId"
+              source="id"
               label="アプリケーションID"
               disabled
               sx={disabledInputBackgroundStyle}

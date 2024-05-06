@@ -22,11 +22,13 @@ import type {
 } from 'react-admin';
 import removeEmptyProperties from '@repo/utils/removeEmptyProperties';
 import { exclude } from '@repo/utils/excludeKey';
-import {
-  GetPutPresignedUrlparams,
-  PutObjectViaPresignedUrlParams,
-} from '@repo/types/dataProvider';
+
 import { RecordValue } from '@repo/types/general';
+import {
+  MultipartUploadActions,
+  MultipartUploadAllowMethods,
+  MultipartUploadBody,
+} from '@repo/types/upload';
 
 const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api`;
 const httpClient = fetchUtils.fetchJson;
@@ -37,8 +39,6 @@ const baseDataProvider: DataProvider = {
     resource: string,
     params: GetListParams
   ): Promise<GetListResult> => {
-    console.log('getList');
-
     const { page, perPage } = params.pagination;
     const { field, order } = params.sort;
     const query = {
@@ -100,6 +100,15 @@ const baseDataProvider: DataProvider = {
     const query = JSON.stringify(params);
 
     const url = `${apiUrl}/${resource}/refer?${query}`;
+    const {
+      json: { metadata },
+    } = await httpClient(url);
+
+    return metadata;
+  },
+
+  getAll: async (resource: string) => {
+    const url = `${apiUrl}/${resource}/batch`;
     const {
       json: { metadata },
     } = await httpClient(url);
@@ -256,6 +265,23 @@ const baseDataProvider: DataProvider = {
       body: JSON.stringify(params),
     });
     console.log(':::response', response);
+
+    return {
+      data: response,
+    };
+  },
+
+  multipartUpload: async (
+    method: MultipartUploadAllowMethods,
+    action: MultipartUploadActions,
+    params: { body: MultipartUploadBody }
+  ) => {
+    const url = `${apiUrl}/upload/multipart/${action}`;
+
+    const response = await httpClient(url, {
+      method: method,
+      body: JSON.stringify(params),
+    });
 
     return {
       data: response,

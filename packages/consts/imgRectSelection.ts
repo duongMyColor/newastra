@@ -20,6 +20,7 @@ const TEXT_OPTIONS = {
   textBackgroundColor: 'white',
 };
 
+
 export {
   CANVAS_WIDTH,
   CANVAS_HEIGHT,
@@ -27,4 +28,4 @@ export {
   SIZE_FALLBACK,
   RECT_OPTIONS,
   TEXT_OPTIONS,
-}
+};
