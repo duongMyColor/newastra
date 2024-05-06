@@ -9,5 +9,5 @@ export const CustomButtonByRole = ({
   children,
 }: CustomButtonByRoleProps) => {
   const record = useRecordContext();
-  return <>{record.role !== 'ADMIN' && children && <div>{children}</div>}</>;
+  return <>{record?.role !== 'ADMIN' && children && <div>{children}</div>}</>;
 };

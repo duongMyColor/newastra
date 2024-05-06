@@ -119,12 +119,6 @@ const MasterEditForm = ({
         handleSave={handleSave}
       >
         <TextInput
-          source="id"
-          label="アプリケーションID"
-          isRequired
-          fullWidth
-        />
-        <TextInput
           source="appName"
           label="アプリケーション名"
           isRequired

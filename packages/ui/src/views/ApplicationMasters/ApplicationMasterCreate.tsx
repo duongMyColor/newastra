@@ -152,6 +152,7 @@ const MasterCreate = ({
           source="outlineUrl"
           label="アクスタ枠データパス"
           placeholder="アップロード"
+          accept={'image/*'}
         >
           <FileField source="src" title="title" />
         </FileInput>
