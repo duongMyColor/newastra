@@ -4,7 +4,7 @@ import { BaseRepo } from './base/base.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
 
-const model = prisma.animal;
+const model = prisma.aplicationMaster;
 const child = 'memo';
 const parent = 'classification';
 

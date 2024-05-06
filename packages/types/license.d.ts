@@ -1,4 +1,4 @@
-export interface LicenseResponselIF {
+export interface LicenseResponseIF {
   id?: number;
   memo: string;
   content:

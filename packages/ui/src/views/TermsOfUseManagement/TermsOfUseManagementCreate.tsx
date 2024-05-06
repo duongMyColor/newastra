@@ -10,7 +10,6 @@ import {
   useDataProvider,
   DateTimeInput,
 } from 'react-admin';
-import { useNavigate } from 'react-router-dom';
 
 import { validateUserCreation } from './formValidator';
 import CustomForm from '@repo/ui/src/components/CustomForm';
@@ -19,6 +18,7 @@ import { REDIRECT_ROUTE } from '@repo/consts/general';
 import { convertToFormData, logFormData } from '@repo/utils/formData';
 import { TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const TermsOfUseManagementCreate = ({
   actions,
@@ -26,8 +26,8 @@ const TermsOfUseManagementCreate = ({
 }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
   const notify = useNotify();
-  const navigate = useNavigate();
   const [create] = useCreate();
+  const navigate = useNavigate();
   const dataProvider = useDataProvider();
   const [oldDate, setOldDate] = useState<Date>();
 
@@ -37,7 +37,7 @@ const TermsOfUseManagementCreate = ({
     try {
       const formData = convertToFormData(values, ['content']);
 
-      await create('term-of-uses', {
+      await create(resource, {
         data: formData,
       });
 

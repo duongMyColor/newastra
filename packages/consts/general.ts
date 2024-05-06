@@ -14,4 +14,12 @@ const MAP_RESOURE: Record<string, string> = {
   performances: 'performaceManagement',
 };
 
-export { baseUploadFolder, REDIRECT_ROUTE, MAP_RESOURE };
+const UPLOAD_FOLDER_MAP = {
+  termOfUse: 'term-of-use',
+  license: 'license',
+  applicationMaster: 'application-master',
+  performance: 'performance',
+  acstar: 'acstar',
+};
+
+export { baseUploadFolder, REDIRECT_ROUTE, UPLOAD_FOLDER_MAP, MAP_RESOURE };

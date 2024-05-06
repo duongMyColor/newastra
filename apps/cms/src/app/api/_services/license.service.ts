@@ -16,6 +16,8 @@ import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
 import { convertFormDataToObject } from '@repo/utils/objectUtils';
 import { putObject } from '@/lib/cloudflare-r2';
+import { UPLOAD_FOLDER_MAP } from '@repo/consts/general';
+
 class LicenseFactory {
   static async create({ payload }: { payload: FormData }) {
     const paylodObj = convertFormDataToObject(payload);
@@ -122,7 +124,7 @@ class UploadFileService {
         const fileName = file?.name;
         console.log('::: fileName', fileName);
 
-        const objKey = `term-of-use/${fileName}`;
+        const objKey = `${UPLOAD_FOLDER_MAP.license}/${fileName}`;
         const buffer = await file.arrayBuffer();
         console.log('::: buffer', buffer);
 

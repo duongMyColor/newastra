@@ -22,12 +22,14 @@ import type {
 } from 'react-admin';
 import removeEmptyProperties from '@repo/utils/removeEmptyProperties';
 import { exclude } from '@repo/utils/excludeKey';
-import {
-  GetPutPresignedUrlparams,
-  PutObjectViaPresignedUrlParams,
-} from '@repo/types/dataProvider';
+
 import { RecordValue } from '@repo/types/general';
 import { MAP_RESOURE } from '@repo/consts/general';
+import {
+  MultipartUploadActions,
+  MultipartUploadAllowMethods,
+  MultipartUploadBody,
+} from '@repo/types/upload';
 
 const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api`;
 const httpClient = fetchUtils.fetchJson;
@@ -38,8 +40,6 @@ const baseDataProvider: DataProvider = {
     resource: string,
     params: GetListParams
   ): Promise<GetListResult> => {
-    console.log('getList');
-
     const { page, perPage } = params.pagination;
     const { field, order } = params.sort;
     const query = {
@@ -107,13 +107,21 @@ const baseDataProvider: DataProvider = {
 
     return metadata;
   },
+
+  getAll: async (resource: string) => {
+    const url = `${apiUrl}/${resource}/batch`;
+    const {
+      json: { metadata },
+    } = await httpClient(url);
+
+    return metadata;
+  },
   // create a record
   create: async (
     resource: string,
     params: CreateParams
   ): Promise<CreateResult> => {
-
-    console.log({resource,params});
+    console.log({ resource, params });
     const url = `${apiUrl}/${resource}`;
 
     let body;
@@ -265,7 +273,7 @@ const baseDataProvider: DataProvider = {
     };
   },
   getIdLastest: async (resource: string) => {
-    console.log({resource});
+    console.log({ resource });
     const url = `${apiUrl}/id-lastest?source=${MAP_RESOURE[resource]}`;
     const {
       json: { metadata },
@@ -275,6 +283,22 @@ const baseDataProvider: DataProvider = {
 
     return {
       data: metadata,
+    };
+  },
+  multipartUpload: async (
+    method: MultipartUploadAllowMethods,
+    action: MultipartUploadActions,
+    params: { body: MultipartUploadBody }
+  ) => {
+    const url = `${apiUrl}/upload/multipart/${action}`;
+
+    const response = await httpClient(url, {
+      method: method,
+      body: JSON.stringify(params),
+    });
+
+    return {
+      data: response,
     };
   },
 };

@@ -1,7 +1,14 @@
-import { List, Datagrid, TextField, EditButton } from 'react-admin';
+import {
+  List,
+  Datagrid,
+  TextField,
+  EditButton,
+  FunctionField,
+} from 'react-admin';
 import { BaseComponentProps } from '@repo/types/general';
 import { validRole } from '../_core/permissions';
 import { ListToolBar } from '@repo/ui/src/components/ListToolBar';
+import { formatDateAcstar } from '@repo/utils/dateFormat';
 
 const MasterList = ({ actions, resource }: BaseComponentProps) => {
   return (
@@ -12,9 +19,15 @@ const MasterList = ({ actions, resource }: BaseComponentProps) => {
       <Datagrid rowClick="show" bulkActionButtons={false}>
         <TextField source="no" label="No" />
         <TextField source="appName" label="アプリケーション名" />
-        <TextField source="appId" label="アプリケーションID" />
+        <TextField source="id" label="アプリケーションID" />
         <TextField source="packageName" label="バンドルID/パッケージ名" />
-        <TextField source="date" label="登録日" />
+
+        <FunctionField
+          label="登録日"
+          render={({ createdAt }: { createdAt: string }) => {
+            return formatDateAcstar(createdAt);
+          }}
+        />
         {validRole('edit', actions) && <EditButton label="編集"></EditButton>}
       </Datagrid>
     </List>

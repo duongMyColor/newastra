@@ -4,13 +4,7 @@ import {
   TextField,
   EditButton,
   DeleteWithConfirmButton,
-  ShowButton,
-  TopToolbar,
-  CreateButton,
-  useShowContext,
-  useRecordContext,
 } from 'react-admin';
-import { Box } from '@mui/material';
 import { BaseComponentProps } from '@repo/types/general';
 import { validRole } from '../_core/permissions';
 import { ListToolBar } from '@repo/ui/src/components/ListToolBar';
@@ -22,7 +16,7 @@ const UserList = ({ actions, resource }: BaseComponentProps) => {
       title="管理ユーザー管理　一覧"
       actions={<ListToolBar isShowCreate={validRole('create', actions)} />}
     >
-      <Datagrid rowClick="show">
+      <Datagrid rowClick="show" bulkActionButtons={false}>
         <TextField source="no" label="No" />
         <TextField source="username" label="CMS-ID" />
         <TextField source="date" label="最縤ログイン" />
