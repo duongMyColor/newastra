@@ -7,4 +7,12 @@ const REDIRECT_ROUTE = {
   edit: 'edit',
 };
 
-export { baseUploadFolder, REDIRECT_ROUTE };
+const UPLOAD_FOLDER_MAP = {
+  termOfUse: 'term-of-use',
+  license: 'license',
+  applicationMaster: 'application-master',
+  performance: 'performance',
+  acstar: 'acstar',
+};
+
+export { baseUploadFolder, REDIRECT_ROUTE, UPLOAD_FOLDER_MAP };

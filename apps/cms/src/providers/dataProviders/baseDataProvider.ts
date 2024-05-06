@@ -22,10 +22,7 @@ import type {
 } from 'react-admin';
 import removeEmptyProperties from '@repo/utils/removeEmptyProperties';
 import { exclude } from '@repo/utils/excludeKey';
-import {
-  GetPutPresignedUrlparams,
-  PutObjectViaPresignedUrlParams,
-} from '@repo/types/dataProvider';
+
 import { RecordValue } from '@repo/types/general';
 import {
   MultipartUploadActions,
@@ -277,20 +274,9 @@ const baseDataProvider: DataProvider = {
   multipartUpload: async (
     method: MultipartUploadAllowMethods,
     action: MultipartUploadActions,
-    params: { body: MultipartUploadBody | FormData }
+    params: { body: MultipartUploadBody }
   ) => {
     const url = `${apiUrl}/upload/multipart/${action}`;
-
-    if (method === 'PUT') {
-      const response = await httpClient(url, {
-        method: method,
-        body: params.body as FormData,
-      });
-
-      return {
-        data: response,
-      };
-    }
 
     const response = await httpClient(url, {
       method: method,

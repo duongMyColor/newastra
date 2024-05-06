@@ -39,8 +39,4 @@ export const deleteObject = async (key: string) => {
   return BUCKET.delete(key);
 };
 
-export const uploadObjectMultipart = (file: File, keyPrefix: string) => {
-
-  
-
-};
+export const uploadObjectMultipart = (file: File, keyPrefix: string) => {};

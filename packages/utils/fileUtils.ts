@@ -98,13 +98,21 @@ const convertBase64ToObjectUrl = (base64: string) => {
   return url;
 };
 
+const CHUNK_SIZE = 1e6;
+
 const encryptFile = (file: File, password: string): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
 
     reader.onload = function (event) {
       const fileContent = event.target?.result as string;
-      const encrypted = CryptoJS.AES.encrypt(fileContent, password).toString();
+      let encrypted = '';
+
+      for (let i = 0; i < fileContent.length; i += CHUNK_SIZE) {
+        const chunk = fileContent.slice(i, i + CHUNK_SIZE);
+        encrypted += CryptoJS.AES.encrypt(chunk, password).toString();
+      }
+
       resolve(encrypted);
     };
 
@@ -122,9 +130,15 @@ const decryptFile = (file: File | Blob, password: string): Promise<string> => {
 
     reader.onload = function (event) {
       const encryptedContent = event.target?.result as string;
-      const decrypted = CryptoJS.AES.decrypt(encryptedContent, password);
-      const originalText = decrypted.toString(CryptoJS.enc.Utf8);
-      resolve(originalText);
+      let decrypted = '';
+
+      for (let i = 0; i < encryptedContent.length; i += CHUNK_SIZE) {
+        const chunk = encryptedContent.slice(i, i + CHUNK_SIZE);
+        const bytes = CryptoJS.AES.decrypt(chunk, password);
+        const originalText = bytes.toString(CryptoJS.enc.Utf8);
+        decrypted += originalText;
+      }
+      resolve(decrypted);
     };
 
     reader.onerror = function (error) {

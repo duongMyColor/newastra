@@ -16,10 +16,22 @@ import {
 } from '../_repos/application-masters.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
+import { convertFormDataToObject } from '@repo/utils/objectUtils';
+import UploadFileService from './upload.service';
+import { UPLOAD_FOLDER_MAP } from '@repo/consts/general';
 
 class ApplicationMasterFactory {
-  static async create({ payload }: { payload: AplicationMasterPostIF }) {
-    return await new ApplicationMaster(payload).create();
+  static async create({ payload }: { payload: FormData }) {
+    const paylodObj = convertFormDataToObject(payload);
+    const timeStamps = new Date().getTime();
+    const key = `${UPLOAD_FOLDER_MAP.applicationMaster}/${timeStamps}/${paylodObj.appName}`;
+
+    const body = await new UploadFileService(
+      paylodObj as AplicationMasterPostIF,
+      key
+    ).uploadFile();
+
+    return await new ApplicationMaster(body).create();
   }
 
   static async createMany(animals: AplicationMasterPostIF[]) {
@@ -54,14 +66,16 @@ class ApplicationMasterFactory {
     return await getManyReference(params);
   }
 
-  static async updateById({
-    id,
-    payload,
-  }: {
-    id: number;
-    payload: AplicationMasterPostIF;
-  }) {
-    return await new ApplicationMaster(payload).updateById({ id });
+  static async updateById({ id, payload }: { id: number; payload: FormData }) {
+    const paylodObj = convertFormDataToObject(payload);
+    const timeStamps = new Date().getTime();
+    const key = `${UPLOAD_FOLDER_MAP.applicationMaster}/${timeStamps}/${paylodObj.appName}`;
+
+    const body = await new UploadFileService(
+      paylodObj as AplicationMasterPostIF,
+      key
+    ).uploadFile();
+    return await new ApplicationMaster(body).updateById({ id });
   }
 
   static async updateMany(updates: AplicationMasterPostIF[]) {
@@ -87,6 +101,7 @@ class ApplicationMaster implements AplicationMasterPostIF {
   public assetBundleIOS: string;
   public assetBundleAndroid: string;
   public outlineUrl: number;
+  public encryptKey: string;
   public updatedAt?: string | Date;
 
   public constructor({
@@ -97,6 +112,7 @@ class ApplicationMaster implements AplicationMasterPostIF {
     assetBundleIOS,
     assetBundleAndroid,
     outlineUrl,
+    encryptKey,
   }: AplicationMasterPostIF) {
     this.appName = appName;
     this.packageName = packageName;
@@ -105,6 +121,7 @@ class ApplicationMaster implements AplicationMasterPostIF {
     this.assetBundleIOS = assetBundleIOS;
     this.assetBundleAndroid = assetBundleAndroid;
     this.outlineUrl = outlineUrl;
+    this.encryptKey = encryptKey;
     this.updatedAt = new Date().toISOString();
   }
 

@@ -7,7 +7,7 @@ import { parseParams, parseSearchParams } from '@repo/utils/parseParams';
 
 class AplicationMasterController {
   create = async (request: NextRequest) => {
-    const payload: AplicationMasterPostIF = await request.json();
+    const payload: FormData = await request.formData();
 
     return new CREATED({
       message: 'created AplicationMaster OK!',
@@ -58,10 +58,10 @@ class AplicationMasterController {
     });
   };
 
-  getOneAndParent = async (id: number) => {
+  getOneById = async (id: number) => {
     return new OK({
       message: 'get AplicationMaster success!',
-      metadata: await AplicationMasterService.getOneAndParent(id),
+      metadata: await AplicationMasterService.getOneById(id),
     });
   };
 
@@ -73,7 +73,7 @@ class AplicationMasterController {
   };
 
   update = async (request: NextRequest, id: number) => {
-    const payload: AplicationMasterPostIF = await request.json();
+    const payload: FormData = await request.formData();
 
     return new OK({
       message: 'updated AplicationMaster OK!',

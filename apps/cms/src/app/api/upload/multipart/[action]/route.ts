@@ -7,7 +7,7 @@ import {
   deleteObject,
   resumeMultipartUpload,
 } from '@/lib/cloudflare-r2';
-import { convertFormDataToObject } from '@repo/utils/objectUtils';
+import { BadRequestError } from '@/app/api/_core/error.response';
 
 export const POST = errorHandlerMiddleware(
   async (
@@ -24,15 +24,13 @@ export const POST = errorHandlerMiddleware(
       }
       case 'mpu-complete': {
         if (uploadId === null) {
-          return new NextResponse('Missing uploadId', { status: 400 });
+          return new BadRequestError('Missing uploadId');
         }
 
         const multipartUpload = await resumeMultipartUpload({ key, uploadId });
 
         if (parts === null) {
-          return new NextResponse('Missing or incomplete parts', {
-            status: 400,
-          });
+          return new BadRequestError('Missing or incomplete parts');
         }
 
         // Error handling in case the multipart upload does not exist anymore
@@ -46,13 +44,11 @@ export const POST = errorHandlerMiddleware(
             },
           });
         } catch (error: any) {
-          return new NextResponse(error.message, { status: 400 });
+          return new BadRequestError(error.message);
         }
       }
       default:
-        return new NextResponse(`Unknown action ${action} for POST`, {
-          status: 400,
-        });
+        return new BadRequestError(`Unknown action ${action} for POST`);
     }
   }
 );
@@ -62,20 +58,17 @@ export const PUT = errorHandlerMiddleware(
     request: NextRequest,
     { params: { action } }: { params: { action: string } }
   ) => {
-    const payload: FormData = await request.formData();
+    const payload: MultipartUploadBody = await request.json();
 
-    const { key, uploadId, partNumberString, part }: { [key: string]: any } =
-      convertFormDataToObject(payload);
+    const { key, uploadId, partNumberString, part } = payload;
 
     switch (action) {
       case 'mpu-uploadpart': {
         if (partNumberString === null || uploadId === null) {
-          return new NextResponse('Missing partNumber or uploadId', {
-            status: 400,
-          });
+          return new BadRequestError('Missing partNumber or uploadId');
         }
         if (part === null) {
-          return new NextResponse('Missing request body', { status: 400 });
+          return new BadRequestError('Missing request body');
         }
 
         const partNumber = parseInt(partNumberString as string, 10);
@@ -88,13 +81,11 @@ export const PUT = errorHandlerMiddleware(
           );
           return new NextResponse(JSON.stringify(uploadedPart));
         } catch (error: any) {
-          return new NextResponse(error.message, { status: 400 });
+          return new BadRequestError(error.message);
         }
       }
       default:
-        return new NextResponse(`Unknown action ${action} for PUT`, {
-          status: 400,
-        });
+        return new BadRequestError(`Unknown action ${action} for PUT`);
     }
   }
 );
@@ -109,14 +100,14 @@ export const DELETE = errorHandlerMiddleware(
     switch (action) {
       case 'mpu-abort': {
         if (uploadId === null) {
-          return new NextResponse('Missing uploadId', { status: 400 });
+          return new BadRequestError('Missing uploadId');
         }
         const multipartUpload = await resumeMultipartUpload({ key, uploadId });
 
         try {
           multipartUpload.abort();
         } catch (error: any) {
-          return new NextResponse(error.message, { status: 400 });
+          return new BadRequestError(error.message);
         }
         return new NextResponse(null, { status: 204 });
       }
@@ -125,9 +116,7 @@ export const DELETE = errorHandlerMiddleware(
         return new NextResponse(null, { status: 204 });
       }
       default:
-        return new NextResponse(`Unknown action ${action} for DELETE`, {
-          status: 400,
-        });
+        return new BadRequestError(`Unknown action ${action} for DELETE`);
     }
   }
 );

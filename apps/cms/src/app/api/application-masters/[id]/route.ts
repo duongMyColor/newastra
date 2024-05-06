@@ -6,9 +6,7 @@ import errorHandlerMiddleware from '@/middlewares/errorHandler';
 export const GET = errorHandlerMiddleware(
   async (request: NextRequest, { params }: { params: { id: string } }) => {
     const id = Number(params.id);
-    return NextResponse.json(
-      await aplicationMasterController.getOneAndChildAndParent(id)
-    );
+    return NextResponse.json(await aplicationMasterController.getOneById(id));
   }
 );
 
