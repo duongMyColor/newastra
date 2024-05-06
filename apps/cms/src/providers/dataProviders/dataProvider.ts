@@ -21,8 +21,8 @@ const dataProvider = withLifecycleCallbacks(baseDataProvider, [
   // axtaManagementCallbackHandler,
   // PerformanceTypeMasterCallbackHandler,
   // performanceManagementCallbackHandlers,
-  // termOfUseManagementCallbackHandlers,
-  // licenseManagementCallbackHandlers,
+  termOfUseManagementCallbackHandlers,
+  licenseManagementCallbackHandlers,
 ]);
 
 export default dataProvider;

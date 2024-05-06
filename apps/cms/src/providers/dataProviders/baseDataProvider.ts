@@ -24,6 +24,7 @@ import removeEmptyProperties from '@repo/utils/removeEmptyProperties';
 import { exclude } from '@repo/utils/excludeKey';
 
 import { RecordValue } from '@repo/types/general';
+import { MAP_RESOURE } from '@repo/consts/general';
 import {
   MultipartUploadActions,
   MultipartUploadAllowMethods,
@@ -120,6 +121,7 @@ const baseDataProvider: DataProvider = {
     resource: string,
     params: CreateParams
   ): Promise<CreateResult> => {
+    console.log({ resource, params });
     const url = `${apiUrl}/${resource}`;
 
     let body;
@@ -270,7 +272,19 @@ const baseDataProvider: DataProvider = {
       data: response,
     };
   },
+  getIdLastest: async (resource: string) => {
+    console.log({ resource });
+    const url = `${apiUrl}/id-lastest?source=${MAP_RESOURE[resource]}`;
+    const {
+      json: { metadata },
+    } = await httpClient(url);
 
+    console.log(':::response', metadata);
+
+    return {
+      data: metadata,
+    };
+  },
   multipartUpload: async (
     method: MultipartUploadAllowMethods,
     action: MultipartUploadActions,

@@ -2,14 +2,12 @@ import {
   List,
   Datagrid,
   TextField,
-  EditButton,
-  TopToolbar,
-  CreateButton,
-  DeleteWithConfirmButton,
+  FunctionField,
 } from 'react-admin';
 import { BaseComponentProps } from '@repo/types/general';
 import { validRole } from '../_core/permissions';
 import { ListToolBar } from '@repo/ui/src/components/ListToolBar';
+import { formatDateAcstar } from '@repo/utils/dateFormat';
 
 const LicenseManagementList = ({ actions, resource }: BaseComponentProps) => {
   return (
@@ -19,11 +17,21 @@ const LicenseManagementList = ({ actions, resource }: BaseComponentProps) => {
     >
       <Datagrid rowClick="show" bulkActionButtons={false}>
         <TextField source="no" label="No" />
-        <TextField source="licenseId" label="ライセンスID" />
+        <TextField source="id" label="ライセンスID" />
         <TextField source="memo" label="メモ" />
         <TextField source="version" label="バージョン" />
-        <TextField source="dateStart" label="公開開始日" />
-        <TextField source="createdAt" label="登録日" />
+        <FunctionField
+          label="公開開始日"
+          render={({ publishedDate }: { publishedDate: string }) => {
+            return formatDateAcstar(publishedDate);
+          }}
+        />
+        <FunctionField
+          label="登録日"
+          render={({ createdAt }: { createdAt: string }) => {
+            return formatDateAcstar(createdAt);
+          }}
+        />
       </Datagrid>
     </List>
   );

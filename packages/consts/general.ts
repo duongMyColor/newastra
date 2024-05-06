@@ -7,6 +7,13 @@ const REDIRECT_ROUTE = {
   edit: 'edit',
 };
 
+const MAP_RESOURE: Record<string, string> = {
+  'term-of-uses': 'termsOfUse',
+  acstas: 'acstaManagement',
+  licenses: 'license',
+  performances: 'performaceManagement',
+};
+
 const UPLOAD_FOLDER_MAP = {
   termOfUse: 'term-of-use',
   license: 'license',
@@ -15,4 +22,4 @@ const UPLOAD_FOLDER_MAP = {
   acstar: 'acstar',
 };
 
-export { baseUploadFolder, REDIRECT_ROUTE, UPLOAD_FOLDER_MAP };
+export { baseUploadFolder, REDIRECT_ROUTE, UPLOAD_FOLDER_MAP, MAP_RESOURE };

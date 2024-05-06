@@ -1,4 +1,12 @@
-import { TextInput, ShowBase, Title, useShowContext } from 'react-admin';
+import {
+  TextInput,
+  ShowBase,
+  Title,
+  useShowContext,
+  FileField,
+  useRecordContext,
+  FunctionField,
+} from 'react-admin';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps } from '@repo/types/general';
 import { Box } from '@mui/material';
@@ -7,26 +15,19 @@ import {
   disabledInputBackgroundStyle,
   textareaStyles,
 } from '@repo/styles';
+import { formatDateAcstar } from '@repo/utils/dateFormat';
+import { useState } from 'react';
+import FormatInputDateShow from '@repo/ui/src/components/FormatInputDateShow';
+import ButtonPreviewFile from '@repo/ui/src/components/ButtonPreviewFile';
 
-const TermsOfUseManagementPreview = () => {
-  const { record } = useShowContext();
-  console.log(':::record', record);
-
-  return (
-    <div
-      style={textareaStyles}
-      dangerouslySetInnerHTML={{ __html: record?.content }}
-    />
-  );
-};
 
 const TermsOfUseManagementShow = ({
   actions,
   resource,
 }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
-  const { record } = useShowContext();
-  console.log(':::record', record);
+  const record = useRecordContext();
+  console.log(':::record show', record);
 
   return (
     <Box sx={boxStyles}>
@@ -35,7 +36,7 @@ const TermsOfUseManagementShow = ({
           <Title title="利用規約管理　参照" />
           <CustomForm pathTo={resourcePath} showCancelButton={true}>
             <TextInput
-              source="termOfUseId"
+              source="id"
               label="利用規約ID"
               fullWidth
               disabled
@@ -55,21 +56,9 @@ const TermsOfUseManagementShow = ({
               fullWidth
               sx={disabledInputBackgroundStyle}
             />
-            <TermsOfUseManagementPreview />
-            <TextInput
-              source="publishedDate"
-              label="公開開始日"
-              disabled
-              fullWidth
-              sx={disabledInputBackgroundStyle}
-            />
-            <TextInput
-              source="createdAt"
-              label="登録日時"
-              disabled
-              fullWidth
-              sx={disabledInputBackgroundStyle}
-            />
+            <ButtonPreviewFile />
+            <FormatInputDateShow label="公開開始日" typeDate="publishedDate" />
+            <FormatInputDateShow label="登録日時" typeDate="createdAt" />
           </CustomForm>
         </>
       </ShowBase>

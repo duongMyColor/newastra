@@ -9,6 +9,7 @@ import { parseParams, parseSearchParams } from '@repo/utils/parseParams';
 class LicenseController {
   create = async (request: NextRequest) => {
     const payload: FormData = await request.formData();
+    console.log({payload});
 
     return new CREATED({
       message: 'created License OK!',

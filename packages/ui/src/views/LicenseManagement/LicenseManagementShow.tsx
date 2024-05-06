@@ -8,6 +8,8 @@ import {
   disabledInputBackgroundStyle,
   textareaStyles,
 } from '@repo/styles';
+import ButtonPreviewFile from '@repo/ui/src/components/ButtonPreviewFile';
+import FormatInputDateShow from '@repo/ui/src/components/FormatInputDateShow';
 
 const LicenseManagementShow = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
@@ -21,7 +23,7 @@ const LicenseManagementShow = ({ actions, resource }: BaseComponentProps) => {
           <Title title="ライセンス管理　参照" />
           <CustomForm pathTo={resourcePath} showCancelButton={true}>
             <TextInput
-              source="termOfUseId"
+              source="id"
               label="利用規約ID"
               fullWidth
               disabled
@@ -41,25 +43,9 @@ const LicenseManagementShow = ({ actions, resource }: BaseComponentProps) => {
               fullWidth
               sx={disabledInputBackgroundStyle}
             />
-            <textarea
-              style={textareaStyles}
-              value={fileContent}
-              disabled
-            ></textarea>
-            <TextInput
-              source="dateStart"
-              label="公開開始日"
-              disabled
-              fullWidth
-              sx={disabledInputBackgroundStyle}
-            />
-            <TextInput
-              source="createdAt"
-              label="登録日時"
-              disabled
-              fullWidth
-              sx={disabledInputBackgroundStyle}
-            />
+            <ButtonPreviewFile />
+            <FormatInputDateShow label="公開開始日" typeDate="publishedDate" />
+            <FormatInputDateShow label="登録日時" typeDate="createdAt" />
           </CustomForm>
         </>
       </ShowBase>
