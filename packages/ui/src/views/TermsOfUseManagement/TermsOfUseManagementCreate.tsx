@@ -51,11 +51,12 @@ const TermsOfUseManagementCreate = ({
   const fetchIdLastest = async () => {
     const response = await dataProvider.getIdLastest(resource);
     const nextId = response.data.length > 0 ? response.data[0].id + 1 : 1;
-    const formatDate = new Date(response.data[0].publishedDate);
-
     setIdTermOfUse(`${nextId}`);
 
-    setOldDate(formatDate);
+    if (response.data[0]) {
+      const formatDate = new Date(response.data[0]?.publishedDate);
+      setOldDate(formatDate);
+    }
   };
   useEffect(() => {
     fetchIdLastest();
