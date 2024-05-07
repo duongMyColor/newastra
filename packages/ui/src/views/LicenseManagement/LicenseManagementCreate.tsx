@@ -37,9 +37,9 @@ const LicenseManagementCreate = ({ actions, resource }: BaseComponentProps) => {
       });
 
       navigate(resourcePath);
-      notify('成功: 利用規約が正常に作成されました', { type: 'success' });
+      notify('成功: ライセンスが正常に作成されました', { type: 'success' });
     } catch (error) {
-      notify('エラー: 利用規約の作成に失敗しました: ' + error, {
+      notify('エラー: ライセンスの作成に失敗しました: ' + error, {
         type: 'warning',
       });
     }
