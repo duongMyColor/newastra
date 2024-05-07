@@ -42,9 +42,11 @@ const TermsOfUseManagementCreate = ({
       });
 
       navigate(resourcePath);
-      notify('Success: Create Term of use successffuly', { type: 'success' });
+      notify('成功: 利用規約が正常に作成されました', { type: 'success' });
     } catch (error) {
-      notify('Error: Create Term of use failed: ' + error, { type: 'warning' });
+      notify('エラー: 利用規約の作成に失敗しました:' + error, {
+        type: 'warning',
+      });
     }
   };
 

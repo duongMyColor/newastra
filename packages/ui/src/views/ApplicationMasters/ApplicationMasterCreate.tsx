@@ -40,7 +40,7 @@ const MasterCreate = ({
 
     const { assetBundleIOS, assetBundleAndroid, ...rest } = values;
 
-    console.log({...rest});
+    console.log({ ...rest });
 
     const assetBundleIOSFile = extractFile(assetBundleIOS);
     const assetBundleAndroidFile = extractFile(assetBundleAndroid);
@@ -61,19 +61,21 @@ const MasterCreate = ({
     try {
       const formData = convertToFormData(req, ['outlineUrl']);
 
-
       const data = await create(resource, {
         data: formData,
       });
 
-      notify('Success: Create Application Master successffuly', {
+      notify('成功: アプリケーション マスターが正常に作成されました', {
         type: 'success',
       });
       navigate(resourcePath);
     } catch (error) {
-      notify('Error: Create Application Master failed: ' + error, {
-        type: 'warning',
-      });
+      notify(
+        'エラー: アプリケーション マスターの作成に失敗しました: ' + error,
+        {
+          type: 'warning',
+        }
+      );
     }
   };
 

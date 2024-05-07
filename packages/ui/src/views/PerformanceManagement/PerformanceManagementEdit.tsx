@@ -75,12 +75,12 @@ const PerformanceEditForm = ({ actions, resource }: BaseComponentProps) => {
         previousData: record,
       });
 
-      notify('Success: Create Application Master successffuly', {
+      notify('成功: 生産管理が正常に更新されました', {
         type: 'success',
       });
       navigate(resourcePath);
     } catch (error) {
-      notify('Error: Create Application Master failed: ' + error, {
+      notify('エラー: 生産管理の更新に失敗しました: ' + error, {
         type: 'warning',
       });
     }

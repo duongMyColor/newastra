@@ -37,9 +37,11 @@ const LicenseManagementCreate = ({ actions, resource }: BaseComponentProps) => {
       });
 
       navigate(resourcePath);
-      notify('Success: Create Term of use successffuly', { type: 'success' });
+      notify('成功: ライセンスが正常に作成されました', { type: 'success' });
     } catch (error) {
-      notify('Error: Create Term of use failed: ' + error, { type: 'warning' });
+      notify('エラー: ライセンスの作成に失敗しました: ' + error, {
+        type: 'warning',
+      });
     }
   };
 

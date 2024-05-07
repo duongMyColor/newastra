@@ -85,7 +85,7 @@ const validateUserCreation = (values: RecordValue): RecordValue => {
     : {
         ...baseValidation,
         password:
-          'Password must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number',
+          'パスワードには少なくとも 1 つの大文字、1 つの小文字、1 つの数字が含まれている必要があります',
       };
 };
 
@@ -99,7 +99,7 @@ const validateUserEdition = (values: RecordValue): RecordValue => {
     : {
         ...baseValidation,
         newPassword:
-          'Password must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number',
+          'パスワードには少なくとも 1 つの大文字、1 つの小文字、1 つの数字が含まれている必要があります',
       };
 };
 

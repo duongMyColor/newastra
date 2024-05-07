@@ -71,12 +71,12 @@ const MasterEditForm = ({
         previousData: record,
       });
 
-      notify('Success: Update Application Master successffuly', {
+      notify('成功: アプリケーション マスターを正常に更新しました', {
         type: 'success',
       });
       navigate(resourcePath);
     } catch (error) {
-      notify('Error: Update Application Master failed: ' + error, {
+      notify('エラー: アプリケーション マスターの更新に失敗しました:' + error, {
         type: 'warning',
       });
     }
