@@ -75,12 +75,12 @@ const PerformanceManagementCreate = ({
         data: formData,
       });
 
-      notify('Success: Create Application Master successffuly', {
+      notify('成功: アプリケーション マスターが正常に作成されました', {
         type: 'success',
       });
       navigate(resourcePath);
     } catch (error) {
-      notify('Error: Create Application Master failed: ' + error, {
+      notify('エラー: アプリケーション マスターの作成に失敗しました:' + error, {
         type: 'warning',
       });
     }

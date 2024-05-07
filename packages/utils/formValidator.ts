@@ -43,7 +43,7 @@ const validateMatch = (
   unMatchMessage: string
 ) => {
   return matchValue && value !== matchValue
-    ? unMatchMessage || 'The values do not match'
+    ? unMatchMessage || '値が一致しません'
     : null;
 };
 
@@ -57,10 +57,10 @@ const validateValue = (
   maxValue: number | undefined
 ) => {
   if (minValue !== undefined && value < minValue) {
-    return `Value should be greater than or equal to ${minValue}`;
+    return `値は以上である必要があります ${minValue}`;
   }
   if (maxValue !== undefined && value > maxValue) {
-    return `Value should be less than or equal to ${maxValue}`;
+    return `値は以上である必要があります ${maxValue}`;
   }
   return null;
 };
@@ -86,7 +86,7 @@ const validateForm = (
     errors[field] =
       validateRequired(value, required) ??
       validateLength(value, minLength, maxLength) ??
-      validateMatch(value, values[match], 'Password does not match');
+      validateMatch(value, values[match], 'パスワードが一致しません');
 
     if (minValue !== undefined || maxValue !== undefined) {
       const error = validateValue(value, minValue, maxValue);

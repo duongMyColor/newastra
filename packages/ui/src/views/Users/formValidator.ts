@@ -33,7 +33,7 @@ const editionRules: ValidationRule[] = [
     minLength: userContentLength.newPassword.min,
     maxLength: userContentLength.newPassword.max,
     match: 'newPassword',
-    unMatchMessage: 'Password does not match',
+    unMatchMessage: 'パスワードが一致しません',
   },
 ];
 
@@ -66,7 +66,7 @@ const creationRules: ValidationRule[] = [
     minLength: userContentLength.password.min,
     maxLength: userContentLength.password.max,
     match: 'password',
-    unMatchMessage: 'Password does not match',
+    unMatchMessage: 'パスワードが一致しません',
   },
 ];
 
@@ -80,14 +80,13 @@ const validateUserCreation = (values: RecordValue): RecordValue => {
     : {
         ...baseValidation,
         password:
-          'Password must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number',
+          'パスワードには少なくとも 1 つの大文字、1 つの小文字、1 つの数字が含まれている必要があります',
       };
 };
 
 const validateUserEdition = (values: RecordValue): RecordValue => {
   console.log('edit validate', values);
   const baseValidation = validateForm(values, editionRules);
-
 
   const validPassword =
     values.newPassword && values.confirmNewPassword
@@ -99,7 +98,7 @@ const validateUserEdition = (values: RecordValue): RecordValue => {
     : {
         ...baseValidation,
         newPassword:
-          'Password must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number',
+          'パスワードには少なくとも 1 つの大文字、1 つの小文字、1 つの数字が含まれている必要があります',
       };
 };
 
