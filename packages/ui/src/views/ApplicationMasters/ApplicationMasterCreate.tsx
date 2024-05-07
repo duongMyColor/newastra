@@ -16,7 +16,7 @@ import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps, RAFile, RecordValue } from '@repo/types/general';
 import { REDIRECT_ROUTE } from '@repo/consts/general';
 import { useEffect, useState } from 'react';
-import { uploadMuiltpart } from './handler';
+import { uploadMuiltpart } from '@repo/utils/multipartUpload';
 import { convertToFormData } from '@repo/utils/formData';
 
 const MasterCreate = ({
@@ -66,7 +66,7 @@ const MasterCreate = ({
       notify('Success: Create Application Master successffuly', {
         type: 'success',
       });
-      // navigate(resourcePath);
+      navigate(resourcePath);
     } catch (error) {
       notify('Error: Create Application Master failed: ' + error, {
         type: 'warning',
@@ -77,7 +77,7 @@ const MasterCreate = ({
   useEffect(() => {
     const getTermOfUseAndLicense = async () => {
       const termsOfUses = await dataProvider.getAll('term-of-uses');
-      const licenses = await dataProvider.getAll('licenses'); 
+      const licenses = await dataProvider.getAll('licenses');
 
       setTermsOfUseIDs(
         termsOfUses.map(({ id, version }: TermOfUseResponseIF) => {

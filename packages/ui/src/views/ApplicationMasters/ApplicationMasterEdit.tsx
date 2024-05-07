@@ -1,4 +1,4 @@
-import { userRoles } from '@repo/consts/user';
+
 import {
   TextInput,
   SelectInput,
@@ -23,7 +23,7 @@ import { LicenseResponseIF } from '@repo/types/license';
 import { TermOfUseResponseIF } from '@repo/types/termOfUse';
 import { useEffect, useState } from 'react';
 import { convertToFormData } from '@repo/utils/formData';
-import { uploadMuiltpart } from './handler';
+import { uploadMuiltpart } from '@repo/utils/multipartUpload';
 
 const MasterEditForm = ({
   actions,
@@ -33,7 +33,6 @@ const MasterEditForm = ({
   const resourcePath = `/${resource}`;
   const { record } = useEditContext();
 
-  const { permissions } = usePermissions();
   const notify = useNotify();
   const navigate = useNavigate();
   const [update] = useUpdate();
