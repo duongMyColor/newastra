@@ -58,9 +58,9 @@ export const PUT = errorHandlerMiddleware(
     request: NextRequest,
     { params: { action } }: { params: { action: string } }
   ) => {
-    const payload: MultipartUploadBody = await request.json();
+    const { body }: MultipartUploadBody = await request.json();
 
-    const { key, uploadId, partNumberString, part } = payload;
+    const { key, uploadId, partNumberString, part } = body;
 
     switch (action) {
       case 'mpu-uploadpart': {
@@ -72,6 +72,7 @@ export const PUT = errorHandlerMiddleware(
         }
 
         const partNumber = parseInt(partNumberString as string, 10);
+
         const multipartUpload = await resumeMultipartUpload({ key, uploadId });
 
         try {

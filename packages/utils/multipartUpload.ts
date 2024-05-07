@@ -1,5 +1,5 @@
 import { encryptFile } from '@repo/utils/fileUtils';
-import dataProvider from '../../../../../apps/cms/src/providers/dataProviders/dataProvider';
+import dataProvider from '../../apps/cms/src/providers/dataProviders/dataProvider';
 import { UPLOAD_FOLDER_MAP } from '@repo/consts/general';
 const CHUNK_SIZE = 5 * 1024 * 1024; // 5MB in bytes
 
@@ -8,7 +8,7 @@ interface UploadedPart {
   PartNumber: number;
 }
 
-const createMultipartUpload = async (key: string) => {
+export const createMultipartUpload = async (key: string) => {
   const {
     data: {
       json: { key: resKey, uploadId },
@@ -20,7 +20,7 @@ const createMultipartUpload = async (key: string) => {
   return { resKey, uploadId };
 };
 
-const uploadParts = async (
+export const uploadParts = async (
   encryptedFile: any,
   resKey: string,
   uploadId: string
@@ -68,7 +68,7 @@ const uploadParts = async (
   return parts;
 };
 
-const completeMultipartUpload = async (
+export const completeMultipartUpload = async (
   resKey: string,
   uploadId: string,
   parts: UploadedPart[]
