@@ -10,7 +10,7 @@ import type {
 } from 'react-admin';
 
 import dayjs from 'dayjs';
-const AxtaManagementCallbackHandler = {
+const AcstaManagementCallbackHandler = {
   resource: 'acstas',
 
   afterGetList: async (
@@ -23,7 +23,7 @@ const AxtaManagementCallbackHandler = {
       {
         id: '1',
         managementName: 'duong',
-        acstaName: 'axta',
+        acstaName: 'acsta',
         status: 'active',
         dateStart: dayjs(new Date()).format('YYYY.MM.DD HH:MM'),
         dateEnd: dayjs(new Date()).format('YYYY.MM.DD HH:MM'),
@@ -54,7 +54,7 @@ const AxtaManagementCallbackHandler = {
       appId: 'USER',
       managementName: 'duong',
       SumoId: 'USER',
-      acstaName: 'axta',
+      acstaName: 'acsta',
       status: 'active',
       acstaThumbnail: 'acsta-waku.png',
       acstaImage: '/sumo.png',
@@ -71,4 +71,4 @@ const AxtaManagementCallbackHandler = {
   },
 };
 
-export default AxtaManagementCallbackHandler;
+export default AcstaManagementCallbackHandler;

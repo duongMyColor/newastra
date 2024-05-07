@@ -1,9 +1,10 @@
-import { PerformancePostIF } from '@repo/types/performance';
+import { AcstaPostIF } from '@repo/types/acsta';
 import { prisma } from '@/lib/prisma';
 import { BaseRepo } from './base/base.repo';
 import { GetAllQueryIF } from '@repo/types/response';
+import { GetManyReferenceParams } from 'react-admin';
 
-const model = prisma.performaceManagement;
+const model = prisma.acstaManagement;
 
 const getAll = async () => {
   return await new BaseRepo(model).getAll();
@@ -16,19 +17,24 @@ const count = async () => {
 const getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
   return await new BaseRepo(model).getAllWithQuery({ sort, range, filter });
 };
+const getAllWithFilters = async ({ sort, range, filter }: GetAllQueryIF) => {
+  return await new BaseRepo(model).getAllWithFilters({ sort, range, filter });
+};
+
+const getManyReference = async (params: GetManyReferenceParams) => {
+  return new BaseRepo(model).getManyReference(params);
+};
 
 const getOneById = async (id: number) => {
   return await new BaseRepo(model).getOneById(id);
 };
 
-const insert = async (payload: PerformancePostIF) => {
+const insert = async (payload: AcstaPostIF) => {
   return await new BaseRepo(model).insert(payload);
 };
 
-const insertMany = async (products: PerformancePostIF[]) => {
-  console.log('products: ', products);
-
-  return await new BaseRepo(model).insertMany(products);
+const insertMany = async (body: AcstaPostIF[]) => {
+  return await new BaseRepo(model).insertMany(body);
 };
 
 const updateById = async ({
@@ -36,12 +42,12 @@ const updateById = async ({
   payload,
 }: {
   id: number;
-  payload: PerformancePostIF;
+  payload: AcstaPostIF;
 }) => {
   return await new BaseRepo(model).updateById({ id, payload });
 };
 
-const updateManyById = async (updates: PerformancePostIF[]) => {
+const updateManyById = async (updates: AcstaPostIF[]) => {
   return await new BaseRepo(model).updateManyById(updates);
 };
 
@@ -55,7 +61,6 @@ const deleteManyById = async (ids: number[]) => {
 
 export {
   getAll,
-  count,
   getOneById,
   insert,
   updateById,
@@ -64,4 +69,7 @@ export {
   insertMany,
   getAllWithQuery,
   deleteManyById,
+  getAllWithFilters,
+  getManyReference,
+  count,
 };

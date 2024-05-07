@@ -9,4 +9,9 @@ export const DELETE = errorHandlerMiddleware(async (request: NextRequest) => {
   );
 });
 
+export const GET = errorHandlerMiddleware(async () => {
+  return NextResponse.json(await performanceMasterController.getAll());
+});
+
+
 export const runtime = 'edge';

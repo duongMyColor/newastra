@@ -17,7 +17,7 @@ import { useState } from 'react';
 import { StatusTextField } from '@repo/ui/src/components/CustomField/StatusTextField';
 import { ScanDataField } from '@repo/ui/src/components/CustomField/ScanDataField';
 import { disabledInputBackgroundStyle, boxStyles } from '@repo/styles';
-const AxtaManagementShow = ({ actions, resource }: BaseComponentProps) => {
+const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
 
   const recordId = useGetRecordId();
@@ -157,4 +157,4 @@ const AxtaManagementShow = ({ actions, resource }: BaseComponentProps) => {
   );
 };
 
-export default AxtaManagementShow;
+export default AcstaManagementShow;

@@ -13,7 +13,7 @@ import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps } from '@repo/types/general';
 import { REDIRECT_ROUTE } from '@repo/consts/general';
 
-const AxtaManagementCreate = ({ actions, resource }: BaseComponentProps) => {
+const AcstaManagementCreate = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
 
   return (
@@ -70,4 +70,4 @@ const AxtaManagementCreate = ({ actions, resource }: BaseComponentProps) => {
   );
 };
 
-export default AxtaManagementCreate;
+export default AcstaManagementCreate;

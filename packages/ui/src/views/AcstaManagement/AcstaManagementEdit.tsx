@@ -14,7 +14,7 @@ import { BaseComponentProps } from '@repo/types/general';
 import { Box } from '@mui/material';
 import { boxStyles } from '@repo/styles';
 
-const AxtaManagementEdit = ({ actions, resource }: BaseComponentProps) => {
+const AcstaManagementEdit = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
 
   return (
@@ -86,4 +86,4 @@ const AxtaManagementEdit = ({ actions, resource }: BaseComponentProps) => {
   );
 };
 
-export default AxtaManagementEdit;
+export default AcstaManagementEdit;

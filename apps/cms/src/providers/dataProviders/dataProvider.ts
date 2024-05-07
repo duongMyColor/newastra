@@ -4,7 +4,7 @@ import baseDataProvider from './baseDataProvider';
 import fakeProvider from './fakeDataProvider';
 import userCallbackHandler from './userCallbackHandlers';
 import applicationMasterCallbackHandler from './applicationMasterCallbackHandlers';
-import axtaManagementCallbackHandler from './axtaManagementCallbackHandlers';
+import acstaManagementCallbackHandler from './acstaManagementCallbackHandlers';
 import PerformanceTypeMasterCallbackHandler from './performanceTypeMasterCallbackHandlers';
 import performanceManagementCallbackHandlers from './performanceManagementCallbackHandlers';
 import termOfUseManagementCallbackHandlers from './termOfUseManagementCallbackHandlers';
@@ -18,9 +18,9 @@ import licenseManagementCallbackHandlers from './licenseManagementCallbackHandle
 const dataProvider = withLifecycleCallbacks(baseDataProvider, [
   // userCallbackHandler,
   // applicationMasterCallbackHandler,
-  // axtaManagementCallbackHandler,
+  // acstaManagementCallbackHandler,
   // PerformanceTypeMasterCallbackHandler,
-  // performanceManagementCallbackHandlers,
+  performanceManagementCallbackHandlers,
   termOfUseManagementCallbackHandlers,
   licenseManagementCallbackHandlers,
 ]);
