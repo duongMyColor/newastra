@@ -15,7 +15,7 @@ import { validateUserCreation } from './formValidator';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps, RecordValue } from '@repo/types/general';
 import { REDIRECT_ROUTE } from '@repo/consts/general';
-import { convertToFormData, logFormData } from '@repo/utils/formData';
+import { convertToFormData } from '@repo/utils/formData';
 import { TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';

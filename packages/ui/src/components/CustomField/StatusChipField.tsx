@@ -1,4 +1,4 @@
-import { ChipField, useRecordContext } from "react-admin";
+import { ChipField, useRecordContext } from 'react-admin';
 
 export const StatusChipField = ({
   source,

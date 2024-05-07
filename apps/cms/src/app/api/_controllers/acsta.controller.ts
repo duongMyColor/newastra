@@ -7,16 +7,16 @@ import type { NextRequest } from 'next/server';
 import { parseParams, parseSearchParams } from '@repo/utils/parseParams';
 
 class AcstaController {
-  // create = async (request: NextRequest) => {
-  //   const payload: FormData = await request.formData();
+  create = async (request: NextRequest) => {
+    const payload: FormData = await request.formData();
 
-  //   return new CREATED({
-  //     message: 'created Acsta OK!',
-  //     metadata: await AcstaService.create({
-  //       payload: payload,
-  //     }),
-  //   });
-  // };
+    return new CREATED({
+      message: 'created Acsta OK!',
+      metadata: await AcstaService.create({
+        payload: payload,
+      }),
+    });
+  };
 
   createMany = async (request: NextRequest) => {
     const payload: AcstaPostIF[] = await request.json();
@@ -68,17 +68,17 @@ class AcstaController {
     });
   };
 
-  // update = async (request: NextRequest, id: number) => {
-  //   const payload: FormData = await request.formData();
+  update = async (request: NextRequest, id: number) => {
+    const payload: FormData = await request.formData();
 
-  //   return new OK({
-  //     message: 'updated Acsta OK!',
-  //     metadata: await AcstaService.updateById({
-  //       id: id,
-  //       payload: payload,
-  //     }),
-  //   });
-  // };
+    return new OK({
+      message: 'updated Acsta OK!',
+      metadata: await AcstaService.updateById({
+        id: id,
+        payload: payload,
+      }),
+    });
+  };
 
   updateMany = async (request: NextRequest) => {
     const payload: AcstaPostIF[] = await request.json();

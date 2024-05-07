@@ -11,8 +11,6 @@ class UploadFileService {
 
   private async uploadToR2() {
     for (const key in this.object) {
-      console.log('::: key', typeof this.object[key]);
-
       if (typeof this.object[key] == 'object') {
         const file = this.object[key];
         const fileName = file?.name;

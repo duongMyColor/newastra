@@ -21,4 +21,8 @@ export const DELETE = errorHandlerMiddleware(async (request: NextRequest) => {
   );
 });
 
+export const GET = errorHandlerMiddleware(async (request: NextRequest) => {
+  return NextResponse.json(await aplicationMasterController.getAll());
+});
+
 export const runtime = 'edge';

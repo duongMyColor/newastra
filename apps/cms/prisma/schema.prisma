@@ -71,7 +71,6 @@ model AcstaManagement {
   id               Int      @id @default(autoincrement())
   managementName   String
   acstaName        String
-  status           String
   applicationID    Int
   thumbnailUrl     String
   scanImageUrl     String

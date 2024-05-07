@@ -2,10 +2,8 @@ import {
   TextInput,
   ShowBase,
   Title,
-  useShowContext,
-  FileField,
+
   useRecordContext,
-  FunctionField,
 } from 'react-admin';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps } from '@repo/types/general';
@@ -13,10 +11,9 @@ import { Box } from '@mui/material';
 import {
   boxStyles,
   disabledInputBackgroundStyle,
-  textareaStyles,
+
 } from '@repo/styles';
-import { formatDateAcstar } from '@repo/utils/dateFormat';
-import { useState } from 'react';
+
 import FormatInputDateShow from '@repo/ui/src/components/FormatInputDateShow';
 import ButtonPreviewFile from '@repo/ui/src/components/ButtonPreviewFile';
 

@@ -1,13 +1,13 @@
-import { TextInput, useRecordContext } from "react-admin";
+import { TextInput, useRecordContext } from 'react-admin';
 
 export const StatusTextField = ({ source }: { source: string }) => {
   const record = useRecordContext();
   return (
     <>
-      {record && record[source] === 'active' && (
+      {record && record[source] === 'アクティブ' && (
         <TextInput
           source={source}
-          label="アクティブ"
+          label="ステータス"
           disabled
           sx={{
             '& .Mui-disabled': {
@@ -17,10 +17,11 @@ export const StatusTextField = ({ source }: { source: string }) => {
         />
       )}
 
-      {record && record[source] === 'deActive' && (
+      {record && record[source] === '非アクティブ' && (
         <TextInput
           source={source}
-          label="非アクティブ"
+          // label="非アクティブ"
+          label="ステータス"
           disabled
           sx={{
             '& .Mui-disabled': {
