@@ -134,8 +134,3 @@ CREATE UNIQUE INDEX "KeyToken_refreshToken_key" ON "KeyToken"("refreshToken");
 -- CreateIndex
 CREATE UNIQUE INDEX "AplicationMaster_appName_key" ON "AplicationMaster"("appName");
 
--- CreateIndex
-CREATE UNIQUE INDEX "AplicationMaster_termsOfUseID_key" ON "AplicationMaster"("termsOfUseID");
-
--- CreateIndex
-CREATE UNIQUE INDEX "AplicationMaster_licenseID_key" ON "AplicationMaster"("licenseID");

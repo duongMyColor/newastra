@@ -4,12 +4,15 @@ import {
   Title,
   TextField,
   SimpleShowLayout,
+  FunctionField,
 } from 'react-admin';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps } from '@repo/types/general';
 import { Box } from '@mui/material';
 import { validRole } from '../_core/permissions';
 import { disabledInputBackgroundStyle, boxStyles } from '@repo/styles';
+import { formatDateAcstar } from '@repo/utils/dateFormat';
+import { extractFilename } from '@repo/utils/fileUtils';
 
 const MasterShow = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
@@ -66,24 +69,29 @@ const MasterShow = ({ actions, resource }: BaseComponentProps) => {
             />
 
             <SimpleShowLayout spacing={3}>
-              <TextField
-                source="assetBundleIOS"
+              <FunctionField
                 label="iOS用共通アセットバンドル"
-                disabled
+                render={({ assetBundleIOS }: { assetBundleIOS: string }) => {
+                  return extractFilename(assetBundleIOS);
+                }}
                 sx={disabledInputBackgroundStyle}
               />
-
-              <TextField
-                source="assetBundleAndroid"
+              <FunctionField
                 label="Android用共通アセットバンドル"
-                disabled
+                render={({
+                  assetBundleAndroid,
+                }: {
+                  assetBundleAndroid: string;
+                }) => {
+                  return extractFilename(assetBundleAndroid);
+                }}
                 sx={disabledInputBackgroundStyle}
               />
-
-              <TextField
-                source="outlineUrl"
+              <FunctionField
                 label="アクスタ枠データパス"
-                disabled
+                render={({ outlineUrl }: { outlineUrl: string }) => {
+                  return extractFilename(outlineUrl);
+                }}
                 sx={disabledInputBackgroundStyle}
               />
             </SimpleShowLayout>

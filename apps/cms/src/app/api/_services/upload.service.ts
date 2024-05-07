@@ -16,11 +16,9 @@ class UploadFileService {
       if (typeof this.object[key] == 'object') {
         const file = this.object[key];
         const fileName = file?.name;
-        console.log('::: fileName', fileName);
-
-        const objKey = `${this.keyPrefix}/${fileName}`;
+        const timestamp = new Date().getTime();
+        const objKey = `${this.keyPrefix}/${timestamp}/${fileName}`;
         const buffer = await file.arrayBuffer();
-        console.log('::: buffer', buffer);
 
         this.object[key] = await putObject(objKey, buffer);
       }

@@ -8,7 +8,6 @@ import {
   useCreate,
   useNotify,
   DateTimeInput,
-  useRecordContext,
 } from 'react-admin';
 import { TextField } from '@mui/material';
 
@@ -18,9 +17,7 @@ import { BaseComponentProps, RecordValue } from '@repo/types/general';
 import { REDIRECT_ROUTE } from '@repo/consts/general';
 import { useEffect, useState } from 'react';
 import { convertToFormData } from '@repo/utils/formData';
-import { formatDateAcstar } from '@repo/utils/dateFormat';
 import { useNavigate } from 'react-router-dom';
-
 
 const LicenseManagementCreate = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
@@ -49,11 +46,12 @@ const LicenseManagementCreate = ({ actions, resource }: BaseComponentProps) => {
   const fetchIdLastest = async () => {
     const response = await dataProvider.getIdLastest(resource);
     const nextId = response.data.length > 0 ? response.data[0].id + 1 : 1;
-
-    const formatDate = new Date(response.data[0].publishedDate);
     setIdLicense(`${nextId}`);
 
-    setOldDate(formatDate);
+    if (response.data[0]) {
+      const formatDate = new Date(response.data[0]?.publishedDate);
+      setOldDate(formatDate);
+    }
   };
   useEffect(() => {
     fetchIdLastest();
@@ -84,7 +82,6 @@ const LicenseManagementCreate = ({ actions, resource }: BaseComponentProps) => {
           defaultValue={oldDate}
           isRequired
         />
-
 
         <FileInput
           source="content"

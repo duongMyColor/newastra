@@ -13,7 +13,7 @@ import {
   getAllWithQuery,
   getAllWithFilters,
   getManyReference,
-} from '../_repos/application-masters.repo';
+} from '../_repos/applicationMaster.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
 import { convertFormDataToObject } from '@repo/utils/objectUtils';
@@ -23,13 +23,13 @@ import { UPLOAD_FOLDER_MAP } from '@repo/consts/general';
 class ApplicationMasterFactory {
   static async create({ payload }: { payload: FormData }) {
     const paylodObj = convertFormDataToObject(payload);
-    const timeStamps = new Date().getTime();
-    const key = `${UPLOAD_FOLDER_MAP.applicationMaster}/${timeStamps}/${paylodObj.appName}`;
 
     const body = await new UploadFileService(
       paylodObj as AplicationMasterPostIF,
-      key
+      UPLOAD_FOLDER_MAP.applicationMaster
     ).uploadFile();
+
+    console.log('body', body);
 
     return await new ApplicationMaster(body).create();
   }
@@ -68,12 +68,10 @@ class ApplicationMasterFactory {
 
   static async updateById({ id, payload }: { id: number; payload: FormData }) {
     const paylodObj = convertFormDataToObject(payload);
-    const timeStamps = new Date().getTime();
-    const key = `${UPLOAD_FOLDER_MAP.applicationMaster}/${timeStamps}/${paylodObj.appName}`;
 
     const body = await new UploadFileService(
       paylodObj as AplicationMasterPostIF,
-      key
+      UPLOAD_FOLDER_MAP.applicationMaster
     ).uploadFile();
     return await new ApplicationMaster(body).updateById({ id });
   }

@@ -14,16 +14,18 @@ import {
 } from '../_repos/license.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
+
 import { convertFormDataToObject } from '@repo/utils/objectUtils';
-import { putObject } from '@/lib/cloudflare-r2';
 import { UPLOAD_FOLDER_MAP } from '@repo/consts/general';
+import UploadFileService from './upload.service';
 
 class LicenseFactory {
   static async create({ payload }: { payload: FormData }) {
     const paylodObj = convertFormDataToObject(payload);
 
     const body = await new UploadFileService(
-      paylodObj as LicensePostIF
+      paylodObj as LicensePostIF,
+      UPLOAD_FOLDER_MAP.license
     ).uploadFile();
 
     return await new License(body).create();
@@ -60,7 +62,8 @@ class LicenseFactory {
     const paylodObj = convertFormDataToObject(payload);
 
     const body = await new UploadFileService(
-      paylodObj as LicensePostIF
+      paylodObj as LicensePostIF,
+      UPLOAD_FOLDER_MAP.license
     ).uploadFile();
 
     return await new License(body).updateById({ id });
@@ -105,38 +108,6 @@ class License implements LicensePostIF {
   public async updateById({ id }: { id: number }) {
     const payload: LicensePostIF = this;
     return await updateById({ id, payload });
-  }
-}
-
-class UploadFileService {
-  private object: LicensePostIF;
-
-  constructor(object: LicensePostIF) {
-    this.object = object;
-  }
-
-  private async uploadToR2() {
-    for (const key in this.object) {
-      console.log('::: key', typeof this.object[key]);
-
-      if (typeof this.object[key] == 'object') {
-        const file = this.object[key];
-        const fileName = file?.name;
-        console.log('::: fileName', fileName);
-
-        const objKey = `${UPLOAD_FOLDER_MAP.license}/${fileName}`;
-        const buffer = await file.arrayBuffer();
-        console.log('::: buffer', buffer);
-
-        this.object[key] = await putObject(objKey, buffer);
-      }
-    }
-
-    return this.object;
-  }
-
-  public uploadFile() {
-    return this.uploadToR2();
   }
 }
 
