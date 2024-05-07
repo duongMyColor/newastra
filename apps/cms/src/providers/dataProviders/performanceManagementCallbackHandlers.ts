@@ -1,55 +1,58 @@
-import type { DataProvider, GetListResult, GetOneResult } from 'react-admin';
+import type {
+  DataProvider,
+  GetListResult,
+  GetOneResult,
+  UpdateParams,
+} from 'react-admin';
 
-import dayjs from 'dayjs';
 const performanceManagementCallbackHandlers = {
   resource: 'performances',
-
-  afterGetList: async (
-    response: GetListResult,
-    dataProvider: DataProvider
-  ): Promise<GetListResult> => {
-    // const { classificationId } = response.data;
-
-    let fake = [
-      {
-        id: '1',
-        name: 'duong',
-        acstaID: '1',
-        performanceTypeMasterID: '2',
-        createdAt: dayjs(new Date()).format('YYYY.MM.DD HH:mm'),
-        assetBundleIOS: 'acsta_anime_ios',
-        assetBundleAndroid: 'acsta_anime_ios',
-      },
-    ];
-
-    return {
-      data: fake,
-      total: 1,
-    };
-  },
 
   afterGetOne: async (
     response: GetOneResult,
     dataProvider: DataProvider
   ): Promise<GetOneResult> => {
-    // const { classificationId } = response.data;
-
-    let fake = {
-      id: '1',
-      name: 'duong',
-      acstaID: '1',
-      performanceTypeMasterID: '2',
-      assetBundleIOS: 'acsta_anime_ios',
-      assetBundleAndroid: 'acsta_anime_ios',
-      createdAt: dayjs(new Date()).format('YYYY.MM.DD HH:mm'),
-      assetDataIOS: { src: 'acsta_anime_ios' },
-      assetDataAndroid: { src: 'acsta_anime_ios' },
+    const data = response.data;
+    console.log({ data });
+    data['assetDataAndroid'] = {
+      src: data.assetBundleAndroid.split('/').pop(),
+      title: data.assetBundleAndroid.split('/').pop(),
+    };
+    data['assetDataIOS'] = {
+      src: data.assetBundleIOS.split('/').pop(),
+      title: data.assetBundleIOS.split('/').pop(),
     };
 
-    return {
-      data: fake,
-    };
+    return response;
   },
+
 };
 
 export default performanceManagementCallbackHandlers;
+
+// import type { DataProvider, GetOneResult } from 'react-admin';
+
+// const performanceManagementCallbackHandlers = {
+//   resource: 'performances',
+
+//   afterGetOne: async (
+//     response: GetOneResult,
+//     dataProvider: DataProvider
+//   ): Promise<GetOneResult> => {
+//     const data = response.data;
+//     console.log({ data });
+
+//     // data['assetDataAndroid'] = {
+//     //   src: data.assetBundleAndroid.split('/').pop(),
+//     //   title: data.assetBundleAndroid.split('/').pop(),
+//     // };
+//     // data['assetDataIOS'] = {
+//     //   src: data.assetBundleIOS.split('/').pop(),
+//     //   title: data.assetBundleIOS.split('/').pop(),
+//     // };
+
+//     return response;
+//   },
+// };
+
+// export default performanceManagementCallbackHandlers;

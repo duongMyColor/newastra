@@ -1,4 +1,4 @@
-import { PerformancePostIF } from '@repo/types/product';
+import { PerformancePostIF } from '@repo/types/performance';
 import {
   getAll,
   getOneById,
@@ -8,15 +8,29 @@ import {
   updateManyById,
   deleteById,
   deleteManyById,
+  getAllWithQuery,
 } from '../_repos/performance.repo';
+import { GetAllQueryIF } from '@repo/types/response';
+import UploadFileService from './upload.service';
+import { UPLOAD_FOLDER_MAP } from '@repo/consts/general';
+import { convertFormDataToObject } from '@repo/utils/objectUtils';
 
-class ProductDetailFactory {
-  static async create({ payload }: { payload: PerformancePostIF }) {
-    return await new ProductDetail(payload).create();
+class PerformanceFactory {
+  static async create({ payload }: { payload: FormData }) {
+    const paylodObj = convertFormDataToObject(payload);
+    const timeStamps = new Date().getTime();
+    const key = `${UPLOAD_FOLDER_MAP.applicationMaster}/${timeStamps}/${paylodObj.appName}`;
+
+    const body = await new UploadFileService(
+      paylodObj as PerformancePostIF,
+      key
+    ).uploadFile();
+
+    return await new Performance(body).create();
   }
 
   static async createMany(products: PerformancePostIF[]) {
-    const payload = products.map((product) => new ProductDetail(product));
+    const payload = products.map((product) => new Performance(product));
     return await insertMany(payload);
   }
 
@@ -27,19 +41,24 @@ class ProductDetailFactory {
   static async getAll() {
     return await getAll();
   }
+  static async getAllWithQuery({ filter, range, sort }: GetAllQueryIF) {
+    return await getAllWithQuery({ filter, range, sort });
+  }
 
-  static async updateById({
-    id,
-    payload,
-  }: {
-    id: number;
-    payload: PerformancePostIF;
-  }) {
-    return await new ProductDetail(payload).updateById({ id });
+  static async updateById({ id, payload }: { id: number; payload: FormData }) {
+    const paylodObj = convertFormDataToObject(payload);
+    const timeStamps = new Date().getTime();
+    const key = `${UPLOAD_FOLDER_MAP.applicationMaster}/${timeStamps}/${paylodObj.appName}`;
+
+    const body = await new UploadFileService(
+      paylodObj as PerformancePostIF,
+      key
+    ).uploadFile();
+    return await new Performance(body).updateById({ id });
   }
 
   static async updateMany(updates: PerformancePostIF[]) {
-    const payload = updates.map((update) => new ProductDetail(update));
+    const payload = updates.map((update) => new Performance(update));
 
     return await updateManyById(payload);
   }
@@ -53,12 +72,13 @@ class ProductDetailFactory {
   }
 }
 
-class ProductDetail implements PerformancePostIF {
+class Performance implements PerformancePostIF {
   public id?: number;
   public name: string;
   public performanceTypeMasterID: number;
   public assetBundleIOS: string;
   public acstaID: number;
+  public encryptKey: string;
   public assetBundleAndroid: string;
   public updatedAt: string | Date;
 
@@ -67,6 +87,7 @@ class ProductDetail implements PerformancePostIF {
     performanceTypeMasterID,
     assetBundleIOS,
     acstaID,
+    encryptKey,
     assetBundleAndroid,
   }: PerformancePostIF) {
     this.name = name;
@@ -74,11 +95,14 @@ class ProductDetail implements PerformancePostIF {
     this.assetBundleIOS = assetBundleIOS;
     this.acstaID = acstaID;
     this.assetBundleAndroid = assetBundleAndroid;
+    this.encryptKey = encryptKey;
     this.updatedAt = new Date();
   }
 
   public async create() {
     const payload: PerformancePostIF = this;
+
+    console.log({ payload });
     // TODO: validate payload
     return await insert(payload);
   }
@@ -90,4 +114,4 @@ class ProductDetail implements PerformancePostIF {
   }
 }
 
-export default ProductDetailFactory;
+export default PerformanceFactory;

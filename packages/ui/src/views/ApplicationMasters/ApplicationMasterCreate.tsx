@@ -40,6 +40,8 @@ const MasterCreate = ({
 
     const { assetBundleIOS, assetBundleAndroid, ...rest } = values;
 
+    console.log({...rest});
+
     const assetBundleIOSFile = extractFile(assetBundleIOS);
     const assetBundleAndroidFile = extractFile(assetBundleAndroid);
 
@@ -59,7 +61,8 @@ const MasterCreate = ({
     try {
       const formData = convertToFormData(req, ['outlineUrl']);
 
-      await create(resource, {
+
+      const data = await create(resource, {
         data: formData,
       });
 

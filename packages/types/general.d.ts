@@ -7,7 +7,7 @@ export type ModelDeligate =
   | UserDeligate
   | MemoDeligate
   | ProductDeligate
-  | ProductDetailDeligate;
+  | PerformanceDeligate;
 
 export interface ResourceIF {
   list?: ReactComponent;

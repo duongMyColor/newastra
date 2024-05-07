@@ -24,11 +24,11 @@ import {
   ApplicationMasterShow,
 } from '@repo/ui/src/views/ApplicationMasters';
 import {
-  AxtaManagementShowList,
-  AxtaManagementCreate,
-  AxtaManagementEdit,
-  AxtaManagementShow,
-} from '@repo/ui/src/views/AxtaManagement';
+  AcstaManagementShowList,
+  AcstaManagementCreate,
+  AcstaManagementEdit,
+  AcstaManagementShow,
+} from '@repo/ui/src/views/AcstaManagement';
 
 import {
   PerformanceTypeMasterList,
@@ -74,10 +74,10 @@ const Resources: ResourceIF[] = [
     label: 'アプリケーションマスタ',
   },
   {
-    list: AxtaManagementShowList,
-    edit: AxtaManagementEdit,
-    create: AxtaManagementCreate,
-    show: AxtaManagementShow,
+    list: AcstaManagementShowList,
+    edit: AcstaManagementEdit,
+    create: AcstaManagementCreate,
+    show: AcstaManagementShow,
     resource: 'acstas',
     label: 'アクスタ管理',
   },

@@ -4,6 +4,7 @@ import {
   Title,
   TextField,
   SimpleShowLayout,
+  FunctionField,
 } from 'react-admin';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps } from '@repo/types/general';
@@ -49,17 +50,22 @@ const PerformanceManagementShow = ({
             />
 
             <SimpleShowLayout spacing={3}>
-              <TextField
-                source="assetBundleIOS"
+              <FunctionField
                 label="アセットバンドルデータ (iOS)"
-                disabled
-                sx={disabledInputBackgroundStyle}
+                render={({ assetBundleIOS }: { assetBundleIOS: string }) => {
+                  return assetBundleIOS.split('/').pop();
+                }}
               />
-              <TextField
-                source="assetBundleAndroid"
+
+              <FunctionField
                 label="アセットバンドルデータ (Android)"
-                disabled
-                sx={disabledInputBackgroundStyle}
+                render={({
+                  assetBundleAndroid,
+                }: {
+                  assetBundleAndroid: string;
+                }) => {
+                  return assetBundleAndroid.split('/').pop();
+                }}
               />
             </SimpleShowLayout>
 

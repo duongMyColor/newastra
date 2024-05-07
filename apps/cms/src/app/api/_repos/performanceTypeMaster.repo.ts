@@ -4,7 +4,7 @@ import { BaseRepo } from './base/base.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 
 const model = prisma.performaceTypeMaster;
-const relationFieldName = 'ProductDetail';
+const relationFieldName = 'Performance';
 
 const getAll = async () => {
   return await new BaseRepo(model).getAll();
@@ -28,7 +28,7 @@ const getOneById = async (id: number) => {
 //       id: id,
 //     },
 //     include: {
-//       ProductDetail: true,
+//       Performance: true,
 //     },
 //   });
 //   return product;

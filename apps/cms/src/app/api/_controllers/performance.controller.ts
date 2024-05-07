@@ -1,16 +1,18 @@
-import ProductDetailService from '../_services/performance.service';
+import PerformanceService from '../_services/performance.service';
 import { OK, CREATED } from '../_core/success.response';
 
-import { PerformancePostIF } from '@repo/types/product';
+import { PerformancePostIF } from '@repo/types/performance';
 import type { NextRequest } from 'next/server';
+import { parseSearchParams } from '@repo/utils/parseParams';
+import { count } from '../_repos/performance.repo';
 
-class ProductDetailController {
+class PerformanceController {
   create = async (request: NextRequest) => {
-    const payload: PerformancePostIF = await request.json();
+    const payload: FormData = await request.formData();
 
     return new CREATED({
-      message: 'created ProductDetail OK!',
-      metadata: await ProductDetailService.create({
+      message: 'created Performance OK!',
+      metadata: await PerformanceService.create({
         payload: payload,
       }),
     });
@@ -20,31 +22,47 @@ class ProductDetailController {
     const payload: PerformancePostIF[] = await request.json();
 
     return new CREATED({
-      message: 'created batch ProductDetail OK!',
-      metadata: await ProductDetailService.createMany(payload),
+      message: 'created batch Performance OK!',
+      metadata: await PerformanceService.createMany(payload),
     });
   };
 
   getAll = async () => {
     return new OK({
       message: 'get all Users success!',
-      metadata: await ProductDetailService.getAll(),
+      metadata: await PerformanceService.getAll(),
+    });
+  };
+  getAllWithQuery = async (request: NextRequest) => {
+    const { searchParams } = new URL(request.url);
+
+    const { filter, range, sort } = parseSearchParams(searchParams);
+
+    return new OK({
+      message: 'get all Acsta success!',
+      metadata: await PerformanceService.getAllWithQuery({
+        filter,
+        range,
+        sort,
+      }),
+      count: await count(),
     });
   };
 
   getOneById = async (id: number) => {
     return new OK({
       message: 'get User success!',
-      metadata: await ProductDetailService.getOneById(id),
+      metadata: await PerformanceService.getOneById(id),
     });
   };
 
   update = async (request: NextRequest, id: number) => {
-    const payload: PerformancePostIF = await request.json();
+    console.log('update controler');
+    const payload: FormData = await request.formData();
 
     return new OK({
-      message: 'updated ProductDetail OK!',
-      metadata: await ProductDetailService.updateById({
+      message: 'updated Performance OK!',
+      metadata: await PerformanceService.updateById({
         id: id,
         payload: payload,
       }),
@@ -55,15 +73,15 @@ class ProductDetailController {
     const payload: PerformancePostIF[] = await request.json();
 
     return new OK({
-      message: 'updated batch ProductDetail OK!',
-      metadata: await ProductDetailService.updateMany(payload),
+      message: 'updated batch Performance OK!',
+      metadata: await PerformanceService.updateMany(payload),
     });
   };
 
   delete = async (id: number) => {
     return new OK({
-      message: 'deleted ProductDetail OK!',
-      metadata: await ProductDetailService.deleteById(id),
+      message: 'deleted Performance OK!',
+      metadata: await PerformanceService.deleteById(id),
     });
   };
 
@@ -71,11 +89,11 @@ class ProductDetailController {
     const payload: number[] = await request.json();
 
     return new OK({
-      message: 'deleted batch ProductDetail OK!',
-      metadata: await ProductDetailService.deleteManyById(payload),
+      message: 'deleted batch Performance OK!',
+      metadata: await PerformanceService.deleteManyById(payload),
     });
   };
 }
 
-const userController = new ProductDetailController();
-export default userController;
+const performanceController = new PerformanceController();
+export default performanceController;

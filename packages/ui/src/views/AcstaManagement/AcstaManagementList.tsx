@@ -10,7 +10,7 @@ import { validRole } from '../_core/permissions';
 import { StatusChipField } from '@repo/ui/src/components/CustomField/StatusChipField';
 import { ListToolBar } from '@repo/ui/src/components/ListToolBar';
 
-const AxtaManagementList = ({ actions, resource }: BaseComponentProps) => {
+const AcstaManagementList = ({ actions, resource }: BaseComponentProps) => {
   return (
     <List
       title="アクスタ管理　一覧"
@@ -40,4 +40,4 @@ const AxtaManagementList = ({ actions, resource }: BaseComponentProps) => {
   );
 };
 
-export default AxtaManagementList;
+export default AcstaManagementList;
