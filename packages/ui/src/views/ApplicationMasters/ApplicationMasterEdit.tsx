@@ -1,4 +1,3 @@
-
 import {
   TextInput,
   SelectInput,
@@ -44,9 +43,7 @@ const MasterEditForm = ({
   };
 
   const handleSave = async (values: RecordValue) => {
-    console.log(':::values', values);
-
-    const encryptKey = CryptoJS.lib.WordArray.random(16).toString();
+    const encryptKey = record.encryptKey;
 
     const { assetBundleIOS, assetBundleAndroid, ...rest } = values;
 
@@ -54,7 +51,6 @@ const MasterEditForm = ({
       const assetBundleIOSFile = extractFile(assetBundleIOS);
       const keyIOS = await uploadMuiltpart(assetBundleIOSFile, encryptKey);
       rest.assetBundleIOS = keyIOS;
-      rest.encryptKey = encryptKey;
     }
 
     if (assetBundleAndroid.rawFile) {
@@ -64,7 +60,6 @@ const MasterEditForm = ({
         encryptKey
       );
       rest.assetBundleAndroid = keyAndroid;
-      rest.encryptKey = encryptKey;
     }
 
     try {
@@ -76,12 +71,12 @@ const MasterEditForm = ({
         previousData: record,
       });
 
-      notify('Success: Update Application Master successffuly', {
+      notify('成功: アプリケーション マスターを正常に更新しました', {
         type: 'success',
       });
       navigate(resourcePath);
     } catch (error) {
-      notify('Error: Update Application Master failed: ' + error, {
+      notify('エラー: アプリケーション マスターの更新に失敗しました:' + error, {
         type: 'warning',
       });
     }
