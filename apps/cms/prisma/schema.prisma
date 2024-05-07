@@ -52,8 +52,8 @@ model AplicationMaster {
   id                 Int      @id @default(autoincrement())
   appName            String   @unique
   packageName        String
-  termsOfUseID       Int      @unique
-  licenseID          Int      @unique
+  termsOfUseID       Int      
+  licenseID          Int      
   assetBundleIOS     String
   assetBundleAndroid String
   encryptKey         String

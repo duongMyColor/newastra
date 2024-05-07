@@ -1,4 +1,4 @@
-import AplicationMasterService from '../_services/application-masters.sercvice';
+import AplicationMasterService from '../_services/applicationMaster.sercvice';
 import { OK, CREATED } from '../_core/success.response';
 
 import { AplicationMasterPostIF } from '@repo/types/applicationMaster';

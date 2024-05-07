@@ -66,7 +66,7 @@ const MasterCreate = ({
       notify('Success: Create Application Master successffuly', {
         type: 'success',
       });
-      navigate(resourcePath);
+      // navigate(resourcePath);
     } catch (error) {
       notify('Error: Create Application Master failed: ' + error, {
         type: 'warning',
@@ -77,7 +77,7 @@ const MasterCreate = ({
   useEffect(() => {
     const getTermOfUseAndLicense = async () => {
       const termsOfUses = await dataProvider.getAll('term-of-uses');
-      const licenses = await dataProvider.getAll('licenses');
+      const licenses = await dataProvider.getAll('licenses'); 
 
       setTermsOfUseIDs(
         termsOfUses.map(({ id, version }: TermOfUseResponseIF) => {

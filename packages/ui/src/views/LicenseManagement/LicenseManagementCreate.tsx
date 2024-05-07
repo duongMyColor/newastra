@@ -8,7 +8,6 @@ import {
   useCreate,
   useNotify,
   DateTimeInput,
-  useRecordContext,
 } from 'react-admin';
 import { TextField } from '@mui/material';
 
@@ -18,7 +17,6 @@ import { BaseComponentProps, RecordValue } from '@repo/types/general';
 import { REDIRECT_ROUTE } from '@repo/consts/general';
 import { useEffect, useState } from 'react';
 import { convertToFormData } from '@repo/utils/formData';
-import { formatDateAcstar } from '@repo/utils/dateFormat';
 import { useNavigate } from 'react-router-dom';
 
 const LicenseManagementCreate = ({ actions, resource }: BaseComponentProps) => {

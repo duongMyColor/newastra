@@ -12,7 +12,7 @@ import {
   useEditContext,
 } from 'react-admin';
 import CustomForm from '@repo/ui/src/components/CustomForm';
-import { validateUserCreation, validateUserEdition } from './formValidator';
+import { validateUserEdition } from './formValidator';
 import { useNavigate } from 'react-router-dom';
 import CryptoJS from 'crypto-js';
 
@@ -45,18 +45,20 @@ const MasterEditForm = ({
   };
 
   const handleSave = async (values: RecordValue) => {
+    console.log(':::values', values);
+
     const encryptKey = CryptoJS.lib.WordArray.random(16).toString();
 
     const { assetBundleIOS, assetBundleAndroid, ...rest } = values;
 
-    if (assetBundleIOS) {
+    if (assetBundleIOS.rawFile) {
       const assetBundleIOSFile = extractFile(assetBundleIOS);
       const keyIOS = await uploadMuiltpart(assetBundleIOSFile, encryptKey);
       rest.assetBundleIOS = keyIOS;
       rest.encryptKey = encryptKey;
     }
 
-    if (assetBundleAndroid) {
+    if (assetBundleAndroid.rawFile) {
       const assetBundleAndroidFile = extractFile(assetBundleAndroid);
       const keyAndroid = await uploadMuiltpart(
         assetBundleAndroidFile,
@@ -163,8 +165,9 @@ const MasterEditForm = ({
           source="outlineUrl"
           label="アクスタ枠データパス"
           placeholder="アップロード"
+          accept={'image/*'}
         >
-          <FileField source="src" title="src" />
+          <FileField source="src" title="title" />
         </FileInput>
       </CustomForm>
     </>
