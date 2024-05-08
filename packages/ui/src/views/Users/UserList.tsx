@@ -26,7 +26,7 @@ const UserList = ({ actions, resource }: BaseComponentProps) => {
           <CustomButtonByRole label="削除">
             <DeleteWithConfirmButton
               confirmContent="よろしいですか?"
-              confirmTitle="論理削除します"
+              confirmTitle="削除"
               label="削除"
               confirmColor="warning"
             ></DeleteWithConfirmButton>
