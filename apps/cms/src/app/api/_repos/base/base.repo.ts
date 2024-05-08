@@ -192,11 +192,11 @@ class BaseRepo {
 
   getOneByIdLastestRecord = async (nameRecord: string) => {
     try {
-      const res = await this.tableModel.findFirst({
+      const latestRecord = await this.tableModel.findFirst({
         where: { name: nameRecord },
       });
 
-      return res;
+      return latestRecord;
     } catch (error) {
       console.log({ error });
     }
@@ -253,17 +253,19 @@ class BaseRepo {
   };
   updateIdLastestOfRecord = async (record: RecordValue) => {
     const data = removeEmptyProperties(record);
-    console.log(':::data update lastest record', data);
     const findData = await this.tableModel.findFirst({
       where: { name: data.record },
     });
+    if (!findData) {
+      throw new Error('Record not found');
+    }
 
-    const update = await this.tableModel.update({
+    const updateData = await this.tableModel.update({
       where: { id: findData.id },
       data: { idLastest: findData.idLastest + 1 },
     });
 
-    return update;
+    return updateData;
   };
 
   deleteById = async (id: number) => {
