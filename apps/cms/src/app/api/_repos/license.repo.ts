@@ -30,6 +30,9 @@ const getOneById = async (id: number) => {
 };
 
 const insert = async (payload: TermOfUsePostIF) => {
+  await new BaseRepo(prisma.idLastestOfRecord).updateIdLastestOfRecord({
+    record: 'license',
+  });
   return await new BaseRepo(model).insert(payload);
 };
 

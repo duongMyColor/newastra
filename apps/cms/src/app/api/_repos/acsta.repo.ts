@@ -30,6 +30,9 @@ const getOneById = async (id: number) => {
 };
 
 const insert = async (payload: AcstaPostIF) => {
+  await new BaseRepo(prisma.idLastestOfRecord).updateIdLastestOfRecord({
+    record: 'acstaManagement',
+  });
   return await new BaseRepo(model).insert(payload);
 };
 

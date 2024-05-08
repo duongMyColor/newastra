@@ -285,6 +285,19 @@ const baseDataProvider: DataProvider = {
       data: metadata,
     };
   },
+  getIdLastestRecord: async (resource: string) => {
+    console.log({ resource });
+    const url = `${apiUrl}/id-lastest-of-record?record=${MAP_RESOURE[resource]}`;
+    const {
+      json: { metadata },
+    } = await httpClient(url);
+
+    console.log(':::response', metadata);
+
+    return {
+      data: metadata,
+    };
+  },
   multipartUpload: async (
     method: MultipartUploadAllowMethods,
     action: MultipartUploadActions,
