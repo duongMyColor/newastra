@@ -134,9 +134,9 @@ const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
 
               <StatusTextField source="status"></StatusTextField>
 
-              <FormatInputDateShow label="公開開始日" typeDate="dateStart" />
-              <FormatInputDateShow label="公開終了日" typeDate="dateEnd" />
-              <FormatInputDateShow label="登録日時" typeDate="createdAt" />
+              <FormatInputDateShow label="公開開始日" source="dateStart" />
+              <FormatInputDateShow label="公開終了日" source="dateEnd" />
+              <FormatInputDateShow label="登録日時" source="createdAt" />
 
               <TextInput
                 source="acstaBasicInfoID"

@@ -75,11 +75,11 @@ model AcstaManagement {
   thumbnailUrl     String
   scanImageUrl     String
   acstaBasicInfoID Int?
-  scanOriginX      Float
-  scanOriginY      Float
-  scanWidth        Float
-  scanHeight       Float
-  scanColors       String
+  scanOriginX      Float?
+  scanOriginY      Float?
+  scanWidth        Float?
+  scanHeight       Float?
+  scanColors       String?
   modeId           Int?
   dateStart        DateTime
   dateEnd          DateTime?

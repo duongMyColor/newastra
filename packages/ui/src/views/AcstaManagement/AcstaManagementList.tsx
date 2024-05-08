@@ -11,6 +11,7 @@ import { validRole } from '../_core/permissions';
 import { StatusChipField } from '@repo/ui/src/components/CustomField/StatusChipField';
 import { ListToolBar } from '@repo/ui/src/components/ListToolBar';
 import { formatDateAcstar } from '@repo/utils/dateFormat';
+import { CustomButtonByRole } from '../../components/CustomButtonByRole';
 
 const AcstaManagementList = ({ actions, resource }: BaseComponentProps) => {
   return (
@@ -44,13 +45,19 @@ const AcstaManagementList = ({ actions, resource }: BaseComponentProps) => {
           }}
         />
 
-        {validRole('delete', actions) && (
-          <DeleteWithConfirmButton
-            confirmContent="よろしいですか?"
-            confirmTitle="削除"
+        {validRole('delete', actions) && true && (
+          <CustomButtonByRole
             label="削除"
-            confirmColor="warning"
-          ></DeleteWithConfirmButton>
+            source="status"
+            condition="アクティブ"
+          >
+            <DeleteWithConfirmButton
+              confirmContent="よろしいですか?"
+              confirmTitle="削除"
+              label="削除"
+              confirmColor="warning"
+            ></DeleteWithConfirmButton>
+          </CustomButtonByRole>
         )}
         {validRole('edit', actions) && <EditButton label="編集"></EditButton>}
       </Datagrid>

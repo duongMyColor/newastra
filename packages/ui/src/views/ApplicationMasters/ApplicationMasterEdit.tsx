@@ -152,7 +152,7 @@ const MasterEditForm = ({
           label="Android用共通アセットバンドル"
           placeholder="アップロード"
         >
-          <FileField source="src" title="src" />
+          <FileField source="src" title="title" />
         </FileInput>
 
         <FileInput

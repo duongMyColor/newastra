@@ -5,15 +5,18 @@ import { disabledInputBackgroundStyle } from '@repo/styles';
 
 const FormatInputDateShow = ({
   label,
-  typeDate,
+  source,
   ...props
 }: {
   label: string;
-  typeDate: string;
+  source: string;
 }) => {
   const record = useRecordContext();
 
-  let formatDate = record ? formatDateAcstar(record[typeDate]) : '';
+  let formatDate = record ? formatDateAcstar(record[source]) : '';
+  console.log('source', record ? record[source] : '');
+
+  console.log({ formatDate });
 
   return (
     <TextField

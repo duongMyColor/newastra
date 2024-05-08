@@ -23,7 +23,7 @@ const UserList = ({ actions, resource }: BaseComponentProps) => {
         <TextField source="role" label="筧昭" />
         <TextField source="email" label="メールアドレス" />
         {validRole('delete', actions) && (
-          <CustomButtonByRole label="削除">
+          <CustomButtonByRole label="削除" source="role">
             <DeleteWithConfirmButton
               confirmContent="よろしいですか?"
               confirmTitle="削除"

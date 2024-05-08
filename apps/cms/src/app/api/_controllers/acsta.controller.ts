@@ -10,6 +10,8 @@ class AcstaController {
   create = async (request: NextRequest) => {
     const payload: FormData = await request.formData();
 
+    console.log('payload', payload);
+
     return new CREATED({
       message: 'created Acsta OK!',
       metadata: await AcstaService.create({

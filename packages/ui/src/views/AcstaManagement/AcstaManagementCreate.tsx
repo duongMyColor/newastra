@@ -1,11 +1,8 @@
-import { userRoles } from '@repo/consts/user';
 import {
   TextInput,
   Create,
   SelectInput,
-  FileInput,
   FileField,
-  DateInput,
   useCreate,
   useNotify,
   ImageInput,
@@ -29,7 +26,6 @@ const AcstaManagementCreate = ({
   dataProvider,
 }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
-  const [create] = useCreate();
   const navigate = useNavigate();
   const notify = useNotify();
 
@@ -37,16 +33,8 @@ const AcstaManagementCreate = ({
   const [appIdIDs, setAppIdIDs] = useState([]);
 
   const handleSave = async (values: RecordValue) => {
-    const newVal = {
-      ...values,
-      scanOriginX: 0,
-      scanOriginY: 0,
-      scanWidth: 0,
-      scanHeight: 0,
-      scanColors: 'rgba(0,0,0,0)',
-    };
     try {
-      const formData = convertToFormData(newVal, [
+      const formData = convertToFormData(values, [
         'thumbnailUrl',
         'scanImageUrl',
       ]);

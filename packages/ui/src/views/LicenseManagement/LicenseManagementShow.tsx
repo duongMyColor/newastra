@@ -44,8 +44,8 @@ const LicenseManagementShow = ({ actions, resource }: BaseComponentProps) => {
               sx={disabledInputBackgroundStyle}
             />
             <ButtonPreviewFile />
-            <FormatInputDateShow label="公開開始日" typeDate="publishedDate" />
-            <FormatInputDateShow label="登録日時" typeDate="createdAt" />
+            <FormatInputDateShow label="公開開始日" source="publishedDate" />
+            <FormatInputDateShow label="登録日時" source="createdAt" />
           </CustomForm>
         </>
       </ShowBase>
