@@ -33,6 +33,7 @@ const UserEdit = ({ actions, resource }: BaseComponentProps) => {
           pathTo={resourcePath}
           validate={validateUserEdition}
           showDeleteButton={validRole('delete', actions)}
+          deleteButtonLabel="アカウント削除"
           showSaveButton={true}
           showReferenceButton={true}
           showCancelButton={true}

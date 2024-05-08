@@ -21,10 +21,10 @@ class AcstaFactory {
   static async create({ payload }: { payload: FormData }) {
     const paylodObj = convertFormDataToObject(payload);
 
-    const body = await new UploadFileService(
+    const body = await new UploadFileService().uploadFile(
       paylodObj as AcstaPostIF,
       UPLOAD_FOLDER_MAP.acsta
-    ).uploadFile();
+    );
 
     return await new Acsta(body).create();
   }
@@ -59,10 +59,10 @@ class AcstaFactory {
   static async updateById({ id, payload }: { id: number; payload: FormData }) {
     const paylodObj = convertFormDataToObject(payload);
 
-    const body = await new UploadFileService(
+    const body = await new UploadFileService().uploadFile(
       paylodObj as AcstaPostIF,
       UPLOAD_FOLDER_MAP.acsta
-    ).uploadFile();
+    );
 
     return await new Acsta(body).updateById({ id });
   }
@@ -97,7 +97,7 @@ class Acsta implements AcstaPostIF {
   public scanColors: string;
   // public modeId?: number;
   public dateStart: string | Date;
-  public dateEnd: string | Date;
+  public dateEnd: string | Date | null;
   public updatedAt: string | Date;
 
   public constructor({
@@ -118,8 +118,8 @@ class Acsta implements AcstaPostIF {
   }: AcstaPostIF) {
     this.acstaName = acstaName.toString();
     this.managementName = managementName.toString();
-    this.thumbnailUrl = thumbnailUrl.toString();
-    this.scanImageUrl = scanImageUrl.toString();
+    this.thumbnailUrl = thumbnailUrl as string;
+    this.scanImageUrl = scanImageUrl as string;
     this.applicationID = applicationID;
     // this.acstaBasicInfoID = acstaBasicInfoID;
     this.scanOriginX = scanOriginX;
@@ -130,7 +130,7 @@ class Acsta implements AcstaPostIF {
 
     // this.modeId = modeId;
     this.dateStart = new Date(dateStart).toISOString();
-    this.dateEnd = new Date(dateEnd).toISOString();
+    this.dateEnd = dateEnd ? new Date(dateEnd).toISOString() : null;
     this.dateStart = new Date(dateStart).toISOString();
     this.updatedAt = new Date().toISOString();
   }

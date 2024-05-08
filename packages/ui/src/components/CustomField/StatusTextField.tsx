@@ -9,9 +9,13 @@ export const StatusTextField = ({ source }: { source: string }) => {
           source={source}
           label="ステータス"
           disabled
+          fullWidth
           sx={{
             '& .Mui-disabled': {
               WebkitTextFillColor: 'green',
+            },
+            '& .MuiFilledInput-input': {
+              background: '#f4f4f5c4',
             },
           }}
         />
@@ -20,9 +24,9 @@ export const StatusTextField = ({ source }: { source: string }) => {
       {record && record[source] === '非アクティブ' && (
         <TextInput
           source={source}
-          // label="非アクティブ"
           label="ステータス"
           disabled
+          fullWidth
           sx={{
             '& .Mui-disabled': {
               WebkitTextFillColor: 'red',

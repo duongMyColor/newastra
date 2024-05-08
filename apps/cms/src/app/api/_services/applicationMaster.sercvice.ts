@@ -24,10 +24,10 @@ class ApplicationMasterFactory {
   static async create({ payload }: { payload: FormData }) {
     const paylodObj = convertFormDataToObject(payload);
 
-    const body = await new UploadFileService(
+    const body = await new UploadFileService().uploadFile(
       paylodObj as AplicationMasterPostIF,
       UPLOAD_FOLDER_MAP.applicationMaster
-    ).uploadFile();
+    );
 
     console.log('body', body);
 
@@ -69,10 +69,10 @@ class ApplicationMasterFactory {
   static async updateById({ id, payload }: { id: number; payload: FormData }) {
     const paylodObj = convertFormDataToObject(payload);
 
-    const body = await new UploadFileService(
+    const body = await new UploadFileService().uploadFile(
       paylodObj as AplicationMasterPostIF,
       UPLOAD_FOLDER_MAP.applicationMaster
-    ).uploadFile();
+    );
     return await new ApplicationMaster(body).updateById({ id });
   }
 
@@ -83,6 +83,22 @@ class ApplicationMasterFactory {
   }
 
   static async deleteById(id: number) {
+    // const deletedRecord = await deleteById(id);
+
+    // const { assetBundleIOS, assetBundleAndroid, outlineUrl } = deletedRecord;
+
+    // const results = await Promise.allSettled([
+    //   new UploadFileService().deleteFile(assetBundleIOS),
+    //   new UploadFileService().deleteFile(assetBundleAndroid),
+    //   new UploadFileService().deleteFile(outlineUrl),
+    // ]);
+
+    // results.forEach((result, i) => {
+    //   if (result.status === 'rejected') {
+    //     console.error(`Error deleting file ${i}: ${result.reason}`);
+    //   }
+    // });
+
     return await deleteById(id);
   }
 

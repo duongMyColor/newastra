@@ -23,10 +23,10 @@ class LicenseFactory {
   static async create({ payload }: { payload: FormData }) {
     const paylodObj = convertFormDataToObject(payload);
 
-    const body = await new UploadFileService(
+    const body = await new UploadFileService().uploadFile(
       paylodObj as LicensePostIF,
       UPLOAD_FOLDER_MAP.license
-    ).uploadFile();
+    );
 
     return await new License(body).create();
   }
@@ -61,10 +61,10 @@ class LicenseFactory {
   static async updateById({ id, payload }: { id: number; payload: FormData }) {
     const paylodObj = convertFormDataToObject(payload);
 
-    const body = await new UploadFileService(
+    const body = await new UploadFileService().uploadFile(
       paylodObj as LicensePostIF,
       UPLOAD_FOLDER_MAP.license
-    ).uploadFile();
+    );
 
     return await new License(body).updateById({ id });
   }

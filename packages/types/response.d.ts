@@ -13,3 +13,5 @@ export interface GetAllQueryIF {
   range: number[];
   sort: string[];
 }
+
+export type GetObjectType = 'image' | 'text-file';

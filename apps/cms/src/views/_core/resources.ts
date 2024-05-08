@@ -1,15 +1,13 @@
 import {
-  EventNote,
-  EmojiNature,
-  Widgets,
-  Pets,
+  SportsKabaddiOutlined,
+  Apps,
   Group,
-  StackedBarChart,
-  Timeline,
-  Crop,
+  TaskOutlined,
+  DescriptionOutlined,
+  Boy,
 } from '@mui/icons-material/';
 
-import type { ResourceIF, ResourceMapIF } from '@repo/types/general';
+import type { ResourceIF } from '@repo/types/general';
 import {
   UserList,
   UserEdit,
@@ -72,6 +70,7 @@ const Resources: ResourceIF[] = [
     show: ApplicationMasterShow,
     resource: 'application-masters',
     label: 'アプリケーションマスタ',
+    icon: Apps,
   },
   {
     list: AcstaManagementShowList,
@@ -80,6 +79,7 @@ const Resources: ResourceIF[] = [
     show: AcstaManagementShow,
     resource: 'acstas',
     label: 'アクスタ管理',
+    icon: Boy,
   },
   {
     list: PerformanceTypeMasterList,
@@ -96,14 +96,15 @@ const Resources: ResourceIF[] = [
     show: PerformanceManagementShow,
     resource: 'performances',
     label: '演出管理',
+    icon: SportsKabaddiOutlined,
   },
   {
     list: TermsOfUseManagementList,
-    // edit: '',
     create: TermsOfUseManagementCreate,
     show: TermsOfUseManagementShow,
     resource: 'term-of-uses',
     label: '利用規約管理',
+    icon: TaskOutlined,
   },
   {
     list: LicenseManagementList,
@@ -111,6 +112,7 @@ const Resources: ResourceIF[] = [
     show: LicenseManagementShow,
     resource: 'licenses',
     label: 'ライセンス管理',
+    icon: DescriptionOutlined,
   },
 ];
 

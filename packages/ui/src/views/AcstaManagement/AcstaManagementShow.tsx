@@ -2,13 +2,9 @@ import {
   TextInput,
   ShowBase,
   Title,
-  TextField,
   SimpleShowLayout,
-  useRecordContext,
-  ImageInput,
   ImageField,
   useGetRecordId,
-  FunctionField,
 } from 'react-admin';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps } from '@repo/types/general';
@@ -17,9 +13,12 @@ import { validRole } from '../_core/permissions';
 import { useState } from 'react';
 import { StatusTextField } from '@repo/ui/src/components/CustomField/StatusTextField';
 import { ScanDataField } from '@repo/ui/src/components/CustomField/ScanDataField';
-import { disabledInputBackgroundStyle, boxStyles } from '@repo/styles';
+import {
+  disabledInputBackgroundStyle,
+  boxStyles,
+  imageFieldStyles,
+} from '@repo/styles';
 import FormatInputDateShow from '@repo/ui/src/components/FormatInputDateShow';
-import { StatusChipField } from '@repo/ui/src/components/CustomField/StatusChipField';
 
 const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
@@ -36,7 +35,13 @@ const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
     <Box sx={boxStyles}>
       <ShowBase>
         <>
-          <Title title="アクスタ管理　参照" />
+          <Title
+            title={
+              isScanRange
+                ? 'アクスタ管理　スキャン範囲指定'
+                : 'アクスタ管理　参照'
+            }
+          />
 
           {isScanRange ? (
             <CustomForm
@@ -63,7 +68,7 @@ const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
                   }}
                 >
                   <ImageField
-                    source="scanData"
+                    source="scanImageUrl"
                     title="title"
                     sx={{
                       '& .RaImageField-image': {
@@ -88,7 +93,6 @@ const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
                 source="id"
                 label="アクスタ ID"
                 disabled
-                fullWidth
                 sx={disabledInputBackgroundStyle}
               />
 
@@ -116,16 +120,15 @@ const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
               />
 
               <SimpleShowLayout spacing={3}>
-                <TextField
-                  source="acstaThumbnail"
+                <ImageField
+                  source="thumbnailUrl"
                   label="アクスタサムネイル"
-                  disabled
-                  sx={disabledInputBackgroundStyle}
+                  sx={imageFieldStyles}
                 />
               </SimpleShowLayout>
 
               <ScanDataField
-                source="scanData"
+                source="scanImageUrl"
                 moveScanRange={moveScanRange}
               ></ScanDataField>
 

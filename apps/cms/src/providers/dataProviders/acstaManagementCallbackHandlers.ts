@@ -1,60 +1,38 @@
-import type {
-  CreateResult,
-  DataProvider,
-  DeleteResult,
-  GetListResult,
-  GetManyReferenceResult,
-  GetOneResult,
-  UpdateParams,
-  UpdateResult,
-} from 'react-admin';
+import type { DataProvider, GetListResult, GetOneResult } from 'react-admin';
 
 import dayjs from 'dayjs';
+
+const determineStatus = (dateEnd: Date | string) => {
+  const currentDate = dayjs();
+  return currentDate.isAfter(dateEnd) ? '非アクティブ' : 'アクティブ';
+};
+
 const AcstaManagementCallbackHandler = {
   resource: 'acstas',
 
-  // afterGetList: async (
-  //   response: GetListResult,
-  //   dataProvider: DataProvider
-  // ): Promise<GetListResult> => {
-  //   // const { classificationId } = response.data;
+  afterGetList: async (response: GetListResult): Promise<GetListResult> => {
+    response.data.forEach((item) => {
+      item.status = determineStatus(item.dateEnd);
+    });
 
-  //   let fake = [
-  //     {
-  //       id: '1',
-  //       managementName: 'duong',
-  //       acstaName: 'acsta',
-  //       status: 'active',
-  //       dateStart: dayjs(new Date()).format('YYYY.MM.DD HH:MM'),
-  //       dateEnd: dayjs(new Date()).format('YYYY.MM.DD HH:MM'),
-  //       createdAt: dayjs(new Date()).format('YYYY.MM.DD HH:MM'),
-  //       assetBundleIOS: 'acsta_anime_ios',
-  //       assetBundleAndroid: 'acsta_anime_ios',
-  //       outlineUrl: 'acsta-waku.png',
-  //       assetDataIOS: { src: 'acsta_anime_ios' },
-  //       assetDataAndroid: { src: 'acsta_anime_ios' },
-  //       assetOutlineUrl: { src: 'acsta-waku.png' },
-  //     },
-  //   ];
-
-  //   return {
-  //     data: fake,
-  //     total: 1,
-  //   };
-  // },
+    return response;
+  },
 
   afterGetOne: async (
     response: GetOneResult,
     dataProvider: DataProvider
   ): Promise<GetOneResult> => {
-    const currentDate = dayjs();
-    const { dateStart, dateEnd } = response.data;
+    const { dateEnd, thumbnailUrl, scanImageUrl } = response.data;
 
-    if (currentDate.isAfter(dateEnd)) {
-      response.data.status = '非アクティブ';
-    } else {
-      response.data.status = 'アクティブ';
-    }
+    response.data.status = determineStatus(dateEnd);
+
+    const [thumbnailUrlObj, scanImageUrlObj] = await Promise.all([
+      dataProvider.getObject({ key: thumbnailUrl }, 'image'),
+      dataProvider.getObject({ key: scanImageUrl }, 'image'),
+    ]);
+
+    response.data.scanImageUrl = scanImageUrlObj.data.body;
+    response.data.thumbnailUrl = thumbnailUrlObj.data.body;
 
     return response;
   },

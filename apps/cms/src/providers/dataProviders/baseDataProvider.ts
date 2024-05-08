@@ -30,6 +30,7 @@ import {
   MultipartUploadAllowMethods,
   MultipartUploadBody,
 } from '@repo/types/upload';
+import { GetObjectType } from '@repo/types/response';
 
 const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api`;
 const httpClient = fetchUtils.fetchJson;
@@ -259,8 +260,8 @@ const baseDataProvider: DataProvider = {
     };
   },
 
-  getObject: async (params: { key: string }) => {
-    const url = `${apiUrl}/upload/get-object`;
+  getObject: async (params: { key: string }, type: GetObjectType) => {
+    const url = `${apiUrl}/upload/get-object/${type}`;
 
     const response = await httpClient(url, {
       method: 'POST',

@@ -6,5 +6,8 @@ export const formatDate = (date: string, format: string): string => {
 };
 
 export const formatDateAcstar = (date: string): string => {
+  if (!date) {
+    return '';
+  }
   return dayjs(date).format('YYYY.MM.DD HH:MM');
 };

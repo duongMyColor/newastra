@@ -29,7 +29,7 @@ const PerformanceManagementList = ({
           <DeleteWithConfirmButton
             confirmContent="よろしいですか?"
             confirmTitle="論理削除します"
-            label="データ削除"
+            label="削除"
             confirmColor="warning"
           ></DeleteWithConfirmButton>
         )}

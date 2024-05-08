@@ -32,7 +32,7 @@ export interface AcstaResponseIF {
   scanColors: string;
   modeId?: number;
   dateStart: string | Date;
-  dateEnd: string | Date;
+  dateEnd?: string | Date | null;
   updatedAt: string | Date;
 }
 
@@ -52,6 +52,6 @@ export interface AcstaPostIF {
   scanColors: string;
   modeId?: number;
   dateStart: string | Date;
-  dateEnd: string | Date;
+  dateEnd?: string | Date | null;
   updatedAt: string | Date;
 }

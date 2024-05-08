@@ -10,9 +10,7 @@ export const StatusChipField = ({
   const record = useRecordContext();
   return (
     <>
-      {record && record[source] === 'active' && (
-        // <span style={{ color: 'green' }}>アクティブ</span>
-
+      {record && record[source] === 'アクティブ' && (
         <ChipField
           source={source}
           label={label}
@@ -23,7 +21,7 @@ export const StatusChipField = ({
         />
       )}
 
-      {record && record[source] === 'deActive' && (
+      {record && record[source] === '非アクティブ' && (
         <ChipField
           source={source}
           label={label}
