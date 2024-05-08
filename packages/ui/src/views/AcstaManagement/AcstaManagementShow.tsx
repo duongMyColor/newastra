@@ -5,6 +5,7 @@ import {
   SimpleShowLayout,
   ImageField,
   useGetRecordId,
+  useShowContext,
 } from 'react-admin';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps } from '@repo/types/general';
@@ -19,16 +20,46 @@ import {
   imageFieldStyles,
 } from '@repo/styles';
 import FormatInputDateShow from '@repo/ui/src/components/FormatInputDateShow';
+import RectEditor from './RectEditor/RectEditor';
+import { RectData } from '@repo/types/rectangleEditor';
+
+const RectEditorArea = ({
+  onChange,
+}: {
+  onChange: (data: RectData) => void;
+}) => {
+  const { record } = useShowContext();
+  const scanImageUrl = record.scanImageUrl;
+
+  return (
+    <RectEditor
+      imagePath={scanImageUrl}
+      data={record.data}
+      onChange={onChange}
+    ></RectEditor>
+  );
+};
 
 const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
 
+  const [rectPosition, setRectPosition] = useState<RectData>({
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+  });
   const recordId = useGetRecordId();
-
   const [isScanRange, setIsScanRange] = useState<boolean>(false);
 
   const moveScanRange = () => {
     setIsScanRange(!isScanRange);
+  };
+
+  const onChange = (data: RectData) => {
+    console.log( data );
+
+    setRectPosition(data);
   };
 
   return (
@@ -50,38 +81,7 @@ const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
               showCancelButton={true}
               moveScanRange={moveScanRange}
             >
-              <Box
-                sx={{
-                  width: '100%',
-                  minHeight: '400px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <Box
-                  sx={{
-                    minHeight: '300px',
-                    border: 'dotted ',
-                    width: '200px',
-                    position: 'relative',
-                  }}
-                >
-                  <ImageField
-                    source="scanImageUrl"
-                    title="title"
-                    sx={{
-                      '& .RaImageField-image': {
-                        position: 'absolute',
-                        objectFit: 'contain',
-                        width: '100%',
-                        height: '100%',
-                        margin: 0,
-                      },
-                    }}
-                  />
-                </Box>
-              </Box>
+              <RectEditorArea onChange={onChange} />
             </CustomForm>
           ) : (
             <CustomForm

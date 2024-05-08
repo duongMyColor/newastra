@@ -14,9 +14,6 @@ const FormatInputDateShow = ({
   const record = useRecordContext();
 
   let formatDate = record ? formatDateAcstar(record[source]) : '';
-  console.log('source', record ? record[source] : '');
-
-  console.log({ formatDate });
 
   return (
     <TextField

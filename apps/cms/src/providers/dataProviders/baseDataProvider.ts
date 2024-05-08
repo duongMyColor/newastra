@@ -267,7 +267,6 @@ const baseDataProvider: DataProvider = {
       method: 'POST',
       body: JSON.stringify(params),
     });
-    console.log(':::response', response);
 
     return {
       data: response,
@@ -279,8 +278,6 @@ const baseDataProvider: DataProvider = {
     const {
       json: { metadata },
     } = await httpClient(url);
-
-    console.log(':::response', metadata);
 
     return {
       data: metadata,
