@@ -1,5 +1,5 @@
 INSERT INTO IdLastestOfRecord (name,idLastest,updatedAt) VALUES 
-('acstaManagement', 0, CURRENT_TIMESTAMP),
-('performaceManagement', 0, CURRENT_TIMESTAMP),
-('license', 0, CURRENT_TIMESTAMP),
-('termsOfUse', 0, CURRENT_TIMESTAMP)
+('acstaManagement', 1, CURRENT_TIMESTAMP),
+('performaceManagement', 1, CURRENT_TIMESTAMP),
+('license', 1, CURRENT_TIMESTAMP),
+('termsOfUse', 1, CURRENT_TIMESTAMP)

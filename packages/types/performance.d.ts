@@ -22,4 +22,5 @@ export interface PerformancePostIF {
   acstaID: number;
   encryptKey: string;
   assetBundleAndroid: string;
+  record?:string
 }

@@ -127,6 +127,7 @@ const baseDataProvider: DataProvider = {
     let body;
     if (params.data instanceof FormData) {
       body = params.data;
+      body.append('record', `${MAP_RESOURE[resource]}`);
     } else {
       body = JSON.stringify(params.data);
     }
@@ -139,7 +140,8 @@ const baseDataProvider: DataProvider = {
       json: { metadata },
     } = response;
 
-    console.log(':::metadata', metadata);
+
+    console.log(':::metadata data', metadata);
     return {
       data: metadata,
     };

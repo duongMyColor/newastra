@@ -81,6 +81,7 @@ class Performance implements PerformancePostIF {
   public encryptKey: string;
   public assetBundleAndroid: string;
   public updatedAt: string | Date;
+  public record?: string;
 
   public constructor({
     name,
@@ -89,6 +90,7 @@ class Performance implements PerformancePostIF {
     acstaID,
     encryptKey,
     assetBundleAndroid,
+    record,
   }: PerformancePostIF) {
     this.name = name;
     this.performanceTypeMasterID = performanceTypeMasterID;
@@ -97,6 +99,7 @@ class Performance implements PerformancePostIF {
     this.assetBundleAndroid = assetBundleAndroid;
     this.encryptKey = encryptKey;
     this.updatedAt = new Date();
+    this.record = record;
   }
 
   public async create() {

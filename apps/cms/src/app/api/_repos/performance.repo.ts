@@ -23,8 +23,9 @@ const getOneById = async (id: number) => {
 
 const insert = async (payload: PerformancePostIF) => {
   await new BaseRepo(prisma.idLastestOfRecord).updateIdLastestOfRecord({
-    record: 'performaceManagement',
+    record: payload.record,
   });
+  delete payload.record;
   return await new BaseRepo(model).insert(payload);
 };
 

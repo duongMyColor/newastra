@@ -98,6 +98,7 @@ class Acsta implements AcstaPostIF {
   public dateStart: string | Date;
   public dateEnd: string | Date;
   public updatedAt: string | Date;
+  public record?: string;
 
   public constructor({
     managementName,
@@ -115,6 +116,7 @@ class Acsta implements AcstaPostIF {
     modeId,
     dateStart,
     dateEnd,
+    record,
   }: AcstaPostIF) {
     this.acstaName = acstaName.toString();
     this.managementName = managementName.toString();
@@ -134,6 +136,7 @@ class Acsta implements AcstaPostIF {
     this.dateEnd = new Date(dateEnd).toISOString();
     this.dateStart = new Date(dateStart).toISOString();
     this.updatedAt = new Date().toISOString();
+    this.record = record;
   }
 
   public async create() {
