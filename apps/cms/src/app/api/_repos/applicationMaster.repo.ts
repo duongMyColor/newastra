@@ -1,4 +1,4 @@
-import { AnimalPostIF } from '@repo/types/animal';
+import { AplicationMasterPostIF } from '@repo/types/applicationMaster';
 import { prisma } from '@/lib/prisma';
 import { BaseRepo } from './base/base.repo';
 import { GetAllQueryIF } from '@repo/types/response';
@@ -52,11 +52,11 @@ const getOneAndChildAndParent = async (id: number) => {
   });
 };
 
-const insert = async (payload: AnimalPostIF) => {
+const insert = async (payload: AplicationMasterPostIF) => {
   return await new BaseRepo(model).insert(payload);
 };
 
-const insertMany = async (animals: AnimalPostIF[]) => {
+const insertMany = async (animals: AplicationMasterPostIF[]) => {
   return await new BaseRepo(model).insertMany(animals);
 };
 
@@ -65,12 +65,12 @@ const updateById = async ({
   payload,
 }: {
   id: number;
-  payload: AnimalPostIF;
+  payload: AplicationMasterPostIF;
 }) => {
   return await new BaseRepo(model).updateById({ id, payload });
 };
 
-const updateManyById = async (updates: AnimalPostIF[]) => {
+const updateManyById = async (updates: AplicationMasterPostIF[]) => {
   return await new BaseRepo(model).updateManyById(updates);
 };
 

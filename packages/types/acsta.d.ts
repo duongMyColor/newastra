@@ -3,7 +3,6 @@ export interface AcstaResponseIF {
   id?: number;
   managementName: string;
   acstaName: string;
-  status: string;
   applicationID: number;
   thumbnailUrl:
     | string
@@ -25,15 +24,15 @@ export interface AcstaResponseIF {
     | URLSearchParams
     | ReadableStream<Uint8Array>
     | null;
-  acstaBasicInfoID: number;
+  acstaBasicInfoID?: number;
   scanOriginX: float;
   scanOriginY: float;
   scanWidth: float;
   scanHeight: float;
   scanColors: string;
-  modeId: number;
+  modeId?: number;
   dateStart: string | Date;
-  dateEnd: string | Date;
+  dateEnd?: string | Date | null;
   updatedAt: string | Date;
 }
 
@@ -42,19 +41,18 @@ export interface AcstaPostIF {
   id?: number;
   managementName: string;
   acstaName: string;
-  status: string;
   applicationID: number;
   thumbnailUrl: string | Buffer | File;
   scanImageUrl: string | Buffer | File;
-  acstaBasicInfoID: number;
+  acstaBasicInfoID?: number;
   scanOriginX: float;
   scanOriginY: float;
   scanWidth: float;
   scanHeight: float;
   scanColors: string;
-  modeId: number;
+  modeId?: number;
   dateStart: string | Date;
-  dateEnd: string | Date;
+  dateEnd?: string | Date | null;
   updatedAt: string | Date;
   record?: string;
 }

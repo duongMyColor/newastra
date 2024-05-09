@@ -4,9 +4,20 @@ Note: Create .env file base on .sample.env
 
 # 2. Run app in local machine without Docker
 
-## Generate DB (at `apps/cms` folder)
+## 2.1 Generate DB (at `apps/cms` folder)
 
 `$ yarn db:migrate apply`
+
+## 2.2 For developer
+### If you modify schema you shoud run
+
+`$ yarn db:migrate create`
+
+### At migration file created (.sql file) remove `PRAGMA foreign_key_check`. It's not supported from SQLite D1 Database currently
+
+### Run apply again
+`$ yarn db:migrate apply`
+
 
 ## Add seed local
 

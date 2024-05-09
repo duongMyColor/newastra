@@ -22,10 +22,10 @@ class TermOfUseFactory {
   static async create({ payload }: { payload: FormData }) {
     const paylodObj = convertFormDataToObject(payload);
 
-    const body = await new UploadFileService(
+    const body = await new UploadFileService().uploadFile(
       paylodObj as TermOfUsePostIF,
       UPLOAD_FOLDER_MAP.termOfUse
-    ).uploadFile();
+    );
 
     return await new TermOfUse(body).create();
   }
@@ -60,10 +60,10 @@ class TermOfUseFactory {
   static async updateById({ id, payload }: { id: number; payload: FormData }) {
     const paylodObj = convertFormDataToObject(payload);
 
-    const body = await new UploadFileService(
+    const body = await new UploadFileService().uploadFile(
       paylodObj as TermOfUsePostIF,
       UPLOAD_FOLDER_MAP.termOfUse
-    ).uploadFile();
+    );
 
     return await new TermOfUse(body).updateById({ id });
   }

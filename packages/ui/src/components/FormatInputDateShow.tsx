@@ -1,22 +1,19 @@
 import { formatDateAcstar } from '@repo/utils/dateFormat';
-import { useState } from 'react';
 import { useRecordContext } from 'react-admin';
 import { TextField } from '@mui/material';
-import {
-  disabledInputBackgroundStyle,
-} from '@repo/styles';
+import { disabledInputBackgroundStyle } from '@repo/styles';
 
 const FormatInputDateShow = ({
   label,
-  typeDate,
+  source,
+  ...props
 }: {
   label: string;
-  typeDate: string;
+  source: string;
 }) => {
   const record = useRecordContext();
-  const [date, setDate] = useState();
 
-  let formatDate = record ? formatDateAcstar(record[typeDate]) : '';
+  let formatDate = record ? formatDateAcstar(record[source]) : '';
 
   return (
     <TextField
@@ -26,8 +23,9 @@ const FormatInputDateShow = ({
       value={formatDate}
       disabled
       sx={{ marginTop: '22px', width: '100%', ...disabledInputBackgroundStyle }}
+      {...props}
     />
   );
 };
 
-export default FormatInputDateShow
+export default FormatInputDateShow;

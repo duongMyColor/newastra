@@ -1,27 +1,32 @@
-import { TextInput, useRecordContext } from "react-admin";
+import { TextInput, useRecordContext } from 'react-admin';
 
 export const StatusTextField = ({ source }: { source: string }) => {
   const record = useRecordContext();
   return (
     <>
-      {record && record[source] === 'active' && (
+      {record && record[source] === 'アクティブ' && (
         <TextInput
           source={source}
-          label="アクティブ"
+          label="ステータス"
           disabled
+          fullWidth
           sx={{
             '& .Mui-disabled': {
               WebkitTextFillColor: 'green',
+            },
+            '& .MuiFilledInput-input': {
+              background: '#f4f4f5c4',
             },
           }}
         />
       )}
 
-      {record && record[source] === 'deActive' && (
+      {record && record[source] === '非アクティブ' && (
         <TextInput
           source={source}
-          label="非アクティブ"
+          label="ステータス"
           disabled
+          fullWidth
           sx={{
             '& .Mui-disabled': {
               WebkitTextFillColor: 'red',

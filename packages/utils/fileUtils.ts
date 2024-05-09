@@ -9,6 +9,19 @@ const convertFileToBase64 = (file: { rawFile: Blob }) =>
     reader.readAsDataURL(file.rawFile);
   });
 
+const convertReadableStreamToBase64 = async (body: ReadableStream) => {
+  let response = new Response(body);
+  let arrayBuffer = await response.arrayBuffer();
+  let uint8Array = new Uint8Array(arrayBuffer);
+
+  let binaryString = '';
+  uint8Array.forEach((byte) => {
+    binaryString += String.fromCharCode(byte);
+  });
+  let base64String = btoa(binaryString);
+  return `data:image/png;base64,${base64String}`;
+};
+
 /**
  * Generate filename with the current date.
  * @param originalFileName filename with extension. Eg: 'lion.jpg'
@@ -163,4 +176,5 @@ export {
   encryptFile,
   decryptFile,
   extractFilename,
+  convertReadableStreamToBase64,
 };

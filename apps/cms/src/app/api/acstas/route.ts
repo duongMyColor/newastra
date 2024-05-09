@@ -8,8 +8,8 @@ export const GET = errorHandlerMiddleware(async (request: NextRequest) => {
   return NextResponse.json(await acstaController.getAllWithQuery(request));
 });
 
-// export const POST = errorHandlerMiddleware(async (request: NextRequest) => {
-//   return NextResponse.json(await acstaController.create(request));
-// });
+export const POST = errorHandlerMiddleware(async (request: NextRequest) => {
+  return NextResponse.json(await acstaController.create(request));
+});
 
 export const runtime = 'edge';

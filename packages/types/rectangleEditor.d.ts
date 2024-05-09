@@ -3,14 +3,11 @@ import type { Rect, Text } from 'fabric/fabric-impl';
 
 export interface RectEditorProps {
   imagePath: string;
-  data: RectData[];
-  onSave: (data: RectData[]) => void;
-  onCancel: () => void;
+  data: RectData;
+  onChange: (data: RectData) => void;
 }
 
 export interface RectData {
-  id?: string | number;
-  class: number;
   x: number;
   y: number;
   width: number;

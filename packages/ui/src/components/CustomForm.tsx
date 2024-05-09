@@ -30,16 +30,19 @@ const CustomForm = ({
   showCancelButton = false,
   showEditButton = false,
   showReferenceButton = false,
+  deleteButtonLabel = '削除',
   validate,
   ...props
 }: {
   children: JSX.Element | JSX.Element[];
   handleSave?: SubmitHandler<FieldValues>;
   showDeleteButton?: boolean;
+  deleteButtonLabel?: string;
   showSaveButton?: boolean;
   showCancelButton?: boolean;
   showEditButton?: boolean;
   showReferenceButton?: boolean;
+
   moveScanRange?: () => void;
 
   pathTo: string;
@@ -62,7 +65,7 @@ const CustomForm = ({
       >
         {showDeleteButton ? (
           <CustomButtonByRole>
-            <DeleteButtonFlexEnd label="データ削除" />
+            <DeleteButtonFlexEnd label={deleteButtonLabel} />
           </CustomButtonByRole>
         ) : null}
         {showSaveButton ? <SaveButton label="保存" /> : null}

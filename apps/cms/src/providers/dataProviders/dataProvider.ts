@@ -18,7 +18,7 @@ import licenseManagementCallbackHandlers from './licenseManagementCallbackHandle
 const dataProvider = withLifecycleCallbacks(baseDataProvider, [
   // userCallbackHandler,
   // applicationMasterCallbackHandler,
-  // acstaManagementCallbackHandler,
+  acstaManagementCallbackHandler,
   // PerformanceTypeMasterCallbackHandler,
   performanceManagementCallbackHandlers,
   termOfUseManagementCallbackHandlers,

@@ -18,13 +18,11 @@ import { convertFormDataToObject } from '@repo/utils/objectUtils';
 class PerformanceFactory {
   static async create({ payload }: { payload: FormData }) {
     const paylodObj = convertFormDataToObject(payload);
-    const timeStamps = new Date().getTime();
-    const key = `${UPLOAD_FOLDER_MAP.applicationMaster}/${timeStamps}/${paylodObj.appName}`;
 
-    const body = await new UploadFileService(
+    const body = await new UploadFileService().uploadFile(
       paylodObj as PerformancePostIF,
-      key
-    ).uploadFile();
+      UPLOAD_FOLDER_MAP.applicationMaster
+    );
 
     return await new Performance(body).create();
   }
@@ -50,10 +48,10 @@ class PerformanceFactory {
     const timeStamps = new Date().getTime();
     const key = `${UPLOAD_FOLDER_MAP.applicationMaster}/${timeStamps}/${paylodObj.appName}`;
 
-    const body = await new UploadFileService(
+    const body = await new UploadFileService().uploadFile(
       paylodObj as PerformancePostIF,
-      key
-    ).uploadFile();
+      UPLOAD_FOLDER_MAP.applicationMaster
+    );
     return await new Performance(body).updateById({ id });
   }
 
