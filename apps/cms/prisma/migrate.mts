@@ -162,7 +162,7 @@ if (command === 'create') {
   }
 }
 
-if (command === 'apply' || command === 'create') {
+if (command === 'apply') {
   const database = await getDatabase();
 
   const s = spinner();
