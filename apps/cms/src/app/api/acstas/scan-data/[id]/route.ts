@@ -9,3 +9,4 @@ export const PUT = errorHandlerMiddleware(
     return NextResponse.json(await acstaController.updateScanData(request, id));
   }
 );
+export const runtime = 'edge';

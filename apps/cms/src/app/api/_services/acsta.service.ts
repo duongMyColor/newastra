@@ -78,23 +78,23 @@ class AcstaFactory {
     id: number;
     payload: RectData;
   }) {
-    const { scanImageUrl } = await getOneById(id);
+    // const { scanImageUrl } = await getOneById(id);
 
-    if (!scanImageUrl) {
-      throw new Error('Scan Image URL is not found');
-    }
+    // if (!scanImageUrl) {
+    //   throw new Error('Scan Image URL is not found');
+    // }
 
-    const object = await getObject(scanImageUrl);
+    // const object = await getObject(scanImageUrl);
 
-    if (!object) {
-      throw new Error('Scan Image is not found');
-    }
+    // if (!object) {
+    //   throw new Error('Scan Image is not found');
+    // }
 
-    const url = await convertReadableStreamToBase64(object.body);
+    // const url = await convertReadableStreamToBase64(object.body);
 
-    if (!url) {
-      throw new Error('Scan Image URL is not found');
-    }
+    // if (!url) {
+    //   throw new Error('Scan Image URL is not found');
+    // }
 
     // const scanColors = await extractColorDistribution(
     //   url,
@@ -144,8 +144,8 @@ class Acsta implements AcstaPostIF {
   public scanHeight: GLfloat;
   public scanColors: string;
   // public modeId?: number;
-  public dateStart: string | Date;
-  public dateEnd: string | Date | null;
+  public dateStart?: string | Date;
+  public dateEnd?: string | Date | null;
   public updatedAt: string | Date;
 
   public constructor({
@@ -164,8 +164,8 @@ class Acsta implements AcstaPostIF {
     dateStart,
     dateEnd,
   }: AcstaPostIF) {
-    this.acstaName = acstaName.toString();
-    this.managementName = managementName.toString();
+    this.acstaName = acstaName?.toString();
+    this.managementName = managementName?.toString();
     this.thumbnailUrl = thumbnailUrl as string;
     this.scanImageUrl = scanImageUrl as string;
     this.applicationID = applicationID;
@@ -177,10 +177,10 @@ class Acsta implements AcstaPostIF {
     this.scanColors = scanColors;
 
     // this.modeId = modeId;
-    this.dateStart = new Date(dateStart).toISOString();
-    this.dateEnd = dateEnd ? new Date(dateEnd).toISOString() : null;
-    this.dateStart = new Date(dateStart).toISOString();
-    this.updatedAt = new Date().toISOString();
+    this.dateStart = dateStart ? new Date(dateStart)?.toISOString() : undefined;
+    this.dateEnd = dateEnd ? new Date(dateEnd)?.toISOString() : null;
+    this.dateStart = dateStart ? new Date(dateStart)?.toISOString() : undefined;
+    this.updatedAt = new Date()?.toISOString();
   }
 
   public async create() {
@@ -192,6 +192,7 @@ class Acsta implements AcstaPostIF {
 
   public async updateById({ id }: { id: number }) {
     const payload: AcstaPostIF = this;
+
     return await updateById({ id, payload });
   }
 }

@@ -3,7 +3,6 @@ import {
   SelectInput,
   EditBase,
   Title,
-  usePermissions,
   FileInput,
   FileField,
   useNotify,
@@ -13,7 +12,6 @@ import {
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { validateUserEdition } from './formValidator';
 import { useNavigate } from 'react-router-dom';
-import CryptoJS from 'crypto-js';
 
 import { BaseComponentProps, RAFile, RecordValue } from '@repo/types/general';
 import { Box } from '@mui/material';
@@ -25,7 +23,6 @@ import { convertToFormData } from '@repo/utils/formData';
 import { uploadMuiltpart } from '@repo/utils/multipartUpload';
 
 const MasterEditForm = ({
-  actions,
   resource,
   dataProvider,
 }: BaseComponentProps) => {

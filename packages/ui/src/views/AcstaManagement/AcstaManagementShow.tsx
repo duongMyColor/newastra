@@ -7,6 +7,7 @@ import {
   useGetRecordId,
   useShowContext,
   SimpleForm,
+  useNotify,
 } from 'react-admin';
 import { Box, Stack, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -29,7 +30,7 @@ import dataProvider from '../../../../../apps/cms/src/providers/dataProviders/da
 
 import { BaseComponentProps } from '@repo/types/general';
 import { RectData } from '@repo/types/rectangleEditor';
-import extractColorDistribution from './scanImage';
+// import extractColorDistribution from './scanImage';
 
 const RectEditorArea = ({
   moveScanRange,
@@ -41,31 +42,32 @@ const RectEditorArea = ({
   recordId: string | number;
 }) => {
   const { record } = useShowContext();
+  const positionData: RectData = {
+    originX: record.scanOriginX,
+    originY: record.scanOriginY,
+    width: record.scanWidth,
+    height: record.scanHeight,
+  };
+
+  const notify = useNotify();
   const scanImageUrl = record.scanImageUrl;
   const pathTo = `/${resource}/${recordId}/show`;
-  const [rectPosition, setRectPosition] = useState<RectData>({
-    originX: 0,
-    originY: 0,
-    width: 0,
-    height: 0,
-  });
+  const [rectPosition, setRectPosition] = useState<RectData>();
 
   const saveRectData = async () => {
-    // const res = await dataProvider.updateScanData(
-    //   {
-    //     ...rectPosition,
-    //   },
-    //   recordId
-    // );
+    try {
+      await dataProvider.updateScanData(
+        {
+          data: rectPosition,
+        },
+        recordId
+      );
+      notify('スキャン範囲を保存しました。', { type: 'success' });
 
-    const result = await extractColorDistribution(
-      scanImageUrl,
-      rectPosition.originX,
-      rectPosition.originY,
-      rectPosition.width,
-      rectPosition.height
-    );
-    console.log({ result });
+      moveScanRange();
+    } catch (error) {
+      notify('スキャン範囲の保存に失敗しました。', { type: 'warning' });
+    }
   };
 
   const onChange = (data: RectData) => {
@@ -88,6 +90,7 @@ const RectEditorArea = ({
           variant="contained"
           startIcon={<SaveIcon />}
           onClick={saveRectData}
+          disabled={!rectPosition}
         >
           保存
         </Button>
@@ -95,7 +98,7 @@ const RectEditorArea = ({
 
       <RectEditor
         imagePath={scanImageUrl}
-        data={record.data}
+        data={positionData}
         onChange={onChange}
       ></RectEditor>
       <Stack

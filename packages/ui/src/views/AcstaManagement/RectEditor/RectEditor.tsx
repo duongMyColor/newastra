@@ -112,16 +112,16 @@ const drawImgWithFabric = (
     });
 
     // Add existing rectangles to canvas
+    console.log({ rectData });
+    console.log(canvas.width, canvas.height);
+
     if (!rectData) return;
-    if (!rectData) return;
-    const left =
-      rectData.originX ?? SIZE_FALLBACK * (canvas.width ?? SIZE_FALLBACK);
-    const top =
-      rectData.originY ?? SIZE_FALLBACK * (canvas.height ?? SIZE_FALLBACK);
-    const width =
-      rectData.width ?? SIZE_FALLBACK * (canvas.width ?? SIZE_FALLBACK);
-    const height =
-      rectData.height ?? SIZE_FALLBACK * (canvas.height ?? SIZE_FALLBACK);
+    const left = rectData.originX * (canvas.width ?? SIZE_FALLBACK);
+    const top = rectData.originY * (canvas.height ?? SIZE_FALLBACK);
+    const width = rectData.width * (canvas.width ?? SIZE_FALLBACK);
+    const height = rectData.height * (canvas.height ?? SIZE_FALLBACK);
+
+    console.log({ left, top, width, height });
 
     const rect: CustomRect = new fabric.Rect({
       left,
@@ -153,6 +153,9 @@ const RectEditor = ({
 }: RectEditorProps) => {
   useEffect(() => {
     const canvas = new fabric.Canvas('canvas');
+
+    console.log({ propsData });
+
     drawImgWithFabric(canvas, imagePath, propsData, onChange);
   }, [imagePath]);
 
