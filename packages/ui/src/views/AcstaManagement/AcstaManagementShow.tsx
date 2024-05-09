@@ -6,60 +6,134 @@ import {
   ImageField,
   useGetRecordId,
   useShowContext,
+  SimpleForm,
 } from 'react-admin';
-import CustomForm from '@repo/ui/src/components/CustomForm';
-import { BaseComponentProps } from '@repo/types/general';
-import { Box } from '@mui/material';
-import { validRole } from '../_core/permissions';
+import { Box, Stack, Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import SaveIcon from '@mui/icons-material/Save';
+
+import CustomForm from '@repo/ui/src/components/CustomForm';
 import { StatusTextField } from '@repo/ui/src/components/CustomField/StatusTextField';
 import { ScanDataField } from '@repo/ui/src/components/CustomField/ScanDataField';
+import FormatInputDateShow from '@repo/ui/src/components/FormatInputDateShow';
+import RectEditor from './RectEditor/RectEditor';
+
+import { validRole } from '../_core/permissions';
 import {
   disabledInputBackgroundStyle,
   boxStyles,
   imageFieldStyles,
 } from '@repo/styles';
-import FormatInputDateShow from '@repo/ui/src/components/FormatInputDateShow';
-import RectEditor from './RectEditor/RectEditor';
+import dataProvider from '../../../../../apps/cms/src/providers/dataProviders/dataProvider';
+
+import { BaseComponentProps } from '@repo/types/general';
 import { RectData } from '@repo/types/rectangleEditor';
+import extractColorDistribution from './scanImage';
 
 const RectEditorArea = ({
-  onChange,
+  moveScanRange,
+  resource,
+  recordId,
 }: {
-  onChange: (data: RectData) => void;
+  moveScanRange: () => void;
+  resource: string;
+  recordId: string | number;
 }) => {
   const { record } = useShowContext();
   const scanImageUrl = record.scanImageUrl;
+  const pathTo = `/${resource}/${recordId}/show`;
+  const [rectPosition, setRectPosition] = useState<RectData>({
+    originX: 0,
+    originY: 0,
+    width: 0,
+    height: 0,
+  });
+
+  const saveRectData = async () => {
+    // const res = await dataProvider.updateScanData(
+    //   {
+    //     ...rectPosition,
+    //   },
+    //   recordId
+    // );
+
+    const result = await extractColorDistribution(
+      scanImageUrl,
+      rectPosition.originX,
+      rectPosition.originY,
+      rectPosition.width,
+      rectPosition.height
+    );
+    console.log({ result });
+  };
+
+  const onChange = (data: RectData) => {
+    console.log(data);
+
+    setRectPosition(data);
+  };
 
   return (
-    <RectEditor
-      imagePath={scanImageUrl}
-      data={record.data}
-      onChange={onChange}
-    ></RectEditor>
+    <SimpleForm warnWhenUnsavedChanges={true} toolbar={false}>
+      <Stack
+        direction="row"
+        justifyContent="flex-end"
+        width="100%"
+        height="100%"
+        gap={3}
+        alignItems="center"
+      >
+        <Button
+          variant="contained"
+          startIcon={<SaveIcon />}
+          onClick={saveRectData}
+        >
+          保存
+        </Button>
+      </Stack>
+
+      <RectEditor
+        imagePath={scanImageUrl}
+        data={record.data}
+        onChange={onChange}
+      ></RectEditor>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        spacing={2}
+        width="100%"
+        sx={{
+          backgroundColor: '#f1f1f1',
+          padding: '1rem',
+          borderRadius: '4px',
+          marginTop: '1rem',
+        }}
+      >
+        <Link to={pathTo}>
+          <Button
+            type="button"
+            variant="contained"
+            color="error"
+            onClick={moveScanRange}
+          >
+            戻る
+          </Button>
+        </Link>
+      </Stack>
+    </SimpleForm>
   );
 };
 
 const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
 
-  const [rectPosition, setRectPosition] = useState<RectData>({
-    x: 0,
-    y: 0,
-    width: 0,
-    height: 0,
-  });
   const recordId = useGetRecordId();
   const [isScanRange, setIsScanRange] = useState<boolean>(false);
 
   const moveScanRange = () => {
     setIsScanRange(!isScanRange);
-  };
-
-  const onChange = (data: RectData) => {
-    console.log( data );
-
-    setRectPosition(data);
   };
 
   return (
@@ -75,14 +149,11 @@ const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
           />
 
           {isScanRange ? (
-            <CustomForm
-              pathTo={`/${resource}/${recordId}/show`}
-              showSaveButton={true}
-              showCancelButton={true}
+            <RectEditorArea
               moveScanRange={moveScanRange}
-            >
-              <RectEditorArea onChange={onChange} />
-            </CustomForm>
+              resource={resource}
+              recordId={recordId}
+            />
           ) : (
             <CustomForm
               pathTo={resourcePath}

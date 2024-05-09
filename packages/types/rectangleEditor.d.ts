@@ -8,8 +8,8 @@ export interface RectEditorProps {
 }
 
 export interface RectData {
-  x: number;
-  y: number;
+  originX: number;
+  originY: number;
   width: number;
   height: number;
 }

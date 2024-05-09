@@ -5,6 +5,7 @@ import { AcstaPostIF } from '@repo/types/acsta';
 import { count } from '../_repos/acsta.repo';
 import type { NextRequest } from 'next/server';
 import { parseParams, parseSearchParams } from '@repo/utils/parseParams';
+import { RectData } from '@repo/types/rectangleEditor';
 
 class AcstaController {
   create = async (request: NextRequest) => {
@@ -76,6 +77,18 @@ class AcstaController {
     return new OK({
       message: 'updated Acsta OK!',
       metadata: await AcstaService.updateById({
+        id: id,
+        payload: payload,
+      }),
+    });
+  };
+
+  updateScanData = async (request: NextRequest, id: number) => {
+    const payload: RectData = await request.json();
+
+    return new OK({
+      message: 'updated Acsta scan data OK!',
+      metadata: await AcstaService.updateScanDataById({
         id: id,
         payload: payload,
       }),

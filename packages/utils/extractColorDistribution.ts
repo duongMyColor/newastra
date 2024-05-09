@@ -45,7 +45,7 @@ const extractColorDistribution = async (
   const areaWidth = Math.round(imgWidth * areaWidthPercent);
   const areaHeight = Math.round(imgHeight * areaHeightPercent);
 
-  const { data } = await image
+  const result = await image
     .extract({
       left: startX,
       top: startY,
@@ -55,6 +55,8 @@ const extractColorDistribution = async (
     .toColourspace('bgr')
     .raw()
     .toBuffer();
+
+  const data = result?.data;
 
   const initialColorCounts: number[] = new Array(COLOR_BINS).fill(0);
 

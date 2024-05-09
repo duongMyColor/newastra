@@ -64,7 +64,7 @@ const CustomForm = ({
         alignItems="center"
       >
         {showDeleteButton ? (
-          <CustomButtonByRole>
+          <CustomButtonByRole source="role">
             <DeleteButtonFlexEnd label={deleteButtonLabel} />
           </CustomButtonByRole>
         ) : null}

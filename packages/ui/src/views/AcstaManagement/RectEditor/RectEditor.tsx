@@ -60,21 +60,18 @@ const drawImgWithFabric = (
 
   const finishDrawingRectangle = () => {
     isDown = false;
-
-    const x =
-      ((rect.left ?? SIZE_FALLBACK) + (rect.width ?? SIZE_FALLBACK) / 2) /
-      (canvas.width ?? SIZE_FALLBACK);
-    const y =
-      ((rect.top ?? SIZE_FALLBACK) + (rect.height ?? SIZE_FALLBACK) / 2) /
-      (canvas.height ?? SCALE_FALLBACK);
+    const originX =
+      (rect.left ?? SIZE_FALLBACK) / (canvas.width ?? SIZE_FALLBACK);
+    const originY =
+      (rect.top ?? SIZE_FALLBACK) / (canvas.height ?? SIZE_FALLBACK);
     const width =
-      (rect.width ?? SIZE_FALLBACK) / (canvas.width ?? SCALE_FALLBACK);
+      (rect.width ?? SIZE_FALLBACK) / (canvas.width ?? SIZE_FALLBACK);
     const height =
-      (rect.height ?? SIZE_FALLBACK) / (canvas.height ?? SCALE_FALLBACK);
+      (rect.height ?? SIZE_FALLBACK) / (canvas.height ?? SIZE_FALLBACK);
 
     onChange({
-      x: roundNumberWith5Decimals(x),
-      y: roundNumberWith5Decimals(y),
+      originX: roundNumberWith5Decimals(originX),
+      originY: roundNumberWith5Decimals(originY),
       width: roundNumberWith5Decimals(width),
       height: roundNumberWith5Decimals(height),
     });
@@ -116,17 +113,15 @@ const drawImgWithFabric = (
 
     // Add existing rectangles to canvas
     if (!rectData) return;
+    if (!rectData) return;
     const left =
-      (rectData.x ?? SIZE_FALLBACK) * (canvas.width ?? SIZE_FALLBACK) -
-      ((rectData.width ?? SIZE_FALLBACK) * (canvas.width ?? SIZE_FALLBACK)) / 2;
+      rectData.originX ?? SIZE_FALLBACK * (canvas.width ?? SIZE_FALLBACK);
     const top =
-      (rectData.y ?? SIZE_FALLBACK) * (canvas.height ?? SIZE_FALLBACK) -
-      ((rectData.height ?? SIZE_FALLBACK) * (canvas.height ?? SIZE_FALLBACK)) /
-        2;
+      rectData.originY ?? SIZE_FALLBACK * (canvas.height ?? SIZE_FALLBACK);
     const width =
-      (rectData.width ?? SIZE_FALLBACK) * (canvas.width ?? SIZE_FALLBACK);
+      rectData.width ?? SIZE_FALLBACK * (canvas.width ?? SIZE_FALLBACK);
     const height =
-      (rectData.height ?? SIZE_FALLBACK) * (canvas.height ?? SIZE_FALLBACK);
+      rectData.height ?? SIZE_FALLBACK * (canvas.height ?? SIZE_FALLBACK);
 
     const rect: CustomRect = new fabric.Rect({
       left,

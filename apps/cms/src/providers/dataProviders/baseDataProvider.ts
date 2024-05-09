@@ -299,6 +299,23 @@ const baseDataProvider: DataProvider = {
       data: response,
     };
   },
+  updateScanData: async (params: UpdateParams, id: number) => {
+    const url = `${apiUrl}/acstas/scan-data/${id}`;
+    const body = JSON.stringify(params.data);
+
+    const response = await httpClient(url, {
+      method: 'PUT',
+      body,
+    });
+
+    const {
+      json: { metadata },
+    } = response;
+
+    return {
+      data: metadata,
+    };
+  },
 };
 
 export default baseDataProvider;
