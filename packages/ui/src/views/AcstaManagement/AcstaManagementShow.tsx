@@ -30,7 +30,7 @@ import dataProvider from '../../../../../apps/cms/src/providers/dataProviders/da
 
 import { BaseComponentProps } from '@repo/types/general';
 import { RectData } from '@repo/types/rectangleEditor';
-// import extractColorDistribution from './scanImage';
+import extractColorDistribution from './scanImageUsingPica';
 
 const RectEditorArea = ({
   moveScanRange,
@@ -55,10 +55,20 @@ const RectEditorArea = ({
   const [rectPosition, setRectPosition] = useState<RectData>();
 
   const saveRectData = async () => {
+    console.log({ rectPosition });
+
+    const scanColors = await extractColorDistribution(
+      scanImageUrl,
+      rectPosition?.originX,
+      rectPosition?.originY,
+      rectPosition?.width,
+      rectPosition?.height
+    );
+
     try {
       await dataProvider.updateScanData(
         {
-          data: rectPosition,
+          data: { ...rectPosition, scanColors: scanColors },
         },
         recordId
       );

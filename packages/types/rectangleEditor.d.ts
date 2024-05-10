@@ -12,6 +12,7 @@ export interface RectData {
   originY: number;
   width: number;
   height: number;
+  scanColors?: string;
 }
 
 export interface CustomRect extends Rect {

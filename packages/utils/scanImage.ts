@@ -1,5 +1,3 @@
-import sharp from 'sharp';
-
 // RGBのレンジを定義
 enum ColorRange {
   Low = 0,
@@ -29,14 +27,27 @@ const extractColorDistribution = async (
   areaWidthPercent: number,
   areaHeightPercent: number
 ): Promise<number[]> => {
-  const image = sharp(imagePath);
-  const metadata = await image.metadata();
+  const image = new Image();
+  image.src = imagePath;
 
-  if (!metadata.width || !metadata.height)
-    throw new Error('Image metadata is missing.');
+  await new Promise((resolve) => {
+    image.onload = resolve;
+  });
 
-  const imgWidth = metadata.width;
-  const imgHeight = metadata.height;
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+
+  const imgWidth = image.width;
+  const imgHeight = image.height;
+
+  canvas.width = imgWidth;
+  canvas.height = imgHeight;
+
+  if (!ctx) {
+    throw new Error('Failed to get 2d context');
+  }
+
+  ctx.drawImage(image, 0, 0, imgWidth, imgHeight);
 
   const startX = Math.round(imgWidth * startXPercent);
   const startY = Math.round(
@@ -45,42 +56,30 @@ const extractColorDistribution = async (
   const areaWidth = Math.round(imgWidth * areaWidthPercent);
   const areaHeight = Math.round(imgHeight * areaHeightPercent);
 
-  const result = await image
-    .extract({
-      left: startX,
-      top: startY,
-      width: areaWidth,
-      height: areaHeight,
-    })
-    .toColourspace('bgr')
-    .raw()
-    .toBuffer();
+  const imageData = ctx.getImageData(startX, startY, areaWidth, areaHeight);
 
-  const data = result?.data;
+  const data = imageData.data;
 
-  const initialColorCounts: number[] = new Array(COLOR_BINS).fill(0);
+  const initialColorCounts = new Array(COLOR_BINS).fill(0);
 
-  const colorCounts: number[] = data.reduce(
-    (counts: number[], value: any, index: number) => {
-      if (index % 3 === 0) {
-        const bgrIndex = getBGRIndex(
-          data[index],
-          data[index + 1],
-          data[index + 2]
-        );
-        if (counts[bgrIndex] !== undefined) {
-          counts[bgrIndex]++;
-        }
+  const colorCounts = data.reduce((counts, value, index) => {
+    if (index % 4 === 0) {
+      const bgrIndex = getBGRIndex(
+        data[index] as number,
+        data[index + 1] as number,
+        data[index + 2] as number
+      );
+      if (counts[bgrIndex] !== undefined) {
+        counts[bgrIndex]++;
       }
-      return counts;
-    },
-    initialColorCounts
-  );
+    }
+    return counts;
+  }, initialColorCounts);
 
   const totalPixels = areaWidth * areaHeight;
   // 小数点第４位で四捨五入し、3桁の精度を保つ
   return colorCounts.map(
-    (count: number) => Math.round((count / totalPixels) * 1000) / 1000
+    (count) => Math.round((count / totalPixels) * 1000) / 1000
   );
 };
 

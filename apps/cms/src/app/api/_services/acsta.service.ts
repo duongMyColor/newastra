@@ -20,7 +20,7 @@ import UploadFileService from './upload.service';
 import { RectData } from '@repo/types/rectangleEditor';
 import { getObject } from '@/lib/cloudflare-r2';
 import { convertReadableStreamToBase64 } from '@repo/utils/fileUtils';
-import extractColorDistribution from '@repo/utils/extractColorDistribution';
+import extractColorDistribution from '@repo/utils/scanImage';
 class AcstaFactory {
   static async create({ payload }: { payload: FormData }) {
     const paylodObj = convertFormDataToObject(payload);
@@ -78,34 +78,8 @@ class AcstaFactory {
     id: number;
     payload: RectData;
   }) {
-    // const { scanImageUrl } = await getOneById(id);
-
-    // if (!scanImageUrl) {
-    //   throw new Error('Scan Image URL is not found');
-    // }
-
-    // const object = await getObject(scanImageUrl);
-
-    // if (!object) {
-    //   throw new Error('Scan Image is not found');
-    // }
-
-    // const url = await convertReadableStreamToBase64(object.body);
-
-    // if (!url) {
-    //   throw new Error('Scan Image URL is not found');
-    // }
-
-    // const scanColors = await extractColorDistribution(
-    //   url,
-    //   payload.originX,
-    //   payload.originY,
-    //   payload.width,
-    //   payload.height
-    // );
-
     const body = {
-      // scanColors: JSON.stringify(scanColors),
+      scanColors: JSON.stringify(payload.scanColors),
       scanOriginX: payload.originX,
       scanOriginY: payload.originY,
       scanWidth: payload.width,
