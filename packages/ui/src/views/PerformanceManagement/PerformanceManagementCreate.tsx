@@ -96,8 +96,8 @@ const PerformanceManagementCreate = ({
     const setIdAcstaFunc = async () => {
       const resAcstaId = await dataProvider.getAll('acstas');
       setAcstaId(
-        resAcstaId.map(({ id }: AcstaResponseIF) => {
-          return { id, name: id };
+        resAcstaId.map(({ id, acstaName }: AcstaResponseIF) => {
+          return { id, name: `${id} :${acstaName}` };
         })
       );
     };

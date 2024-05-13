@@ -1,7 +1,8 @@
 import { ForcedUpdateManagementResponseIF } from '@repo/types/forceUpdateManagement';
+import { RecordValue } from '@repo/types/general';
 import dayjs from 'dayjs';
 
-export const validatePublishedDate = (values: any): boolean => {
+export const validatePublishedDate = (values: RecordValue): boolean => {
   const listUpdateAllStorage = JSON.parse(
     localStorage.getItem('listUpdateAll') || 'null'
   );

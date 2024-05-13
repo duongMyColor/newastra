@@ -8,6 +8,7 @@ export interface ForcedUpdateManagementResponseIF {
   no: number;
   status?: string;
   record?: string;
+  textOperate?:string
 }
 
 export interface ForcedUpdateManagementPostIF {
