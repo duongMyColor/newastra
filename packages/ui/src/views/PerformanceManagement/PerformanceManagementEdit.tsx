@@ -50,7 +50,7 @@ const PerformanceEditForm = ({ actions, resource }: BaseComponentProps) => {
     console.log('handle values;', values);
     const { assetDataAndroid, assetDataIOS, encryptKey, ...rest } = values;
 
-    if (assetDataAndroid.rawFile) {
+    if (assetDataAndroid?.rawFile) {
       const assetBundleAndroidFile = extractFile(assetDataAndroid);
       const keyAndroid = await uploadMuiltpart(
         assetBundleAndroidFile,
@@ -59,7 +59,7 @@ const PerformanceEditForm = ({ actions, resource }: BaseComponentProps) => {
       rest.assetBundleAndroid = keyAndroid;
     }
 
-    if (assetDataIOS.rawFile) {
+    if (assetDataIOS?.rawFile) {
       const assetBundleIOSFile = extractFile(assetDataIOS);
 
       const keyIOS = await uploadMuiltpart(assetBundleIOSFile, encryptKey);

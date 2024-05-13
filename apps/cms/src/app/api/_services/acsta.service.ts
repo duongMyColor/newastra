@@ -17,6 +17,10 @@ import { GetManyReferenceParams } from 'react-admin';
 import { convertFormDataToObject } from '@repo/utils/objectUtils';
 import { UPLOAD_FOLDER_MAP } from '@repo/consts/general';
 import UploadFileService from './upload.service';
+import { RectData } from '@repo/types/rectangleEditor';
+import { getObject } from '@/lib/cloudflare-r2';
+import { convertReadableStreamToBase64 } from '@repo/utils/fileUtils';
+import extractColorDistribution from '@repo/utils/scanImage';
 class AcstaFactory {
   static async create({ payload }: { payload: FormData }) {
     const paylodObj = convertFormDataToObject(payload);
@@ -67,6 +71,24 @@ class AcstaFactory {
     return await new Acsta(body).updateById({ id });
   }
 
+  static async updateScanDataById({
+    id,
+    payload,
+  }: {
+    id: number;
+    payload: RectData;
+  }) {
+    const body = {
+      scanColors: JSON.stringify(payload.scanColors),
+      scanOriginX: payload.originX,
+      scanOriginY: payload.originY,
+      scanWidth: payload.width,
+      scanHeight: payload.height,
+    };
+
+    return await new Acsta(body as AcstaPostIF).updateById({ id });
+  }
+
   static async updateMany(updates: AcstaPostIF[]) {
     const payload = updates.map((update) => new Acsta(update));
 
@@ -96,8 +118,8 @@ class Acsta implements AcstaPostIF {
   public scanHeight: GLfloat;
   public scanColors: string;
   // public modeId?: number;
-  public dateStart: string | Date;
-  public dateEnd: string | Date | null;
+  public dateStart?: string | Date;
+  public dateEnd?: string | Date | null;
   public updatedAt: string | Date;
   public record?: string;
 
@@ -118,8 +140,8 @@ class Acsta implements AcstaPostIF {
     dateEnd,
     record,
   }: AcstaPostIF) {
-    this.acstaName = acstaName.toString();
-    this.managementName = managementName.toString();
+    this.acstaName = acstaName?.toString();
+    this.managementName = managementName?.toString();
     this.thumbnailUrl = thumbnailUrl as string;
     this.scanImageUrl = scanImageUrl as string;
     this.applicationID = applicationID;
@@ -131,10 +153,10 @@ class Acsta implements AcstaPostIF {
     this.scanColors = scanColors;
 
     // this.modeId = modeId;
-    this.dateStart = new Date(dateStart).toISOString();
-    this.dateEnd = dateEnd ? new Date(dateEnd).toISOString() : null;
-    this.dateStart = new Date(dateStart).toISOString();
-    this.updatedAt = new Date().toISOString();
+    this.dateStart = dateStart ? new Date(dateStart)?.toISOString() : undefined;
+    this.dateEnd = dateEnd ? new Date(dateEnd)?.toISOString() : null;
+    this.dateStart = dateStart ? new Date(dateStart)?.toISOString() : undefined;
+    this.updatedAt = new Date()?.toISOString();
     this.record = record;
   }
 
@@ -147,6 +169,7 @@ class Acsta implements AcstaPostIF {
 
   public async updateById({ id }: { id: number }) {
     const payload: AcstaPostIF = this;
+
     return await updateById({ id, payload });
   }
 }

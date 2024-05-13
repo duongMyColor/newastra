@@ -33,7 +33,7 @@ export const POST = errorHandlerMiddleware(
           headers,
         });
       default:
-        break;
+        return new NotFoundError('Unsupported type');
     }
   }
 );

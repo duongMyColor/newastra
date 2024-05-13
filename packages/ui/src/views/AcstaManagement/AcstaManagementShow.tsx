@@ -5,61 +5,32 @@ import {
   SimpleShowLayout,
   ImageField,
   useGetRecordId,
-  useShowContext,
 } from 'react-admin';
-import CustomForm from '@repo/ui/src/components/CustomForm';
-import { BaseComponentProps } from '@repo/types/general';
 import { Box } from '@mui/material';
-import { validRole } from '../_core/permissions';
 import { useState } from 'react';
+
+import CustomForm from '@repo/ui/src/components/CustomForm';
 import { StatusTextField } from '@repo/ui/src/components/CustomField/StatusTextField';
 import { ScanDataField } from '@repo/ui/src/components/CustomField/ScanDataField';
+import FormatInputDateShow from '@repo/ui/src/components/FormatInputDateShow';
+import RectEditorArea from './RectEditorArea';
+
+import { validRole } from '../_core/permissions';
 import {
   disabledInputBackgroundStyle,
   boxStyles,
   imageFieldStyles,
 } from '@repo/styles';
-import FormatInputDateShow from '@repo/ui/src/components/FormatInputDateShow';
-import RectEditor from './RectEditor/RectEditor';
-import { RectData } from '@repo/types/rectangleEditor';
 
-const RectEditorArea = ({
-  onChange,
-}: {
-  onChange: (data: RectData) => void;
-}) => {
-  const { record } = useShowContext();
-  const scanImageUrl = record.scanImageUrl;
-
-  return (
-    <RectEditor
-      imagePath={scanImageUrl}
-      data={record.data}
-      onChange={onChange}
-    ></RectEditor>
-  );
-};
+import { BaseComponentProps } from '@repo/types/general';
 
 const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
 
-  const [rectPosition, setRectPosition] = useState<RectData>({
-    x: 0,
-    y: 0,
-    width: 0,
-    height: 0,
-  });
-  const recordId = useGetRecordId();
   const [isScanRange, setIsScanRange] = useState<boolean>(false);
 
   const moveScanRange = () => {
     setIsScanRange(!isScanRange);
-  };
-
-  const onChange = (data: RectData) => {
-    console.log( data );
-
-    setRectPosition(data);
   };
 
   return (
@@ -75,14 +46,7 @@ const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
           />
 
           {isScanRange ? (
-            <CustomForm
-              pathTo={`/${resource}/${recordId}/show`}
-              showSaveButton={true}
-              showCancelButton={true}
-              moveScanRange={moveScanRange}
-            >
-              <RectEditorArea onChange={onChange} />
-            </CustomForm>
+            <RectEditorArea moveScanRange={moveScanRange} resource={resource} />
           ) : (
             <CustomForm
               pathTo={resourcePath}
@@ -121,14 +85,14 @@ const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
 
               <SimpleShowLayout spacing={3}>
                 <ImageField
-                  source="thumbnailUrl"
+                  source="thumbnailUrl.src"
                   label="アクスタサムネイル"
                   sx={imageFieldStyles}
                 />
               </SimpleShowLayout>
 
               <ScanDataField
-                source="scanImageUrl"
+                source="scanImageUrl.src"
                 moveScanRange={moveScanRange}
               ></ScanDataField>
 
@@ -138,20 +102,13 @@ const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
               <FormatInputDateShow label="公開終了日" source="dateEnd" />
               <FormatInputDateShow label="登録日時" source="createdAt" />
 
-              <TextInput
-                source="dateEnd"
-                label="公開終了日"
+              {/* <TextInput
+                source="acstaBasicInfoID"
+                label="力士基本情報ID"
                 disabled
                 sx={disabledInputBackgroundStyle}
-              />
-              <TextInput
-                source="createdAt"
-                label="登録日時"
-                disabled
-                sx={disabledInputBackgroundStyle}
-              />
-
-              
+                fullWidth
+              /> */}
             </CustomForm>
           )}
         </>

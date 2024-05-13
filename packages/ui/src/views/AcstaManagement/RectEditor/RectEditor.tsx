@@ -1,7 +1,12 @@
 // External imports
 import { Dispatch, useEffect } from 'react';
 import { fabric } from 'fabric';
-import type { Image, Canvas, IEvent, IPoint } from 'fabric/fabric-impl';
+import type {
+  Image as FabricImage,
+  Canvas,
+  IEvent,
+  IPoint,
+} from 'fabric/fabric-impl';
 
 // Internal imports
 import {
@@ -26,9 +31,14 @@ const drawImgWithFabric = (
   rectData: RectData,
   onChange: Dispatch<any>
 ) => {
-  if (!imagePath.includes('base64')) return;
+  // if (!imagePath.includes('base64')) return;
+  console.log('rectData.originY', rectData.originY);
 
   let rect: CustomRect, isDown: boolean, origX: number, origY: number;
+
+  const addRectToCanvas = (rect: fabric.Rect, canvas: Canvas) => {
+    canvas.add(rect);
+  };
 
   const addRectangle = (pointer: IPoint) => {
     // Remove any existing rectangles
@@ -42,7 +52,7 @@ const drawImgWithFabric = (
       ...RECT_OPTIONS,
     });
 
-    canvas.add(rect);
+    addRectToCanvas(rect, canvas);
   };
 
   const updateRectangle = (pointer: IPoint) => {
@@ -60,21 +70,18 @@ const drawImgWithFabric = (
 
   const finishDrawingRectangle = () => {
     isDown = false;
-
-    const x =
-      ((rect.left ?? SIZE_FALLBACK) + (rect.width ?? SIZE_FALLBACK) / 2) /
-      (canvas.width ?? SIZE_FALLBACK);
-    const y =
-      ((rect.top ?? SIZE_FALLBACK) + (rect.height ?? SIZE_FALLBACK) / 2) /
-      (canvas.height ?? SCALE_FALLBACK);
+    const originX =
+      (rect.left ?? SIZE_FALLBACK) / (canvas.width ?? SIZE_FALLBACK);
+    const originY =
+      (rect.top ?? SIZE_FALLBACK) / (canvas.height ?? SIZE_FALLBACK);
     const width =
-      (rect.width ?? SIZE_FALLBACK) / (canvas.width ?? SCALE_FALLBACK);
+      (rect.width ?? SIZE_FALLBACK) / (canvas.width ?? SIZE_FALLBACK);
     const height =
-      (rect.height ?? SIZE_FALLBACK) / (canvas.height ?? SCALE_FALLBACK);
+      (rect.height ?? SIZE_FALLBACK) / (canvas.height ?? SIZE_FALLBACK);
 
     onChange({
-      x: roundNumberWith5Decimals(x),
-      y: roundNumberWith5Decimals(y),
+      originX: roundNumberWith5Decimals(originX),
+      originY: roundNumberWith5Decimals(originY),
       width: roundNumberWith5Decimals(width),
       height: roundNumberWith5Decimals(height),
     });
@@ -98,7 +105,7 @@ const drawImgWithFabric = (
   };
 
   // Add image to canvas
-  fabric.Image.fromURL(imagePath, (img: Image) => {
+  fabric.Image.fromURL(imagePath, (img: FabricImage) => {
     let scale = Math.min(
       CANVAS_WIDTH / (img.width ?? SCALE_FALLBACK),
       CANVAS_HEIGHT / (img.height ?? SCALE_FALLBACK)
@@ -116,17 +123,12 @@ const drawImgWithFabric = (
 
     // Add existing rectangles to canvas
     if (!rectData) return;
-    const left =
-      (rectData.x ?? SIZE_FALLBACK) * (canvas.width ?? SIZE_FALLBACK) -
-      ((rectData.width ?? SIZE_FALLBACK) * (canvas.width ?? SIZE_FALLBACK)) / 2;
-    const top =
-      (rectData.y ?? SIZE_FALLBACK) * (canvas.height ?? SIZE_FALLBACK) -
-      ((rectData.height ?? SIZE_FALLBACK) * (canvas.height ?? SIZE_FALLBACK)) /
-        2;
-    const width =
-      (rectData.width ?? SIZE_FALLBACK) * (canvas.width ?? SIZE_FALLBACK);
-    const height =
-      (rectData.height ?? SIZE_FALLBACK) * (canvas.height ?? SIZE_FALLBACK);
+    const left = rectData.originX * (canvas.width ?? SIZE_FALLBACK);
+    const top = rectData.originY * (canvas.height ?? SIZE_FALLBACK);
+    const width = rectData.width * (canvas.width ?? SIZE_FALLBACK);
+    const height = rectData.height * (canvas.height ?? SIZE_FALLBACK);
+
+    console.log({ left, top, width, height });
 
     const rect: CustomRect = new fabric.Rect({
       left,
@@ -136,7 +138,7 @@ const drawImgWithFabric = (
       ...RECT_OPTIONS,
     });
 
-    canvas.add(rect);
+    addRectToCanvas(rect, canvas);
   });
 
   canvas.renderAll();
@@ -158,6 +160,9 @@ const RectEditor = ({
 }: RectEditorProps) => {
   useEffect(() => {
     const canvas = new fabric.Canvas('canvas');
+
+    // console.log({ propsData });
+
     drawImgWithFabric(canvas, imagePath, propsData, onChange);
   }, [imagePath]);
 

@@ -1,13 +1,19 @@
 import { useRecordContext } from 'react-admin';
 
 interface CustomButtonByRoleProps {
-  label?: string;
   children: JSX.Element | JSX.Element[];
   condition?: any;
   source: string;
 }
+
+/**
+ *
+ * @param children - JSX.Element | JSX.Element[]
+ * @param condition - condition to match
+ * @param source - source to match
+ * @returns
+ */
 export const CustomButtonByRole = ({
-  label,
   children,
   condition,
   source,

@@ -5,7 +5,7 @@ const SIZE_FALLBACK = 0;
 const RECT_OPTIONS = {
   fill: 'transparent',
   stroke: 'red',
-  strokeWidth: 3,
+  strokeWidth: 2,
   selectable: false,
   originX: 'left',
   originY: 'top',
@@ -19,7 +19,6 @@ const TEXT_OPTIONS = {
   fill: 'black',
   textBackgroundColor: 'white',
 };
-
 
 export {
   CANVAS_WIDTH,

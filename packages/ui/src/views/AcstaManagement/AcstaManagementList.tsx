@@ -46,11 +46,7 @@ const AcstaManagementList = ({ actions, resource }: BaseComponentProps) => {
         />
 
         {validRole('delete', actions) && true && (
-          <CustomButtonByRole
-            label="削除"
-            source="status"
-            condition="アクティブ"
-          >
+          <CustomButtonByRole source="status" condition="アクティブ">
             <DeleteWithConfirmButton
               confirmContent="よろしいですか?"
               confirmTitle="削除"

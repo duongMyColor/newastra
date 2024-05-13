@@ -51,7 +51,7 @@ export interface AcstaPostIF {
   scanHeight: float;
   scanColors: string;
   modeId?: number;
-  dateStart: string | Date;
+  dateStart?: string | Date;
   dateEnd?: string | Date | null;
   updatedAt: string | Date;
   record?: string;
