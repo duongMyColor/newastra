@@ -190,6 +190,18 @@ class BaseRepo {
     }
   };
 
+  getOneByIdLastestRecord = async (nameRecord: string) => {
+    try {
+      const latestRecord = await this.tableModel.findFirst({
+        where: { name: nameRecord },
+      });
+
+      return latestRecord;
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+
   insert = async (payload: RecordValue) => {
     const data = removeEmptyProperties(payload);
 
@@ -241,6 +253,22 @@ class BaseRepo {
     });
 
     return await prisma.$transaction(operations);
+  };
+  updateIdLastestOfRecord = async (record: RecordValue) => {
+    const data = removeEmptyProperties(record);
+    const findData = await this.tableModel.findFirst({
+      where: { name: data.record },
+    });
+    if (!findData) {
+      throw new Error('Record not found');
+    }
+
+    const updateData = await this.tableModel.update({
+      where: { id: findData.id },
+      data: { idLastest: findData.idLastest + 1 },
+    });
+
+    return updateData;
   };
 
   deleteById = async (id: number) => {

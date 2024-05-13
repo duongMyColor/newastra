@@ -24,4 +24,5 @@ export interface LicensePostIF {
   content: string | Buffer | File;
   publishedDate: string | Date;
   updatedAt?: string | Date;
+  record?: string;
 }

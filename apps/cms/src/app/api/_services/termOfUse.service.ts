@@ -90,18 +90,21 @@ class TermOfUse implements TermOfUsePostIF {
   public content: string;
   public publishedDate: string | Date;
   public updatedAt: string;
+  public record?: string;
 
   public constructor({
     version,
     content,
     memo,
     publishedDate,
+    record,
   }: TermOfUsePostIF) {
     this.version = version.toString();
     this.content = content as string;
     this.memo = memo.toString();
     this.publishedDate = new Date(publishedDate).toISOString();
     this.updatedAt = new Date().toISOString();
+    this.record = record;
   }
 
   public async create() {

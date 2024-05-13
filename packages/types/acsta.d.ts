@@ -54,4 +54,5 @@ export interface AcstaPostIF {
   dateStart?: string | Date;
   dateEnd?: string | Date | null;
   updatedAt: string | Date;
+  record?: string;
 }

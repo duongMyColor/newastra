@@ -128,6 +128,7 @@ const baseDataProvider: DataProvider = {
     let body;
     if (params.data instanceof FormData) {
       body = params.data;
+      body.append('record', `${MAP_RESOURE[resource]}`);
     } else {
       body = JSON.stringify(params.data);
     }
@@ -140,7 +141,8 @@ const baseDataProvider: DataProvider = {
       json: { metadata },
     } = response;
 
-    console.log(':::metadata', metadata);
+
+    console.log(':::metadata data', metadata);
     return {
       data: metadata,
     };
@@ -278,6 +280,19 @@ const baseDataProvider: DataProvider = {
     const {
       json: { metadata },
     } = await httpClient(url);
+
+    return {
+      data: metadata,
+    };
+  },
+  getIdLastestRecord: async (resource: string) => {
+    console.log({ resource });
+    const url = `${apiUrl}/id-lastest-of-record?record=${MAP_RESOURE[resource]}`;
+    const {
+      json: { metadata },
+    } = await httpClient(url);
+
+    console.log(':::response', metadata);
 
     return {
       data: metadata,
