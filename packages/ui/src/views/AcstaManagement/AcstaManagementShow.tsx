@@ -143,12 +143,7 @@ const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
                 sx={disabledInputBackgroundStyle}
               />
 
-              <TextInput
-                source="SumoId"
-                label="力士基本情報ID"
-                disabled
-                sx={disabledInputBackgroundStyle}
-              />
+              
             </CustomForm>
           )}
         </>

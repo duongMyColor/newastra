@@ -17,7 +17,7 @@ const UserCreate = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
 
   return (
-    <Create redirect={REDIRECT_ROUTE.list} title="管理ユーザー管理　新规作成">
+    <Create redirect={REDIRECT_ROUTE.list} title="管理ユーザー管理　新規作成">
       <CustomForm
         pathTo={resourcePath}
         validate={validateUserCreation}
@@ -47,7 +47,7 @@ const UserCreate = ({ actions, resource }: BaseComponentProps) => {
         />
         <PasswordInput
           source="confirmPassword"
-          label="バスワード辟涊"
+          label="パスワード確認"
           fullWidth
           isRequired
         />

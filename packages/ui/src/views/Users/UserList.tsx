@@ -19,8 +19,8 @@ const UserList = ({ actions, resource }: BaseComponentProps) => {
       <Datagrid rowClick="show" bulkActionButtons={false}>
         <TextField source="no" label="No" />
         <TextField source="username" label="CMS-ID" />
-        <TextField source="date" label="最縤ログイン" />
-        <TextField source="role" label="筧昭" />
+        <TextField source="date" label="最終ログイン" />
+        <TextField source="role" label="権限" />
         <TextField source="email" label="メールアドレス" />
         {validRole('edit', actions) && <EditButton label="編集"></EditButton>}
         {validRole('delete', actions) && (
