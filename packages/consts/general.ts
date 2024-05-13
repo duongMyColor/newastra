@@ -12,6 +12,7 @@ const MAP_RESOURE: Record<string, string> = {
   acstas: 'acstaManagement',
   licenses: 'license',
   performances: 'performaceManagement',
+  'forced-update-managements': 'forcedUpdateManagements',
 };
 
 const UPLOAD_FOLDER_MAP = {
@@ -22,4 +23,15 @@ const UPLOAD_FOLDER_MAP = {
   acsta: 'acsta',
 };
 
-export { baseUploadFolder, REDIRECT_ROUTE, UPLOAD_FOLDER_MAP, MAP_RESOURE };
+const OPERATE_SYSTEM = [
+  { id: '0', name: 'IOS' },
+  { id: '1', name: 'Android' },
+];
+
+export {
+  baseUploadFolder,
+  REDIRECT_ROUTE,
+  UPLOAD_FOLDER_MAP,
+  MAP_RESOURE,
+  OPERATE_SYSTEM,
+};

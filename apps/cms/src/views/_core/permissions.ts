@@ -10,15 +10,17 @@ const ADMIN: Permission = {
   performances: '*',
   'term-of-uses': '*',
   licenses: '*',
+  'forced-update-managements': '*',
 };
 const GENERAL: Permission = {
-  users: ['list', 'show'],
+  users: ['list', 'show', 'edit', 'delete'],
   'application-masters': ['create', 'list', 'show', 'edit', 'delete'],
   acstas: ['create', 'list', 'show', 'edit', 'delete'],
   'performance-type-masters': ['create', 'list', 'show', 'edit', 'delete'],
   performances: ['create', 'list', 'show', 'edit', 'delete'],
   'term-of-uses': ['create', 'list', 'show'],
   licenses: ['create', 'list', 'show'],
+  'forced-update-managements': ['create', 'list', 'show'],
 
   // products: ['list', 'create', 'edit', 'delete', 'show'],
 };
@@ -30,6 +32,7 @@ const READ_ONLY: Permission = {
   performances: ['list', 'show'],
   'term-of-uses': ['list', 'show'],
   licenses: ['list', 'show'],
+  'forced-update-managements': ['list', 'show'],
 };
 
 const ROLES_MAP: {

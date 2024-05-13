@@ -52,6 +52,11 @@ import {
   LicenseManagementCreate,
   LicenseManagementShow,
 } from '@repo/ui/src/views/LicenseManagement';
+import {
+  ForcedUpdateManagementList,
+  ForcedUpdateManagementCreate,
+  ForcedUpdateManagementShow,
+} from '@repo/ui/src/views/ForcedUpdateManagement';
 
 const Resources: ResourceIF[] = [
   {
@@ -113,6 +118,14 @@ const Resources: ResourceIF[] = [
     resource: 'licenses',
     label: 'ライセンス管理',
     icon: DescriptionOutlined,
+  },
+  {
+    list: ForcedUpdateManagementList,
+    create: ForcedUpdateManagementCreate,
+    show: ForcedUpdateManagementShow,
+    resource: 'forced-update-managements',
+    label: '強制アップデート管理',
+    // icon: DescriptionOutlined,
   },
 ];
 
