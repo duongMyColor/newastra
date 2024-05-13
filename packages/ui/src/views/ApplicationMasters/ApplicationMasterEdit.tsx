@@ -3,7 +3,6 @@ import {
   SelectInput,
   EditBase,
   Title,
-  usePermissions,
   FileInput,
   FileField,
   useNotify,
@@ -13,7 +12,6 @@ import {
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { validateUserEdition } from './formValidator';
 import { useNavigate } from 'react-router-dom';
-import CryptoJS from 'crypto-js';
 
 import { BaseComponentProps, RAFile, RecordValue } from '@repo/types/general';
 import { Box } from '@mui/material';
@@ -25,7 +23,6 @@ import { convertToFormData } from '@repo/utils/formData';
 import { uploadMuiltpart } from '@repo/utils/multipartUpload';
 
 const MasterEditForm = ({
-  actions,
   resource,
   dataProvider,
 }: BaseComponentProps) => {
@@ -47,13 +44,13 @@ const MasterEditForm = ({
 
     const { assetBundleIOS, assetBundleAndroid, ...rest } = values;
 
-    if (assetBundleIOS.rawFile) {
+    if (assetBundleIOS?.rawFile) {
       const assetBundleIOSFile = extractFile(assetBundleIOS);
       const keyIOS = await uploadMuiltpart(assetBundleIOSFile, encryptKey);
       rest.assetBundleIOS = keyIOS;
     }
 
-    if (assetBundleAndroid.rawFile) {
+    if (assetBundleAndroid?.rawFile) {
       const assetBundleAndroidFile = extractFile(assetBundleAndroid);
       const keyAndroid = await uploadMuiltpart(
         assetBundleAndroidFile,
@@ -152,7 +149,7 @@ const MasterEditForm = ({
           label="Android用共通アセットバンドル"
           placeholder="アップロード"
         >
-          <FileField source="src" title="src" />
+          <FileField source="src" title="title" />
         </FileInput>
 
         <FileInput

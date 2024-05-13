@@ -1,4 +1,11 @@
-import { TextInput, ShowBase, Show, Title, useShowContext, useRecordContext } from 'react-admin';
+import {
+  TextInput,
+  ShowBase,
+  Show,
+  Title,
+  useShowContext,
+  useRecordContext,
+} from 'react-admin';
 import { countryList, userRoles } from '@repo/consts/user';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps } from '@repo/types/general';
@@ -19,6 +26,7 @@ const UserShow = ({ actions, resource }: BaseComponentProps) => {
           <CustomForm
             pathTo={resourcePath}
             showDeleteButton={validRole('delete', actions)}
+            deleteButtonLabel="アカウント削除"
             showEditButton={validRole('edit', actions)}
             showCancelButton={true}
           >

@@ -22,17 +22,17 @@ const UserList = ({ actions, resource }: BaseComponentProps) => {
         <TextField source="date" label="最終ログイン" />
         <TextField source="role" label="権限" />
         <TextField source="email" label="メールアドレス" />
-        {validRole('edit', actions) && <EditButton label="編集"></EditButton>}
         {validRole('delete', actions) && (
-          <CustomButtonByRole label="データ削除">
+          <CustomButtonByRole source="role">
             <DeleteWithConfirmButton
               confirmContent="よろしいですか?"
-              confirmTitle="論理削除します"
-              label="データ削除"
+              confirmTitle="削除"
+              label="削除"
               confirmColor="warning"
             ></DeleteWithConfirmButton>
           </CustomButtonByRole>
         )}
+        {validRole('edit', actions) && <EditButton label="編集"></EditButton>}
       </Datagrid>
     </List>
   );

@@ -28,3 +28,11 @@ export const textareaStyles = {
   fontSize: 16,
   overflow: 'auto',
 };
+
+export const imageFieldStyles = {
+  '& img': {
+    maxWidth: 100,
+    maxHeight: 100,
+    objectFit: 'contain',
+  },
+};

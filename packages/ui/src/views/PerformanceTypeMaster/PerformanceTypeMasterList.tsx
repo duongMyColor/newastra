@@ -35,8 +35,8 @@ const PerformanceTypeMasterList = ({
         {validRole('delete', actions) && (
           <DeleteWithConfirmButton
             confirmContent="よろしいですか?"
-            confirmTitle="論理削除します"
-            label="データ削除"
+            confirmTitle="削除"
+            label="削除"
             confirmColor="warning"
           ></DeleteWithConfirmButton>
         )}

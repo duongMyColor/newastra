@@ -30,6 +30,7 @@ import {
   MultipartUploadAllowMethods,
   MultipartUploadBody,
 } from '@repo/types/upload';
+import { GetObjectType } from '@repo/types/response';
 
 const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api`;
 const httpClient = fetchUtils.fetchJson;
@@ -261,14 +262,13 @@ const baseDataProvider: DataProvider = {
     };
   },
 
-  getObject: async (params: { key: string }) => {
-    const url = `${apiUrl}/upload/get-object`;
+  getObject: async (params: { key: string }, type: GetObjectType) => {
+    const url = `${apiUrl}/upload/get-object/${type}`;
 
     const response = await httpClient(url, {
       method: 'POST',
       body: JSON.stringify(params),
     });
-    console.log(':::response', response);
 
     return {
       data: response,
@@ -280,8 +280,6 @@ const baseDataProvider: DataProvider = {
     const {
       json: { metadata },
     } = await httpClient(url);
-
-    console.log(':::response', metadata);
 
     return {
       data: metadata,
@@ -314,6 +312,23 @@ const baseDataProvider: DataProvider = {
 
     return {
       data: response,
+    };
+  },
+  updateScanData: async (params: UpdateParams, id: number) => {
+    const url = `${apiUrl}/acstas/scan-data/${id}`;
+    const body = JSON.stringify(params.data);
+
+    const response = await httpClient(url, {
+      method: 'PUT',
+      body,
+    });
+
+    const {
+      json: { metadata },
+    } = response;
+
+    return {
+      data: metadata,
     };
   },
 };

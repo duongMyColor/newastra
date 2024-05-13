@@ -52,8 +52,8 @@ model AplicationMaster {
   id                 Int      @id @default(autoincrement())
   appName            String   @unique
   packageName        String
-  termsOfUseID       Int      
-  licenseID          Int      
+  termsOfUseID       Int
+  licenseID          Int
   assetBundleIOS     String
   assetBundleAndroid String
   encryptKey         String
@@ -68,24 +68,23 @@ model AplicationMaster {
 }
 
 model AcstaManagement {
-  id               Int      @id @default(autoincrement())
+  id               Int       @id @default(autoincrement())
   managementName   String
   acstaName        String
-  status           String
   applicationID    Int
   thumbnailUrl     String
   scanImageUrl     String
   acstaBasicInfoID Int?
-  scanOriginX      Float
-  scanOriginY      Float
-  scanWidth        Float
-  scanHeight       Float
-  scanColors       String
+  scanOriginX      Float?
+  scanOriginY      Float?
+  scanWidth        Float?
+  scanHeight       Float?
+  scanColors       String?
   modeId           Int?
   dateStart        DateTime
-  dateEnd          DateTime
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  dateEnd          DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 
   application AplicationMaster       @relation(fields: [applicationID], references: [id], onDelete: Cascade)
   performace  PerformaceManagement[]

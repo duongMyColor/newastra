@@ -110,13 +110,9 @@ if (command === 'create') {
     `npx wrangler d1 migrations create ${database} "${migrationName}"`
   );
 
-  console.log({ result });
-
   s.stop('Creating migration');
 
   const resultLines = result.trim().split('\n');
-
-  console.log({ resultLines });
 
   let pathIndex = resultLines.findIndex((line) => line.endsWith('.sql'));
   if (pathIndex === -1) {
@@ -162,7 +158,7 @@ if (command === 'create') {
   }
 }
 
-if (command === 'apply' || command === 'create') {
+if (command === 'apply') {
   const database = await getDatabase();
 
   const s = spinner();

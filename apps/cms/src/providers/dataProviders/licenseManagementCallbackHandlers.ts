@@ -8,7 +8,7 @@ const licenseManagementCallbackHandlers = {
   ): Promise<GetOneResult> => {
     const { content } = response.data;
 
-    const object = await dataProvider.getObject({ key: content });
+    const object = await dataProvider.getObject({ key: content }, 'text-file');
     response.data.content = object.data.body;
 
     return response;

@@ -25,6 +25,7 @@ const MasterShow = ({ actions, resource }: BaseComponentProps) => {
           <CustomForm
             pathTo={resourcePath}
             showDeleteButton={validRole('delete', actions)}
+            deleteButtonLabel="データ削除"
             showEditButton={validRole('edit', actions)}
             showCancelButton={true}
           >

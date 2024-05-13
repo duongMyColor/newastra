@@ -19,7 +19,7 @@ const UPLOAD_FOLDER_MAP = {
   license: 'license',
   applicationMaster: 'application-master',
   performance: 'performance',
-  acstar: 'acstar',
+  acsta: 'acsta',
 };
 
 export { baseUploadFolder, REDIRECT_ROUTE, UPLOAD_FOLDER_MAP, MAP_RESOURE };

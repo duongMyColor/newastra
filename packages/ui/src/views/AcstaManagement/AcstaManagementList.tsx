@@ -4,11 +4,14 @@ import {
   TextField,
   EditButton,
   DeleteWithConfirmButton,
+  FunctionField,
 } from 'react-admin';
 import { BaseComponentProps } from '@repo/types/general';
 import { validRole } from '../_core/permissions';
 import { StatusChipField } from '@repo/ui/src/components/CustomField/StatusChipField';
 import { ListToolBar } from '@repo/ui/src/components/ListToolBar';
+import { formatDateAcstar } from '@repo/utils/dateFormat';
+import { CustomButtonByRole } from '../../components/CustomButtonByRole';
 
 const AcstaManagementList = ({ actions, resource }: BaseComponentProps) => {
   return (
@@ -20,19 +23,37 @@ const AcstaManagementList = ({ actions, resource }: BaseComponentProps) => {
         <TextField source="no" label="No" />
         <TextField source="managementName" label="管理名" />
         <TextField source="acstaName" label="アクスタ名称" />
-        <TextField source="acstaId" label="アクスタID" />
+        <TextField source="id" label="アクスタID" />
         <StatusChipField source="status" label="ステータス"></StatusChipField>
 
-        <TextField source="dateStart" label="公開開始日" />
-        <TextField source="dateEnd" label="公開終了日" />
-        <TextField source="createdAt" label="登録日" />
-        {validRole('delete', actions) && (
-          <DeleteWithConfirmButton
-            confirmContent="よろしいですか?"
-            confirmTitle="論理削除します"
-            label="データ削除"
-            confirmColor="warning"
-          ></DeleteWithConfirmButton>
+        <FunctionField
+          label="公開開始日"
+          render={({ dateStart }: { dateStart: string }) => {
+            return formatDateAcstar(dateStart);
+          }}
+        />
+        <FunctionField
+          label="公開終了日"
+          render={({ dateEnd }: { dateEnd: string }) => {
+            return formatDateAcstar(dateEnd);
+          }}
+        />
+        <FunctionField
+          label="登録日"
+          render={({ createdAt }: { createdAt: string }) => {
+            return formatDateAcstar(createdAt);
+          }}
+        />
+
+        {validRole('delete', actions) && true && (
+          <CustomButtonByRole source="status" condition="アクティブ">
+            <DeleteWithConfirmButton
+              confirmContent="よろしいですか?"
+              confirmTitle="削除"
+              label="削除"
+              confirmColor="warning"
+            ></DeleteWithConfirmButton>
+          </CustomButtonByRole>
         )}
         {validRole('edit', actions) && <EditButton label="編集"></EditButton>}
       </Datagrid>

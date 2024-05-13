@@ -204,6 +204,9 @@ class BaseRepo {
 
   insert = async (payload: RecordValue) => {
     const data = removeEmptyProperties(payload);
+
+    console.log(':::data', data);
+
     return await this.tableModel.create({
       data,
     });

@@ -15,18 +15,23 @@ import {
 import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
 import { convertFormDataToObject } from '@repo/utils/objectUtils';
-import { putObject } from '@/lib/cloudflare-r2';
 import { UPLOAD_FOLDER_MAP } from '@repo/consts/general';
+import UploadFileService from './upload.service';
+import { RectData } from '@repo/types/rectangleEditor';
+import { getObject } from '@/lib/cloudflare-r2';
+import { convertReadableStreamToBase64 } from '@repo/utils/fileUtils';
+import extractColorDistribution from '@repo/utils/scanImage';
 class AcstaFactory {
-  // static async create({ payload }: { payload: FormData }) {
-  //   const paylodObj = convertFormDataToObject(payload);
+  static async create({ payload }: { payload: FormData }) {
+    const paylodObj = convertFormDataToObject(payload);
 
-  //   const body = await new UploadFileService(
-  //     paylodObj as AcstaPostIF
-  //   ).uploadFile();
+    const body = await new UploadFileService().uploadFile(
+      paylodObj as AcstaPostIF,
+      UPLOAD_FOLDER_MAP.acsta
+    );
 
-  //   return await new AcstaPostIF(body).create();
-  // }
+    return await new Acsta(body).create();
+  }
 
   static async createMany(body: AcstaPostIF[]) {
     const payload = body.map(
@@ -55,15 +60,34 @@ class AcstaFactory {
     return await getManyReference(params);
   }
 
-  // static async updateById({ id, payload }: { id: number; payload: FormData }) {
-  //   const paylodObj = convertFormDataToObject(payload);
+  static async updateById({ id, payload }: { id: number; payload: FormData }) {
+    const paylodObj = convertFormDataToObject(payload);
 
-  //   const body = await new UploadFileService(
-  //     paylodObj as AcstaPostIF
-  //   ).uploadFile();
+    const body = await new UploadFileService().uploadFile(
+      paylodObj as AcstaPostIF,
+      UPLOAD_FOLDER_MAP.acsta
+    );
 
-  //   return await new AcstaPostIF(body).updateById({ id });
-  // }
+    return await new Acsta(body).updateById({ id });
+  }
+
+  static async updateScanDataById({
+    id,
+    payload,
+  }: {
+    id: number;
+    payload: RectData;
+  }) {
+    const body = {
+      scanColors: JSON.stringify(payload.scanColors),
+      scanOriginX: payload.originX,
+      scanOriginY: payload.originY,
+      scanWidth: payload.width,
+      scanHeight: payload.height,
+    };
+
+    return await new Acsta(body as AcstaPostIF).updateById({ id });
+  }
 
   static async updateMany(updates: AcstaPostIF[]) {
     const payload = updates.map((update) => new Acsta(update));
@@ -84,102 +108,70 @@ class Acsta implements AcstaPostIF {
   public id?: number;
   public managementName: string;
   public acstaName: string;
-  public status: string;
   public applicationID: number;
   public thumbnailUrl: string;
   public scanImageUrl: string;
-  public acstaBasicInfoID: number;
+  // public acstaBasicInfoID: number;
   public scanOriginX: GLfloat;
   public scanOriginY: GLfloat;
   public scanWidth: GLfloat;
   public scanHeight: GLfloat;
   public scanColors: string;
-  public modeId: number;
-  public dateStart: string | Date;
-  public dateEnd: string | Date;
+  // public modeId?: number;
+  public dateStart?: string | Date;
+  public dateEnd?: string | Date | null;
   public updatedAt: string | Date;
   public record?: string;
 
   public constructor({
     managementName,
     acstaName,
-    status,
     applicationID,
     thumbnailUrl,
     scanImageUrl,
-    acstaBasicInfoID,
+    // acstaBasicInfoID,
     scanOriginX,
     scanOriginY,
     scanWidth,
     scanHeight,
     scanColors,
-    modeId,
+    // modeId,
     dateStart,
     dateEnd,
     record,
   }: AcstaPostIF) {
-    this.acstaName = acstaName.toString();
-    this.managementName = managementName.toString();
-    this.status = status.toString();
-    this.thumbnailUrl = thumbnailUrl.toString();
-    this.scanImageUrl = scanImageUrl.toString();
+    this.acstaName = acstaName?.toString();
+    this.managementName = managementName?.toString();
+    this.thumbnailUrl = thumbnailUrl as string;
+    this.scanImageUrl = scanImageUrl as string;
     this.applicationID = applicationID;
-    this.acstaBasicInfoID = acstaBasicInfoID;
+    // this.acstaBasicInfoID = acstaBasicInfoID;
     this.scanOriginX = scanOriginX;
     this.scanOriginY = scanOriginY;
     this.scanWidth = scanWidth;
     this.scanHeight = scanHeight;
     this.scanColors = scanColors;
 
-    this.modeId = modeId;
-    this.dateStart = new Date(dateStart).toISOString();
-    this.dateEnd = new Date(dateEnd).toISOString();
-    this.dateStart = new Date(dateStart).toISOString();
-    this.updatedAt = new Date().toISOString();
+    // this.modeId = modeId;
+    this.dateStart = dateStart ? new Date(dateStart)?.toISOString() : undefined;
+    this.dateEnd = dateEnd ? new Date(dateEnd)?.toISOString() : null;
+    this.dateStart = dateStart ? new Date(dateStart)?.toISOString() : undefined;
+    this.updatedAt = new Date()?.toISOString();
     this.record = record;
   }
 
   public async create() {
     const payload: AcstaPostIF = this;
+    console.log('payload', payload);
+
     return await insert(payload);
   }
 
   public async updateById({ id }: { id: number }) {
     const payload: AcstaPostIF = this;
+
     return await updateById({ id, payload });
   }
 }
-
-// class UploadFileService {
-//   private object: AcstaPostIF;
-
-//   constructor(object: AcstaPostIF) {
-//     this.object = object;
-//   }
-
-//   private async uploadToR2() {
-//     for (const key in this.object) {
-//       console.log('::: key', typeof this.object[key]);
-
-//       if (typeof this.object[key] == 'object') {
-//         const file = this.object[key];
-//         const fileName = file?.name;
-//         console.log('::: fileName', fileName);
-
-//         const objKey = `${UPLOAD_FOLDER_MAP.license}/${fileName}`;
-//         const buffer = await file.arrayBuffer();
-//         console.log('::: buffer', buffer);
-
-//         this.object[key] = await putObject(objKey, buffer);
-//       }
-//     }
-
-//     return this.object;
-//   }
-
-//   public uploadFile() {
-//     return this.uploadToR2();
-//   }
-// }
 
 export default AcstaFactory;

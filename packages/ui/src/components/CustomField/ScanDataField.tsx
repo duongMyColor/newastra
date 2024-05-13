@@ -1,5 +1,6 @@
-import { SimpleShowLayout, TextField, useRecordContext } from 'react-admin';
+import { ImageField, SimpleShowLayout } from 'react-admin';
 import { Box, Button } from '@mui/material';
+import { imageFieldStyles } from '@repo/styles';
 
 export const ScanDataField = ({
   source,
@@ -8,11 +9,14 @@ export const ScanDataField = ({
   source: string;
   moveScanRange?: () => void;
 }) => {
-  const record = useRecordContext();
   return (
-    <Box sx={{ display: 'flex', gap: 10 }}>
+    <Box sx={{ display: 'flex', gap: 10, alignItems: 'center' }}>
       <SimpleShowLayout spacing={3}>
-        <TextField source={source} label="スキャン用データ" disabled />
+        <ImageField
+          source={source}
+          label="スキャン用データ"
+          sx={imageFieldStyles}
+        />
       </SimpleShowLayout>
 
       <Button

@@ -1,4 +1,4 @@
-export interface AplicationMasterResponselIF {
+export interface AplicationMasterResponseIF {
   id?: number;
   appName: string;
   packageName: string;

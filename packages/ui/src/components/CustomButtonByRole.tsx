@@ -1,13 +1,30 @@
 import { useRecordContext } from 'react-admin';
 
 interface CustomButtonByRoleProps {
-  label?: string;
   children: JSX.Element | JSX.Element[];
+  condition?: any;
+  source: string;
 }
+
+/**
+ *
+ * @param children - JSX.Element | JSX.Element[]
+ * @param condition - condition to match
+ * @param source - source to match
+ * @returns
+ */
 export const CustomButtonByRole = ({
-  label,
   children,
+  condition,
+  source,
 }: CustomButtonByRoleProps) => {
   const record = useRecordContext();
-  return <>{record?.role !== 'ADMIN' && children && <div>{children}</div>}</>;
+
+  const defaultCondition = record && record[source] !== 'ADMIN';
+  let masterCondition = defaultCondition;
+  if (condition) {
+    masterCondition = record && record[source] !== condition;
+  }
+
+  return <>{masterCondition && children && <div>{children}</div>}</>;
 };

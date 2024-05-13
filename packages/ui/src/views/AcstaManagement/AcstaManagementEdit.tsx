@@ -1,4 +1,3 @@
-import { userRoles } from '@repo/consts/user';
 import {
   TextInput,
   SelectInput,
@@ -6,77 +5,148 @@ import {
   Title,
   FileInput,
   FileField,
-  DateInput,
+  useNotify,
+  DateTimeInput,
+  useEditContext,
 } from 'react-admin';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { validateUserEdition } from './formValidator';
-import { BaseComponentProps } from '@repo/types/general';
+import { BaseComponentProps, RecordValue } from '@repo/types/general';
 import { Box } from '@mui/material';
 import { boxStyles } from '@repo/styles';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AplicationMasterResponseIF } from '@repo/types/applicationMaster';
+import { convertToFormData } from '@repo/utils/formData';
 
-const AcstaManagementEdit = ({ actions, resource }: BaseComponentProps) => {
+const EditForm = ({ actions, resource, dataProvider }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
+  const navigate = useNavigate();
+  const notify = useNotify();
+  const { record } = useEditContext();
 
+  const handleSave = async (values: RecordValue) => {
+    console.log('values', values);
+
+    const { thumbnailUrl, scanImageUrl } = values;
+    if (!thumbnailUrl?.rawFile) {
+      delete values.thumbnailUrl;
+    }
+    if (!scanImageUrl.rawFile) {
+      delete values.scanImageUrl;
+    }
+
+    const formData = convertToFormData(values, [
+      'thumbnailUrl',
+      'scanImageUrl',
+    ]);
+
+    try {
+      await dataProvider.update(resource, {
+        id: record.id,
+        data: formData,
+        previousData: record,
+      });
+
+      navigate(resourcePath);
+      notify('成功: アクスタ管理が正常に更新されました。', {
+        type: 'success',
+      });
+    } catch (error) {
+      notify('エラー: アクスタ管理の更新中に問題が発生しました。', {
+        type: 'error',
+      });
+    }
+  };
+
+  const [appIdIDs, setAppIdIDs] = useState([]);
+  useEffect(() => {
+    const fetchApplicationMaster = async () => {
+      const appLicationMasters = await dataProvider.getAll(
+        'application-masters'
+      );
+      setAppIdIDs(
+        appLicationMasters.map(
+          ({ id, appName }: AplicationMasterResponseIF) => {
+            return { id, name: `${id} : ${appName}` };
+          }
+        )
+      );
+    };
+
+    Promise.allSettled([fetchApplicationMaster()]);
+  }, []);
+  return (
+    <>
+      <Title title="アクスタ管理　編集" />
+      <CustomForm
+        pathTo={resourcePath}
+        validate={validateUserEdition}
+        showSaveButton={true}
+        showReferenceButton={true}
+        showCancelButton={true}
+        handleSave={handleSave}
+      >
+        <TextInput
+          source="id"
+          label="アクスタ ID"
+          isRequired
+          fullWidth
+          disabled
+        />
+        <TextInput
+          source="managementName"
+          label="管理名"
+          fullWidth
+          isRequired
+        />
+
+        <TextInput source="acstaName" label="アクスタ名" fullWidth isRequired />
+        <SelectInput
+          source="applicationID"
+          choices={appIdIDs}
+          fullWidth
+          isRequired
+          label="アプリケーション ID"
+        />
+
+        <FileInput
+          source="thumbnailUrl"
+          label="アクスタサムネイル"
+          placeholder="アップロード"
+        >
+          <FileField source="src" title="title" />
+        </FileInput>
+
+        <FileInput
+          source="scanImageUrl"
+          label="スキャン用データ"
+          placeholder="アップロード"
+        >
+          <FileField source="src" title="title" />
+        </FileInput>
+        <DateTimeInput source="dateStart" fullWidth label="公開開始日" />
+        <DateTimeInput source="dateEnd" fullWidth label="公開終了日" />
+
+        {/* <TextInput
+          source="acstaBasicInfoID"
+          label="力士基本情報ID"
+          fullWidth
+          isRequired
+          disabled
+        /> */}
+      </CustomForm>
+    </>
+  );
+};
+
+const AcstaManagementEdit = (props: BaseComponentProps) => {
   return (
     <Box sx={boxStyles}>
       <EditBase>
-        <Title title="アクスタ管理　編集" />
-        <CustomForm
-          pathTo={resourcePath}
-          validate={validateUserEdition}
-          showSaveButton={true}
-          showReferenceButton={true}
-          showCancelButton={true}
-        >
-          <TextInput
-            source="acstaId"
-            label="アクスタ ID"
-            isRequired
-            fullWidth
-          />
-          <TextInput
-            source="managementName"
-            label="管理名"
-            fullWidth
-            isRequired
-          />
-
-          <TextInput
-            source="acstaName"
-            label="アクスタ名"
-            fullWidth
-            isRequired
-          />
-          <SelectInput
-            source="appId"
-            choices={userRoles}
-            defaultValue={'USER'}
-            fullWidth
-            isRequired
-            label="アプリケーション ID"
-          />
-
-          <FileInput
-            source="assetAcstaThumbnail"
-            label="アクスタサムネイル"
-            placeholder="アップロード"
-          >
-            <FileField source="src" title="src" />
-          </FileInput>
-
-          <FileInput
-            source="assetScanData"
-            label="スキャン用データ"
-            placeholder="アップロード"
-          >
-            <FileField source="src" title="src" />
-          </FileInput>
-          <DateInput source="dateStart" fullWidth label="公開開始日" />
-          <DateInput source="dateEnd" fullWidth label="公開終了日" />
-        </CustomForm>
+        <EditForm {...props} />
       </EditBase>
     </Box>
   );
 };
-
 export default AcstaManagementEdit;

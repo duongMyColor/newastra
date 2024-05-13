@@ -1,106 +1,50 @@
-import { userContentLength } from '@repo/consts/user';
 import validateForm, { ValidationRule } from '@repo/utils/formValidator';
-import { validatePassword } from '@repo/utils/password';
 import { RecordValue } from '@repo/types/general';
 
 const editionRules: ValidationRule[] = [
   {
-    field: 'role',
+    field: 'managementName',
     required: true,
   },
   {
-    field: 'name',
+    field: 'acstaName',
     required: true,
-    minLength: userContentLength.name.min,
-    maxLength: userContentLength.name.max,
   },
   {
-    field: 'email',
+    field: 'dateStart',
     required: true,
-    minLength: userContentLength.email.min,
-    maxLength: userContentLength.email.max,
-  },
-  {
-    field: 'newPassword',
-    required: true,
-    minLength: userContentLength.password.min,
-    maxLength: userContentLength.password.max,
-  },
-  {
-    field: 'confirmNewPassword',
-    required: true,
-    minLength: userContentLength.password.min,
-    maxLength: userContentLength.password.max,
-    match: 'password',
-    unMatchMessage: 'Password does not match',
   },
 ];
 
 const creationRules: ValidationRule[] = [
   {
-    field: 'username',
-    required: true,
-    minLength: userContentLength.username.min,
-    maxLength: userContentLength.username.max,
-  },
-  {
-    field: 'role',
+    field: 'managementName',
     required: true,
   },
   {
-    field: 'name',
+    field: 'acstaName',
     required: true,
-    minLength: userContentLength.name.min,
-    maxLength: userContentLength.name.max,
   },
   {
-    field: 'email',
+    field: 'thumbnailUrl',
     required: true,
-    minLength: userContentLength.email.min,
-    maxLength: userContentLength.email.max,
   },
   {
-    field: 'password',
+    field: 'scanImageUrl',
     required: true,
-    minLength: userContentLength.password.min,
-    maxLength: userContentLength.password.max,
   },
   {
-    field: 'confirmPassword',
+    field: 'dateStart',
     required: true,
-    minLength: userContentLength.password.min,
-    maxLength: userContentLength.password.max,
-    match: 'password',
-    unMatchMessage: 'Password does not match',
   },
 ];
 
 const validateUserCreation = (values: RecordValue): RecordValue => {
-  const baseValidation = validateForm(values, creationRules);
-
-  const validPassword = validatePassword(values.password);
-
-  return validPassword
-    ? baseValidation
-    : {
-        ...baseValidation,
-        password:
-          'パスワードには少なくとも 1 つの大文字、1 つの小文字、1 つの数字が含まれている必要があります',
-      };
+  return validateForm(values, creationRules);
 };
 
 const validateUserEdition = (values: RecordValue): RecordValue => {
-  const baseValidation = validateForm(values, editionRules);
-
-  const validPassword = validatePassword(values.newPassword);
-
-  return validPassword
-    ? baseValidation
-    : {
-        ...baseValidation,
-        newPassword:
-          'パスワードには少なくとも 1 つの大文字、1 つの小文字、1 つの数字が含まれている必要があります',
-      };
+  return validateForm(values, editionRules);
 };
 
 export { validateUserCreation, validateUserEdition };

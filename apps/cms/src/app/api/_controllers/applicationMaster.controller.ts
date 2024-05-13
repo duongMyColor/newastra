@@ -110,5 +110,5 @@ class AplicationMasterController {
   };
 }
 
-const userController = new AplicationMasterController();
-export default userController;
+const applicationMasterController = new AplicationMasterController();
+export default applicationMasterController;
