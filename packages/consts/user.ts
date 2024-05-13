@@ -27,10 +27,16 @@ const defaultRoles = [
 const countryList: Country[] = countries;
 
 const userRoles: RoleSelectInput[] = [
-  { id: 'ADMIN', name: 'ADMIN' },
-  { id: 'GENERAL', name: 'GENERAL' },
-  { id: 'READ_ONLY', name: 'READ_ONLY' },
+  { id: 'ADMIN', name: '管理者' },
+  { id: 'GENERAL', name: '一般' },
+  { id: 'READ_ONLY', name: '参照のみ' },
 ];
+
+const MAP_ROLE = {
+  ADMIN: '管理者',
+  GENERAL: '一般',
+  READ_ONLY: '参照のみ',
+};
 
 const userContentLength = {
   username: {
@@ -49,10 +55,10 @@ const userContentLength = {
     min: 8,
     max: 20,
   },
-  newPassword:{
-    min:0,
-    max:0
-  }
+  newPassword: {
+    min: 0,
+    max: 0,
+  },
 };
 
 export {
@@ -61,4 +67,5 @@ export {
   userRoles,
   userContentLength,
   defaultRoles,
+  MAP_ROLE,
 };

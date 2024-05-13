@@ -9,6 +9,7 @@ import type {
   UpdateResult,
 } from 'react-admin';
 import dayjs from 'dayjs';
+import { MAP_ROLE } from '@repo/consts/user';
 const userCallbackHandler = {
   resource: 'users',
 
@@ -16,40 +17,26 @@ const userCallbackHandler = {
     response: GetListResult,
     dataProvider: DataProvider
   ): Promise<GetListResult> => {
-    // const { classificationId } = response.data;
+    let data = response.data;
 
-    let fake = {
-      id: '1',
-      username: 'duong',
-      date: dayjs(new Date()).format('YYYY.MM.DD HH:MM'),
-      role: 'GENERAL',
-      email: 'susdoidfjsd@gmail.com',
-    };
+    data = data.map((value) => {
+      value.role = MAP_ROLE[value.role as keyof typeof MAP_ROLE];
 
-    return {
-      data: [fake],
-      total: 1,
-    };
+      return value;
+    });
+
+    return response;
   },
 
   afterGetOne: async (
     response: GetOneResult,
     dataProvider: DataProvider
   ): Promise<GetOneResult> => {
-    // const { classificationId } = response.data;
+    const data = response.data;
 
-    let fake = {
-      id: '1',
+    data.role = MAP_ROLE[data.role as keyof typeof MAP_ROLE];
 
-      username: 'duong',
-      date: dayjs(new Date()).format('YYYY.MM.DD HH:MM'),
-      role: 'GENERAL',
-      email: 'susdoidfjsd@gmail.com',
-    };
-
-    return {
-      data: fake,
-    };
+    return response;
   },
 };
 

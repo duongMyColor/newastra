@@ -73,13 +73,6 @@ const AcstaManagementEdit = ({ actions, resource }: BaseComponentProps) => {
           </FileInput>
           <DateInput source="dateStart" fullWidth label="公開開始日" />
           <DateInput source="dateEnd" fullWidth label="公開終了日" />
-
-          <TextInput
-            source="SumoId"
-            label="力士基本情報ID"
-            fullWidth
-            isRequired
-          />
         </CustomForm>
       </EditBase>
     </Box>
