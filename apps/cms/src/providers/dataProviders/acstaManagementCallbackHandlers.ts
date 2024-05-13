@@ -3,9 +3,11 @@ import type { DataProvider, GetListResult, GetOneResult } from 'react-admin';
 import dayjs from 'dayjs';
 import { extractFilename, generateFileName } from '@repo/utils/fileUtils';
 
-const determineStatus = (dateEnd: Date | string) => {
+const determineStatus = (dateStart: Date | string, dateEnd: Date | string) => {
   const currentDate = dayjs();
-  return currentDate.isAfter(dateEnd) ? '非アクティブ' : 'アクティブ';
+  return currentDate.isBefore(dateStart) || currentDate.isAfter(dateEnd)
+    ? '非アクティブ'
+    : 'アクティブ';
 };
 
 const AcstaManagementCallbackHandler = {
@@ -13,7 +15,7 @@ const AcstaManagementCallbackHandler = {
 
   afterGetList: async (response: GetListResult): Promise<GetListResult> => {
     response.data.forEach((item) => {
-      item.status = determineStatus(item.dateEnd);
+      item.status = determineStatus(item.dateStart, item.dateEnd);
     });
 
     return response;
@@ -23,9 +25,9 @@ const AcstaManagementCallbackHandler = {
     response: GetOneResult,
     dataProvider: DataProvider
   ): Promise<GetOneResult> => {
-    const { dateEnd, thumbnailUrl, scanImageUrl } = response.data;
+    const { dateStart, dateEnd, thumbnailUrl, scanImageUrl } = response.data;
 
-    response.data.status = determineStatus(dateEnd);
+    response.data.status = determineStatus(dateStart, dateEnd);
 
     const [thumbnailUrlObj, scanImageUrlObj] = await Promise.all([
       dataProvider.getObject({ key: thumbnailUrl }, 'image'),

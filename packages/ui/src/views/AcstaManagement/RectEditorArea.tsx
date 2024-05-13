@@ -1,4 +1,4 @@
-import { useShowContext, SimpleForm, useNotify } from 'react-admin';
+import { useShowContext, SimpleForm, useNotify, useRefresh } from 'react-admin';
 import { Stack, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
@@ -19,6 +19,7 @@ const RectEditorArea = ({
   resource: string;
 }) => {
   const { record } = useShowContext();
+  const refresh = useRefresh();
   const notify = useNotify();
   const scanImageUrl = record.scanImageUrl.src;
   const pathTo = `/${resource}/${record.id}/show`;
@@ -51,6 +52,7 @@ const RectEditorArea = ({
       );
       notify('スキャン範囲を保存しました。', { type: 'success' });
 
+      refresh();
       moveScanRange();
     } catch (error) {
       notify('スキャン範囲の保存に失敗しました。', { type: 'warning' });
