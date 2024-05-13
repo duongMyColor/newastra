@@ -88,8 +88,8 @@ const PerformanceManagementCreate = ({
 
   const fetchIdLastest = async () => {
     const setIdPerformanceFunc = async () => {
-      const response = await dataProvider.getIdLastest(resource);
-      const nextId = response.data?.length > 0 ? response.data[0].id + 1 : 1;
+      const response = await dataProvider.getIdLastestRecord(resource);
+      const nextId = response.data.idLastest ? response.data.idLastest : 1;
       setIdPerformance(`${nextId}`);
     };
 

@@ -138,3 +138,11 @@ model License {
 
   applications AplicationMaster[]
 }
+
+model IdLastestOfRecord {
+  id            Int      @id @default(autoincrement())
+  name          String
+  idLastest     Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
