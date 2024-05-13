@@ -35,13 +35,19 @@ const RectEditorArea = ({
   };
 
   const saveRectData = async () => {
-    const scanColors = await extractColorDistribution(
-      scanImageUrl,
-      rectPosition?.originX,
-      rectPosition?.originY,
-      rectPosition?.width,
-      rectPosition?.height
-    );
+    let scanColors;
+    try {
+      scanColors = await extractColorDistribution(
+        scanImageUrl,
+        rectPosition?.originX,
+        rectPosition?.originY,
+        rectPosition?.width,
+        rectPosition?.height
+      );
+    } catch (error) {
+      console.error('Error extracting color distribution:', error);
+      return;
+    }
 
     try {
       await dataProvider.updateScanData(
