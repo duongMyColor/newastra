@@ -1,7 +1,12 @@
 // External imports
 import { Dispatch, useEffect } from 'react';
 import { fabric } from 'fabric';
-import type { Image, Canvas, IEvent, IPoint } from 'fabric/fabric-impl';
+import type {
+  Image as FabricImage,
+  Canvas,
+  IEvent,
+  IPoint,
+} from 'fabric/fabric-impl';
 
 // Internal imports
 import {
@@ -26,9 +31,14 @@ const drawImgWithFabric = (
   rectData: RectData,
   onChange: Dispatch<any>
 ) => {
-  if (!imagePath.includes('base64')) return;
+  // if (!imagePath.includes('base64')) return;
+  console.log('rectData.originY', rectData.originY);
 
   let rect: CustomRect, isDown: boolean, origX: number, origY: number;
+
+  const addRectToCanvas = (rect: fabric.Rect, canvas: Canvas) => {
+    canvas.add(rect);
+  };
 
   const addRectangle = (pointer: IPoint) => {
     // Remove any existing rectangles
@@ -42,7 +52,7 @@ const drawImgWithFabric = (
       ...RECT_OPTIONS,
     });
 
-    canvas.add(rect);
+    addRectToCanvas(rect, canvas);
   };
 
   const updateRectangle = (pointer: IPoint) => {
@@ -95,7 +105,7 @@ const drawImgWithFabric = (
   };
 
   // Add image to canvas
-  fabric.Image.fromURL(imagePath, (img: Image) => {
+  fabric.Image.fromURL(imagePath, (img: FabricImage) => {
     let scale = Math.min(
       CANVAS_WIDTH / (img.width ?? SCALE_FALLBACK),
       CANVAS_HEIGHT / (img.height ?? SCALE_FALLBACK)
@@ -112,9 +122,6 @@ const drawImgWithFabric = (
     });
 
     // Add existing rectangles to canvas
-    console.log({ rectData });
-    console.log(canvas.width, canvas.height);
-
     if (!rectData) return;
     const left = rectData.originX * (canvas.width ?? SIZE_FALLBACK);
     const top = rectData.originY * (canvas.height ?? SIZE_FALLBACK);
@@ -131,7 +138,7 @@ const drawImgWithFabric = (
       ...RECT_OPTIONS,
     });
 
-    canvas.add(rect);
+    addRectToCanvas(rect, canvas);
   });
 
   canvas.renderAll();
@@ -154,7 +161,7 @@ const RectEditor = ({
   useEffect(() => {
     const canvas = new fabric.Canvas('canvas');
 
-    console.log({ propsData });
+    // console.log({ propsData });
 
     drawImgWithFabric(canvas, imagePath, propsData, onChange);
   }, [imagePath]);

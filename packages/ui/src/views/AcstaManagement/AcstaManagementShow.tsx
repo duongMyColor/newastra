@@ -5,20 +5,15 @@ import {
   SimpleShowLayout,
   ImageField,
   useGetRecordId,
-  useShowContext,
-  SimpleForm,
-  useNotify,
 } from 'react-admin';
-import { Box, Stack, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Box } from '@mui/material';
 import { useState } from 'react';
-import SaveIcon from '@mui/icons-material/Save';
 
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { StatusTextField } from '@repo/ui/src/components/CustomField/StatusTextField';
 import { ScanDataField } from '@repo/ui/src/components/CustomField/ScanDataField';
 import FormatInputDateShow from '@repo/ui/src/components/FormatInputDateShow';
-import RectEditor from './RectEditor/RectEditor';
+import RectEditorArea from './RectEditorArea';
 
 import { validRole } from '../_core/permissions';
 import {
@@ -26,123 +21,12 @@ import {
   boxStyles,
   imageFieldStyles,
 } from '@repo/styles';
-import dataProvider from '../../../../../apps/cms/src/providers/dataProviders/dataProvider';
 
 import { BaseComponentProps } from '@repo/types/general';
-import { RectData } from '@repo/types/rectangleEditor';
-import extractColorDistribution from './scanImageUsingPica';
-
-const RectEditorArea = ({
-  moveScanRange,
-  resource,
-  recordId,
-}: {
-  moveScanRange: () => void;
-  resource: string;
-  recordId: string | number;
-}) => {
-  const { record } = useShowContext();
-  const positionData: RectData = {
-    originX: record.scanOriginX,
-    originY: record.scanOriginY,
-    width: record.scanWidth,
-    height: record.scanHeight,
-  };
-
-  const notify = useNotify();
-  const scanImageUrl = record.scanImageUrl;
-  const pathTo = `/${resource}/${recordId}/show`;
-  const [rectPosition, setRectPosition] = useState<RectData>();
-
-  const saveRectData = async () => {
-    console.log({ rectPosition });
-
-    const scanColors = await extractColorDistribution(
-      scanImageUrl,
-      rectPosition?.originX,
-      rectPosition?.originY,
-      rectPosition?.width,
-      rectPosition?.height
-    );
-
-    try {
-      await dataProvider.updateScanData(
-        {
-          data: { ...rectPosition, scanColors: scanColors },
-        },
-        recordId
-      );
-      notify('スキャン範囲を保存しました。', { type: 'success' });
-
-      moveScanRange();
-    } catch (error) {
-      notify('スキャン範囲の保存に失敗しました。', { type: 'warning' });
-    }
-  };
-
-  const onChange = (data: RectData) => {
-    console.log(data);
-
-    setRectPosition(data);
-  };
-
-  return (
-    <SimpleForm warnWhenUnsavedChanges={true} toolbar={false}>
-      <Stack
-        direction="row"
-        justifyContent="flex-end"
-        width="100%"
-        height="100%"
-        gap={3}
-        alignItems="center"
-      >
-        <Button
-          variant="contained"
-          startIcon={<SaveIcon />}
-          onClick={saveRectData}
-          disabled={!rectPosition}
-        >
-          保存
-        </Button>
-      </Stack>
-
-      <RectEditor
-        imagePath={scanImageUrl}
-        data={positionData}
-        onChange={onChange}
-      ></RectEditor>
-      <Stack
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
-        spacing={2}
-        width="100%"
-        sx={{
-          backgroundColor: '#f1f1f1',
-          padding: '1rem',
-          borderRadius: '4px',
-          marginTop: '1rem',
-        }}
-      >
-        <Link to={pathTo}>
-          <Button
-            type="button"
-            variant="contained"
-            color="error"
-            onClick={moveScanRange}
-          >
-            戻る
-          </Button>
-        </Link>
-      </Stack>
-    </SimpleForm>
-  );
-};
 
 const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
 
-  const recordId = useGetRecordId();
   const [isScanRange, setIsScanRange] = useState<boolean>(false);
 
   const moveScanRange = () => {
@@ -162,11 +46,7 @@ const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
           />
 
           {isScanRange ? (
-            <RectEditorArea
-              moveScanRange={moveScanRange}
-              resource={resource}
-              recordId={recordId}
-            />
+            <RectEditorArea moveScanRange={moveScanRange} resource={resource} />
           ) : (
             <CustomForm
               pathTo={resourcePath}
@@ -205,14 +85,14 @@ const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
 
               <SimpleShowLayout spacing={3}>
                 <ImageField
-                  source="thumbnailUrl"
+                  source="thumbnailUrl.src"
                   label="アクスタサムネイル"
                   sx={imageFieldStyles}
                 />
               </SimpleShowLayout>
 
               <ScanDataField
-                source="scanImageUrl"
+                source="scanImageUrl.src"
                 moveScanRange={moveScanRange}
               ></ScanDataField>
 

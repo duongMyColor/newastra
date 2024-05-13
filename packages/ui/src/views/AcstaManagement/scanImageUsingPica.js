@@ -1,5 +1,3 @@
-import Pica from 'pica';
-
 // RGBのレンジを定義
 const ColorRange = {
   Low: 0,

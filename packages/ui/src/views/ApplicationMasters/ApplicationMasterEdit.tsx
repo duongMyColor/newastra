@@ -44,13 +44,13 @@ const MasterEditForm = ({
 
     const { assetBundleIOS, assetBundleAndroid, ...rest } = values;
 
-    if (assetBundleIOS.rawFile) {
+    if (assetBundleIOS?.rawFile) {
       const assetBundleIOSFile = extractFile(assetBundleIOS);
       const keyIOS = await uploadMuiltpart(assetBundleIOSFile, encryptKey);
       rest.assetBundleIOS = keyIOS;
     }
 
-    if (assetBundleAndroid.rawFile) {
+    if (assetBundleAndroid?.rawFile) {
       const assetBundleAndroidFile = extractFile(assetBundleAndroid);
       const keyAndroid = await uploadMuiltpart(
         assetBundleAndroidFile,

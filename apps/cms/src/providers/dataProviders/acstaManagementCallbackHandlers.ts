@@ -1,6 +1,7 @@
 import type { DataProvider, GetListResult, GetOneResult } from 'react-admin';
 
 import dayjs from 'dayjs';
+import { extractFilename, generateFileName } from '@repo/utils/fileUtils';
 
 const determineStatus = (dateEnd: Date | string) => {
   const currentDate = dayjs();
@@ -31,8 +32,14 @@ const AcstaManagementCallbackHandler = {
       dataProvider.getObject({ key: scanImageUrl }, 'image'),
     ]);
 
-    response.data.scanImageUrl = scanImageUrlObj.data.body;
-    response.data.thumbnailUrl = thumbnailUrlObj.data.body;
+    response.data.scanImageUrl = {
+      src: scanImageUrlObj.data.body,
+      title: extractFilename(scanImageUrl),
+    };
+    response.data.thumbnailUrl = {
+      src: thumbnailUrlObj.data.body,
+      title: extractFilename(thumbnailUrl),
+    };
 
     return response;
   },

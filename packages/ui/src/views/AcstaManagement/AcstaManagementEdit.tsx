@@ -29,7 +29,7 @@ const EditForm = ({ actions, resource, dataProvider }: BaseComponentProps) => {
     console.log('values', values);
 
     const { thumbnailUrl, scanImageUrl } = values;
-    if (!thumbnailUrl.rawFile) {
+    if (!thumbnailUrl?.rawFile) {
       delete values.thumbnailUrl;
     }
     if (!scanImageUrl.rawFile) {
