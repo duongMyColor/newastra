@@ -154,12 +154,12 @@ const AcstaManagementCreate = ({
 
         <DateTimeInput source="dateStart" label="公開開始日" required />
         <DateTimeInput source="dateEnd" label="公開終了日" />
-        <TextInput
+        {/* <TextInput
           source="acstaBasicInfoID"
           label="力士基本情報ID"
           fullWidth
           disabled
-        />
+        /> */}
       </CustomForm>
     </Create>
   );

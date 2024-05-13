@@ -128,13 +128,13 @@ const EditForm = ({ actions, resource, dataProvider }: BaseComponentProps) => {
         <DateTimeInput source="dateStart" fullWidth label="公開開始日" />
         <DateTimeInput source="dateEnd" fullWidth label="公開終了日" />
 
-        <TextInput
+        {/* <TextInput
           source="acstaBasicInfoID"
           label="力士基本情報ID"
           fullWidth
           isRequired
           disabled
-        />
+        /> */}
       </CustomForm>
     </>
   );

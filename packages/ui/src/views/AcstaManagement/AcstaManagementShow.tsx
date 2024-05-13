@@ -102,13 +102,13 @@ const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
               <FormatInputDateShow label="公開終了日" source="dateEnd" />
               <FormatInputDateShow label="登録日時" source="createdAt" />
 
-              <TextInput
+              {/* <TextInput
                 source="acstaBasicInfoID"
                 label="力士基本情報ID"
                 disabled
                 sx={disabledInputBackgroundStyle}
                 fullWidth
-              />
+              /> */}
             </CustomForm>
           )}
         </>
