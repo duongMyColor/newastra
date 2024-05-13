@@ -3,7 +3,7 @@
 import { Admin, Resource } from 'react-admin';
 
 import dataProvider from '../providers/dataProviders/dataProvider';
-import authProvider from '../providers/authProvider';
+import authProvider from '../providers/fakeAuthProvider';
 import { Actions, Permission } from '@repo/types/roles';
 import React from 'react';
 import { checkRole } from '@repo/ui/src/views/_core/permissions';
@@ -19,6 +19,7 @@ const AdminApp = () => {
       dataProvider={dataProvider}
       authProvider={authProvider}
       i18nProvider={i18nProvider}
+      requireAuth
     >
       {(permission: Permission) => {
         return Resources.map((resource: ResourceIF) => {
