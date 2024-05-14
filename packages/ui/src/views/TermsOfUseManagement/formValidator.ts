@@ -16,6 +16,10 @@ const editionRules: ValidationRule[] = [
     field: 'content',
     required: true,
   },
+  {
+    field: 'memo',
+    required: true,
+  },
 ];
 
 const creationRules: ValidationRule[] = [
@@ -29,6 +33,10 @@ const creationRules: ValidationRule[] = [
   },
   {
     field: 'content',
+    required: true,
+  },
+  {
+    field: 'memo',
     required: true,
   },
 ];

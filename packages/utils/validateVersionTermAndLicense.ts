@@ -12,7 +12,8 @@ export const validateVersionTermAndLicense = async (
 
   const responseIdLastest = await dataProvider.getIdLastest(resource);
 
-  let versionEnd = parseInt(responseIdLastest.data[0].version);
+  let versionEnd = parseInt(responseIdLastest.data[0]?.version) || null;
+  if(!versionEnd) return true
   let versionNext = parseInt(values?.version);
 
   if (versionNext <= versionEnd) return false;
