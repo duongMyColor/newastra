@@ -68,7 +68,7 @@ const TermsOfUseManagementCreate = ({
   }, []);
 
   return (
-    <Create redirect={REDIRECT_ROUTE.show} title="利用規約管理　新规作成">
+    <Create redirect={REDIRECT_ROUTE.list} title="利用規約管理　新规作成">
       <CustomForm
         pathTo={resourcePath}
         validate={validateUserCreation}
