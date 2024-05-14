@@ -9,6 +9,7 @@ import PerformanceTypeMasterCallbackHandler from './performanceTypeMasterCallbac
 import performanceManagementCallbackHandlers from './performanceManagementCallbackHandlers';
 import termOfUseManagementCallbackHandlers from './termOfUseManagementCallbackHandlers';
 import licenseManagementCallbackHandlers from './licenseManagementCallbackHandlers';
+import forcedUpdateManagementCallbackHandlers from './forcedUpdateManagementCallbackHandlers';
 
 /**
  * NOTE:Limitation of withLifecycleCallbacks
@@ -18,6 +19,7 @@ import licenseManagementCallbackHandlers from './licenseManagementCallbackHandle
 const dataProvider = withLifecycleCallbacks(baseDataProvider, [
   userCallbackHandler,
   // applicationMasterCallbackHandler,
+  forcedUpdateManagementCallbackHandlers,
   acstaManagementCallbackHandler,
   // PerformanceTypeMasterCallbackHandler,
   performanceManagementCallbackHandlers,
