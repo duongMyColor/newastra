@@ -96,14 +96,19 @@ class AccessService {
     password: string;
   }) => {
     //1.
-    const foundUser = await userService.findByUsername({
-      username,
+    const foundUser = await userService.findByEmail({
+      email: username,
     });
+
+    console.log('foundUser', foundUser);
+
     if (!foundUser) throw new BadRequestError('User not registered');
     if (!foundUser.enabled) throw new AuthFailureError('User is locked');
 
     //2.
     const matchPassword = hashPassword(password) === foundUser.password;
+    console.log('matchPassword', matchPassword);
+
     if (!matchPassword) throw new AuthFailureError('Authentication failed');
 
     //3.
@@ -126,6 +131,8 @@ class AccessService {
       publicKey,
       privateKey
     );
+
+    console.log('tokens', tokens);
 
     await keyTokenService.createKeyToken({
       userId,

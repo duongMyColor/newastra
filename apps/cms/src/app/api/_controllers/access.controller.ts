@@ -27,6 +27,8 @@ class AccessController {
     const payload: { username: string; password: string } =
       await request.json();
 
+    console.log('payload', payload);
+
     return new OK({
       metadata: await AccessService.login(payload),
       message: 'Login successfully!',

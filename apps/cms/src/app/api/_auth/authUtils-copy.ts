@@ -1,4 +1,4 @@
-import { SignJWT, jwtVerify, JWK } from 'jose';
+import jose from 'jose';
 import type { JWTPayload } from 'jose';
 import {
   AuthFailureError,
@@ -24,24 +24,22 @@ const createTokenPair = async (
   publicKey: string,
   privateKey: string
 ) => {
-  console.log({ payload, publicKey, privateKey });
-
   try {
     //access token
-    const accessToken = await new SignJWT(payload as JWTPayload)
+    const accessToken = await new jose.SignJWT(payload as JWTPayload)
       .setProtectedHeader({ alg: 'RS256' })
       .setIssuedAt()
       .setExpirationTime('1d')
-      .sign(privateKey);
+      .sign({ type: privateKey });
 
-    const refreshToken = await new SignJWT(payload as JWTPayload)
+    const refreshToken = await new jose.SignJWT(payload as JWTPayload)
       .setProtectedHeader({ alg: 'RS256' })
       .setIssuedAt()
       .setExpirationTime('1d')
-      .sign(privateKey);
+      .sign({ type: privateKey });
 
     // verify
-    await jwtVerify(accessToken, { type: publicKey });
+    await jose.jwtVerify(accessToken, { type: publicKey });
     return { accessToken, refreshToken };
   } catch (error) {
     throw new InternalServerError(error);
@@ -64,10 +62,7 @@ const getKeyStore = async (userId: number) => {
 
 const verifyUser = async (userId: number, token: string, key: string) => {
   try {
-    // Convert the key string to a CryptoKey
-    const cryptoKey = await JWK.asKey(key, { alg: 'RS256', use: 'sig' });
-
-    const decodeUser = (await jwtVerify(token, cryptoKey))
+    const decodeUser = (await jose.jwtVerify(token, { type: key }))
       .payload as JWTPayload;
     if (userId !== decodeUser.userId)
       throw new AuthFailureError('Invalid user');
@@ -79,8 +74,6 @@ const verifyUser = async (userId: number, token: string, key: string) => {
 
 const authentication = async () => {
   const userIdString = getServerCookieValue(HEADER.CLIENT_ID);
-  console.log('userIdString', userIdString);
-
   if (!userIdString)
     throw new AuthFailureError('Invalid request: missing client id');
   const userId = Number(userIdString);
