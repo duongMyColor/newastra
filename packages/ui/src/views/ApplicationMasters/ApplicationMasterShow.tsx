@@ -56,7 +56,7 @@ const MasterShow = ({ actions, resource }: BaseComponentProps) => {
               sx={disabledInputBackgroundStyle}
             />
             <TextInput
-              source="licenseID"
+              source="licenseId"
               label="ライセンスID"
               disabled
               sx={disabledInputBackgroundStyle}

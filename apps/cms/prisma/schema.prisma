@@ -55,7 +55,7 @@ model AplicationMaster {
   appName            String   @unique
   packageName        String
   termsOfUseId       Int
-  licenseID          Int
+  licenseId          Int
   assetBundleIOS     String
   assetBundleAndroid String
   encryptKey         String
@@ -64,7 +64,7 @@ model AplicationMaster {
   updatedAt          DateTime @updatedAt
 
   termOfUse TermsOfUse @relation(fields: [termsOfUseId], references: [id])
-  license   License    @relation(fields: [licenseID], references: [id])
+  license   License    @relation(fields: [licenseId], references: [id])
 
   acsta AcstaManagement[]
 }

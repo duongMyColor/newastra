@@ -11,7 +11,7 @@ const editionRules: ValidationRule[] = [
     required: true,
   },
   {
-    field: 'licenseID',
+    field: 'licenseId',
     required: true,
   },
   {
@@ -30,7 +30,7 @@ const creationRules: ValidationRule[] = [
     required: true,
   },
   {
-    field: 'licenseID',
+    field: 'licenseId',
     required: true,
   },
   {

@@ -126,7 +126,7 @@ const MasterCreate = ({
           label="利用規約ID"
         />
         <SelectInput
-          source="licenseID"
+          source="licenseId"
           choices={licenseIDs}
           isRequired
           label="ライセンスID"

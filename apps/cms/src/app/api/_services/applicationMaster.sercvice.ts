@@ -111,7 +111,7 @@ class ApplicationMaster implements AplicationMasterPostIF {
   public appName: string;
   public packageName: string;
   public termsOfUseId: number;
-  public licenseID: string;
+  public licenseId: string;
   public assetBundleIOS: string;
   public assetBundleAndroid: string;
   public outlineUrl: number;
@@ -122,7 +122,7 @@ class ApplicationMaster implements AplicationMasterPostIF {
     appName,
     packageName,
     termsOfUseId,
-    licenseID,
+    licenseId,
     assetBundleIOS,
     assetBundleAndroid,
     outlineUrl,
@@ -131,7 +131,7 @@ class ApplicationMaster implements AplicationMasterPostIF {
     this.appName = appName;
     this.packageName = packageName;
     this.termsOfUseId = termsOfUseId;
-    this.licenseID = licenseID;
+    this.licenseId = licenseId;
     this.assetBundleIOS = assetBundleIOS;
     this.assetBundleAndroid = assetBundleAndroid;
     this.outlineUrl = outlineUrl;

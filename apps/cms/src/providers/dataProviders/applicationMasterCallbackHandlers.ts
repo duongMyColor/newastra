@@ -44,7 +44,7 @@ const applicationMasterCallbackHandler = {
       createdAt: dayjs(new Date()).format('YYYY.MM.DD HH:MM'),
       packageName: 'com.example.myapp',
       termsOfUseId: 'USER',
-      licenseID: 'USER',
+      licenseId: 'USER',
       assetBundleIOS: 'acsta_anime_ios',
       assetBundleAndroid: 'acsta_anime_ios',
       outlineUrl: 'acsta-waku.png',
