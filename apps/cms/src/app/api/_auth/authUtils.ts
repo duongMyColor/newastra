@@ -1,5 +1,5 @@
-import JWT from 'jsonwebtoken';
-import type { JwtPayload } from 'jsonwebtoken';
+import { SignJWT, jwtVerify } from 'jose';
+import type { JWTPayload } from 'jose';
 import {
   AuthFailureError,
   InternalServerError,
@@ -11,6 +11,7 @@ import keyTokenService from '../_services/keyToken.service';
 import { getServerCookieValue } from '@repo/utils/server_actions/cookies';
 import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
 import { CreateTokenPayload } from '@repo/types/auth';
+
 const HEADER = {
   API_KEY: 'x-api-key',
   CLIENT_ID: 'x-client-id',
@@ -19,23 +20,36 @@ const HEADER = {
 };
 
 const createTokenPair = async (
-  payload: CreateTokenPayload,
+  payload: CreateTokenPayload | JWTPayload,
   publicKey: string,
   privateKey: string
 ) => {
-  try {
-    //access token
-    const accessToken = JWT.sign(payload, publicKey, {
-      expiresIn: '1 days',
-    });
+  const encoder = new TextEncoder();
+  const publicKeyEncode = encoder.encode(publicKey);
+  const privateKeyEncode = encoder.encode(privateKey);
 
-    const refreshToken = JWT.sign(payload, privateKey, {
-      expiresIn: '1 days',
-    });
+  try {
+    console.log('generate token');
+
+    //access token
+    const accessToken = await new SignJWT(payload as JWTPayload)
+      .setProtectedHeader({ alg: 'HS256' })
+      .setIssuedAt()
+      .setExpirationTime('1d')
+      .sign(publicKeyEncode);
+
+    console.log('accessToken', accessToken);
+
+    const refreshToken = await new SignJWT(payload as JWTPayload)
+      .setProtectedHeader({ alg: 'HS256' })
+      .setIssuedAt()
+      .setExpirationTime('1d')
+      .sign(privateKeyEncode);
+    console.log('accessToken', refreshToken);
 
     // verify
-    JWT.verify(accessToken, publicKey, (err, decode) => {
-      if (err) console.error(`error verify ::`, err);
+    await jwtVerify(accessToken, publicKeyEncode, {
+      algorithms: ['HS256'],
     });
     return { accessToken, refreshToken };
   } catch (error) {
@@ -57,9 +71,16 @@ const getKeyStore = async (userId: number) => {
   return keyStore;
 };
 
-const verifyUser = (userId: number, token: string, key: string) => {
+const verifyUser = async (userId: number, token: string, key: string) => {
+  const encoder = new TextEncoder();
   try {
-    const decodeUser = JWT.verify(token, key) as JwtPayload;
+    // Convert the key string to a CryptoKey
+
+    const decodeUser = (
+      await jwtVerify(token, encoder.encode(key), {
+        algorithms: ['HS256'],
+      })
+    ).payload as JWTPayload;
     if (userId !== decodeUser.userId)
       throw new AuthFailureError('Invalid user');
     return decodeUser;
@@ -69,15 +90,9 @@ const verifyUser = (userId: number, token: string, key: string) => {
 };
 
 const authentication = async () => {
-  /*
-		1 - Check userId missing ???
-		2 - get accessToken
-		3 - verify token
-		4 - check user in dbs?
-		5 - check keyStore with this userId?
-		6 - OK all -> return res
-	*/
   const userIdString = getServerCookieValue(HEADER.CLIENT_ID);
+  console.log('userIdString', userIdString);
+
   if (!userIdString)
     throw new AuthFailureError('Invalid request: missing client id');
   const userId = Number(userIdString);
@@ -88,7 +103,7 @@ const authentication = async () => {
   const refreshToken = getServerCookieValue(HEADER.REFRESHTOKEN);
 
   if (refreshToken) {
-    const decodeUser = verifyUser(
+    const decodeUser = await verifyUser(
       userId,
       refreshToken,
       keyStore.privateKey as string
@@ -102,7 +117,7 @@ const authentication = async () => {
   const accessToken = getServerCookieValue(HEADER.AUTHORIZATION);
   if (!accessToken)
     throw new AuthFailureError('Invalid request: missing authorization');
-  const decodeUser = verifyUser(
+  const decodeUser = await verifyUser(
     userId,
     accessToken,
     keyStore.publicKey as string

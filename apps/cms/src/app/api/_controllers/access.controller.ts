@@ -12,7 +12,7 @@ class AccessController {
       metadata: await AccessService.handleRefreshTokenV2({
         refreshToken: request.refreshToken,
         user: request.user,
-        keyStore: request.keyStore,
+        keyStore: request.keyStore as any,
       }),
     });
   };
@@ -26,6 +26,8 @@ class AccessController {
   login = async (request: NextRequest) => {
     const payload: { username: string; password: string } =
       await request.json();
+
+    console.log('payload', payload);
 
     return new OK({
       metadata: await AccessService.login(payload),

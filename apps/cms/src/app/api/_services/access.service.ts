@@ -1,6 +1,6 @@
 // 'use server';
 
-import crypto from 'crypto';
+// import crypto from 'crypto';
 
 import keyTokenService from './keyToken.service';
 import {
@@ -96,19 +96,31 @@ class AccessService {
     password: string;
   }) => {
     //1.
-    const foundUser = await userService.findByUsername({
-      username,
+    const foundUser = await userService.findByEmail({
+      email: username,
     });
+
+    console.log('foundUser', foundUser);
+
     if (!foundUser) throw new BadRequestError('User not registered');
     if (!foundUser.enabled) throw new AuthFailureError('User is locked');
 
     //2.
     const matchPassword = hashPassword(password) === foundUser.password;
+    console.log('matchPassword', matchPassword);
+
     if (!matchPassword) throw new AuthFailureError('Authentication failed');
 
     //3.
-    const privateKey = crypto.randomBytes(64).toString('hex');
-    const publicKey = crypto.randomBytes(64).toString('hex');
+    const privateKeyArray = crypto.getRandomValues(new Uint8Array(16));
+    const publicKeyArray = crypto.getRandomValues(new Uint8Array(16));
+
+    const privateKey = Array.from(privateKeyArray)
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('');
+    const publicKey = Array.from(publicKeyArray)
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('');
 
     //4.
 

@@ -9,6 +9,7 @@ export interface UserIF {
   password: string;
   newPassword?: string;
   isDeleted?: boolean;
+  lastLogin?: Date | string;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -22,4 +23,3 @@ export interface RoleSelectInput {
   id: string | number;
   name: string;
 }
-

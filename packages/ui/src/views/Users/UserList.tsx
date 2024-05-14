@@ -4,11 +4,13 @@ import {
   TextField,
   EditButton,
   DeleteWithConfirmButton,
+  FunctionField,
 } from 'react-admin';
 import { BaseComponentProps } from '@repo/types/general';
 import { validRole } from '../_core/permissions';
 import { ListToolBar } from '@repo/ui/src/components/ListToolBar';
 import { CustomButtonByRole } from '@repo/ui/src/components/CustomButtonByRole';
+import { formatDateAcstar } from '@repo/utils/dateFormat';
 
 const UserList = ({ actions, resource }: BaseComponentProps) => {
   return (
@@ -19,7 +21,12 @@ const UserList = ({ actions, resource }: BaseComponentProps) => {
       <Datagrid rowClick="show" bulkActionButtons={false}>
         <TextField source="no" label="No" />
         <TextField source="username" label="CMS-ID" />
-        <TextField source="date" label="最終ログイン" />
+        <FunctionField
+          label="公開開始日"
+          render={({ lastLogin }: { lastLogin: string }) => {
+            return formatDateAcstar(lastLogin);
+          }}
+        />
         <TextField source="role" label="権限" />
         <TextField source="email" label="メールアドレス" />
         {validRole('delete', actions) && (
