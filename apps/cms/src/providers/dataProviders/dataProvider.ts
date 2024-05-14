@@ -18,10 +18,9 @@ import forcedUpdateManagementCallbackHandlers from './forcedUpdateManagementCall
  */
 const dataProvider = withLifecycleCallbacks(baseDataProvider, [
   userCallbackHandler,
+  // applicationMasterCallbackHandler,
   forcedUpdateManagementCallbackHandlers,
   acstaManagementCallbackHandler,
-  applicationMasterCallbackHandler,
-  // acstaManagementCallbackHandler,
   // PerformanceTypeMasterCallbackHandler,
   performanceManagementCallbackHandlers,
   termOfUseManagementCallbackHandlers,

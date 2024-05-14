@@ -137,15 +137,15 @@ const MasterEditForm = ({
           isRequired
         />
         <FileInput
-          source="assetDataIOS"
+          source="assetBundleIOS"
           label="iOS用共通アセットバンドル"
           placeholder="アップロード"
         >
-          <FileField source="src" title="title" />
+          <FileField source="src" title="src" />
         </FileInput>
 
         <FileInput
-          source="assetDataAndroid"
+          source="assetBundleAndroid"
           label="Android用共通アセットバンドル"
           placeholder="アップロード"
         >
@@ -153,7 +153,7 @@ const MasterEditForm = ({
         </FileInput>
 
         <FileInput
-          source="assetDataOutlineUrl"
+          source="outlineUrl"
           label="アクスタ枠データパス"
           placeholder="アップロード"
           accept={'image/*'}

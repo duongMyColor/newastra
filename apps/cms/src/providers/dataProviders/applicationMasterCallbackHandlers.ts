@@ -9,7 +9,6 @@ import type {
   UpdateResult,
 } from 'react-admin';
 import dayjs from 'dayjs';
-import { extractFilename } from '@repo/utils/fileUtils';
 const applicationMasterCallbackHandler = {
   resource: 'application-masters',
 
@@ -19,28 +18,44 @@ const applicationMasterCallbackHandler = {
   ): Promise<GetListResult> => {
     // const { classificationId } = response.data;
 
-    return response;
+    let fake = {
+      id: '1',
+      appName: 'duong',
+      createdAt: dayjs(new Date()).format('YYYY.MM.DD HH:MM'),
+      appId: 'USER',
+      packageName: 'com.example.myapp',
+    };
+
+    return {
+      data: [fake],
+      total: 1,
+    };
   },
+
   afterGetOne: async (
     response: GetOneResult,
     dataProvider: DataProvider
   ): Promise<GetOneResult> => {
-    const data = response.data;
-    data['assetDataAndroid'] = {
-      src: extractFilename(data.assetBundleAndroid),
-      title: extractFilename(data.assetBundleAndroid),
-    };
-    data['assetDataIOS'] = {
-      src: extractFilename(data.assetBundleIOS),
-      title: extractFilename(data.assetBundleIOS),
+    // const { classificationId } = response.data;
+
+    let fake = {
+      id: '1',
+      appName: 'duong',
+      createdAt: dayjs(new Date()).format('YYYY.MM.DD HH:MM'),
+      packageName: 'com.example.myapp',
+      termsOfUseID: 'USER',
+      licenseID: 'USER',
+      assetBundleIOS: 'acsta_anime_ios',
+      assetBundleAndroid: 'acsta_anime_ios',
+      outlineUrl: 'acsta-waku.png',
+      assetDataIOS: { src: 'acsta_anime_ios' },
+      assetDataAndroid: { src: 'acsta_anime_ios' },
+      assetOutlineUrl: { src: 'acsta-waku.png' },
     };
 
-    data['assetDataOutlineUrl'] = {
-      src: extractFilename(data.outlineUrl),
-      title: extractFilename(data.outlineUrl),
+    return {
+      data: fake,
     };
-
-    return response;
   },
 };
 
