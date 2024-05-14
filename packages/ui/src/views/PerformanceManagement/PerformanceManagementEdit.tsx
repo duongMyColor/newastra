@@ -126,7 +126,7 @@ const PerformanceEditForm = ({ actions, resource }: BaseComponentProps) => {
         showCancelButton={true}
         handleSave={handleUpdate}
       >
-        <TextInput source="id" label="演出ID" isRequired fullWidth />
+        <TextInput source="id" label="演出ID" isRequired fullWidth disabled />
         <TextInput source="name" label="演出名" fullWidth isRequired />
 
         <SelectInput
