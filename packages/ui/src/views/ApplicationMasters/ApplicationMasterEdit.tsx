@@ -122,7 +122,7 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
           label="利用規約ID"
         />
         <SelectInput
-          source="licenseID"
+          source="licenseId"
           choices={licenseIDs}
           isRequired
           label="椎ライセンスID限"
