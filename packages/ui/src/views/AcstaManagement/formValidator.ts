@@ -8,6 +8,10 @@ const editionRules: ValidationRule[] = [
     required: true,
   },
   {
+    field: 'applicationId',
+    required: true,
+  },
+  {
     field: 'acstaName',
     required: true,
   },
@@ -20,6 +24,11 @@ const editionRules: ValidationRule[] = [
 const creationRules: ValidationRule[] = [
   {
     field: 'managementName',
+    required: true,
+  },
+
+  {
+    field: 'applicationId',
     required: true,
   },
   {
