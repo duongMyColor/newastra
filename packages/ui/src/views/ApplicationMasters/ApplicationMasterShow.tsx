@@ -50,7 +50,7 @@ const MasterShow = ({ actions, resource }: BaseComponentProps) => {
             />
 
             <TextInput
-              source="termsOfUseID"
+              source="termsOfUseId"
               label="利用規約ID"
               disabled
               sx={disabledInputBackgroundStyle}

@@ -28,7 +28,7 @@ const MasterCreate = ({
   const notify = useNotify();
   const navigate = useNavigate();
   const [create] = useCreate();
-  const [termsOfUseIDs, setTermsOfUseIDs] = useState([]);
+  const [termsOfUseIds, settermsOfUseIds] = useState([]);
   const [licenseIDs, setLicenseIDs] = useState([]);
 
   const extractFile = (value: RAFile): File => {
@@ -84,7 +84,7 @@ const MasterCreate = ({
       const termsOfUses = await dataProvider.getAll('term-of-uses');
       const licenses = await dataProvider.getAll('licenses');
 
-      setTermsOfUseIDs(
+      settermsOfUseIds(
         termsOfUses.map(({ id, version }: TermOfUseResponseIF) => {
           return { id, name: `${id} : バージョン${version}` };
         })
@@ -120,8 +120,8 @@ const MasterCreate = ({
         />
 
         <SelectInput
-          source="termsOfUseID"
-          choices={termsOfUseIDs}
+          source="termsOfUseId"
+          choices={termsOfUseIds}
           isRequired
           label="利用規約ID"
         />

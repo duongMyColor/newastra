@@ -2,7 +2,7 @@ export interface AplicationMasterResponseIF {
   id?: number;
   appName: string;
   packageName: string;
-  termsOfUseID: number;
+  termsOfUseId: number;
   licenseID: string;
   assetBundleIOS: string;
   assetBundleAndroid: string;
@@ -17,7 +17,7 @@ export interface AplicationMasterPostIF {
   id?: number;
   appName: string;
   packageName: string;
-  termsOfUseID: number;
+  termsOfUseId: number;
   licenseID: string;
   assetBundleIOS: string;
   assetBundleAndroid: string;

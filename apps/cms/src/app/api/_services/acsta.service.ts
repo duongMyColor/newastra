@@ -108,10 +108,10 @@ class Acsta implements AcstaPostIF {
   public id?: number;
   public managementName: string;
   public acstaName: string;
-  public applicationID: number;
+  public applicationId: number;
   public thumbnailUrl: string;
   public scanImageUrl: string;
-  // public acstaBasicInfoID: number;
+  // public acstaBasicInfoId: number;
   public scanOriginX: GLfloat;
   public scanOriginY: GLfloat;
   public scanWidth: GLfloat;
@@ -126,10 +126,10 @@ class Acsta implements AcstaPostIF {
   public constructor({
     managementName,
     acstaName,
-    applicationID,
+    applicationId,
     thumbnailUrl,
     scanImageUrl,
-    // acstaBasicInfoID,
+    // acstaBasicInfoId,
     scanOriginX,
     scanOriginY,
     scanWidth,
@@ -144,8 +144,8 @@ class Acsta implements AcstaPostIF {
     this.managementName = managementName?.toString();
     this.thumbnailUrl = thumbnailUrl as string;
     this.scanImageUrl = scanImageUrl as string;
-    this.applicationID = applicationID;
-    // this.acstaBasicInfoID = acstaBasicInfoID;
+    this.applicationId = applicationId;
+    // this.acstaBasicInfoId = acstaBasicInfoId;
     this.scanOriginX = scanOriginX;
     this.scanOriginY = scanOriginY;
     this.scanWidth = scanWidth;

@@ -103,7 +103,7 @@ const EditForm = ({ actions, resource, dataProvider }: BaseComponentProps) => {
 
         <TextInput source="acstaName" label="アクスタ名" fullWidth isRequired />
         <SelectInput
-          source="applicationID"
+          source="applicationId"
           choices={appIdIDs}
           fullWidth
           isRequired
@@ -129,7 +129,7 @@ const EditForm = ({ actions, resource, dataProvider }: BaseComponentProps) => {
         <DateTimeInput source="dateEnd" fullWidth label="公開終了日" />
 
         {/* <TextInput
-          source="acstaBasicInfoID"
+          source="acstaBasicInfoId"
           label="力士基本情報ID"
           fullWidth
           isRequired

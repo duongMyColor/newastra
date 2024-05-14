@@ -73,9 +73,9 @@ class PerformanceFactory {
 class Performance implements PerformancePostIF {
   public id?: number;
   public name: string;
-  public performanceTypeMasterID: number;
+  public performanceTypeMasterId: number;
   public assetBundleIOS: string;
-  public acstaID: number;
+  public acstaId: number;
   public encryptKey: string;
   public assetBundleAndroid: string;
   public updatedAt: string | Date;
@@ -83,17 +83,17 @@ class Performance implements PerformancePostIF {
 
   public constructor({
     name,
-    performanceTypeMasterID,
+    performanceTypeMasterId,
     assetBundleIOS,
-    acstaID,
+    acstaId,
     encryptKey,
     assetBundleAndroid,
     record,
   }: PerformancePostIF) {
     this.name = name;
-    this.performanceTypeMasterID = performanceTypeMasterID;
+    this.performanceTypeMasterId = performanceTypeMasterId;
     this.assetBundleIOS = assetBundleIOS;
-    this.acstaID = acstaID;
+    this.acstaId = acstaId;
     this.assetBundleAndroid = assetBundleAndroid;
     this.encryptKey = encryptKey;
     this.updatedAt = new Date();

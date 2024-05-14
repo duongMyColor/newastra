@@ -22,7 +22,7 @@ const PerformanceManagementList = ({
         <TextField source="no" label="No" />
         <TextField source="name" label="演出名" />
         <TextField source="id" label="演出ID" />
-        <TextField source="performanceTypeMasterID" label="演出種別ID" />
+        <TextField source="performanceTypeMasterId" label="演出種別ID" />
 
         <TextField source="createdAt" label="登録日" />
         {validRole('delete', actions) && (

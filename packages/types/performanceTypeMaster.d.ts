@@ -17,9 +17,9 @@ export interface PerformanceTypeMasterPostIF {
 // export interface PerformanceResponseIF {
 //   id: id;
 //   name: string;
-//   performanceTypeMasterID: number;
+//   performanceTypeMasterId: number;
 //   assetBundleIOS: string;
-//   acstaID: number;
+//   acstaId: number;
 //   assetBundleAndroid: string;
 //   createdAt: string | Date;
 //   updatedAt: string | Date;
@@ -28,8 +28,8 @@ export interface PerformanceTypeMasterPostIF {
 // export interface PerformancePostIF {
 //   id?: id;
 //   name: string;
-//   performanceTypeMasterID: number;
+//   performanceTypeMasterId: number;
 //   assetBundleIOS: string;
-//   acstaID: number;
+//   acstaId: number;
 //   assetBundleAndroid: string;
 // }

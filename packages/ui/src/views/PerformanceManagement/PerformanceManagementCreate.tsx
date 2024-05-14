@@ -153,7 +153,7 @@ const PerformanceManagementCreate = ({
 
         <TextInput source="name" label="演出名" fullWidth isRequired />
         <SelectInput
-          source="performanceTypeMasterID"
+          source="performanceTypeMasterId"
           choices={performanceTypeMasterId}
           fullWidth
           isRequired
@@ -176,7 +176,7 @@ const PerformanceManagementCreate = ({
           <FileField source="src" title="title" />
         </FileInput>
         <SelectInput
-          source="acstaID"
+          source="acstaId"
           choices={acstaId}
           fullWidth
           isRequired
