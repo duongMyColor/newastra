@@ -18,18 +18,6 @@ const editionRules: ValidationRule[] = [
     field: 'packageName',
     required: true,
   },
-  {
-    field: 'assetDataIOS',
-    required: true,
-  },
-  {
-    field: 'assetDataAndroid',
-    required: true,
-  },
-  {
-    field: 'assetDataOutlineUrl',
-    required: true,
-  },
 ];
 
 const creationRules: ValidationRule[] = [
