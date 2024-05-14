@@ -1,4 +1,4 @@
-import { SignJWT, jwtVerify, JWK } from 'jose';
+import { SignJWT, jwtVerify } from 'jose';
 import type { JWTPayload } from 'jose';
 import {
   AuthFailureError,
@@ -24,24 +24,33 @@ const createTokenPair = async (
   publicKey: string,
   privateKey: string
 ) => {
-  console.log({ payload, publicKey, privateKey });
+  const encoder = new TextEncoder();
+  const publicKeyEncode = encoder.encode(publicKey);
+  const privateKeyEncode = encoder.encode(privateKey);
 
   try {
+    console.log('generate token');
+
     //access token
     const accessToken = await new SignJWT(payload as JWTPayload)
-      .setProtectedHeader({ alg: 'RS256' })
+      .setProtectedHeader({ alg: 'HS256' })
       .setIssuedAt()
       .setExpirationTime('1d')
-      .sign(privateKey);
+      .sign(publicKeyEncode);
+
+    console.log('accessToken', accessToken);
 
     const refreshToken = await new SignJWT(payload as JWTPayload)
-      .setProtectedHeader({ alg: 'RS256' })
+      .setProtectedHeader({ alg: 'HS256' })
       .setIssuedAt()
       .setExpirationTime('1d')
-      .sign(privateKey);
+      .sign(privateKeyEncode);
+    console.log('accessToken', refreshToken);
 
     // verify
-    await jwtVerify(accessToken, { type: publicKey });
+    await jwtVerify(accessToken, publicKeyEncode, {
+      algorithms: ['HS256'],
+    });
     return { accessToken, refreshToken };
   } catch (error) {
     throw new InternalServerError(error);
@@ -63,12 +72,15 @@ const getKeyStore = async (userId: number) => {
 };
 
 const verifyUser = async (userId: number, token: string, key: string) => {
+  const encoder = new TextEncoder();
   try {
     // Convert the key string to a CryptoKey
-    const cryptoKey = await JWK.asKey(key, { alg: 'RS256', use: 'sig' });
 
-    const decodeUser = (await jwtVerify(token, cryptoKey))
-      .payload as JWTPayload;
+    const decodeUser = (
+      await jwtVerify(token, encoder.encode(key), {
+        algorithms: ['HS256'],
+      })
+    ).payload as JWTPayload;
     if (userId !== decodeUser.userId)
       throw new AuthFailureError('Invalid user');
     return decodeUser;

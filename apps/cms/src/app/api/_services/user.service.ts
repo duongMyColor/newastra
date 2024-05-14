@@ -11,6 +11,7 @@ import {
   getAllWithQuery,
   safetyDeleteById,
   safetyDeleteManyById,
+  updateLastLogin,
 } from '../_repos/user.repo';
 import { hashPassword } from '@repo/utils/password';
 import { GetAllQueryIF } from '@repo/types/response';
@@ -62,6 +63,10 @@ class UserFactory {
 
   static async findByUsername({ username }: { username: string }) {
     return await getOneWithParam({ where: { username } });
+  }
+
+  static async updateLastLogin({ id }: { id: number }) {
+    return await updateLastLogin({ id });
   }
 }
 

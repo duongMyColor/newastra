@@ -12,6 +12,7 @@ import { BaseComponentProps } from '@repo/types/general';
 import { Box } from '@mui/material';
 import { validRole } from '../_core/permissions';
 import { disabledInputBackgroundStyle, boxStyles } from '@repo/styles';
+import FormatInputDateShow from '../../components/FormatInputDateShow';
 
 const UserShow = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
@@ -53,13 +54,7 @@ const UserShow = ({ actions, resource }: BaseComponentProps) => {
               sx={disabledInputBackgroundStyle}
             />
 
-            <TextInput
-              source="date"
-              label="最新ログイン"
-              fullWidth
-              disabled
-              sx={disabledInputBackgroundStyle}
-            />
+            <FormatInputDateShow label="最新ログイン" source="lastLogin" />
           </CustomForm>
         </>
       </ShowBase>

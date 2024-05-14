@@ -63,6 +63,13 @@ const updateManyById = async (updates: { id: number; data: UserIF }[]) => {
   return await new BaseRepo(model).updateManyById(updates);
 };
 
+const updateLastLogin = async ({ id }: { id: number }) => {
+  return await new BaseRepo(model).updateById({
+    id,
+    payload: { lastLogin: new Date() },
+  });
+};
+
 const updateById = async ({ id, payload }: { id: number; payload: UserIF }) => {
   return await new BaseRepo(model).updateById({ id, payload });
 };
@@ -98,4 +105,5 @@ export {
   safetyDeleteById,
   safetyDeleteManyById,
   count,
+  updateLastLogin,
 };

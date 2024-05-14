@@ -132,8 +132,6 @@ class AccessService {
       privateKey
     );
 
-    console.log('tokens', tokens);
-
     await keyTokenService.createKeyToken({
       userId,
       refreshToken: tokens.refreshToken,

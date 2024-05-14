@@ -12,7 +12,7 @@ class AccessController {
       metadata: await AccessService.handleRefreshTokenV2({
         refreshToken: request.refreshToken,
         user: request.user,
-        keyStore: request.keyStore,
+        keyStore: request.keyStore as any,
       }),
     });
   };

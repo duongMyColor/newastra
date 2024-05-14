@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import { KeyTokenPostIF } from '@repo/types/access';
-
+import UserService from './user.service';
 const keyTokenModel = prisma.keyToken;
 
 class KeyTokenService {
@@ -10,11 +10,13 @@ class KeyTokenService {
     privateKey,
     refreshToken,
   }: KeyTokenPostIF) {
+    console.log('createKeyToken', userId, publicKey, privateKey, refreshToken);
+
     try {
       const data = {
         publicKey,
         privateKey,
-        refreshTokensUsed: [],
+        refreshTokensUsed: JSON.stringify([]),
         refreshToken,
       };
 
@@ -24,6 +26,10 @@ class KeyTokenService {
         },
         update: data,
         create: { userId, ...data },
+      });
+
+      await UserService.updateLastLogin({
+        id: userId,
       });
       return tokens ? tokens.publicKey : null;
     } catch (error) {
@@ -70,7 +76,7 @@ class KeyTokenService {
 
     let refreshTokensUsed = keyToken?.refreshTokensUsed
       ? JSON.parse(keyToken.refreshTokensUsed.toString())
-      : [];
+      : JSON.stringify([]);
 
     refreshTokensUsed.push(oldToken);
 

@@ -19,33 +19,35 @@ model UserRole {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  username  String   @unique
-  role      String   @default("READ_ONLY")
-  enabled   Boolean  @default(true)
-  email     String   @unique
+  id        Int       @id @default(autoincrement())
+  username  String    @unique
+  role      String    @default("READ_ONLY")
+  enabled   Boolean   @default(true)
+  email     String    @unique
   password  String
-  isDeleted Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  isDeleted Boolean   @default(false)
+  lastLogin DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
   userRole UserRole  @relation(fields: [role], references: [id])
   keyToken KeyToken?
 }
 
 model KeyToken {
-  id                Int      @id @default(autoincrement())
-  userID            Int      @unique
-  publicKey         String?  @unique
-  privateKey        String?  @unique
-  refreshToken      String?  @unique
+  id                Int     @id @default(autoincrement())
+  userId            Int     @unique
+  publicKey         String? @unique
+  privateKey        String? @unique
+  refreshToken      String? @unique
   // JSON object
   // Currently, Prisma do not suport JSON type
   refreshTokensUsed String?
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
 
-  user User @relation(fields: [userID], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model AplicationMaster {
@@ -139,9 +141,9 @@ model License {
 }
 
 model IdLastestOfRecord {
-  id            Int      @id @default(autoincrement())
-  name          String
-  idLastest     Int
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id        Int      @id @default(autoincrement())
+  name      String
+  idLastest Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
