@@ -11,7 +11,7 @@ import {
   DateTimeInput,
 } from 'react-admin';
 
-import { validateUserCreation } from './formValidator';
+import { validateCreation } from './formValidator';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps, RecordValue } from '@repo/types/general';
 import { REDIRECT_ROUTE } from '@repo/consts/general';
@@ -71,7 +71,7 @@ const TermsOfUseManagementCreate = ({
     <Create redirect={REDIRECT_ROUTE.list} title="利用規約管理　新规作成">
       <CustomForm
         pathTo={resourcePath}
-        validate={validateUserCreation}
+        validate={validateCreation}
         showSaveButton={true}
         showCancelButton={true}
         handleSave={handleSave}
