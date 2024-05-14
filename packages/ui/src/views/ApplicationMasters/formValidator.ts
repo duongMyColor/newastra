@@ -7,7 +7,7 @@ const editionRules: ValidationRule[] = [
     required: true,
   },
   {
-    field: 'termsOfUseID',
+    field: 'termsOfUseId',
     required: true,
   },
   {
@@ -26,7 +26,7 @@ const creationRules: ValidationRule[] = [
     required: true,
   },
   {
-    field: 'termsOfUseID',
+    field: 'termsOfUseId',
     required: true,
   },
   {

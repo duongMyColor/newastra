@@ -5,9 +5,9 @@ export interface ProductPostFormIF extends ProductPostIF {
 export interface PerformanceResponseIF {
   id: id;
   name: string;
-  performanceTypeMasterID: number;
+  performanceTypeMasterId: number;
   assetBundleIOS: string;
-  acstaID: number;
+  acstaId: number;
   encryptKey: string;
   assetBundleAndroid: string;
   createdAt: string | Date;
@@ -17,10 +17,10 @@ export interface PerformanceResponseIF {
 export interface PerformancePostIF {
   id?: id;
   name: string;
-  performanceTypeMasterID: number;
+  performanceTypeMasterId: number;
   assetBundleIOS: string;
-  acstaID: number;
+  acstaId: number;
   encryptKey: string;
   assetBundleAndroid: string;
-  record?:string
+  record?: string;
 }

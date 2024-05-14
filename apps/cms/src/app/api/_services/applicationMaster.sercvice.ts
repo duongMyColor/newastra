@@ -110,7 +110,7 @@ class ApplicationMasterFactory {
 class ApplicationMaster implements AplicationMasterPostIF {
   public appName: string;
   public packageName: string;
-  public termsOfUseID: number;
+  public termsOfUseId: number;
   public licenseID: string;
   public assetBundleIOS: string;
   public assetBundleAndroid: string;
@@ -121,7 +121,7 @@ class ApplicationMaster implements AplicationMasterPostIF {
   public constructor({
     appName,
     packageName,
-    termsOfUseID,
+    termsOfUseId,
     licenseID,
     assetBundleIOS,
     assetBundleAndroid,
@@ -130,7 +130,7 @@ class ApplicationMaster implements AplicationMasterPostIF {
   }: AplicationMasterPostIF) {
     this.appName = appName;
     this.packageName = packageName;
-    this.termsOfUseID = termsOfUseID;
+    this.termsOfUseId = termsOfUseId;
     this.licenseID = licenseID;
     this.assetBundleIOS = assetBundleIOS;
     this.assetBundleAndroid = assetBundleAndroid;

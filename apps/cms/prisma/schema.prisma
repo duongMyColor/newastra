@@ -54,7 +54,7 @@ model AplicationMaster {
   id                 Int      @id @default(autoincrement())
   appName            String   @unique
   packageName        String
-  termsOfUseID       Int
+  termsOfUseId       Int
   licenseID          Int
   assetBundleIOS     String
   assetBundleAndroid String
@@ -63,7 +63,7 @@ model AplicationMaster {
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 
-  termOfUse TermsOfUse @relation(fields: [termsOfUseID], references: [id])
+  termOfUse TermsOfUse @relation(fields: [termsOfUseId], references: [id])
   license   License    @relation(fields: [licenseID], references: [id])
 
   acsta AcstaManagement[]
@@ -73,10 +73,10 @@ model AcstaManagement {
   id               Int       @id @default(autoincrement())
   managementName   String
   acstaName        String
-  applicationID    Int
+  applicationId    Int
   thumbnailUrl     String
   scanImageUrl     String
-  acstaBasicInfoID Int?
+  acstaBasicInfoId Int?
   scanOriginX      Float?
   scanOriginY      Float?
   scanWidth        Float?
@@ -88,7 +88,7 @@ model AcstaManagement {
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
 
-  application AplicationMaster       @relation(fields: [applicationID], references: [id], onDelete: Cascade)
+  application AplicationMaster       @relation(fields: [applicationId], references: [id], onDelete: Cascade)
   performace  PerformaceManagement[]
 }
 
@@ -104,16 +104,16 @@ model PerformaceTypeMaster {
 model PerformaceManagement {
   id                      Int      @id @default(autoincrement())
   name                    String
-  performanceTypeMasterID Int
+  performanceTypeMasterId Int
   assetBundleIOS          String
-  acstaID                 Int
+  acstaId                 Int
   assetBundleAndroid      String
   encryptKey              String
   createdAt               DateTime @default(now())
   updatedAt               DateTime @updatedAt
 
-  performanceTypeMaster PerformaceTypeMaster @relation(fields: [performanceTypeMasterID], references: [id])
-  acsta                 AcstaManagement      @relation(fields: [acstaID], references: [id])
+  performanceTypeMaster PerformaceTypeMaster @relation(fields: [performanceTypeMasterId], references: [id])
+  acsta                 AcstaManagement      @relation(fields: [acstaId], references: [id])
 }
 
 model TermsOfUse {
@@ -149,12 +149,11 @@ model IdLastestOfRecord {
 }
 
 model ForcedUpdateManagement {
-  id               Int      @id @default(autoincrement())
-  managementName   String
-  operateSystem    String
-  version          String
-  publishedDate    DateTime
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  id             Int      @id @default(autoincrement())
+  managementName String
+  operateSystem  String
+  version        String
+  publishedDate  DateTime
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
-

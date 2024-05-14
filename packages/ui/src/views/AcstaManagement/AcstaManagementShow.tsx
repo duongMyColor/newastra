@@ -76,7 +76,7 @@ const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
               />
 
               <TextInput
-                source="applicationID"
+                source="applicationId"
                 label="利用規約ID"
                 disabled
                 fullWidth
@@ -103,7 +103,7 @@ const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
               <FormatInputDateShow label="登録日時" source="createdAt" />
 
               {/* <TextInput
-                source="acstaBasicInfoID"
+                source="acstaBasicInfoId"
                 label="力士基本情報ID"
                 disabled
                 sx={disabledInputBackgroundStyle}

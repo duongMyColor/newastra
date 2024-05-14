@@ -130,7 +130,7 @@ const PerformanceEditForm = ({ actions, resource }: BaseComponentProps) => {
         <TextInput source="name" label="演出名" fullWidth isRequired />
 
         <SelectInput
-          source="performanceTypeMasterID"
+          source="performanceTypeMasterId"
           choices={performanceTypeMasterId}
           fullWidth
           isRequired
@@ -154,7 +154,7 @@ const PerformanceEditForm = ({ actions, resource }: BaseComponentProps) => {
         </FileInput>
 
         <SelectInput
-          source="acstaID"
+          source="acstaId"
           choices={acstaId}
           fullWidth
           isRequired

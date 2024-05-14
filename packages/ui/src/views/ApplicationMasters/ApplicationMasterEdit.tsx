@@ -22,17 +22,14 @@ import { useEffect, useState } from 'react';
 import { convertToFormData } from '@repo/utils/formData';
 import { uploadMuiltpart } from '@repo/utils/multipartUpload';
 
-const MasterEditForm = ({
-  resource,
-  dataProvider,
-}: BaseComponentProps) => {
+const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
   const { record } = useEditContext();
 
   const notify = useNotify();
   const navigate = useNavigate();
   const [update] = useUpdate();
-  const [termsOfUseIDs, setTermsOfUseIDs] = useState([]);
+  const [termsOfUseIds, settermsOfUseIds] = useState([]);
   const [licenseIDs, setLicenseIDs] = useState([]);
 
   const extractFile = (value: RAFile): File => {
@@ -84,7 +81,7 @@ const MasterEditForm = ({
       const termsOfUses = await dataProvider.getAll('term-of-uses');
       const licenses = await dataProvider.getAll('licenses');
 
-      setTermsOfUseIDs(
+      settermsOfUseIds(
         termsOfUses.map(({ id, version }: TermOfUseResponseIF) => {
           return { id, name: `${id} : バージョン${version}` };
         })
@@ -119,8 +116,8 @@ const MasterEditForm = ({
         />
 
         <SelectInput
-          source="termsOfUseID"
-          choices={termsOfUseIDs}
+          source="termsOfUseId"
+          choices={termsOfUseIds}
           isRequired
           label="利用規約ID"
         />

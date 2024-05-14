@@ -12,7 +12,7 @@ const editionRules: ValidationRule[] = [
     required: true,
   },
   {
-    field: 'performanceTypeMasterID',
+    field: 'performanceTypeMasterId',
     required: true,
   },
   {
@@ -24,7 +24,7 @@ const editionRules: ValidationRule[] = [
     required: true,
   },
   {
-    field: 'acstaID',
+    field: 'acstaId',
     required: true,
   },
 ];
@@ -39,7 +39,7 @@ const creationRules: ValidationRule[] = [
     required: true,
   },
   {
-    field: 'performanceTypeMasterID',
+    field: 'performanceTypeMasterId',
     required: true,
   },
   {
@@ -51,7 +51,7 @@ const creationRules: ValidationRule[] = [
     required: true,
   },
   {
-    field: 'acstaID',
+    field: 'acstaId',
     required: true,
   },
 ];

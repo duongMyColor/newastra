@@ -43,7 +43,7 @@ const applicationMasterCallbackHandler = {
       appName: 'duong',
       createdAt: dayjs(new Date()).format('YYYY.MM.DD HH:MM'),
       packageName: 'com.example.myapp',
-      termsOfUseID: 'USER',
+      termsOfUseId: 'USER',
       licenseID: 'USER',
       assetBundleIOS: 'acsta_anime_ios',
       assetBundleAndroid: 'acsta_anime_ios',
