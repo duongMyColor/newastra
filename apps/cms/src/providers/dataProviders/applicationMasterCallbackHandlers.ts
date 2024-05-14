@@ -9,6 +9,7 @@ import type {
   UpdateResult,
 } from 'react-admin';
 import dayjs from 'dayjs';
+import { extractFilename } from '@repo/utils/fileUtils';
 const applicationMasterCallbackHandler = {
   resource: 'application-masters',
 
@@ -18,44 +19,28 @@ const applicationMasterCallbackHandler = {
   ): Promise<GetListResult> => {
     // const { classificationId } = response.data;
 
-    let fake = {
-      id: '1',
-      appName: 'duong',
-      createdAt: dayjs(new Date()).format('YYYY.MM.DD HH:MM'),
-      appId: 'USER',
-      packageName: 'com.example.myapp',
-    };
-
-    return {
-      data: [fake],
-      total: 1,
-    };
+    return response;
   },
-
   afterGetOne: async (
     response: GetOneResult,
     dataProvider: DataProvider
   ): Promise<GetOneResult> => {
-    // const { classificationId } = response.data;
-
-    let fake = {
-      id: '1',
-      appName: 'duong',
-      createdAt: dayjs(new Date()).format('YYYY.MM.DD HH:MM'),
-      packageName: 'com.example.myapp',
-      termsOfUseID: 'USER',
-      licenseID: 'USER',
-      assetBundleIOS: 'acsta_anime_ios',
-      assetBundleAndroid: 'acsta_anime_ios',
-      outlineUrl: 'acsta-waku.png',
-      assetDataIOS: { src: 'acsta_anime_ios' },
-      assetDataAndroid: { src: 'acsta_anime_ios' },
-      assetOutlineUrl: { src: 'acsta-waku.png' },
+    const data = response.data;
+    data['assetDataAndroid'] = {
+      src: extractFilename(data.assetBundleAndroid),
+      title: extractFilename(data.assetBundleAndroid),
+    };
+    data['assetDataIOS'] = {
+      src: extractFilename(data.assetBundleIOS),
+      title: extractFilename(data.assetBundleIOS),
     };
 
-    return {
-      data: fake,
+    data['assetDataOutlineUrl'] = {
+      src: extractFilename(data.outlineUrl),
+      title: extractFilename(data.outlineUrl),
     };
+
+    return response;
   },
 };
 
