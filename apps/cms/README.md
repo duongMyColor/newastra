@@ -13,7 +13,7 @@ Note: Create .env file base on .sample.env
 
 `$ yarn db:migrate create`
 
-### At migration file created (.sql file) remove `PRAGMA foreign_key_check`. It's not supported from SQLite D1 Database currently
+### At migration file created (.sql file) remove `PRAGMA foreign_key_check` if you got error `not authorize`. It's not supported from SQLite D1 Database currently
 
 ### Run apply again
 `$ yarn db:migrate apply`
