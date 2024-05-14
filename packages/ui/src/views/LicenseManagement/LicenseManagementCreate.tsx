@@ -11,7 +11,7 @@ import {
 } from 'react-admin';
 import { TextField } from '@mui/material';
 
-import { validateUserCreation } from './formValidator';
+import { validateCreation } from './formValidator';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps, RecordValue } from '@repo/types/general';
 import { REDIRECT_ROUTE } from '@repo/consts/general';
@@ -47,11 +47,12 @@ const LicenseManagementCreate = ({ actions, resource }: BaseComponentProps) => {
 
   const fetchIdLastest = async () => {
     const response = await dataProvider.getIdLastestRecord(resource);
+    const responseIdLastest = await dataProvider.getIdLastest(resource);
     const nextId = response.data.idLastest ? response.data.idLastest : 1;
     setIdLicense(`${nextId}`);
 
-    if (response.data[0]) {
-      const formatDate = new Date(response.data[0]?.publishedDate);
+    if (responseIdLastest.data[0]) {
+      const formatDate = new Date(responseIdLastest.data[0]?.publishedDate);
       setOldDate(formatDate);
     }
   };
@@ -63,7 +64,7 @@ const LicenseManagementCreate = ({ actions, resource }: BaseComponentProps) => {
     <Create redirect={REDIRECT_ROUTE.list} title="ライセンス管理　新规作成">
       <CustomForm
         pathTo={resourcePath}
-        validate={validateUserCreation}
+        validate={validateCreation}
         showSaveButton={true}
         showCancelButton={true}
         handleSave={handleSave}
