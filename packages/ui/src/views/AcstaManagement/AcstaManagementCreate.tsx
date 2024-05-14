@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { TextField, Box } from '@mui/material';
 
-import { validateUserCreation } from './formValidator';
+import { validateAcstaCreation } from './formValidator';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps, RecordValue } from '@repo/types/general';
 import { REDIRECT_ROUTE } from '@repo/consts/general';
@@ -81,7 +81,7 @@ const AcstaManagementCreate = ({
     <Create redirect={REDIRECT_ROUTE.list} title="アクスタ管理　新规作成">
       <CustomForm
         pathTo={resourcePath}
-        validate={validateUserCreation}
+        validate={validateAcstaCreation}
         showSaveButton={true}
         showCancelButton={true}
         handleSave={handleSave}
