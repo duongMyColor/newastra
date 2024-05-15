@@ -6,7 +6,7 @@ import errorHandlerMiddleware from '@/middlewares/errorHandler'; // Import the e
 
 export const GET = errorHandlerMiddleware(async (request: NextRequest) => {
   return NextResponse.json(
-    await performanceMasterController.getAllWithQuery(request)
+    await performanceMasterController.getAllPerformanceTypeMaster(request)
   );
 });
 

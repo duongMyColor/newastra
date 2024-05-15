@@ -45,8 +45,62 @@ class BaseRepo {
       take: (end ?? 0) - (start ?? 0) + 1,
       where: whereClause,
     });
+      return res;
+  };
+
+  getAllPerformanceTypeMaster = async ({ sort, range, filter }: GetAllQueryIF) => {
+    const [sortField, sortOrder] = sort;
+    const [start, end] = range;
+
+    const whereClause = Object.fromEntries(
+      Object.entries(filter).map(([key, value]) => [
+        key,
+        {
+          search: (value as string)
+            .trim()
+            .split(' ')
+            .map((word: string) => `${word} ${word}*`.toLowerCase())
+            .join(' '),
+        },
+      ])
+    );
+
+    let res = await this.tableModel.findMany({
+      orderBy: {
+        [String(sortField)]: sortOrder?.toLowerCase() ?? '',
+      },
+      skip: start ?? 0,
+      take: (end ?? 0) - (start ?? 0) + 1,
+      where: whereClause,
+    });
+
+    for (let i = 0; i < res.length; i++) {
+      const queryOne = await this.getOneByIdPerformaceTypeMaster(res[i].id);
+
+      if (queryOne) {
+        res[i]['isExist'] = true;
+      } else {
+        res[i]['isExist'] = false;
+      }
+    }
+
+    console.log({ res });
 
     return res;
+  };
+
+  getOneByIdPerformaceTypeMaster = async (idPerformanceTypeMaster: number) => {
+    try {
+      const response = await prisma.performaceManagement.findFirst({
+        where: { performanceTypeMasterId: idPerformanceTypeMaster },
+      });
+
+      console.log({ response });
+
+      return response;
+    } catch (error) {
+      console.log({ error });
+    }
   };
 
   getAllWithFilters = async ({ sort, range, filter }: GetAllQueryIF) => {
