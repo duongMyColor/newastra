@@ -8,6 +8,7 @@ import { Actions, Permission } from '@repo/types/roles';
 import React from 'react';
 import { checkRole } from '@repo/ui/src/views/_core/permissions';
 import { i18nProvider } from '@/providers/i18nProvider';
+import Login from '@repo/ui/src/views/Login/Login'
 
 // Define resources
 import Resources from './_core/resources';
@@ -19,6 +20,7 @@ const AdminApp = () => {
       dataProvider={dataProvider}
       authProvider={authProvider}
       i18nProvider={i18nProvider}
+      loginPage={Login}
       requireAuth
     >
       {(permission: Permission) => {
