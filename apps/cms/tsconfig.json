@@ -13,7 +13,7 @@
       "@/*": ["./src/*"]
     },
 
-    "types": ["@cloudflare/workers-types", "node"]
+ 
   },
   "include": [
     "next-env.d.ts",
