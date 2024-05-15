@@ -102,6 +102,17 @@ class BaseRepo {
       console.log({ error });
     }
   };
+  getOneByPacketName = async (packageName:string) => {
+    try {
+      const response = await this.tableModel.findFirst({
+        where: { packageName},
+      });
+
+      return response;
+    } catch (error) {
+      console.log({ error });
+    }
+  };
 
   getAllWithFilters = async ({ sort, range, filter }: GetAllQueryIF) => {
     const [sortField, sortOrder] = sort;
@@ -259,7 +270,7 @@ class BaseRepo {
   insert = async (payload: RecordValue) => {
     const data = removeEmptyProperties(payload);
 
-    console.log(':::data sdfsdfsd', data.operateSystem);
+    console.log(':::data', data.operateSystem);
 
     return await this.tableModel.create({
       data,

@@ -274,6 +274,17 @@ const baseDataProvider: DataProvider = {
       data: response,
     };
   },
+  getPacketName: async (resource: string, packetName: string | number) => {
+    console.log({ resource });
+    const url = `${apiUrl}/${resource}/queryPacketName?packetName=${packetName}`;
+    const {
+      json: { metadata },
+    } = await httpClient(url);
+
+    return {
+      data: metadata,
+    };
+  },
   getIdLastest: async (resource: string) => {
     console.log({ resource });
     const url = `${apiUrl}/id-lastest?source=${MAP_RESOURE[resource]}`;
