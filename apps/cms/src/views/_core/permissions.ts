@@ -13,7 +13,7 @@ const ADMIN: Permission = {
   'forced-update-managements': '*',
 };
 const GENERAL: Permission = {
-  users: ['list', 'show', 'edit', 'delete'],
+  users: ['list', 'show','edit','delete'],
   'application-masters': ['create', 'list', 'show', 'edit', 'delete'],
   acstas: ['create', 'list', 'show', 'edit', 'delete'],
   'performance-type-masters': ['create', 'list', 'show', 'edit', 'delete'],

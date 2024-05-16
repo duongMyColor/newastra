@@ -11,7 +11,7 @@ import {
   DateTimeInput,
 } from 'react-admin';
 
-import { validateUserCreation } from './formValidator';
+import { validateCreation } from './formValidator';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps, RecordValue } from '@repo/types/general';
 import { REDIRECT_ROUTE } from '@repo/consts/general';
@@ -52,11 +52,14 @@ const TermsOfUseManagementCreate = ({
 
   const fetchIdLastest = async () => {
     const response = await dataProvider.getIdLastestRecord(resource);
+    const responseIdLastest = await dataProvider.getIdLastest(resource);
     const nextId = response.data.idLastest ? response.data.idLastest : 1;
     setIdTermOfUse(`${nextId}`);
 
-    if (response.data[0]) {
-      const formatDate = new Date(response.data[0]?.publishedDate);
+    console.log({ responseIdLastest });
+
+    if (responseIdLastest.data[0]) {
+      const formatDate = new Date(responseIdLastest.data[0]?.publishedDate);
       setOldDate(formatDate);
     }
   };
@@ -68,7 +71,7 @@ const TermsOfUseManagementCreate = ({
     <Create redirect={REDIRECT_ROUTE.list} title="利用規約管理　新规作成">
       <CustomForm
         pathTo={resourcePath}
-        validate={validateUserCreation}
+        validate={validateCreation}
         showSaveButton={true}
         showCancelButton={true}
         handleSave={handleSave}

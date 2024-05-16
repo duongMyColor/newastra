@@ -9,6 +9,7 @@ import {
   deleteManyById,
   deleteWithRelation,
   getAllWithQuery,
+  getAllPerformanceTypeMaster,
 } from '../_repos/performanceTypeMaster.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 
@@ -28,9 +29,17 @@ class PerformanceTypeMasterFactory {
   static async getAll() {
     return await getAll();
   }
-  
+
   static async getAllWithQuery({ filter, range, sort }: GetAllQueryIF) {
     return await getAllWithQuery({ filter, range, sort });
+  }
+
+  static async getAllPerformanceTypeMaster({
+    filter,
+    range,
+    sort,
+  }: GetAllQueryIF) {
+    return await getAllPerformanceTypeMaster({ filter, range, sort });
   }
 
   static async updateById({

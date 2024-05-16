@@ -19,7 +19,7 @@ export const validatePublishedDate = (values: RecordValue): boolean => {
       ) => dayjs(b.publishedDate).valueOf() - dayjs(a.publishedDate).valueOf()
     )[0]?.publishedDate;
 
-  if (!publicDateEnd) return false;
+  if (!publicDateEnd) return true;
   if (
     dayjs(publicDateEnd).valueOf() >= new Date(values?.publishedDate).getTime()
   )

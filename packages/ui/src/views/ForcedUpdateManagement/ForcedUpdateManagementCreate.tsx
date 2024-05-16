@@ -32,7 +32,6 @@ const ForcedUpdateManagementCreate = ({
   const [oldDate, setOldDate] = useState<Date>();
 
   const handleSave = async (values: RecordValue) => {
-    console.log('handle Save', values);
     try {
       const formData = convertToFormData(values);
 
@@ -43,7 +42,7 @@ const ForcedUpdateManagementCreate = ({
       console.log({ data });
 
       navigate(resourcePath);
-      notify('成功: ライセンスが正常に作成されました', { type: 'success' });
+      await notify('成功: ライセンスが正常に作成されました', { type: 'success' });
     } catch (error) {
       notify('エラー: ライセンスの作成に失敗しました: ' + error, {
         type: 'warning',
