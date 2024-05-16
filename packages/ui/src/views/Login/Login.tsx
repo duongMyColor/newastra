@@ -77,7 +77,7 @@ const Login = () => {
               color: (theme) => theme.palette.grey[500],
             }}
           >
-            アクスタAR
+            AR力士　管理画面
           </Box>
           <Box sx={{ padding: '0 1em 1em 1em' }}>
             <Box sx={{ marginTop: '1em' }}>
