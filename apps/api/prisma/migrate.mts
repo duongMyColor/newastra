@@ -120,7 +120,6 @@ if (command === 'create') {
     process.exit(1);
   }
 
-  console.log({ pathIndex });
 
   let migrationPath = '';
 
@@ -190,7 +189,7 @@ async function getDatabase() {
   }
 
   database =
-    database ||
+    database || 
     (await select({
       message: 'Select a database',
       options: databases,
