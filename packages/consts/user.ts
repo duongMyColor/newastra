@@ -1,5 +1,5 @@
 import { hashPassword } from '../utils/password';
-import { Country, RoleSelectInput, UserIF } from '@repo/types/user';
+import { Country, OptionRole, RoleSelectInput, UserIF } from '@repo/types/user';
 import countries from '@repo/assets/json/countries.json';
 
 const defaultUsers: UserIF[] = [
@@ -32,7 +32,7 @@ const userRoles: RoleSelectInput[] = [
   { id: 'READ_ONLY', name: '参照のみ' },
 ];
 
-const MAP_ROLE = {
+const MAP_ROLE: OptionRole = {
   ADMIN: '管理者',
   GENERAL: '一般',
   READ_ONLY: '参照のみ',
