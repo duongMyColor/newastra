@@ -60,6 +60,29 @@ class ForcedUpdateManagementController {
       count: await count(),
     });
   };
+  getAllAndParentWithFilters = async (request: NextRequest) => {
+    const { searchParams } = new URL(request.url);
+
+    const { filter, range, sort } = parseSearchParams(searchParams);
+
+    return new OK({
+      message: 'get all Acsta success!',
+      metadata: await ForcedUpdateManagementService.getAllAndParentWithFilters({
+        filter,
+        range,
+        sort,
+      }),
+      count: await count(),
+    });
+  };
+
+  getAllParen = async () => {
+    return new OK({
+      message: 'get all forced for update success!',
+      metadata: await ForcedUpdateManagementService.getAllParen(),
+      count: await count(),
+    });
+  };
 
   getOneById = async (id: number) => {
     return new OK({
@@ -77,6 +100,12 @@ class ForcedUpdateManagementController {
         id: id,
         payload: payload,
       }),
+    });
+  };
+  getOneAndChildAndParent = async (id: number) => {
+    return new OK({
+      message: 'get AplicationMaster success!',
+      metadata: await ForcedUpdateManagementService.getOneAndParent(id),
     });
   };
 

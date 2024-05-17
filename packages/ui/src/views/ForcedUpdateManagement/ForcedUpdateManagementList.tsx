@@ -4,6 +4,7 @@ import { validRole } from '../_core/permissions';
 import { ListToolBar } from '@repo/ui/src/components/ListToolBar';
 import { formatDateAcstar } from '@repo/utils/dateFormat';
 import { StatusChipField } from '@repo/ui/src/components/CustomField/StatusChipField';
+import { AplicationMasterResponseIF } from '@repo/types/applicationMaster';
 
 const ForcedUpdateManagementList = ({
   actions,
@@ -18,6 +19,16 @@ const ForcedUpdateManagementList = ({
         <TextField source="no" label="No" />
         <TextField source="managementName" label="管理タイトル" />
         <TextField source="id" label="強制アップデート ID" />
+        <FunctionField
+          label="アプリケーションID"
+          render={({
+            aplicationMaster,
+          }: {
+            aplicationMaster: AplicationMasterResponseIF;
+          }) => {
+            return `${aplicationMaster.id} : ${aplicationMaster.appName}`;
+          }}
+        />
         <FunctionField
           label="OS"
           render={({ operateSystem }: { operateSystem: string }) => {

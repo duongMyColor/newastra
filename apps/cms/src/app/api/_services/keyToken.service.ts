@@ -19,6 +19,8 @@ class KeyTokenService {
         refreshTokensUsed: JSON.stringify([]),
         refreshToken,
       };
+      console.log('====================upsert====================');
+      console.log({ userId, data });
 
       const tokens = await keyTokenModel.upsert({
         where: {
@@ -27,6 +29,8 @@ class KeyTokenService {
         update: data,
         create: { userId, ...data },
       });
+
+      console.log({ tokens });
 
       await UserService.updateLastLogin({
         id: userId,
@@ -38,6 +42,8 @@ class KeyTokenService {
   }
 
   static async findByUserId(userId: number) {
+    console.log('findByUserId', userId);
+
     return await keyTokenModel.findUnique({ where: { userId } });
   }
 

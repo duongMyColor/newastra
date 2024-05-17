@@ -5,9 +5,8 @@ import forcedUpdateManagementController from '../_controllers/forcedUpdateManage
 import errorHandlerMiddleware from '@/middlewares/errorHandler'; // Import the errorHandlerMiddleware
 
 export const GET = errorHandlerMiddleware(async (request: NextRequest) => {
-
   return NextResponse.json(
-    await forcedUpdateManagementController.getAllWithQuery(request)
+    await forcedUpdateManagementController.getAllAndParentWithFilters(request)
   );
 });
 

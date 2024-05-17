@@ -26,6 +26,14 @@ const ForcedUpdateManagementShow = ({
               sx={disabledInputBackgroundStyle}
             />
             <TextInput
+              source="appMasterIdAndName"
+              label="アプリケーションID"
+              fullWidth
+              disabled
+              sx={disabledInputBackgroundStyle}
+            />
+
+            <TextInput
               source="version"
               label="バージョン"
               disabled
@@ -46,10 +54,7 @@ const ForcedUpdateManagementShow = ({
               fullWidth
               sx={disabledInputBackgroundStyle}
             />
-
-
             <StatusTextField source="status"></StatusTextField>
-
             <FormatInputDateShow label="公開開始日" source="publishedDate" />
             <FormatInputDateShow label="登録日時" source="createdAt" />
           </CustomForm>

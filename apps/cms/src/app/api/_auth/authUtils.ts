@@ -53,6 +53,8 @@ const createTokenPair = async (
     });
     return { accessToken, refreshToken };
   } catch (error) {
+    console.log({error});
+    
     throw new InternalServerError(error);
   }
 };

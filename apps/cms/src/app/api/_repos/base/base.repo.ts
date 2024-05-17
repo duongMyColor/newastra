@@ -18,6 +18,9 @@ class BaseRepo {
   getAll = async () => {
     return await this.tableModel.findMany();
   };
+  getAllParen = async ({ include }: RecordValue) => {
+    return await this.tableModel.findMany({ include });
+  };
 
   getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
     const [sortField, sortOrder] = sort;
@@ -300,9 +303,6 @@ class BaseRepo {
 
   insert = async (payload: RecordValue) => {
     const data = removeEmptyProperties(payload);
-
-    console.log(':::data', data.operateSystem);
-
     return await this.tableModel.create({
       data,
     });

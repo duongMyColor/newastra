@@ -67,6 +67,7 @@ model AplicationMaster {
   license   License    @relation(fields: [licenseId], references: [id])
 
   acsta AcstaManagement[]
+  forcedUpdate ForcedUpdateManagement[]
 }
 
 model AcstaManagement {
@@ -150,10 +151,13 @@ model IdLastestOfRecord {
 
 model ForcedUpdateManagement {
   id             Int      @id @default(autoincrement())
+  appMasterId    Int
   managementName String
   operateSystem  String
   version        String
   publishedDate  DateTime
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+
+  aplicationMaster AplicationMaster @relation(fields: [appMasterId], references: [id])
 }
