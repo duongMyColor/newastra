@@ -37,48 +37,17 @@ const ForcedUpdateManagementCreate = ({
 
   const handleSave = async (values: RecordValue) => {
     try {
-      console.log('have save ================', values);
       const formData = convertToFormData(values);
 
       const data = await create(resource, {
         data: formData,
       });
 
-      // let dataGetOne = await dataProvider.getOne(
-      //   'forced-update-managements',
-      //   {
-      //     id: parseInt(idLicense),
-      //   }
-      // );
-      // console.log('dataa sau khi create', dataGetOne);
-
-      // const {
-      //   json: { metadata },
-      // } = await fetchUtils.fetchJson(
-      //   'http://localhost:3000/api/forced-update-managements/7'
-      // );
-
-      // console.log('data response', metadata);
-
-      // let listAllStorage = JSON.parse(
-      //   localStorage.getItem('listUpdateAll') || 'null'
-      // );
-      // dataGetOne.data['no'] = listAllStorage.length + 1;
-      // dataGetOne.data['textOperate'] =
-      //   dataGetOne.data['operateSystem'] === OPERATE_IOS ? 'iOS' : 'Android';
-
-      // let newDataAfterStatus = updateStatusAll([...listAllStorage, data]);
-
-      // console.log({ newDataAfterStatus });
-
-      // localStorage.setItem('listUpdateAll', JSON.stringify(newDataAfterStatus));
-
-      // console.log({ data });
-
-      navigate(resourcePath);
+      
       await notify('成功: ライセンスが正常に作成されました', {
         type: 'success',
       });
+      navigate(resourcePath);
     } catch (error) {
       notify('エラー: ライセンスの作成に失敗しました: ' + error, {
         type: 'warning',

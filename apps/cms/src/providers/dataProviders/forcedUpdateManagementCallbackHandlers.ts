@@ -109,15 +109,20 @@ const forcedUpdateManagementCallbackHandlers = {
 
     let data = response.data;
 
-    console.log("data creat:",data);
 
     let listAllStorage = JSON.parse(
       localStorage.getItem('listUpdateAll') || 'null'
     );
-    data['no'] = listAllStorage.length + 1;
-    data['textOperate'] = data['operateSystem'] === OPERATE_IOS ? 'iOS' : 'Android';
 
-    let newDataAfterStatus = updateStatusAll([...listAllStorage, data]);
+    const dataGetOne = await dataProvider.getOne('forced-update-managements', {
+      id: parseInt(data.id),
+    });
+
+    dataGetOne.data['no'] = listAllStorage.length + 1;
+    dataGetOne.data['textOperate'] =
+    dataGetOne.data['operateSystem'] === OPERATE_IOS ? 'iOS' : 'Android';
+
+    let newDataAfterStatus = updateStatusAll([...listAllStorage, dataGetOne.data]);
 
     localStorage.setItem('listUpdateAll', JSON.stringify(newDataAfterStatus));
 
