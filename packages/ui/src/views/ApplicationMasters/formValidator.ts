@@ -18,6 +18,18 @@ const editionRules: ValidationRule[] = [
     field: 'packageName',
     required: true,
   },
+  {
+    field: 'assetDataIOS',
+    required: true,
+  },
+  {
+    field: 'assetDataAndroid',
+    required: true,
+  },
+  {
+    field: 'assetDataOutlineUrl',
+    required: true,
+  },
 ];
 
 const creationRules: ValidationRule[] = [
@@ -51,12 +63,15 @@ const creationRules: ValidationRule[] = [
   },
 ];
 
-const validateUserCreation = (values: RecordValue): RecordValue => {
-  return validateForm(values, creationRules);
+const validateCreation = async (values: RecordValue) => {
+  console.log({ values });
+  const baseValidation = validateForm(values, creationRules);
+  const validationMessages = { ...baseValidation };
+  return validationMessages;
 };
 
 const validateUserEdition = (values: RecordValue): RecordValue => {
   return validateForm(values, editionRules);
 };
 
-export { validateUserCreation, validateUserEdition };
+export { validateCreation, validateUserEdition };

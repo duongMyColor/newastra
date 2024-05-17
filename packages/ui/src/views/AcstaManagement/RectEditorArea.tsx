@@ -1,7 +1,7 @@
 import { useShowContext, SimpleForm, useNotify, useRefresh } from 'react-admin';
 import { Stack, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SaveIcon from '@mui/icons-material/Save';
 
 import RectEditor from './RectEditor/RectEditor';
@@ -26,14 +26,22 @@ const RectEditorArea = ({
   const [rectPosition, setRectPosition] = useState<RectData>();
 
   console.log({ record });
-
-  const positionData: RectData = {
-    originX: record.scanOriginX,
-    originY: record.scanOriginY,
-    width: record.scanWidth,
-    height: record.scanHeight,
+  let positionData: RectData = {
+    originX: 0.2,
+    originY: 0.45625,
+    width: 0.6,
+    height: 0.405,
   };
+  if (record.scanColors) {
+    positionData = {
+      originX: record.scanOriginX,
+      originY: record.scanOriginY,
+      width: record.scanWidth,
+      height: record.scanHeight,
+    };
+  }
 
+  console.log({ positionData });
   const saveRectData = async () => {
     let scanColors;
     try {
@@ -69,6 +77,18 @@ const RectEditorArea = ({
     setRectPosition(data);
   };
 
+  useEffect(() => {
+    if (record.scanColors) {
+      const positionData: RectData = {
+        originX: 0.2,
+        originY: 0.45625,
+        width: 0.6,
+        height: 0.405,
+      };
+      setRectPosition(positionData);
+    }
+  }, []);
+
   return (
     <SimpleForm warnWhenUnsavedChanges={true} toolbar={false}>
       <Stack
@@ -83,9 +103,6 @@ const RectEditorArea = ({
           variant="contained"
           startIcon={<SaveIcon />}
           onClick={saveRectData}
-          disabled={
-            !rectPosition || (!rectPosition.width && !rectPosition.height)
-          }
         >
           保存
         </Button>

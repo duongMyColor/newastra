@@ -17,6 +17,17 @@ const count = async () => {
 const getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
   return await new BaseRepo(model).getAllWithQuery({ sort, range, filter });
 };
+const getAllPerformanceTypeMaster = async ({
+  sort,
+  range,
+  filter,
+}: GetAllQueryIF) => {
+  return await new BaseRepo(model).getAllPerformanceTypeMaster({
+    sort,
+    range,
+    filter,
+  });
+};
 
 const getOneById = async (id: number) => {
   return await new BaseRepo(model).getOneById(id);
@@ -83,4 +94,5 @@ export {
   deleteManyById,
   deleteWithRelation,
   count,
+  getAllPerformanceTypeMaster,
 };

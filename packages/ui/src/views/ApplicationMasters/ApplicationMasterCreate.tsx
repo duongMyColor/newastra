@@ -11,7 +11,7 @@ import CryptoJS from 'crypto-js';
 import { useNavigate } from 'react-router-dom';
 import { TermOfUseResponseIF } from '@repo/types/termOfUse';
 import { LicenseResponseIF } from '@repo/types/license';
-import { validateUserCreation } from './formValidator';
+import { validateCreation } from './formValidator';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps, RAFile, RecordValue } from '@repo/types/general';
 import { REDIRECT_ROUTE } from '@repo/consts/general';
@@ -36,6 +36,17 @@ const MasterCreate = ({
   };
 
   const handleSave = async (values: RecordValue) => {
+    const check = await dataProvider.getPacketName(
+      'application-masters',
+      values.packageName
+    );
+    if (check.data.packageName) {
+      notify('バンドルID/パッケージ名はすでに存在します', {
+        type: 'warning',
+      });
+      return false;
+    }
+
     const encryptKey = CryptoJS.lib.WordArray.random(16).toString();
 
     const { assetBundleIOS, assetBundleAndroid, ...rest } = values;
@@ -107,7 +118,7 @@ const MasterCreate = ({
     >
       <CustomForm
         pathTo={resourcePath}
-        validate={validateUserCreation}
+        validate={validateCreation}
         showSaveButton={true}
         showCancelButton={true}
         handleSave={handleSave}

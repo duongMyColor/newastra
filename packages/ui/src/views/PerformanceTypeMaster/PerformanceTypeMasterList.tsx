@@ -5,11 +5,30 @@ import {
   EditButton,
   DeleteWithConfirmButton,
   FunctionField,
+  useRecordContext,
 } from 'react-admin';
 import { BaseComponentProps } from '@repo/types/general';
 import { validRole } from '../_core/permissions';
 import { ListToolBar } from '@repo/ui/src/components/ListToolBar';
 import { formatDateAcstar } from '@repo/utils/dateFormat';
+
+const CustomDeleteButton = ({ label }: { label: string }) => {
+  const record = useRecordContext();
+  return (
+    <>
+      {!record.isExist ? (
+        <DeleteWithConfirmButton
+          confirmContent="よろしいですか?"
+          confirmTitle="削除"
+          label={label}
+          confirmColor="warning"
+        ></DeleteWithConfirmButton>
+      ) : (
+        <></>
+      )}
+    </>
+  );
+};
 
 const PerformanceTypeMasterList = ({
   actions,
@@ -32,14 +51,7 @@ const PerformanceTypeMasterList = ({
           }}
         />
 
-        {validRole('delete', actions) && (
-          <DeleteWithConfirmButton
-            confirmContent="よろしいですか?"
-            confirmTitle="削除"
-            label="削除"
-            confirmColor="warning"
-          ></DeleteWithConfirmButton>
-        )}
+        {validRole('delete', actions) && <CustomDeleteButton label="削除" />}
         {validRole('edit', actions) && <EditButton label="編集"></EditButton>}
       </Datagrid>
     </List>

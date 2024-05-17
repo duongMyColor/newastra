@@ -1,9 +1,14 @@
 import validateForm, { ValidationRule } from '@repo/utils/formValidator';
 import { RecordValue } from '@repo/types/general';
+import { validatePublicDateAcsta } from '@repo/utils/validatePublicDateAcsta';
 
 const editionRules: ValidationRule[] = [
   {
     field: 'managementName',
+    required: true,
+  },
+  {
+    field: 'applicationId',
     required: true,
   },
   {
@@ -19,6 +24,11 @@ const editionRules: ValidationRule[] = [
 const creationRules: ValidationRule[] = [
   {
     field: 'managementName',
+    required: true,
+  },
+
+  {
+    field: 'applicationId',
     required: true,
   },
   {
@@ -39,12 +49,22 @@ const creationRules: ValidationRule[] = [
   },
 ];
 
-const validateUserCreation = (values: RecordValue): RecordValue => {
-  return validateForm(values, creationRules);
+const validateAcstaCreation = (values: RecordValue): RecordValue => {
+  console.log({ values });
+  const baseValidation = validateForm(values, creationRules);
+  const validatePublicDateEnd = validatePublicDateAcsta(values);
+  const validationMessages = { ...baseValidation };
+
+  console.log({ validatePublicDateEnd });
+  if (!validatePublicDateEnd) {
+    validationMessages.dateEnd =
+      '終了時間は開始時間より大きくなければなりません';
+  }
+  return validationMessages;
 };
 
-const validateUserEdition = (values: RecordValue): RecordValue => {
+const validateAcstaEdition = (values: RecordValue): RecordValue => {
   return validateForm(values, editionRules);
 };
 
-export { validateUserCreation, validateUserEdition };
+export { validateAcstaCreation, validateAcstaEdition };

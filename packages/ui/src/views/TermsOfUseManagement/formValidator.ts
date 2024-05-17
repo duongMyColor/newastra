@@ -1,6 +1,6 @@
 import { userContentLength } from '@repo/consts/user';
 import validateForm, { ValidationRule } from '@repo/utils/formValidator';
-import { validatePassword } from '@repo/utils/password';
+import { validateVersionTermAndLicense } from '@repo/utils/validateVersionTermAndLicense';
 import { RecordValue } from '@repo/types/general';
 
 const editionRules: ValidationRule[] = [
@@ -14,6 +14,10 @@ const editionRules: ValidationRule[] = [
   },
   {
     field: 'content',
+    required: true,
+  },
+  {
+    field: 'memo',
     required: true,
   },
 ];
@@ -31,14 +35,29 @@ const creationRules: ValidationRule[] = [
     field: 'content',
     required: true,
   },
+  {
+    field: 'memo',
+    required: true,
+  },
 ];
 
-const validateUserCreation = (values: RecordValue): RecordValue => {
-  return validateForm(values, creationRules);
+const validateCreation = async (values: RecordValue) => {
+  const baseValidation = validateForm(values, creationRules);
+  const validateVersions = await validateVersionTermAndLicense(
+    values,
+    'term-of-uses'
+  );
+  const validationMessages = { ...baseValidation };
+
+  if (!validateVersions) {
+    validationMessages.version =
+      '数値である必要があり、前のバージョンより大きくなければなりません';
+  }
+  return validationMessages;
 };
 
-const validateUserEdition = (values: RecordValue): RecordValue => {
+const validateEdition = (values: RecordValue): RecordValue => {
   return validateForm(values, editionRules);
 };
 
-export { validateUserCreation, validateUserEdition };
+export { validateCreation, validateEdition };

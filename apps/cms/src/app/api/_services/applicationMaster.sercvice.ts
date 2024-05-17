@@ -109,7 +109,7 @@ class ApplicationMasterFactory {
 
 class ApplicationMaster implements AplicationMasterPostIF {
   public appName: string;
-  public packageName: string;
+  public packageName: string|number;
   public termsOfUseId: number;
   public licenseId: string;
   public assetBundleIOS: string;
@@ -129,7 +129,7 @@ class ApplicationMaster implements AplicationMasterPostIF {
     encryptKey,
   }: AplicationMasterPostIF) {
     this.appName = appName;
-    this.packageName = packageName;
+    this.packageName = packageName.toString();
     this.termsOfUseId = termsOfUseId;
     this.licenseId = licenseId;
     this.assetBundleIOS = assetBundleIOS;

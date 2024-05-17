@@ -11,7 +11,7 @@ class ProductController {
     const payload: PerformanceTypeMasterPostIF = await request.json();
 
     return new CREATED({
-      message: 'created Product OK!',
+      message: 'created performance type master OK!',
       metadata: await ProductService.create({
         payload: payload,
       }),
@@ -38,16 +38,28 @@ class ProductController {
     });
   };
 
+  getAllPerformanceTypeMaster = async (request: NextRequest) => {
+    const { searchParams } = new URL(request.url);
+
+    const { filter, range, sort } = parseSearchParams(searchParams);
+
+    return new OK({
+      message: 'get all performance type master success!',
+      metadata: await ProductService.getAllPerformanceTypeMaster({ filter, range, sort }),
+      count: await count(),
+    });
+  };
+
   getOneById = async (id: number) => {
     return new OK({
-      message: 'get Product success!',
+      message: 'get performance type master success!',
       metadata: await ProductService.getOneById(id),
     });
   };
 
   getByIdWithDetail = async (id: number) => {
     return new OK({
-      message: 'get Product with detail success!',
+      message: 'get performance type master with detail success!',
       metadata: await ProductService.getOneById(id),
     });
   };
@@ -56,7 +68,7 @@ class ProductController {
     const payload: PerformanceTypeMasterPostIF = await request.json();
 
     return new OK({
-      message: 'updated Product OK!',
+      message: 'updated performance type master OK!',
       metadata: await ProductService.updateById({
         id: id,
         payload: payload,
@@ -66,14 +78,14 @@ class ProductController {
 
   delete = async (id: number) => {
     return new OK({
-      message: 'deleted Product OK!',
+      message: 'deleted performance type master OK!',
       metadata: await ProductService.deleteById(id),
     });
   };
 
   deleteWithRelation = async (id: number) => {
     return new OK({
-      message: 'deleted Product an details OK!',
+      message: 'deleted performance type master an details OK!',
       metadata: await ProductService.deleteWithRelation(id),
     });
   };
@@ -82,7 +94,7 @@ class ProductController {
     const payload: number[] = await request.json();
 
     return new OK({
-      message: 'deleted batch Product OK!',
+      message: 'deleted batch performance type master OK!',
       metadata: await ProductService.deleteManyById(payload),
     });
   };
