@@ -150,16 +150,18 @@ const MasterCreate = ({
         />
         <FileInput
           source="assetBundleIOS"
-          label="iOS用共通アセットバンドル"
+          label="共通アセットバンドルデータ (iOS)"
           placeholder="アップロード"
+          accept={['image/jpeg', 'image/png', 'image/jpg', 'text/html']}
         >
           <FileField source="src" title="title" />
         </FileInput>
 
         <FileInput
           source="assetBundleAndroid"
-          label="Android用共通アセットバンドル"
+          label="共通アセットバンドルデータ (Android)"
           placeholder="アップロード"
+          accept={['image/jpeg', 'image/png', 'image/jpg', 'text/html']}
         >
           <FileField source="src" title="title" />
         </FileInput>

@@ -68,7 +68,7 @@ const CustomForm = ({
             <DeleteButtonFlexEnd label={deleteButtonLabel} />
           </CustomButtonByRole>
         ) : null}
-        {showSaveButton ? <SaveButton label="保存" /> : null}
+
         {showEditButton ? <EditButtonFlexEnd label="編集" /> : null}
         {showReferenceButton ? <ReferenceButtonFlexEnd label="参照" /> : null}
       </Stack>
@@ -100,6 +100,7 @@ const CustomForm = ({
             </Button>
           </Link>
         ) : null}
+        {showSaveButton ? <SaveButton label="保存" /> : null}
       </Stack>
     </SimpleForm>
   );
