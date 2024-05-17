@@ -23,9 +23,12 @@ const performanceManagementCallbackHandlers = {
       title: data.assetBundleIOS.split('/').pop(),
     };
 
+    data['acstaIdAndName'] = `${data.acsta.id} : ${data.acsta.acstaName}`;
+    data['performanceTypeMasterIdAndName'] =
+      `${data.performanceTypeMaster.id} : ${data.performanceTypeMaster.typeName}`;
+
     return response;
   },
-
 };
 
 export default performanceManagementCallbackHandlers;

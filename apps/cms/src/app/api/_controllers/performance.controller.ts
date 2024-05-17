@@ -49,10 +49,33 @@ class PerformanceController {
     });
   };
 
+
+  getAllAndParent = async (request: NextRequest) => {
+    const { searchParams } = new URL(request.url);
+
+    const { filter, range, sort } = parseSearchParams(searchParams);
+
+    return new OK({
+      message: 'get all Acsta success!',
+      metadata: await PerformanceService.getAllAndParent({
+        filter,
+        range,
+        sort,
+      }),
+      count: await count(),
+    });
+  };
+
   getOneById = async (id: number) => {
     return new OK({
       message: 'get User success!',
       metadata: await PerformanceService.getOneById(id),
+    });
+  };
+  getOneAndChildAndParent = async (id: number) => {
+    return new OK({
+      message: 'get AplicationMaster success!',
+      metadata: await PerformanceService.getOneAndParent(id),
     });
   };
 

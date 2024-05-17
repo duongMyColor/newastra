@@ -17,8 +17,28 @@ const getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
   return await new BaseRepo(model).getAllWithQuery({ sort, range, filter });
 };
 
+const getAllAndParent = async ({ sort, range, filter }: GetAllQueryIF) => {
+  return await new BaseRepo(model).getAllWithParm({
+    sort,
+    range,
+    filter,
+    include: {
+      performanceTypeMaster: true,
+      acsta: true,
+    },
+  });
+};
+
 const getOneById = async (id: number) => {
   return await new BaseRepo(model).getOneById(id);
+};
+const getOneAndParent = async (id: number) => {
+  return await new BaseRepo(model).getOneByIdWithParam(id, {
+    include: {
+      performanceTypeMaster: true,
+      acsta: true,
+    },
+  });
 };
 
 const insert = async (payload: PerformancePostIF) => {
@@ -68,4 +88,6 @@ export {
   insertMany,
   getAllWithQuery,
   deleteManyById,
+  getOneAndParent,
+  getAllAndParent,
 };

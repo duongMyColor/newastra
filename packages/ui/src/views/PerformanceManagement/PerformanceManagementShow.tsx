@@ -43,7 +43,7 @@ const PerformanceManagementShow = ({
               sx={disabledInputBackgroundStyle}
             />
             <TextInput
-              source="performanceTypeMasterId"
+              source="performanceTypeMasterIdAndName"
               label="演出種別ID"
               disabled
               sx={disabledInputBackgroundStyle}
@@ -70,7 +70,7 @@ const PerformanceManagementShow = ({
             </SimpleShowLayout>
 
             <TextInput
-              source="acstaId"
+              source="acstaIdAndName"
               label="アクスタ ID"
               disabled
               sx={disabledInputBackgroundStyle}

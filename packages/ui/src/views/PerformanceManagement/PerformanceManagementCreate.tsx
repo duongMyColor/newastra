@@ -127,7 +127,7 @@ const PerformanceManagementCreate = ({
   }, []);
 
   return (
-    <Create redirect={REDIRECT_ROUTE.list} title="演出管理　新规作成">
+    <Create title="演出管理　新规作成">
       <CustomForm
         pathTo={resourcePath}
         validate={validateUserCreation}
