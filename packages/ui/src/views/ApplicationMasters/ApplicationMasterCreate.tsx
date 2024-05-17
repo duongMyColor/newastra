@@ -76,7 +76,7 @@ const MasterCreate = ({
         data: formData,
       });
 
-      notify('成功: アプリケーション マスターが正常に作成されました', {
+      await notify('成功: アプリケーション マスターが正常に作成されました', {
         type: 'success',
       });
       navigate(resourcePath);

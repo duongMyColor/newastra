@@ -65,14 +65,17 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
         previousData: record,
       });
 
-      notify('成功: アプリケーション マスターを正常に更新しました', {
+      await notify('成功: アプリケーション マスターを正常に更新しました', {
         type: 'success',
       });
       navigate(resourcePath);
     } catch (error) {
-      notify('エラー: アプリケーション マスターの更新に失敗しました:' + error, {
-        type: 'warning',
-      });
+      notify(
+        'エラー: アプリケーション マスターの更新に失敗しました:' + error,
+        {
+          type: 'warning',
+        }
+      );
     }
   };
 

@@ -75,7 +75,7 @@ const PerformanceManagementCreate = ({
         data: formData,
       });
 
-     await notify('成功: 生産管理が正常に作成されました', {
+      await notify('成功: 生産管理が正常に作成されました', {
         type: 'success',
       });
       navigate(resourcePath);

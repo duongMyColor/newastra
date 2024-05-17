@@ -64,7 +64,7 @@ const RectEditorArea = ({
         },
         record.id
       );
-      notify('スキャン範囲を保存しました。', { type: 'success' });
+      await notify('スキャン範囲を保存しました。', { type: 'success' });
 
       refresh();
       moveScanRange();

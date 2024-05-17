@@ -75,7 +75,7 @@ const PerformanceEditForm = ({ actions, resource }: BaseComponentProps) => {
         previousData: record,
       });
 
-      notify('成功: 生産管理が正常に更新されました', {
+      await notify('成功: 生産管理が正常に更新されました', {
         type: 'success',
       });
       navigate(resourcePath);
