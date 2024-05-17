@@ -1,117 +1,49 @@
-import { PerformancePostIF } from '@repo/types/performance';
 import {
-  getAll,
-  getOneById,
-  insert,
-  insertMany,
-  updateById,
-  updateManyById,
-  deleteById,
-  deleteManyById,
-  getAllWithQuery,
-} from '../repos/performance.repo';
-import { GetAllQueryIF } from '@repo/types/response';
-import UploadFileService from './upload.service';
-import { UPLOAD_FOLDER_MAP } from '@repo/consts/general';
-import { convertFormDataToObject } from '@repo/utils/objectUtils';
+  PerformanceApiResponseIF,
+  PerformanceResponseIF,
+} from '@repo/types/performance';
+import { getAll, getOneById, getManyByIds } from '../repos/performance.repo';
 
 class PerformanceFactory {
-  static async create({ payload }: { payload: FormData }) {
-    const paylodObj = convertFormDataToObject(payload);
-
-    const body = await new UploadFileService().uploadFile(
-      paylodObj as PerformancePostIF,
-      UPLOAD_FOLDER_MAP.applicationMaster
-    );
-
-    return await new Performance(body).create();
-  }
-
-  static async createMany(products: PerformancePostIF[]) {
-    const payload = products.map((product) => new Performance(product));
-    return await insertMany(payload);
-  }
-
   static async getOneById(id: number) {
-    return await getOneById(id);
+    return new Performance(await getOneById(id));
   }
 
   static async getAll() {
-    return await getAll();
-  }
-  static async getAllWithQuery({ filter, range, sort }: GetAllQueryIF) {
-    return await getAllWithQuery({ filter, range, sort });
-  }
-
-  static async updateById({ id, payload }: { id: number; payload: FormData }) {
-    const paylodObj = convertFormDataToObject(payload);
-    const timeStamps = new Date().getTime();
-    const key = `${UPLOAD_FOLDER_MAP.applicationMaster}/${timeStamps}/${paylodObj.appName}`;
-
-    const body = await new UploadFileService().uploadFile(
-      paylodObj as PerformancePostIF,
-      UPLOAD_FOLDER_MAP.applicationMaster
+    const performances = await getAll();
+    return performances.map(
+      (performance: PerformanceResponseIF) => new Performance(performance)
     );
-    return await new Performance(body).updateById({ id });
   }
 
-  static async updateMany(updates: PerformancePostIF[]) {
-    const payload = updates.map((update) => new Performance(update));
-
-    return await updateManyById(payload);
-  }
-
-  static async deleteById(id: number) {
-    return await deleteById(id);
-  }
-
-  static async deleteManyById(ids: number[]) {
-    return await deleteManyById(ids);
+  static async getManyByIds(ids: number[]) {
+    const performances = await getManyByIds(ids);
+    return performances.map(
+      (performance: PerformanceResponseIF) => new Performance(performance)
+    );
   }
 }
 
-class Performance implements PerformancePostIF {
-  public id?: number;
-  public name: string;
-  public performanceTypeMasterId: number;
+class Performance implements PerformanceApiResponseIF {
+  public modeId: number;
+  public modeTypeId: number;
   public assetBundleIOS: string;
   public acstaId: number;
-  public encryptKey: string;
   public assetBundleAndroid: string;
-  public updatedAt: string | Date;
   public record?: string;
 
   public constructor({
-    name,
+    id,
     performanceTypeMasterId,
     assetBundleIOS,
     acstaId,
-    encryptKey,
     assetBundleAndroid,
-    record,
-  }: PerformancePostIF) {
-    this.name = name;
-    this.performanceTypeMasterId = performanceTypeMasterId;
+  }: PerformanceApiResponseIF) {
+    this.modeId = id;
+    this.modeTypeId = performanceTypeMasterId as number;
     this.assetBundleIOS = assetBundleIOS;
-    this.acstaId = acstaId;
     this.assetBundleAndroid = assetBundleAndroid;
-    this.encryptKey = encryptKey;
-    this.updatedAt = new Date();
-    this.record = record;
-  }
-
-  public async create() {
-    const payload: PerformancePostIF = this;
-
-    console.log({ payload });
-    // TODO: validate payload
-    return await insert(payload);
-  }
-
-  public async updateById({ id }: { id: number }) {
-    const payload: PerformancePostIF = this;
-    // TODO: validate payload
-    return await updateById({ id, payload });
+    this.acstaId = acstaId;
   }
 }
 

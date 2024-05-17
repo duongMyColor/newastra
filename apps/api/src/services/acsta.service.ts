@@ -1,176 +1,84 @@
-import { AcstaPostIF } from '@repo/types/acsta';
+import { AcstaApiResponseIF } from '@repo/types/acsta';
 import {
   getAll,
   getOneById,
-  insert,
-  insertMany,
-  updateById,
-  updateManyById,
-  deleteById,
-  deleteManyById,
-  getAllWithQuery,
-  getAllWithFilters,
-  getManyReference,
+  getManyByIdsAndChildren,
+  getManyByIds,
 } from '../repos/acsta.repo';
-import { GetAllQueryIF } from '@repo/types/response';
-import { GetManyReferenceParams } from 'react-admin';
-import { convertFormDataToObject } from '@repo/utils/objectUtils';
-import { UPLOAD_FOLDER_MAP } from '@repo/consts/general';
-import UploadFileService from './upload.service';
-import { RectData } from '@repo/types/rectangleEditor';
-import { getObject } from '@/lib/cloudflare-r2';
-import { convertReadableStreamToBase64 } from '@repo/utils/fileUtils';
-import extractColorDistribution from '@repo/utils/scanImage';
+import { PerformanceResponseIF } from '@repo/types/performance';
+
 class AcstaFactory {
-  static async create({ payload }: { payload: FormData }) {
-    const paylodObj = convertFormDataToObject(payload);
-
-    const body = await new UploadFileService().uploadFile(
-      paylodObj as AcstaPostIF,
-      UPLOAD_FOLDER_MAP.acsta
-    );
-
-    return await new Acsta(body).create();
-  }
-
-  static async createMany(body: AcstaPostIF[]) {
-    const payload = body.map(
-      (acsta_and_conditions) => new Acsta(acsta_and_conditions)
-    );
-    return await insertMany(payload);
+  static async getAll() {
+    const acstas = await getAll();
+    const res = acstas.map((acsta: AcstaApiResponseIF) => {
+      return new Acsta(acsta);
+    });
+    return res;
   }
 
   static async getOneById(id: number) {
-    return await getOneById(id);
+    return new Acsta(await getOneById(id));
   }
 
-  static async getAll() {
-    return await getAll();
+  static async getManyByIds(ids: number[]) {
+    const acstas = await getManyByIds(ids);
+    console.log('acstas', acstas);
+
+    return acstas.map((acsta: AcstaApiResponseIF) => {
+      return new Acsta(acsta);
+    });
   }
 
-  static async getAllWithQuery({ filter, range, sort }: GetAllQueryIF) {
-    return await getAllWithQuery({ filter, range, sort });
-  }
+  static async getManyByIdsAndChildren(ids: number[]) {
+    const acstas = await getManyByIdsAndChildren(ids);
+    console.log('acstas', acstas);
 
-  static async getAllWithFilters({ filter, range, sort }: GetAllQueryIF) {
-    return await getAllWithFilters({ filter, range, sort });
-  }
-
-  static async getManyReference(params: GetManyReferenceParams) {
-    return await getManyReference(params);
-  }
-
-  static async updateById({ id, payload }: { id: number; payload: FormData }) {
-    const paylodObj = convertFormDataToObject(payload);
-
-    const body = await new UploadFileService().uploadFile(
-      paylodObj as AcstaPostIF,
-      UPLOAD_FOLDER_MAP.acsta
-    );
-
-    return await new Acsta(body).updateById({ id });
-  }
-
-  static async updateScanDataById({
-    id,
-    payload,
-  }: {
-    id: number;
-    payload: RectData;
-  }) {
-    const body = {
-      scanColors: JSON.stringify(payload.scanColors),
-      scanOriginX: payload.originX,
-      scanOriginY: payload.originY,
-      scanWidth: payload.width,
-      scanHeight: payload.height,
-    };
-
-    return await new Acsta(body as AcstaPostIF).updateById({ id });
-  }
-
-  static async updateMany(updates: AcstaPostIF[]) {
-    const payload = updates.map((update) => new Acsta(update));
-
-    return await updateManyById(payload);
-  }
-
-  static async deleteById(id: number) {
-    return await deleteById(id);
-  }
-
-  static async deleteManyById(ids: number[]) {
-    return await deleteManyById(ids);
+    return acstas.map((acsta: AcstaApiResponseIF) => {
+      return new Acsta(acsta);
+    });
   }
 }
 
-class Acsta implements AcstaPostIF {
-  public id?: number;
-  public managementName: string;
+class Acsta implements AcstaApiResponseIF {
+  public acstaId: number;
+  public appId: number;
   public acstaName: string;
-  public applicationId: number;
   public thumbnailUrl: string;
   public scanImageUrl: string;
-  // public acstaBasicInfoId: number;
-  public scanOriginX: GLfloat;
-  public scanOriginY: GLfloat;
-  public scanWidth: GLfloat;
-  public scanHeight: GLfloat;
-  public scanColors: string;
-  // public modeId?: number;
-  public dateStart?: string | Date;
-  public dateEnd?: string | Date | null;
-  public updatedAt: string | Date;
-  public record?: string;
+  public scanOriginX: number;
+  public scanOriginY: number;
+  public scanWidth: number;
+  public scanHeight: number;
+  public scanColors: string | number[];
+  public modeId: string;
 
   public constructor({
-    managementName,
+    id,
     acstaName,
     applicationId,
     thumbnailUrl,
     scanImageUrl,
-    // acstaBasicInfoId,
     scanOriginX,
     scanOriginY,
     scanWidth,
     scanHeight,
     scanColors,
-    // modeId,
-    dateStart,
-    dateEnd,
-    record,
-  }: AcstaPostIF) {
-    this.acstaName = acstaName?.toString();
-    this.managementName = managementName?.toString();
+    performace,
+  }: AcstaApiResponseIF) {
+    this.acstaId = id as number;
+    this.acstaName = acstaName;
+    this.appId = applicationId as number;
     this.thumbnailUrl = thumbnailUrl as string;
     this.scanImageUrl = scanImageUrl as string;
-    this.applicationId = applicationId;
-    // this.acstaBasicInfoId = acstaBasicInfoId;
     this.scanOriginX = scanOriginX;
     this.scanOriginY = scanOriginY;
     this.scanWidth = scanWidth;
     this.scanHeight = scanHeight;
-    this.scanColors = scanColors;
+    this.scanColors = JSON.parse(scanColors as string);
 
-    // this.modeId = modeId;
-    this.dateStart = dateStart ? new Date(dateStart)?.toISOString() : undefined;
-    this.dateEnd = dateEnd ? new Date(dateEnd)?.toISOString() : null;
-    this.dateStart = dateStart ? new Date(dateStart)?.toISOString() : undefined;
-    this.updatedAt = new Date()?.toISOString();
-    this.record = record;
-  }
-
-  public async create() {
-    const payload: AcstaPostIF = this;
-    console.log('payload', payload);
-
-    return await insert(payload);
-  }
-
-  public async updateById({ id }: { id: number }) {
-    const payload: AcstaPostIF = this;
-
-    return await updateById({ id, payload });
+    this.modeId = performace
+      ? performace.map((p: PerformanceResponseIF) => p.id)
+      : [];
   }
 }
 

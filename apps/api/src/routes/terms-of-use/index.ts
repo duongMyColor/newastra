@@ -1,20 +1,20 @@
 // books.ts
 import { Hono } from 'hono';
-import licenseController from '@/controllers/license.controller';
+import termsOfUseController from '@/controllers/termOfUse.controller';
 const app = new Hono();
 
 app.get('/', async (c) => {
-  return c.json(await licenseController.getAll());
+  return c.json(await termsOfUseController.getAll());
 });
 
 app.get('/:id', async (c) => {
   const id = c.req.param('id');
   const numId = parseInt(id, 10);
-  return c.json(await licenseController.getOneById(numId));
+  return c.json(await termsOfUseController.getOneById(numId));
 });
 
 app.get('/latest', async (c) => {
-  return c.json(await licenseController.getCurrentLicense());
+  return c.json(await termsOfUseController.getCurrentTermOfUse());
 });
 
 export default app;

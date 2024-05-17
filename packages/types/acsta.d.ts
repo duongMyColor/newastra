@@ -50,9 +50,26 @@ export interface AcstaPostIF {
   scanWidth: float;
   scanHeight: float;
   scanColors: string;
-  modeId?: number;
+  modeId?: string;
   dateStart?: string | Date;
   dateEnd?: string | Date | null;
-  updatedAt: string | Date;
+  updatedAt?: string | Date;
   record?: string;
+}
+
+export interface AcstaApiResponseIF {
+  id?: number;
+  acstaId: number;
+  appId: number;
+  acstaName: string;
+  applicationId?: number;
+  thumbnailUrl: string;
+  scanImageUrl: string;
+  scanOriginX: float;
+  scanOriginY: float;
+  scanWidth: float;
+  scanHeight: float;
+  scanColors: string | number[];
+  modeId?: string;
+  performace?: any;
 }

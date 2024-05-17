@@ -26,6 +26,6 @@ app.use(async (c, next) => {
 //     return c.json({ err: 'e.message' }, 500);
 //   }
 // });
-app.route('/v1/api', routes);
+app.route('/api/v1', routes);
 
 export default app;
