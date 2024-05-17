@@ -18,7 +18,6 @@ Note: Create .env file base on .sample.env
 ### Run apply again
 `$ yarn db:migrate apply`
 
-
 ## Add seed local
 
 - db_name: see `apps/cms/wrangler.toml`

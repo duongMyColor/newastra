@@ -24,3 +24,14 @@ export interface PerformancePostIF {
   assetBundleAndroid: string;
   record?: string;
 }
+
+export interface PerformanceApiResponseIF {
+  id?: id;
+  modeId?: number;
+  modeTypeId?: number;
+  name?: string;
+  performanceTypeMasterId?: number;
+  assetBundleIOS: string;
+  acstaId: number;
+  assetBundleAndroid: string;
+}

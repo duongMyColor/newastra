@@ -1,5 +1,7 @@
 export interface AplicationMasterResponseIF {
   id?: number;
+  appId?: number;
+
   appName: string;
   packageName: string | number;
   termsOfUseId: number;
@@ -15,6 +17,7 @@ export interface AplicationMasterResponseIF {
 
 export interface AplicationMasterPostIF {
   id?: number;
+  appId?: number;
   appName: string;
   packageName: string | number;
   termsOfUseId: number;
