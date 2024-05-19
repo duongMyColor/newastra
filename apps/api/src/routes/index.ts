@@ -1,10 +1,10 @@
-import { Hono } from 'hono';
+import { OpenAPIHono } from '@hono/zod-openapi';
 import applicationMaster from './application-master';
 import acsta from './acsta';
 import product from './product';
 import license from './license';
 import termsOfUse from './terms-of-use';
-const app = new Hono();
+const app = new OpenAPIHono();
 
 app.route('/application-masters', applicationMaster);
 app.route('/acstas', acsta);

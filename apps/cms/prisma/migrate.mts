@@ -114,7 +114,9 @@ if (command === 'create') {
 
   const resultLines = result.trim().split('\n');
 
-  let pathIndex = resultLines.findIndex((line) => line.endsWith('.sql'));
+  let pathIndex = resultLines.findIndex(
+    (line) => line.endsWith('.sql') || line.endsWith('.sq')
+  );
   if (pathIndex === -1) {
     log.error('Could not find migration path');
     process.exit(1);
@@ -142,7 +144,9 @@ if (command === 'create') {
 
   s.start('Generating migration diff from Prisma schema');
 
-  console.log({ migrationPath });
+  if (migrationPath.endsWith('.sq')) {
+    migrationPath = migrationPath.replace('.sq', '.sql');
+  }
 
   await asyncExec(
     `npx prisma migrate diff --from-local-d1 --to-schema-datamodel ${

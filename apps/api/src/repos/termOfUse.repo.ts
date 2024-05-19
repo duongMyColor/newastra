@@ -6,6 +6,8 @@ export const getAll = async () => {
 };
 
 export const getCurrentTermOfUse = async () => {
+  console.log('getCurrentTermOfUse');
+
   const currentLicense = await prisma.termsOfUse.findFirst({
     where: {
       publishedDate: {
@@ -21,5 +23,6 @@ export const getCurrentTermOfUse = async () => {
 };
 
 export const getOneById = async (id: number) => {
+  console.log('getOneById');
   return await new BaseRepo(prisma.termsOfUse).getOneById(id);
 };

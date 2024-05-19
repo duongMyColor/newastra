@@ -1,20 +1,101 @@
-// books.ts
-import { Hono } from 'hono';
 import termsOfUseController from '@/controllers/termOfUse.controller';
-const app = new Hono();
+import { OpenAPIHono, createRoute, z } from '@hono/zod-openapi';
+import { ParamsSchema, ResponseSchema } from '@/openapi/terms-of-use';
+const app = new OpenAPIHono();
 
-app.get('/', async (c) => {
-  return c.json(await termsOfUseController.getAll());
-});
+// app.openapi(
+//   createRoute({
+//     method: 'get',
+//     path: '/',
+//     responses: {
+//       200: {
+//         content: {
+//           'application/json': {
+//             schema: z.object({
+//               message: z
+//                 .string()
+//                 .openapi({ example: 'get all Term Of Use success!' }),
+//               status: z.number().openapi({ example: 200 }),
+//               reason: z.string().openapi({ example: 'OK' }),
+//               metadata: z.array(
+//                 z.object({
+//                   id: z.number().openapi({ example: 1 }),
+//                   memo: z.string().openapi({ example: 'memo' }),
+//                   version: z.string().openapi({ example: '1' }),
+//                   content: z.string().openapi({
+//                     example: 'term-of-use/1716091800044/demo.html',
+//                   }),
+//                   publishedDate: z
+//                     .string()
+//                     .transform((val) => new Date(val))
+//                     .openapi({ example: '2024-05-19T04:09:00.000Z' }),
+//                   createdAt: z
+//                     .string()
+//                     .transform((val) => new Date(val))
+//                     .openapi({ example: '2024-05-19T04:10:00.130Z' }),
+//                   updatedAt: z
+//                     .string()
+//                     .transform((val) => new Date(val))
+//                     .openapi({ example: '2024-05-19T04:10:00.097Z' }),
+//                 })
+//               ),
+//             }),
+//           },
+//         },
+//         description: 'Ok Response',
+//       },
+//     },
+//   }),
+//   async (c): Promise<any> => {
+//     return c.json(await termsOfUseController.getAll());
+//   }
+// );
 
-app.get('/:id', async (c) => {
-  const id = c.req.param('id');
-  const numId = parseInt(id, 10);
-  return c.json(await termsOfUseController.getOneById(numId));
-});
+app.openapi(
+  createRoute({
+    method: 'get',
+    path: '/latest',
+    description: 'Get the latest Term Of Use',
+    responses: {
+      200: {
+        content: {
+          'application/json': {
+            schema: ResponseSchema,
+          },
+        },
+        description: 'Ok Response',
+      },
+    },
+  }),
+  async (c): Promise<any> => {
+    return c.json(await termsOfUseController.getCurrentTermOfUse());
+  }
+);
 
-app.get('/latest', async (c) => {
-  return c.json(await termsOfUseController.getCurrentTermOfUse());
-});
+app.openapi(
+  createRoute({
+    method: 'get',
+    path: '/{id}',
+    description: 'Get Term Of Use by id',
+    request: {
+      params: ParamsSchema,
+    },
+    responses: {
+      200: {
+        content: {
+          'application/json': {
+            schema: ResponseSchema,
+          },
+        },
+        description: 'Ok Response',
+      },
+    },
+  }),
+  async (c): Promise<any> => {
+    const id = c.req.param('id');
+    const numId = parseInt(id, 10);
+    return c.json(await termsOfUseController.getOneById(numId));
+  }
+);
 
 export default app;
