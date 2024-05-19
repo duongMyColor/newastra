@@ -39,7 +39,6 @@ const forcedUpdateManagementCallbackHandlers = {
       );
 
       let getAllData = await dataProvider.getAll('forced-update-managements');
-
       getAllData = getAllData.map((value: RecordValue, idx: number) => {
         value['no'] = idx + 1;
         value['textOperate'] = value.operateSystem === '0' ? 'iOS' : 'Android';
@@ -80,7 +79,7 @@ const forcedUpdateManagementCallbackHandlers = {
         getAllData.map((value: RecordValue, idx: number) => ({
           ...value,
           no: idx + 1,
-          textOperate: value.operateSystem === '0' ? 'iOS' : 'Android',
+          textOperate: value.operateSystem === OPERATE_IOS ? 'iOS' : 'Android',
         }))
       );
 
@@ -93,6 +92,10 @@ const forcedUpdateManagementCallbackHandlers = {
     );
     if (matchedItem) {
       data.status = matchedItem.status;
+      data['textOperate'] =
+        matchedItem.operateSystem === OPERATE_IOS ? 'iOS' : 'Android';
+      data['appMasterIdAndName'] =
+        `${data.aplicationMaster.id} : ${data.aplicationMaster.appName}`;
     }
 
     return { data };
@@ -106,13 +109,20 @@ const forcedUpdateManagementCallbackHandlers = {
 
     let data = response.data;
 
+
     let listAllStorage = JSON.parse(
       localStorage.getItem('listUpdateAll') || 'null'
     );
-    data['no'] = listAllStorage.length + 1;
-    data['textOperate'] = data['operateSystem'] === OPERATE_IOS ? 'iOS' : 'Android';
 
-    let newDataAfterStatus = updateStatusAll([...listAllStorage, data]);
+    const dataGetOne = await dataProvider.getOne('forced-update-managements', {
+      id: parseInt(data.id),
+    });
+
+    dataGetOne.data['no'] = listAllStorage.length + 1;
+    dataGetOne.data['textOperate'] =
+    dataGetOne.data['operateSystem'] === OPERATE_IOS ? 'iOS' : 'Android';
+
+    let newDataAfterStatus = updateStatusAll([...listAllStorage, dataGetOne.data]);
 
     localStorage.setItem('listUpdateAll', JSON.stringify(newDataAfterStatus));
 

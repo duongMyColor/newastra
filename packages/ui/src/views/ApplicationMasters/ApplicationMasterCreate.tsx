@@ -76,7 +76,7 @@ const MasterCreate = ({
         data: formData,
       });
 
-      notify('成功: アプリケーション マスターが正常に作成されました', {
+      await notify('成功: アプリケーション マスターが正常に作成されました', {
         type: 'success',
       });
       navigate(resourcePath);
@@ -150,16 +150,18 @@ const MasterCreate = ({
         />
         <FileInput
           source="assetBundleIOS"
-          label="iOS用共通アセットバンドル"
+          label="共通アセットバンドルデータ (iOS)"
           placeholder="アップロード"
+          accept={['image/jpeg', 'image/png', 'image/jpg', 'text/html']}
         >
           <FileField source="src" title="title" />
         </FileInput>
 
         <FileInput
           source="assetBundleAndroid"
-          label="Android用共通アセットバンドル"
+          label="共通アセットバンドルデータ (Android)"
           placeholder="アップロード"
+          accept={['image/jpeg', 'image/png', 'image/jpg', 'text/html']}
         >
           <FileField source="src" title="title" />
         </FileInput>

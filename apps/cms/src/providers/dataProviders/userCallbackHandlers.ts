@@ -13,31 +13,31 @@ import { MAP_ROLE } from '@repo/consts/user';
 const userCallbackHandler = {
   resource: 'users',
 
-  afterGetList: async (
-    response: GetListResult,
-    dataProvider: DataProvider
-  ): Promise<GetListResult> => {
-    let data = response.data;
+  // afterGetList: async (
+  //   response: GetListResult,
+  //   dataProvider: DataProvider
+  // ): Promise<GetListResult> => {
+  //   let data = response.data;
 
-    data = data.map((value) => {
-      value.role = MAP_ROLE[value.role as keyof typeof MAP_ROLE];
+  //   data = data.map((value) => {
+  //     value['textRolebyJP'] = MAP_ROLE[value.role as keyof typeof MAP_ROLE];
 
-      return value;
-    });
+  //     return value;
+  //   });
 
-    return response;
-  },
+  //   return response;
+  // },
 
-  afterGetOne: async (
-    response: GetOneResult,
-    dataProvider: DataProvider
-  ): Promise<GetOneResult> => {
-    const data = response.data;
+  // afterGetOne: async (
+  //   response: GetOneResult,
+  //   dataProvider: DataProvider
+  // ): Promise<GetOneResult> => {
+  //   const data = response.data;
 
-    data.role = MAP_ROLE[data.role as keyof typeof MAP_ROLE];
+  //   data['textRolebyJP'] = MAP_ROLE[data.role as keyof typeof MAP_ROLE];
 
-    return response;
-  },
+  //   return response;
+  // },
 };
 
 export default userCallbackHandler;

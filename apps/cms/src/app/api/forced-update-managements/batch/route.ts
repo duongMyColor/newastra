@@ -22,7 +22,7 @@ export const DELETE = errorHandlerMiddleware(async (request: NextRequest) => {
 });
 
 export const GET = errorHandlerMiddleware(async (request: NextRequest) => {
-  return NextResponse.json(await forcedUpdateManagementController.getAll());
+  return NextResponse.json(await forcedUpdateManagementController.getAllParen());
 });
 
 export const runtime = 'edge';

@@ -8,7 +8,8 @@ export interface ForcedUpdateManagementResponseIF {
   no: number;
   status?: string;
   record?: string;
-  textOperate?:string
+  textOperate?: string;
+  appMasterId: string | number;
 }
 
 export interface ForcedUpdateManagementPostIF {
@@ -19,4 +20,5 @@ export interface ForcedUpdateManagementPostIF {
   publishedDate: string | date;
   updatedAt?: string | date;
   record?: string;
+  appMasterId:string | number
 }

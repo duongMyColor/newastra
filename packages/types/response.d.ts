@@ -1,3 +1,5 @@
+import { RecordValue } from './general';
+
 export type FilterType = Filter;
 
 export interface ResponseIF {
@@ -12,6 +14,7 @@ export interface GetAllQueryIF {
   filter: FilterType;
   range: number[];
   sort: string[];
+  include?: RecordValue;
 }
 
 export type GetObjectType = 'image' | 'text-file';

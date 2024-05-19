@@ -10,7 +10,7 @@ import {
   useEditContext,
 } from 'react-admin';
 import CustomForm from '@repo/ui/src/components/CustomForm';
-import { validateUserEdition } from './formValidator';
+import { validateAcstaEdition } from './formValidator';
 import { BaseComponentProps, RecordValue } from '@repo/types/general';
 import { Box } from '@mui/material';
 import { boxStyles } from '@repo/styles';
@@ -49,7 +49,7 @@ const EditForm = ({ actions, resource, dataProvider }: BaseComponentProps) => {
       });
 
       navigate(resourcePath);
-      notify('成功: アクスタ管理が正常に更新されました。', {
+      await notify('成功: アクスタ管理が正常に更新されました。', {
         type: 'success',
       });
     } catch (error) {
@@ -81,7 +81,7 @@ const EditForm = ({ actions, resource, dataProvider }: BaseComponentProps) => {
       <Title title="アクスタ管理　編集" />
       <CustomForm
         pathTo={resourcePath}
-        validate={validateUserEdition}
+        validate={validateAcstaEdition}
         showSaveButton={true}
         showReferenceButton={true}
         showCancelButton={true}

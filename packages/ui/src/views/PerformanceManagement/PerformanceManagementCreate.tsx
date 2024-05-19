@@ -75,7 +75,7 @@ const PerformanceManagementCreate = ({
         data: formData,
       });
 
-     await notify('成功: 生産管理が正常に作成されました', {
+      await notify('成功: 生産管理が正常に作成されました', {
         type: 'success',
       });
       navigate(resourcePath);
@@ -127,7 +127,7 @@ const PerformanceManagementCreate = ({
   }, []);
 
   return (
-    <Create redirect={REDIRECT_ROUTE.list} title="演出管理　新规作成">
+    <Create title="演出管理　新规作成">
       <CustomForm
         pathTo={resourcePath}
         validate={validateUserCreation}

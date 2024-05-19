@@ -43,8 +43,10 @@ const AcstaManagementCreate = ({
         data: formData,
       });
 
+      await notify('成功: アクスタ管理が正常に作成されました。', {
+        type: 'success',
+      });
       navigate(resourcePath);
-      notify('成功: アクスタ管理が正常に作成されました。', { type: 'success' });
     } catch (error) {
       notify('エラー: アクスタ管理の作成に失敗しました: ' + error, {
         type: 'warning',

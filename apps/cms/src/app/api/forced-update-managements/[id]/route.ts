@@ -7,7 +7,7 @@ export const GET = errorHandlerMiddleware(
   async (request: NextRequest, { params }: { params: { id: string } }) => {
     const id = Number(params.id);
     return NextResponse.json(
-      await forcedUpdateManagementController.getOneById(id)
+      await forcedUpdateManagementController.getOneAndChildAndParent(id)
     );
   }
 );

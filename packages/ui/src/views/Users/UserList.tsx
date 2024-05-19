@@ -11,6 +11,8 @@ import { validRole } from '../_core/permissions';
 import { ListToolBar } from '@repo/ui/src/components/ListToolBar';
 import { CustomButtonByRole } from '@repo/ui/src/components/CustomButtonByRole';
 import { formatDateAcstar } from '@repo/utils/dateFormat';
+import { MAP_ROLE } from '@repo/consts/user';
+import { Role } from '@repo/types/user';
 
 const UserList = ({ actions, resource }: BaseComponentProps) => {
   return (
@@ -22,15 +24,21 @@ const UserList = ({ actions, resource }: BaseComponentProps) => {
         <TextField source="no" label="No" />
         <TextField source="username" label="CMS-ID" />
         <FunctionField
-          label="公開開始日"
+          label="最新ログイン"
           render={({ lastLogin }: { lastLogin: string }) => {
             return formatDateAcstar(lastLogin);
           }}
         />
-        <TextField source="role" label="権限" />
+
+        <FunctionField
+          label="権限"
+          render={({ role }: { role: Role }) => {
+            return MAP_ROLE[role];
+          }}
+        />
         <TextField source="email" label="メールアドレス" />
         {validRole('delete', actions) && (
-          <CustomButtonByRole source="role">
+          <CustomButtonByRole source="role" label="削除">
             <DeleteWithConfirmButton
               confirmContent="よろしいですか?"
               confirmTitle="削除"

@@ -9,6 +9,8 @@ import {
   deleteById,
   deleteManyById,
   getAllWithQuery,
+  getOneAndParent,
+  getAllAndParent,
 } from '../_repos/performance.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 import UploadFileService from './upload.service';
@@ -34,6 +36,13 @@ class PerformanceFactory {
 
   static async getOneById(id: number) {
     return await getOneById(id);
+  }
+  static async getOneAndParent(id: number) {
+    return await await getOneAndParent(id);
+  }
+
+  static async getAllAndParent({ filter, range, sort }: GetAllQueryIF) {
+    return await await getAllAndParent({ filter, range, sort });
   }
 
   static async getAll() {

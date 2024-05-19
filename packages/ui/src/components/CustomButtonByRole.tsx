@@ -4,6 +4,7 @@ interface CustomButtonByRoleProps {
   children: JSX.Element | JSX.Element[];
   condition?: any;
   source: string;
+  label?: string;
 }
 
 /**
@@ -17,6 +18,7 @@ export const CustomButtonByRole = ({
   children,
   condition,
   source,
+  label,
 }: CustomButtonByRoleProps) => {
   const record = useRecordContext();
 

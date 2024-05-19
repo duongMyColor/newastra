@@ -18,6 +18,9 @@ import { useEffect, useState } from 'react';
 import { convertToFormData } from '@repo/utils/formData';
 import { useNavigate } from 'react-router-dom';
 import { updateStatusAll } from '@repo/utils/updateStatus';
+import { AplicationMasterResponseIF } from '@repo/types/applicationMaster';
+import { OPERATE_IOS } from '@repo/consts/forceUpdate';
+import { fetchUtils, withLifecycleCallbacks } from 'react-admin';
 
 const ForcedUpdateManagementCreate = ({
   actions,
@@ -30,6 +33,7 @@ const ForcedUpdateManagementCreate = ({
   const dataProvider = useDataProvider();
   const [idLicense, setIdLicense] = useState<string>('');
   const [oldDate, setOldDate] = useState<Date>();
+  const [idAppMaster, setIdAppMaster] = useState([]);
 
   const handleSave = async (values: RecordValue) => {
     try {
@@ -39,10 +43,11 @@ const ForcedUpdateManagementCreate = ({
         data: formData,
       });
 
-      console.log({ data });
-
+      
+      await notify('成功: ライセンスが正常に作成されました', {
+        type: 'success',
+      });
       navigate(resourcePath);
-      await notify('成功: ライセンスが正常に作成されました', { type: 'success' });
     } catch (error) {
       notify('エラー: ライセンスの作成に失敗しました: ' + error, {
         type: 'warning',
@@ -55,6 +60,14 @@ const ForcedUpdateManagementCreate = ({
       localStorage.getItem('listUpdateAll') || 'null'
     );
     const response = await dataProvider.getIdLastestRecord(resource);
+    let getAllAppMasterId = await dataProvider.getAll('application-masters');
+    console.log({ getAllAppMasterId });
+    setIdAppMaster(
+      getAllAppMasterId.map(({ id, appName }: AplicationMasterResponseIF) => {
+        return { id, name: `${id} : ${appName}` };
+      })
+    );
+
     const nextId = response.data.idLastest ? response.data.idLastest : 1;
     setIdLicense(`${nextId}`);
 
@@ -65,6 +78,7 @@ const ForcedUpdateManagementCreate = ({
 
     if (!listUpdateAllStorage) {
       let getAllData = await dataProvider.getAll('forced-update-managements');
+
       getAllData = getAllData.map((value: RecordValue, idx: number) => {
         value['no'] = idx + 1;
         value['textOperate'] = value.operateSystem === '0' ? 'iOS' : 'Android';
@@ -98,6 +112,13 @@ const ForcedUpdateManagementCreate = ({
           variant="filled"
           value={idLicense}
           disabled
+        />
+        <SelectInput
+          source="appMasterId"
+          choices={idAppMaster}
+          fullWidth
+          isRequired
+          label="アプリケーションID"
         />
         <TextInput source="version" label="バージョン" isRequired fullWidth />
         <TextInput

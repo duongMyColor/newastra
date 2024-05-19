@@ -23,3 +23,10 @@ export interface RoleSelectInput {
   id: string | number;
   name: string;
 }
+export interface OptionRole {
+  ADMIN: string;
+  GENERAL: string;
+  READ_ONLY: string;
+}
+
+export type Role = 'ADMIN' | 'GENERAL' | 'READ_ONLY';

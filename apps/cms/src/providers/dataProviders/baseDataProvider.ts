@@ -53,7 +53,7 @@ const baseDataProvider: DataProvider = {
     const {
       json: { metadata, count },
     } = await httpClient(url);
-    console.log('metadata: ', metadata?.length);
+    console.log('metadata: ', metadata);
 
     let newMetaData = metadata.map((value: RecordValue, idx: number) => {
       value['no'] = (page - 1) * perPage + idx + 1;
@@ -70,16 +70,20 @@ const baseDataProvider: DataProvider = {
     resource: string,
     params: GetOneParams
   ): Promise<GetOneResult> => {
+    console.log({ params });
+
     const url = `${apiUrl}/${resource}/${params.id}`;
+    console.log({ url });
     const {
       json: { metadata },
     } = await httpClient(url);
-    console.log('metadata: ', metadata);
+    console.log('metadata:zxc zxdccxvv ', metadata);
 
     return {
       data: metadata,
     };
   },
+
   // get a list of records based on an array of ids
   getMany: async (
     resource: string,
@@ -140,7 +144,6 @@ const baseDataProvider: DataProvider = {
     const {
       json: { metadata },
     } = response;
-
 
     console.log(':::metadata data', metadata);
     return {

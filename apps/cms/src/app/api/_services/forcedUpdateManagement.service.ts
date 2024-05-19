@@ -11,6 +11,9 @@ import {
   getAllWithQuery,
   getAllWithFilters,
   getManyReference,
+  getOneAndParent,
+  getAllAndParentWithFilters,
+  getAllParen,
 } from '../_repos/forcedUpdateManagement.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
@@ -36,9 +39,16 @@ class ForcedUpdateManagementFactory {
   static async getOneById(id: number) {
     return await getOneById(id);
   }
+  static async getOneAndParent(id: number) {
+    return await await getOneAndParent(id);
+  }
 
   static async getAll() {
     return await getAll();
+  }
+
+  static async getAllParen() {
+    return await getAllParen();
   }
 
   static async getAllWithQuery({ filter, range, sort }: GetAllQueryIF) {
@@ -47,6 +57,13 @@ class ForcedUpdateManagementFactory {
 
   static async getAllWithFilters({ filter, range, sort }: GetAllQueryIF) {
     return await getAllWithFilters({ filter, range, sort });
+  }
+  static async getAllAndParentWithFilters({
+    filter,
+    range,
+    sort,
+  }: GetAllQueryIF) {
+    return await await getAllAndParentWithFilters({ filter, range, sort });
   }
 
   static async getManyReference(params: GetManyReferenceParams) {
@@ -87,6 +104,7 @@ class ForcedUpdateManagement implements ForcedUpdateManagementPostIF {
   public publishedDate: string | Date;
   public updatedAt: string;
   public record?: string;
+  public appMasterId: string | number;
 
   public constructor({
     version,
@@ -94,6 +112,7 @@ class ForcedUpdateManagement implements ForcedUpdateManagementPostIF {
     operateSystem,
     publishedDate,
     record,
+    appMasterId,
   }: ForcedUpdateManagementPostIF) {
     this.version = version.toString();
     this.managementName = managementName;
@@ -101,6 +120,7 @@ class ForcedUpdateManagement implements ForcedUpdateManagementPostIF {
     this.publishedDate = new Date(publishedDate).toISOString();
     this.updatedAt = new Date().toISOString();
     this.record = record;
+    this.appMasterId = appMasterId;
   }
 
   public async create() {

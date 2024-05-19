@@ -4,10 +4,13 @@ import {
   TextField,
   EditButton,
   DeleteWithConfirmButton,
+  FunctionField,
 } from 'react-admin';
 import { BaseComponentProps } from '@repo/types/general';
 import { validRole } from '../_core/permissions';
 import { ListToolBar } from '@repo/ui/src/components/ListToolBar';
+import { AplicationMasterResponseIF } from '@repo/types/applicationMaster';
+import { PerformanceTypeMasterResponseIF } from '@repo/types/performanceTypeMaster';
 
 const PerformanceManagementList = ({
   actions,
@@ -22,7 +25,16 @@ const PerformanceManagementList = ({
         <TextField source="no" label="No" />
         <TextField source="name" label="演出名" />
         <TextField source="id" label="演出ID" />
-        <TextField source="performanceTypeMasterId" label="演出種別ID" />
+        <FunctionField
+          label="演出種別ID"
+          render={({
+            performanceTypeMaster,
+          }: {
+            performanceTypeMaster: PerformanceTypeMasterResponseIF;
+          }) => {
+            return `${performanceTypeMaster.id} : ${performanceTypeMaster.typeName}`;
+          }}
+        />
 
         <TextField source="createdAt" label="登録日" />
         {validRole('delete', actions) && (

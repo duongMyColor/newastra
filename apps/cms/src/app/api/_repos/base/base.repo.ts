@@ -18,6 +18,9 @@ class BaseRepo {
   getAll = async () => {
     return await this.tableModel.findMany();
   };
+  getAllParen = async ({ include }: RecordValue) => {
+    return await this.tableModel.findMany({ include });
+  };
 
   getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
     const [sortField, sortOrder] = sort;
@@ -45,10 +48,44 @@ class BaseRepo {
       take: (end ?? 0) - (start ?? 0) + 1,
       where: whereClause,
     });
-      return res;
+    return res;
   };
 
-  getAllPerformanceTypeMaster = async ({ sort, range, filter }: GetAllQueryIF) => {
+  getAllWithParm = async ({ sort, range, filter, include }: GetAllQueryIF) => {
+    const [sortField, sortOrder] = sort;
+    const [start, end] = range;
+    console.log(':::filter getAllWithQuery', filter);
+
+    const whereClause = Object.fromEntries(
+      Object.entries(filter).map(([key, value]) => [
+        key,
+        {
+          search: (value as string)
+            .trim()
+            .split(' ')
+            .map((word: string) => `${word} ${word}*`.toLowerCase())
+            .join(' '),
+        },
+      ])
+    );
+
+    const res = await this.tableModel.findMany({
+      orderBy: {
+        [String(sortField)]: sortOrder?.toLowerCase() ?? '',
+      },
+      skip: start ?? 0,
+      take: (end ?? 0) - (start ?? 0) + 1,
+      where: whereClause,
+      include,
+    });
+    return res;
+  };
+
+  getAllPerformanceTypeMaster = async ({
+    sort,
+    range,
+    filter,
+  }: GetAllQueryIF) => {
     const [sortField, sortOrder] = sort;
     const [start, end] = range;
 
@@ -102,10 +139,10 @@ class BaseRepo {
       console.log({ error });
     }
   };
-  getOneByPacketName = async (packageName:string) => {
+  getOneByPacketName = async (packageName: string) => {
     try {
       const response = await this.tableModel.findFirst({
-        where: { packageName},
+        where: { packageName },
       });
 
       return response;
@@ -145,9 +182,6 @@ class BaseRepo {
       skip: start ?? 0,
       take: (end ?? 0) - (start ?? 0) + 1,
       where: whereClause,
-      include: {
-        classification: true,
-      },
     });
 
     return res;
@@ -269,9 +303,6 @@ class BaseRepo {
 
   insert = async (payload: RecordValue) => {
     const data = removeEmptyProperties(payload);
-
-    console.log(':::data', data.operateSystem);
-
     return await this.tableModel.create({
       data,
     });
