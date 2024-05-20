@@ -1,9 +1,8 @@
-// import { Hono } from 'hono';
 import { generateClient } from './lib/prisma';
 import { swaggerUI } from '@hono/swagger-ui';
 import { OpenAPIHono } from '@hono/zod-openapi';
-import { basicAuth } from 'hono/basic-auth';
-import { bearerAuth } from 'hono/bearer-auth';
+// import { basicAuth } from 'hono/basic-auth';
+// import { bearerAuth } from 'hono/bearer-auth';
 
 import routes from './routes';
 type Bindings = {
@@ -11,7 +10,6 @@ type Bindings = {
 };
 
 const app = new OpenAPIHono<{ Bindings: Bindings }>();
-// const app = new Hono<{ Bindings: Bindings }>();
 
 // Init prism client
 app.use(async (c, next) => {
@@ -28,6 +26,7 @@ app.route('/api/v1', routes);
 //     password: 'password',
 //   })
 // );
+
 app.get(
   '/ui',
   swaggerUI({

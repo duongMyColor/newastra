@@ -66,7 +66,7 @@ model AplicationMaster {
   termOfUse TermsOfUse @relation(fields: [termsOfUseId], references: [id])
   license   License    @relation(fields: [licenseId], references: [id])
 
-  acsta AcstaManagement[]
+  acsta        AcstaManagement[]
   forcedUpdate ForcedUpdateManagement[]
 }
 
@@ -160,4 +160,11 @@ model ForcedUpdateManagement {
   updatedAt      DateTime @updatedAt
 
   aplicationMaster AplicationMaster @relation(fields: [appMasterId], references: [id])
+}
+
+model BootUpdate {
+  id        Int      @id @default(autoincrement())
+  tableName String   @unique /// table name
+  createdAt DateTime @default(now()) /// Creation date and time
+  updatedAt DateTime @updatedAt /// updated date and time
 }

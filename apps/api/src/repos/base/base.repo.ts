@@ -36,12 +36,13 @@ class BaseRepo {
     return res;
   };
 
-  getOneById = (id: number) => {
-    const res = this.tableModel.findUnique({
+  getOneById = async (id: number) => {
+    const res = await this.tableModel.findUnique({
       where: {
         id: id,
       },
     });
+
     return res;
   };
 
