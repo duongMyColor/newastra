@@ -23,7 +23,7 @@ export const QueySchema = z.object({
   }),
 });
 
-const metadata = z.object({
+export const metadata = z.object({
   appId: z.number().openapi({ example: 1 }),
   appName: z.string().openapi({ example: 'appName' }),
   assetBundleIOS: z

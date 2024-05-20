@@ -68,6 +68,20 @@ class BaseRepo {
       },
     });
   };
+
+  getUpdated = async (
+    lastSyncDate: Date | string,
+    include: RecordValue = {}
+  ) => {
+    return await this.tableModel.findMany({
+      where: {
+        updatedAt: {
+          gt: lastSyncDate,
+        },
+      },
+      include: include,
+    });
+  };
 }
 
 export { BaseRepo };

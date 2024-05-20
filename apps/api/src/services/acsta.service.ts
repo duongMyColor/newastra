@@ -4,6 +4,7 @@ import {
   getOneById,
   getManyByIdsAndChildren,
   getManyByIds,
+  getUpdateData,
 } from '../repos/acsta.repo';
 import { PerformanceResponseIF } from '@repo/types/performance';
 
@@ -23,6 +24,9 @@ class AcstaFactory {
   static async getManyByIds(ids: number[]) {
     const acstas = await getManyByIds(ids);
     console.log('acstas', acstas);
+    if (!acstas?.length) {
+      return [];
+    }
 
     return acstas.map((acsta: AcstaApiResponseIF) => {
       return new Acsta(acsta);
@@ -32,7 +36,21 @@ class AcstaFactory {
   static async getManyByIdsAndChildren(ids: number[]) {
     const acstas = await getManyByIdsAndChildren(ids);
     console.log('acstas', acstas);
+    if (!acstas?.length) {
+      return [];
+    }
 
+    return acstas.map((acsta: AcstaApiResponseIF) => {
+      return new Acsta(acsta);
+    });
+  }
+
+  static async getUpdateData(lastSyncDate: Date | string) {
+    const acstas = await getUpdateData(lastSyncDate);
+
+    if (!acstas?.length) {
+      return [];
+    }
     return acstas.map((acsta: AcstaApiResponseIF) => {
       return new Acsta(acsta);
     });

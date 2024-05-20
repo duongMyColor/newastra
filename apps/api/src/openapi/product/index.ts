@@ -23,7 +23,7 @@ export const QueySchema = z.object({
   }),
 });
 
-const metadata = z.object({
+export const metadata = z.object({
   modeId: z.number().openapi({ example: 1 }),
   modeTypeId: z.number().openapi({ example: 1 }),
   assetBundleIOS: z

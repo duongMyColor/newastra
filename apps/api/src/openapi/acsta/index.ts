@@ -23,7 +23,7 @@ export const QueySchema = z.object({
   }),
 });
 
-const metadata = z.object({
+export const metadata = z.object({
   acstaId: z.number().openapi({ example: 1 }),
   appId: z.number().openapi({ example: 1 }),
   acstaName: z.string().openapi({ example: 'name1' }),

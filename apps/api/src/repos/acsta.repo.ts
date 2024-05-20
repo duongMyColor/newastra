@@ -24,3 +24,13 @@ export const getManyByIdsAndChildren = async (ids: number[]) => {
     'performace'
   );
 };
+
+export const getUpdateData = async (lastSyncDate: Date | string) => {
+  const include = {
+    performace: true,
+  };
+  return await new BaseRepo(prisma.acstaManagement).getUpdated(
+    lastSyncDate,
+    include
+  );
+};

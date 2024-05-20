@@ -12,3 +12,9 @@ export const getOneById = async (id: number) => {
 export const getManyByIds = async (ids: number[]) => {
   return await new BaseRepo(prisma.performaceManagement).getManyByIds(ids);
 };
+
+export const getUpdateData = async (lastSyncDate: Date | string) => {
+  return await new BaseRepo(prisma.performaceManagement).getUpdated(
+    lastSyncDate
+  );
+};

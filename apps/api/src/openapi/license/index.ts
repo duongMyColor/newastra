@@ -11,13 +11,15 @@ export const ParamsSchema = z.object({
   }),
 });
 
+export const metadata = z.object({
+  contentUrl: z.string().openapi({
+    example: 'license/1716091800044/demo.html',
+  }),
+});
+
 export const ResponseSchema = z.object({
   message: z.string().openapi({ example: 'get License success!' }),
   status: z.number().openapi({ example: 200 }),
   reason: z.string().openapi({ example: 'OK' }),
-  metadata: z.object({
-    contentUrl: z.string().openapi({
-      example: 'license/1716091800044/demo.html',
-    }),
-  }),
+  metadata: metadata,
 });

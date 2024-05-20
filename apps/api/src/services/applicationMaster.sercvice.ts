@@ -2,6 +2,7 @@ import {
   getAll,
   getOneById,
   getManyByIds,
+  getUpdateData,
 } from '../repos/applicationMaster.repo';
 import {
   AplicationMasterPostIF,
@@ -11,6 +12,9 @@ class ApplicationMasterFactory {
   static async getAll() {
     const applicationMasters = await getAll();
 
+    if (!applicationMasters?.length) {
+      return [];
+    }
     const res = applicationMasters.map(
       (applicationMaster: AplicationMasterResponseIF) => {
         return new ApplicationMaster(applicationMaster);
@@ -27,9 +31,22 @@ class ApplicationMasterFactory {
 
   static async getManyByIds(ids: number[]) {
     const applicationMasters = await getManyByIds(ids);
-    console.log('applicationMasters', applicationMasters);
+    if (!applicationMasters?.length) {
+      return [];
+    }
 
     return applicationMasters.map((acsta: AplicationMasterResponseIF) => {
+      return new ApplicationMaster(acsta);
+    });
+  }
+
+  static async getUpdateData(lastSyncDate: Date | string) {
+    const apps = await getUpdateData(lastSyncDate);
+
+    if (!apps?.length) {
+      return [];
+    }
+    return apps.map((acsta: AplicationMasterResponseIF) => {
       return new ApplicationMaster(acsta);
     });
   }
