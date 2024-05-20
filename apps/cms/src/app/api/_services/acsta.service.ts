@@ -18,9 +18,6 @@ import { convertFormDataToObject } from '@repo/utils/objectUtils';
 import { UPLOAD_FOLDER_MAP } from '@repo/consts/general';
 import UploadFileService from './upload.service';
 import { RectData } from '@repo/types/rectangleEditor';
-import { getObject } from '@/lib/cloudflare-r2';
-import { convertReadableStreamToBase64 } from '@repo/utils/fileUtils';
-import extractColorDistribution from '@repo/utils/scanImage';
 class AcstaFactory {
   static async create({ payload }: { payload: FormData }) {
     const paylodObj = convertFormDataToObject(payload);
