@@ -13,6 +13,7 @@ const MAP_RESOURE: Record<string, string> = {
   licenses: 'license',
   performances: 'performaceManagement',
   'forced-update-managements': 'forcedUpdateManagements',
+  'application-masters': 'applicationMaster',
 };
 
 const UPLOAD_FOLDER_MAP = {

@@ -1,26 +1,62 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { updateByTableName } from '@/app/api/_repos/bootUpdate.repo';
+import { MAP_RESOURE } from '@repo/consts/general';
 
-const baseMiddleware = (request: NextRequest) => {
-  // Store the response so we can modify its headers
-  const response = NextResponse.next();
-
-  // Set custom header
+const setResponseHeaders = (response: NextResponse) => {
   response.headers.set('Access-Control-Expose-Headers', 'Content-Range');
   response.headers.set('Content-Range', 'users 0-10/10');
   response.headers.set('Access-Control-Allow-Origin', '*');
-
   response.headers.set(
     'Access-Control-Allow-Methods',
     'GET, POST, PUT, DELETE'
   );
-
   response.headers.set(
     'Access-Control-Allow-Headers',
     'Content-Type, Authorization'
   );
+};
 
-  // Return response
+const isValidMethod = (method: string) =>
+  ['POST', 'PUT', 'DELETE'].includes(method);
+
+const getValidPath = (path: string) => {
+  const validPaths = [
+    'acstas',
+    'performances',
+    'application-masters',
+    'term-of-uses',
+    'licenses',
+  ];
+  return validPaths.find((validPath) => path.includes(validPath));
+};
+
+const baseMiddleware = async (request: NextRequest) => {
+  const response = NextResponse.next();
+  setResponseHeaders(response);
+
+  if (!isValidMethod(request.method)) {
+    return response;
+  }
+
+  const validPath = getValidPath(request.nextUrl.pathname);
+  if (!validPath) {
+    return response;
+  }
+
+  const tableName = MAP_RESOURE[validPath];
+  if (!tableName) {
+    return response;
+  }
+
+  console.log('tableName', tableName);
+
+  if (response.status === 200) {
+    await updateByTableName(tableName);
+  } else {
+    console.log('Response was not successful');
+  }
+
   return response;
 };
 

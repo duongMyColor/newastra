@@ -34,3 +34,24 @@ WHERE NOT EXISTS (SELECT 1 FROM IdLastestOfRecord WHERE name = 'termsOfUse');
 INSERT INTO IdLastestOfRecord (name, idLastest, updatedAt)
 SELECT 'forcedUpdateManagements', 1, CURRENT_TIMESTAMP
 WHERE NOT EXISTS (SELECT 1 FROM IdLastestOfRecord WHERE name = 'forcedUpdateManagements');
+
+-- Insert BootUpdate record if it doesn't exist
+INSERT INTO BootUpdate (tableName, updatedAt, createdAt)
+SELECT 'acstaManagement', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+WHERE NOT EXISTS (SELECT 1 FROM BootUpdate WHERE tableName = 'acstaManagement');
+
+INSERT INTO BootUpdate (tableName, updatedAt, createdAt)
+SELECT 'aplicationMaster', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+WHERE NOT EXISTS (SELECT 1 FROM BootUpdate WHERE tableName = 'aplicationMaster');
+
+INSERT INTO BootUpdate (tableName, updatedAt, createdAt)
+SELECT 'performaceManagement', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+WHERE NOT EXISTS (SELECT 1 FROM BootUpdate WHERE tableName = 'performaceManagement');
+
+INSERT INTO BootUpdate (tableName, updatedAt, createdAt)
+SELECT 'termsOfUse', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+WHERE NOT EXISTS (SELECT 1 FROM BootUpdate WHERE tableName = 'termsOfUse');
+
+INSERT INTO BootUpdate (tableName, updatedAt, createdAt)
+SELECT 'license', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+WHERE NOT EXISTS (SELECT 1 FROM BootUpdate WHERE tableName = 'license');

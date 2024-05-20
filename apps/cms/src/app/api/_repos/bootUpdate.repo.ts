@@ -17,20 +17,28 @@ const count = async () => {
   return await new BaseRepo(model).count();
 };
 
-const insert = async (payload: UserIF) => {
-  return await new BaseRepo(model).insert(payload);
-};
-
 const insertMany = async (users: UserIF[]) => {
   return await new BaseRepo(model).insertMany(users);
 };
 
-const updateById = async ({ id, payload }: { id: number; payload: UserIF }) => {
-  return await new BaseRepo(model).updateById({ id, payload });
+const updateById = async ({ id }: { id: number }) => {
+  return await new BaseRepo(model).updateById({
+    id,
+    payload: { updateAt: new Date() },
+  });
+};
+
+const updateByTableName = async (tableName: string) => {
+  return await prisma.bootUpdate.update({
+    where: {
+      tableName: tableName,
+    },
+    data: { updatedAt: new Date() },
+  });
 };
 
 const deleteById = async (id: number) => {
   return await new BaseRepo(model).deleteById(id);
 };
 
-export { getAll, insert, updateById, deleteById, insertMany, count };
+export { getAll, updateById, deleteById, insertMany, count, updateByTableName };
