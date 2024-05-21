@@ -3,21 +3,15 @@ import { BaseRepo } from './base/base.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
 import { generateClient } from '@/lib/prisma';
-import type { PrismaClient } from '@prisma/client/extension';
-
-// const this.prisma.forcedUpdateManagement = prisma.forcedUpdateManagement;
 
 class ForcedUpdateRepo {
-  public prisma: PrismaClient;
-  constructor() {
-    this.prisma = generateClient();
-  }
-
   getAll = async () => {
-    return await new BaseRepo(this.prisma.forcedUpdateManagement).getAll();
+    return await new BaseRepo(generateClient().forcedUpdateManagement).getAll();
   };
   getAllParen = async () => {
-    return await new BaseRepo(this.prisma.forcedUpdateManagement).getAllParen({
+    return await new BaseRepo(
+      generateClient().forcedUpdateManagement
+    ).getAllParen({
       include: {
         aplicationMaster: true,
       },
@@ -25,17 +19,17 @@ class ForcedUpdateRepo {
   };
 
   count = async () => {
-    return await new BaseRepo(this.prisma.forcedUpdateManagement).count();
+    return await new BaseRepo(generateClient().forcedUpdateManagement).count();
   };
 
   getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
     return await new BaseRepo(
-      this.prisma.forcedUpdateManagement
+      generateClient().forcedUpdateManagement
     ).getAllWithQuery({ sort, range, filter });
   };
   getAllWithFilters = async ({ sort, range, filter }: GetAllQueryIF) => {
     return await new BaseRepo(
-      this.prisma.forcedUpdateManagement
+      generateClient().forcedUpdateManagement
     ).getAllWithFilters({ sort, range, filter });
   };
   getAllAndParentWithFilters = async ({
@@ -44,7 +38,7 @@ class ForcedUpdateRepo {
     filter,
   }: GetAllQueryIF) => {
     return await new BaseRepo(
-      this.prisma.forcedUpdateManagement
+      generateClient().forcedUpdateManagement
     ).getAllWithParm({
       sort,
       range,
@@ -56,19 +50,19 @@ class ForcedUpdateRepo {
   };
 
   getManyReference = async (params: GetManyReferenceParams) => {
-    return new BaseRepo(this.prisma.forcedUpdateManagement).getManyReference(
-      params
-    );
+    return new BaseRepo(
+      generateClient().forcedUpdateManagement
+    ).getManyReference(params);
   };
 
   getOneById = async (id: number) => {
-    return await new BaseRepo(this.prisma.forcedUpdateManagement).getOneById(
-      id
-    );
+    return await new BaseRepo(
+      generateClient().forcedUpdateManagement
+    ).getOneById(id);
   };
   getOneAndParent = async (id: number) => {
     return await new BaseRepo(
-      this.prisma.forcedUpdateManagement
+      generateClient().forcedUpdateManagement
     ).getOneByIdWithParam(id, {
       include: {
         aplicationMaster: true,
@@ -77,19 +71,21 @@ class ForcedUpdateRepo {
   };
 
   insert = async (payload: ForcedUpdateManagementPostIF) => {
-    await new BaseRepo(this.prisma.idLastestOfRecord).updateIdLastestOfRecord({
+    await new BaseRepo(
+      generateClient().idLastestOfRecord
+    ).updateIdLastestOfRecord({
       record: payload.record,
     });
     delete payload.record;
-    return await new BaseRepo(this.prisma.forcedUpdateManagement).insert(
+    return await new BaseRepo(generateClient().forcedUpdateManagement).insert(
       payload
     );
   };
 
   insertMany = async (body: ForcedUpdateManagementPostIF[]) => {
-    return await new BaseRepo(this.prisma.forcedUpdateManagement).insertMany(
-      body
-    );
+    return await new BaseRepo(
+      generateClient().forcedUpdateManagement
+    ).insertMany(body);
   };
 
   updateById = async ({
@@ -99,7 +95,9 @@ class ForcedUpdateRepo {
     id: number;
     payload: ForcedUpdateManagementPostIF;
   }) => {
-    return await new BaseRepo(this.prisma.forcedUpdateManagement).updateById({
+    return await new BaseRepo(
+      generateClient().forcedUpdateManagement
+    ).updateById({
       id,
       payload,
     });
@@ -107,19 +105,19 @@ class ForcedUpdateRepo {
 
   updateManyById = async (updates: ForcedUpdateManagementPostIF[]) => {
     return await new BaseRepo(
-      this.prisma.forcedUpdateManagement
+      generateClient().forcedUpdateManagement
     ).updateManyById(updates);
   };
 
   deleteById = async (id: number) => {
-    return await new BaseRepo(this.prisma.forcedUpdateManagement).deleteById(
-      id
-    );
+    return await new BaseRepo(
+      generateClient().forcedUpdateManagement
+    ).deleteById(id);
   };
 
   deleteManyById = async (ids: number[]) => {
     return await new BaseRepo(
-      this.prisma.forcedUpdateManagement
+      generateClient().forcedUpdateManagement
     ).deleteManyById(ids);
   };
 }

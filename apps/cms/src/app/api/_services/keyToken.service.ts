@@ -6,7 +6,7 @@ import { PrismaClient } from '@prisma/client/extension';
 class KeyTokenService {
   public prisma: PrismaClient;
   constructor() {
-    this.prisma = generateClient();
+    // generateClient() = generateClient();
   }
 
   async createKeyToken({
@@ -25,7 +25,7 @@ class KeyTokenService {
         refreshToken,
       };
 
-      const tokens = await this.prisma.keyToken.upsert({
+      const tokens = await generateClient().keyToken.upsert({
         where: {
           userId: userId,
         },
@@ -43,29 +43,31 @@ class KeyTokenService {
   }
 
   async findByUserId(userId: number) {
-    return await this.prisma.keyToken.findUnique({ where: { userId } });
+    return await generateClient().keyToken.findUnique({ where: { userId } });
   }
 
   async removeToken(id: number) {
-    return await this.prisma.keyToken.delete({ where: { id } });
+    return await generateClient().keyToken.delete({ where: { id } });
   }
 
   async removeTokenByUserId(userId: number) {
-    return await this.prisma.keyToken.delete({ where: { userId } });
+    return await generateClient().keyToken.delete({ where: { userId } });
   }
 
   async findByRefreshTokenUsed(refreshToken: string) {
-    return await this.prisma.keyToken.findUnique({
+    return await generateClient().keyToken.findUnique({
       where: { refreshToken },
     });
   }
 
   async findByRefreshToken(refreshToken: string) {
-    return await this.prisma.keyToken.findUnique({ where: { refreshToken } });
+    return await generateClient().keyToken.findUnique({
+      where: { refreshToken },
+    });
   }
 
   async deleteKeyById(userId: number) {
-    return await this.prisma.keyToken.delete({ where: { userId } });
+    return await generateClient().keyToken.delete({ where: { userId } });
   }
 
   async updateKeyById({
@@ -77,7 +79,9 @@ class KeyTokenService {
     oldToken: string;
     newToken: string;
   }) {
-    const keyToken = await this.prisma.keyToken.findUnique({ where: { id } });
+    const keyToken = await generateClient().keyToken.findUnique({
+      where: { id },
+    });
 
     let refreshTokensUsed = keyToken?.refreshTokensUsed
       ? JSON.parse(keyToken.refreshTokensUsed.toString())
@@ -85,7 +89,7 @@ class KeyTokenService {
 
     refreshTokensUsed.push(oldToken);
 
-    return await this.prisma.keyToken.update({
+    return await generateClient().keyToken.update({
       where: { id },
       data: {
         refreshToken: newToken,

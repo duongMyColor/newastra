@@ -3,30 +3,25 @@ import { generateClient } from '@/lib/prisma';
 import { BaseRepo } from './base/base.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
-import type { PrismaClient } from '@prisma/client/extension';
 
 class LicenseRepo {
-  public prisma: PrismaClient;
-  constructor() {
-    this.prisma = generateClient();
-  }
   getAll = async () => {
-    return await new BaseRepo(this.prisma.license).getAll();
+    return await new BaseRepo(generateClient().license).getAll();
   };
 
   count = async () => {
-    return await new BaseRepo(this.prisma.license).count();
+    return await new BaseRepo(generateClient().license).count();
   };
 
   getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
-    return await new BaseRepo(this.prisma.license).getAllWithQuery({
+    return await new BaseRepo(generateClient().license).getAllWithQuery({
       sort,
       range,
       filter,
     });
   };
   getAllWithFilters = async ({ sort, range, filter }: GetAllQueryIF) => {
-    return await new BaseRepo(this.prisma.license).getAllWithFilters({
+    return await new BaseRepo(generateClient().license).getAllWithFilters({
       sort,
       range,
       filter,
@@ -34,23 +29,25 @@ class LicenseRepo {
   };
 
   getManyReference = async (params: GetManyReferenceParams) => {
-    return new BaseRepo(this.prisma.license).getManyReference(params);
+    return new BaseRepo(generateClient().license).getManyReference(params);
   };
 
   getOneById = async (id: number) => {
-    return await new BaseRepo(this.prisma.license).getOneById(id);
+    return await new BaseRepo(generateClient().license).getOneById(id);
   };
 
   insert = async (payload: TermOfUsePostIF) => {
-    await new BaseRepo(this.prisma.idLastestOfRecord).updateIdLastestOfRecord({
+    await new BaseRepo(
+      generateClient().idLastestOfRecord
+    ).updateIdLastestOfRecord({
       record: payload.record,
     });
     delete payload.record;
-    return await new BaseRepo(this.prisma.license).insert(payload);
+    return await new BaseRepo(generateClient().license).insert(payload);
   };
 
   insertMany = async (body: TermOfUsePostIF[]) => {
-    return await new BaseRepo(this.prisma.license).insertMany(body);
+    return await new BaseRepo(generateClient().license).insertMany(body);
   };
 
   updateById = async ({
@@ -60,19 +57,22 @@ class LicenseRepo {
     id: number;
     payload: TermOfUsePostIF;
   }) => {
-    return await new BaseRepo(this.prisma.license).updateById({ id, payload });
+    return await new BaseRepo(generateClient().license).updateById({
+      id,
+      payload,
+    });
   };
 
   updateManyById = async (updates: TermOfUsePostIF[]) => {
-    return await new BaseRepo(this.prisma.license).updateManyById(updates);
+    return await new BaseRepo(generateClient().license).updateManyById(updates);
   };
 
   deleteById = async (id: number) => {
-    return await new BaseRepo(this.prisma.license).deleteById(id);
+    return await new BaseRepo(generateClient().license).deleteById(id);
   };
 
   deleteManyById = async (ids: number[]) => {
-    return await new BaseRepo(this.prisma.license).deleteManyById(ids);
+    return await new BaseRepo(generateClient().license).deleteManyById(ids);
   };
 }
 

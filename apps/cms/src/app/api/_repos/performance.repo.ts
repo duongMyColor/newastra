@@ -2,32 +2,26 @@ import { PerformancePostIF } from '@repo/types/performance';
 import { generateClient } from '@/lib/prisma';
 import { BaseRepo } from './base/base.repo';
 import { GetAllQueryIF } from '@repo/types/response';
-import type { PrismaClient } from '@prisma/client/extension';
-
-// const this.prisma.performaceManagement = prisma.performaceManagement;
 
 class PerformanceRepo {
-  public prisma: PrismaClient;
-  constructor() {
-    this.prisma = generateClient();
-  }
-
   getAll = async () => {
-    return await new BaseRepo(this.prisma.performaceManagement).getAll();
+    return await new BaseRepo(generateClient().performaceManagement).getAll();
   };
 
   count = async () => {
-    return await new BaseRepo(this.prisma.performaceManagement).count();
+    return await new BaseRepo(generateClient().performaceManagement).count();
   };
 
   getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
-    return await new BaseRepo(this.prisma.performaceManagement).getAllWithQuery(
-      { sort, range, filter }
-    );
+    return await new BaseRepo(
+      generateClient().performaceManagement
+    ).getAllWithQuery({ sort, range, filter });
   };
 
   getAllAndParent = async ({ sort, range, filter }: GetAllQueryIF) => {
-    return await new BaseRepo(this.prisma.performaceManagement).getAllWithParm({
+    return await new BaseRepo(
+      generateClient().performaceManagement
+    ).getAllWithParm({
       sort,
       range,
       filter,
@@ -39,11 +33,13 @@ class PerformanceRepo {
   };
 
   getOneById = async (id: number) => {
-    return await new BaseRepo(this.prisma.performaceManagement).getOneById(id);
+    return await new BaseRepo(generateClient().performaceManagement).getOneById(
+      id
+    );
   };
   getOneAndParent = async (id: number) => {
     return await new BaseRepo(
-      this.prisma.performaceManagement
+      generateClient().performaceManagement
     ).getOneByIdWithParam(id, {
       include: {
         performanceTypeMaster: true,
@@ -53,17 +49,21 @@ class PerformanceRepo {
   };
 
   insert = async (payload: PerformancePostIF) => {
-    await new BaseRepo(this.prisma.idLastestOfRecord).updateIdLastestOfRecord({
+    await new BaseRepo(
+      generateClient().idLastestOfRecord
+    ).updateIdLastestOfRecord({
       record: payload.record,
     });
     delete payload.record;
-    return await new BaseRepo(this.prisma.performaceManagement).insert(payload);
+    return await new BaseRepo(generateClient().performaceManagement).insert(
+      payload
+    );
   };
 
   insertMany = async (products: PerformancePostIF[]) => {
     console.log('products: ', products);
 
-    return await new BaseRepo(this.prisma.performaceManagement).insertMany(
+    return await new BaseRepo(generateClient().performaceManagement).insertMany(
       products
     );
   };
@@ -75,26 +75,30 @@ class PerformanceRepo {
     id: number;
     payload: PerformancePostIF;
   }) => {
-    return await new BaseRepo(this.prisma.performaceManagement).updateById({
-      id,
-      payload,
-    });
+    return await new BaseRepo(generateClient().performaceManagement).updateById(
+      {
+        id,
+        payload,
+      }
+    );
   };
 
   updateManyById = async (updates: PerformancePostIF[]) => {
-    return await new BaseRepo(this.prisma.performaceManagement).updateManyById(
-      updates
-    );
+    return await new BaseRepo(
+      generateClient().performaceManagement
+    ).updateManyById(updates);
   };
 
   deleteById = async (id: number) => {
-    return await new BaseRepo(this.prisma.performaceManagement).deleteById(id);
+    return await new BaseRepo(generateClient().performaceManagement).deleteById(
+      id
+    );
   };
 
   deleteManyById = async (ids: number[]) => {
-    return await new BaseRepo(this.prisma.performaceManagement).deleteManyById(
-      ids
-    );
+    return await new BaseRepo(
+      generateClient().performaceManagement
+    ).deleteManyById(ids);
   };
 }
 

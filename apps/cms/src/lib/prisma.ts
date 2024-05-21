@@ -22,4 +22,4 @@ const generateClient = () => {
   return prisma;
 };
 
-export { prisma, generateClient };
+export { generateClient };

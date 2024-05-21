@@ -2,32 +2,30 @@ import { AcstaPostIF } from '@repo/types/acsta';
 import { BaseRepo } from './base/base.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
-import type { PrismaClient } from '@prisma/client/extension';
 import { generateClient } from '@/lib/prisma';
 
 class AcstaRepo {
-  public prisma: PrismaClient;
-  constructor() {
-    this.prisma = generateClient();
-  }
-
   getAll = async () => {
-    return await new BaseRepo(this.prisma.acstaManagement).getAll();
+    return await new BaseRepo(generateClient().acstaManagement).getAll();
   };
 
   count = async () => {
-    return await new BaseRepo(this.prisma.acstaManagement).count();
+    return await new BaseRepo(generateClient().acstaManagement).count();
   };
 
   getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
-    return await new BaseRepo(this.prisma.acstaManagement).getAllWithQuery({
-      sort,
-      range,
-      filter,
-    });
+    return await new BaseRepo(generateClient().acstaManagement).getAllWithQuery(
+      {
+        sort,
+        range,
+        filter,
+      }
+    );
   };
   getAllWithFilters = async ({ sort, range, filter }: GetAllQueryIF) => {
-    return await new BaseRepo(this.prisma.acstaManagement).getAllWithFilters({
+    return await new BaseRepo(
+      generateClient().acstaManagement
+    ).getAllWithFilters({
       sort,
       range,
       filter,
@@ -35,23 +33,29 @@ class AcstaRepo {
   };
 
   getManyReference = async (params: GetManyReferenceParams) => {
-    return new BaseRepo(this.prisma.acstaManagement).getManyReference(params);
+    return new BaseRepo(generateClient().acstaManagement).getManyReference(
+      params
+    );
   };
 
   getOneById = async (id: number) => {
-    return await new BaseRepo(this.prisma.acstaManagement).getOneById(id);
+    return await new BaseRepo(generateClient().acstaManagement).getOneById(id);
   };
 
   insert = async (payload: AcstaPostIF) => {
-    await new BaseRepo(this.prisma.idLastestOfRecord).updateIdLastestOfRecord({
+    await new BaseRepo(
+      generateClient().idLastestOfRecord
+    ).updateIdLastestOfRecord({
       record: payload.record,
     });
     delete payload.record;
-    return await new BaseRepo(this.prisma.acstaManagement).insert(payload);
+    return await new BaseRepo(generateClient().acstaManagement).insert(payload);
   };
 
   insertMany = async (body: AcstaPostIF[]) => {
-    return await new BaseRepo(this.prisma.acstaManagement).insertMany(body);
+    return await new BaseRepo(generateClient().acstaManagement).insertMany(
+      body
+    );
   };
 
   updateById = async ({
@@ -61,24 +65,26 @@ class AcstaRepo {
     id: number;
     payload: AcstaPostIF;
   }) => {
-    return await new BaseRepo(this.prisma.acstaManagement).updateById({
+    return await new BaseRepo(generateClient().acstaManagement).updateById({
       id,
       payload,
     });
   };
 
   updateManyById = async (updates: AcstaPostIF[]) => {
-    return await new BaseRepo(this.prisma.acstaManagement).updateManyById(
+    return await new BaseRepo(generateClient().acstaManagement).updateManyById(
       updates
     );
   };
 
   deleteById = async (id: number) => {
-    return await new BaseRepo(this.prisma.acstaManagement).deleteById(id);
+    return await new BaseRepo(generateClient().acstaManagement).deleteById(id);
   };
 
   deleteManyById = async (ids: number[]) => {
-    return await new BaseRepo(this.prisma.acstaManagement).deleteManyById(ids);
+    return await new BaseRepo(generateClient().acstaManagement).deleteManyById(
+      ids
+    );
   };
 }
 

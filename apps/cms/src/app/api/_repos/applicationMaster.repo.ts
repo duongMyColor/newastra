@@ -3,32 +3,25 @@ import { generateClient } from '@/lib/prisma';
 import { BaseRepo } from './base/base.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
-import type { PrismaClient } from '@prisma/client/extension';
-
-// const this.prisma.applicationMaster = prisma.aplicationMaster;
-// const child = 'memo';
-// const parent = 'classification';
 
 class AplicationMasterRepo {
-  public prisma: PrismaClient;
-
-  constructor() {
-    this.prisma = generateClient();
-  }
-
   getAll = async () => {
-    return await new BaseRepo(this.prisma.applicationMaster).getAll();
+    return await new BaseRepo(generateClient().aplicationMaster).getAll();
   };
 
   getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
-    return await new BaseRepo(this.prisma.applicationMaster).getAllWithQuery({
+    return await new BaseRepo(
+      generateClient().aplicationMaster
+    ).getAllWithQuery({
       sort,
       range,
       filter,
     });
   };
   getAllWithFilters = async ({ sort, range, filter }: GetAllQueryIF) => {
-    return await new BaseRepo(this.prisma.applicationMaster).getAllWithFilters({
+    return await new BaseRepo(
+      generateClient().aplicationMaster
+    ).getAllWithFilters({
       sort,
       range,
       filter,
@@ -36,16 +29,18 @@ class AplicationMasterRepo {
   };
 
   getManyReference = async (params: GetManyReferenceParams) => {
-    return new BaseRepo(this.prisma.applicationMaster).getManyReference(params);
+    return new BaseRepo(generateClient().aplicationMaster).getManyReference(
+      params
+    );
   };
 
   getOneById = async (id: number) => {
-    return await new BaseRepo(this.prisma.applicationMaster).getOneById(id);
+    return await new BaseRepo(generateClient().aplicationMaster).getOneById(id);
   };
 
   getOneAndParent = async (id: number) => {
     return await new BaseRepo(
-      this.prisma.applicationMaster
+      generateClient().aplicationMaster
     ).getOneByIdWithParam(id, {
       include: {
         classification: true,
@@ -54,7 +49,7 @@ class AplicationMasterRepo {
   };
 
   // const getOneAndChildren = async (id: number, child: string) => {
-  //   return await new BaseRepo(this.prisma.applicationMaster).getOneByIdWithParam(id, {
+  //   return await new BaseRepo(generateClient().aplicationMaster).getOneByIdWithParam(id, {
   //     include: {
   //       [child]: true,
   //     },
@@ -62,7 +57,7 @@ class AplicationMasterRepo {
   // };
 
   // const getOneAndChildAndParent = async (id: number) => {
-  //   return await new BaseRepo(this.prisma.applicationMaster).getOneByIdWithParam(id, {
+  //   return await new BaseRepo(generateClient().aplicationMaster).getOneByIdWithParam(id, {
   //     include: {
   //       [child]: true,
   //       [parent]: true,
@@ -71,11 +66,13 @@ class AplicationMasterRepo {
   // };
 
   insert = async (payload: AplicationMasterPostIF) => {
-    return await new BaseRepo(this.prisma.applicationMaster).insert(payload);
+    return await new BaseRepo(generateClient().aplicationMaster).insert(
+      payload
+    );
   };
 
   insertMany = async (animals: AplicationMasterPostIF[]) => {
-    return await new BaseRepo(this.prisma.applicationMaster).insertMany(
+    return await new BaseRepo(generateClient().aplicationMaster).insertMany(
       animals
     );
   };
@@ -87,24 +84,24 @@ class AplicationMasterRepo {
     id: number;
     payload: AplicationMasterPostIF;
   }) => {
-    return await new BaseRepo(this.prisma.applicationMaster).updateById({
+    return await new BaseRepo(generateClient().aplicationMaster).updateById({
       id,
       payload,
     });
   };
 
   updateManyById = async (updates: AplicationMasterPostIF[]) => {
-    return await new BaseRepo(this.prisma.applicationMaster).updateManyById(
+    return await new BaseRepo(generateClient().aplicationMaster).updateManyById(
       updates
     );
   };
 
   deleteById = async (id: number) => {
-    return await new BaseRepo(this.prisma.applicationMaster).deleteById(id);
+    return await new BaseRepo(generateClient().aplicationMaster).deleteById(id);
   };
 
   deleteManyById = async (ids: number[]) => {
-    return await new BaseRepo(this.prisma.applicationMaster).deleteManyById(
+    return await new BaseRepo(generateClient().aplicationMaster).deleteManyById(
       ids
     );
   };

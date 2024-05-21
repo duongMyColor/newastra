@@ -2,18 +2,10 @@ import { UserIF } from '@repo/types/user';
 import { generateClient } from '@/lib/prisma';
 import { exclude } from '@repo/utils/excludeKey';
 import { BaseRepo } from './base/base.repo';
-import type { PrismaClient } from '@prisma/client/extension';
-
-// const this.prisma.bootUpdate = prisma.bootUpdate;
 
 class BootUpdateRepo {
-  public prisma: PrismaClient;
-
-  constructor() {
-    this.prisma = generateClient();
-  }
   getAll = async () => {
-    const res = (await new BaseRepo(this.prisma.bootUpdate).getAll()).map(
+    const res = (await new BaseRepo(generateClient().bootUpdate).getAll()).map(
       (user: UserIF) => exclude(user, ['password'])
     );
 
@@ -21,22 +13,22 @@ class BootUpdateRepo {
   };
 
   count = async () => {
-    return await new BaseRepo(this.prisma.bootUpdate).count();
+    return await new BaseRepo(generateClient().bootUpdate).count();
   };
 
   insertMany = async (users: UserIF[]) => {
-    return await new BaseRepo(this.prisma.bootUpdate).insertMany(users);
+    return await new BaseRepo(generateClient().bootUpdate).insertMany(users);
   };
 
   updateById = async ({ id }: { id: number }) => {
-    return await new BaseRepo(this.prisma.bootUpdate).updateById({
+    return await new BaseRepo(generateClient().bootUpdate).updateById({
       id,
       payload: { updateAt: new Date() },
     });
   };
 
   updateByTableName = async (tableName: string) => {
-    return await this.prisma.bootUpdate.update({
+    return await generateClient().bootUpdate.update({
       where: {
         tableName: tableName,
       },
@@ -45,7 +37,7 @@ class BootUpdateRepo {
   };
 
   deleteById = async (id: number) => {
-    return await new BaseRepo(this.prisma.bootUpdate).deleteById(id);
+    return await new BaseRepo(generateClient().bootUpdate).deleteById(id);
   };
 }
 

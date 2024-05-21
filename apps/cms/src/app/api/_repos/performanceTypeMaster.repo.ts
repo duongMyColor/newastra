@@ -2,29 +2,22 @@ import { PerformanceTypeMasterPostIF } from '@repo/types/performanceTypeMaster';
 import { generateClient } from '@/lib/prisma';
 import { BaseRepo } from './base/base.repo';
 import { GetAllQueryIF } from '@repo/types/response';
-import type { PrismaClient } from '@prisma/client/extension';
 
-// const prisma = prisma.performaceTypeMaster;
 const relationFieldName = 'Performance';
 
 class PerformanceTypeMasterRepo {
-  public prisma: PrismaClient;
-  constructor() {
-    this.prisma = generateClient();
-  }
-
   getAll = async () => {
-    return await new BaseRepo(this.prisma.performaceTypeMaster).getAll();
+    return await new BaseRepo(generateClient().performaceTypeMaster).getAll();
   };
 
   count = async () => {
-    return await new BaseRepo(this.prisma.performaceTypeMaster).count();
+    return await new BaseRepo(generateClient().performaceTypeMaster).count();
   };
 
   getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
-    return await new BaseRepo(this.prisma.performaceTypeMaster).getAllWithQuery(
-      { sort, range, filter }
-    );
+    return await new BaseRepo(
+      generateClient().performaceTypeMaster
+    ).getAllWithQuery({ sort, range, filter });
   };
   getAllPerformanceTypeMaster = async ({
     sort,
@@ -32,7 +25,7 @@ class PerformanceTypeMasterRepo {
     filter,
   }: GetAllQueryIF) => {
     return await new BaseRepo(
-      this.prisma.performaceTypeMaster
+      generateClient().performaceTypeMaster
     ).getAllPerformanceTypeMaster({
       sort,
       range,
@@ -41,7 +34,9 @@ class PerformanceTypeMasterRepo {
   };
 
   getOneById = async (id: number) => {
-    return await new BaseRepo(this.prisma.performaceTypeMaster).getOneById(id);
+    return await new BaseRepo(generateClient().performaceTypeMaster).getOneById(
+      id
+    );
   };
 
   // const getByIdWithDetail = async (id: number) => {
@@ -57,11 +52,13 @@ class PerformanceTypeMasterRepo {
   // };
 
   insert = async (payload: PerformanceTypeMasterPostIF) => {
-    return await new BaseRepo(this.prisma.performaceTypeMaster).insert(payload);
+    return await new BaseRepo(generateClient().performaceTypeMaster).insert(
+      payload
+    );
   };
 
   insertMany = async (products: PerformanceTypeMasterPostIF[]) => {
-    return await new BaseRepo(this.prisma.performaceTypeMaster).insertMany(
+    return await new BaseRepo(generateClient().performaceTypeMaster).insertMany(
       products
     );
   };
@@ -73,34 +70,38 @@ class PerformanceTypeMasterRepo {
     id: number;
     payload: PerformanceTypeMasterPostIF;
   }) => {
-    return await new BaseRepo(this.prisma.performaceTypeMaster).updateById({
-      id,
-      payload,
-    });
+    return await new BaseRepo(generateClient().performaceTypeMaster).updateById(
+      {
+        id,
+        payload,
+      }
+    );
   };
 
   updateManyById = async (
     updates: { id: number; data: PerformanceTypeMasterPostIF }[]
   ) => {
-    return await new BaseRepo(this.prisma.performaceTypeMaster).updateManyById(
-      updates
-    );
+    return await new BaseRepo(
+      generateClient().performaceTypeMaster
+    ).updateManyById(updates);
   };
 
   deleteById = async (id: number) => {
-    return await new BaseRepo(this.prisma.performaceTypeMaster).deleteById(id);
+    return await new BaseRepo(generateClient().performaceTypeMaster).deleteById(
+      id
+    );
   };
 
   deleteWithRelation = async (id: number) => {
     return await new BaseRepo(
-      this.prisma.performaceTypeMaster
+      generateClient().performaceTypeMaster
     ).deleteWithRelation(id, relationFieldName);
   };
 
   deleteManyById = async (ids: number[]) => {
-    return await new BaseRepo(this.prisma.performaceTypeMaster).deleteManyById(
-      ids
-    );
+    return await new BaseRepo(
+      generateClient().performaceTypeMaster
+    ).deleteManyById(ids);
   };
 }
 

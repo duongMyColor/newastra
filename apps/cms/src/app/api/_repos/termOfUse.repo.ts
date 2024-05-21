@@ -3,33 +3,25 @@ import { generateClient } from '@/lib/prisma';
 import { BaseRepo } from './base/base.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
-import type { PrismaClient } from '@prisma/client/extension';
-
-// const model = prisma.termsOfUse;
 
 class TermsOfUseRepo {
-  public prisma: PrismaClient;
-  constructor() {
-    this.prisma = generateClient();
-  }
-
   getAll = async () => {
-    return await new BaseRepo(this.prisma.termsOfUse).getAll();
+    return await new BaseRepo(generateClient().termsOfUse).getAll();
   };
 
   count = async () => {
-    return await new BaseRepo(this.prisma.termsOfUse).count();
+    return await new BaseRepo(generateClient().termsOfUse).count();
   };
 
   getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
-    return await new BaseRepo(this.prisma.termsOfUse).getAllWithQuery({
+    return await new BaseRepo(generateClient().termsOfUse).getAllWithQuery({
       sort,
       range,
       filter,
     });
   };
   getAllWithFilters = async ({ sort, range, filter }: GetAllQueryIF) => {
-    return await new BaseRepo(this.prisma.termsOfUse).getAllWithFilters({
+    return await new BaseRepo(generateClient().termsOfUse).getAllWithFilters({
       sort,
       range,
       filter,
@@ -37,23 +29,25 @@ class TermsOfUseRepo {
   };
 
   getManyReference = async (params: GetManyReferenceParams) => {
-    return new BaseRepo(this.prisma.termsOfUse).getManyReference(params);
+    return new BaseRepo(generateClient().termsOfUse).getManyReference(params);
   };
 
   getOneById = async (id: number) => {
-    return await new BaseRepo(this.prisma.termsOfUse).getOneById(id);
+    return await new BaseRepo(generateClient().termsOfUse).getOneById(id);
   };
 
   insert = async (payload: TermOfUsePostIF) => {
-    await new BaseRepo(this.prisma.idLastestOfRecord).updateIdLastestOfRecord({
+    await new BaseRepo(
+      generateClient().idLastestOfRecord
+    ).updateIdLastestOfRecord({
       record: payload.record,
     });
     delete payload.record;
-    return await new BaseRepo(this.prisma.termsOfUse).insert(payload);
+    return await new BaseRepo(generateClient().termsOfUse).insert(payload);
   };
 
   insertMany = async (body: TermOfUsePostIF[]) => {
-    return await new BaseRepo(this.prisma.termsOfUse).insertMany(body);
+    return await new BaseRepo(generateClient().termsOfUse).insertMany(body);
   };
 
   updateById = async ({
@@ -63,22 +57,24 @@ class TermsOfUseRepo {
     id: number;
     payload: TermOfUsePostIF;
   }) => {
-    return await new BaseRepo(this.prisma.termsOfUse).updateById({
+    return await new BaseRepo(generateClient().termsOfUse).updateById({
       id,
       payload,
     });
   };
 
   updateManyById = async (updates: TermOfUsePostIF[]) => {
-    return await new BaseRepo(this.prisma.termsOfUse).updateManyById(updates);
+    return await new BaseRepo(generateClient().termsOfUse).updateManyById(
+      updates
+    );
   };
 
   deleteById = async (id: number) => {
-    return await new BaseRepo(this.prisma.termsOfUse).deleteById(id);
+    return await new BaseRepo(generateClient().termsOfUse).deleteById(id);
   };
 
   deleteManyById = async (ids: number[]) => {
-    return await new BaseRepo(this.prisma.termsOfUse).deleteManyById(ids);
+    return await new BaseRepo(generateClient().termsOfUse).deleteManyById(ids);
   };
 }
 

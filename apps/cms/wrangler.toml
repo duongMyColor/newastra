@@ -2,8 +2,9 @@ name = "cms"
 compatibility_date = "2024-04-26"
 compatibility_flags = ["nodejs_compat"]
 
-account_id = "a44770b6d89c0ca3f00ef61b49135478" # ← Replace with your Account ID.
-workers_dev = true
+# account_id = "a44770b6d89c0ca3f00ef61b49135478" # ← Replace with your Account ID.
+# workers_dev = f
+pages_build_output_dir = "./.vercel/output/static"
 
 [[d1_databases]]
 binding = "DB" # i.e. available in your Worker on env.DB
