@@ -7,18 +7,19 @@ import {
   getUpdateData,
 } from '../repos/acsta.repo';
 import { PerformanceResponseIF } from '@repo/types/performance';
+import { getPresignedUrl } from '@/lib/cloudflare-r2';
 
 class AcstaFactory {
   static async getAll() {
     const acstas = await getAll();
     const res = acstas.map((acsta: AcstaApiResponseIF) => {
-      return new Acsta(acsta);
+      return new Acsta().getData(acsta);
     });
     return res;
   }
 
   static async getOneById(id: number) {
-    return new Acsta(await getOneById(id));
+    return new Acsta().getData(await getOneById(id));
   }
 
   static async getManyByIds(ids: number[]) {
@@ -29,7 +30,7 @@ class AcstaFactory {
     }
 
     return acstas.map((acsta: AcstaApiResponseIF) => {
-      return new Acsta(acsta);
+      return new Acsta().getData(acsta);
     });
   }
 
@@ -41,7 +42,7 @@ class AcstaFactory {
     }
 
     return acstas.map((acsta: AcstaApiResponseIF) => {
-      return new Acsta(acsta);
+      return new Acsta().getData(acsta);
     });
   }
 
@@ -52,25 +53,13 @@ class AcstaFactory {
       return [];
     }
     return acstas.map((acsta: AcstaApiResponseIF) => {
-      return new Acsta(acsta);
+      return new Acsta().getData(acsta);
     });
   }
 }
 
-class Acsta implements AcstaApiResponseIF {
-  public acstaId: number;
-  public appId: number;
-  public acstaName: string;
-  public thumbnailUrl: string;
-  public scanImageUrl: string;
-  public scanOriginX: number;
-  public scanOriginY: number;
-  public scanWidth: number;
-  public scanHeight: number;
-  public scanColors: string | number[];
-  public modeId: string;
-
-  public constructor({
+class Acsta {
+  async getData({
     id,
     acstaName,
     applicationId,
@@ -83,20 +72,22 @@ class Acsta implements AcstaApiResponseIF {
     scanColors,
     performace,
   }: AcstaApiResponseIF) {
-    this.acstaId = id as number;
-    this.acstaName = acstaName;
-    this.appId = applicationId as number;
-    this.thumbnailUrl = thumbnailUrl as string;
-    this.scanImageUrl = scanImageUrl as string;
-    this.scanOriginX = scanOriginX;
-    this.scanOriginY = scanOriginY;
-    this.scanWidth = scanWidth;
-    this.scanHeight = scanHeight;
-    this.scanColors = JSON.parse(scanColors as string);
+    return {
+      acstaId: id,
+      appId: applicationId,
+      acstaName,
 
-    this.modeId = performace
-      ? performace.map((p: PerformanceResponseIF) => p.id)
-      : [];
+      thumbnailUrl: await getPresignedUrl('da-acsta', thumbnailUrl),
+      scanImageUrl: await getPresignedUrl('da-acsta', scanImageUrl),
+      scanOriginX: scanOriginX,
+      scanOriginY: scanOriginY,
+      scanWidth: scanWidth,
+      scanHeight: scanHeight,
+      scanColors: JSON.parse(scanColors as string),
+      modeId: performace
+        ? performace.map((p: PerformanceResponseIF) => p.id)
+        : [],
+    };
   }
 }
 

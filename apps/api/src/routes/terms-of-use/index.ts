@@ -66,6 +66,7 @@ app.openapi(
         description: 'Ok Response',
       },
     },
+    tags: ['Term Of Use'],
   }),
   async (c): Promise<any> => {
     return c.json(await termsOfUseController.getCurrentTermOfUse());
@@ -90,6 +91,7 @@ app.openapi(
         description: 'Ok Response',
       },
     },
+    tags: ['Term Of Use'],
   }),
   async (c): Promise<any> => {
     const id = c.req.param('id');

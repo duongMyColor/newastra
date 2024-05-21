@@ -33,6 +33,7 @@ app.openapi(
         description: 'Ok Response',
       },
     },
+    tags: ['Update Check'],
   }),
   async (c): Promise<any> => {
     try {

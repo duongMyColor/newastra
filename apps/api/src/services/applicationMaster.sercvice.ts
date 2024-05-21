@@ -1,3 +1,4 @@
+import { getPresignedUrl } from '../lib/cloudflare-r2';
 import {
   getAll,
   getOneById,
@@ -17,7 +18,7 @@ class ApplicationMasterFactory {
     }
     const res = applicationMasters.map(
       (applicationMaster: AplicationMasterResponseIF) => {
-        return new ApplicationMaster(applicationMaster);
+        return new ApplicationMaster().getData(applicationMaster);
       }
     );
     return res;
@@ -26,7 +27,7 @@ class ApplicationMasterFactory {
   static async getOneById(id: number) {
     const applicationMaster: AplicationMasterResponseIF = await getOneById(id);
 
-    return new ApplicationMaster(applicationMaster);
+    return new ApplicationMaster().getData(applicationMaster);
   }
 
   static async getManyByIds(ids: number[]) {
@@ -35,8 +36,8 @@ class ApplicationMasterFactory {
       return [];
     }
 
-    return applicationMasters.map((acsta: AplicationMasterResponseIF) => {
-      return new ApplicationMaster(acsta);
+    return applicationMasters.map((app: AplicationMasterResponseIF) => {
+      return new ApplicationMaster().getData(app);
     });
   }
 
@@ -46,31 +47,27 @@ class ApplicationMasterFactory {
     if (!apps?.length) {
       return [];
     }
-    return apps.map((acsta: AplicationMasterResponseIF) => {
-      return new ApplicationMaster(acsta);
+    return apps.map((app: AplicationMasterResponseIF) => {
+      return new ApplicationMaster().getData(app);
     });
   }
 }
 
 class ApplicationMaster {
-  public appId: number;
-  public appName: string;
-  public assetBundleIOS: string;
-  public assetBundleAndroid: string;
-  public outlineUrl: number;
-
-  public constructor({
+  async getData({
     id,
     appName,
     assetBundleIOS,
     assetBundleAndroid,
     outlineUrl,
   }: AplicationMasterPostIF) {
-    this.appId = id as number;
-    this.appName = appName;
-    this.assetBundleIOS = assetBundleIOS;
-    this.assetBundleAndroid = assetBundleAndroid;
-    this.outlineUrl = outlineUrl;
+    return {
+      appId: id,
+      appName,
+      assetBundleIOS: await getPresignedUrl('da-acsta', assetBundleIOS),
+      assetBundleAndroid: await getPresignedUrl('da-acsta', assetBundleAndroid),
+      outlineUrl: await getPresignedUrl('da-acsta', outlineUrl),
+    };
   }
 }
 
