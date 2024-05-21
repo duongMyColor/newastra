@@ -1,93 +1,101 @@
 import { PerformancePostIF } from '@repo/types/performance';
-import { prisma } from '@/lib/prisma';
+import { generateClient } from '@/lib/prisma';
 import { BaseRepo } from './base/base.repo';
 import { GetAllQueryIF } from '@repo/types/response';
+import type { PrismaClient } from '@prisma/client/extension';
 
-const model = prisma.performaceManagement;
+// const this.prisma.performaceManagement = prisma.performaceManagement;
 
-const getAll = async () => {
-  return await new BaseRepo(model).getAll();
-};
+class PerformanceRepo {
+  public prisma: PrismaClient;
+  constructor() {
+    this.prisma = generateClient();
+  }
 
-const count = async () => {
-  return await new BaseRepo(model).count();
-};
+  getAll = async () => {
+    return await new BaseRepo(this.prisma.performaceManagement).getAll();
+  };
 
-const getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
-  return await new BaseRepo(model).getAllWithQuery({ sort, range, filter });
-};
+  count = async () => {
+    return await new BaseRepo(this.prisma.performaceManagement).count();
+  };
 
-const getAllAndParent = async ({ sort, range, filter }: GetAllQueryIF) => {
-  return await new BaseRepo(model).getAllWithParm({
-    sort,
-    range,
-    filter,
-    include: {
-      performanceTypeMaster: true,
-      acsta: true,
-    },
-  });
-};
+  getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
+    return await new BaseRepo(this.prisma.performaceManagement).getAllWithQuery(
+      { sort, range, filter }
+    );
+  };
 
-const getOneById = async (id: number) => {
-  return await new BaseRepo(model).getOneById(id);
-};
-const getOneAndParent = async (id: number) => {
-  return await new BaseRepo(model).getOneByIdWithParam(id, {
-    include: {
-      performanceTypeMaster: true,
-      acsta: true,
-    },
-  });
-};
+  getAllAndParent = async ({ sort, range, filter }: GetAllQueryIF) => {
+    return await new BaseRepo(this.prisma.performaceManagement).getAllWithParm({
+      sort,
+      range,
+      filter,
+      include: {
+        performanceTypeMaster: true,
+        acsta: true,
+      },
+    });
+  };
 
-const insert = async (payload: PerformancePostIF) => {
-  await new BaseRepo(prisma.idLastestOfRecord).updateIdLastestOfRecord({
-    record: payload.record,
-  });
-  delete payload.record;
-  return await new BaseRepo(model).insert(payload);
-};
+  getOneById = async (id: number) => {
+    return await new BaseRepo(this.prisma.performaceManagement).getOneById(id);
+  };
+  getOneAndParent = async (id: number) => {
+    return await new BaseRepo(
+      this.prisma.performaceManagement
+    ).getOneByIdWithParam(id, {
+      include: {
+        performanceTypeMaster: true,
+        acsta: true,
+      },
+    });
+  };
 
-const insertMany = async (products: PerformancePostIF[]) => {
-  console.log('products: ', products);
+  insert = async (payload: PerformancePostIF) => {
+    await new BaseRepo(this.prisma.idLastestOfRecord).updateIdLastestOfRecord({
+      record: payload.record,
+    });
+    delete payload.record;
+    return await new BaseRepo(this.prisma.performaceManagement).insert(payload);
+  };
 
-  return await new BaseRepo(model).insertMany(products);
-};
+  insertMany = async (products: PerformancePostIF[]) => {
+    console.log('products: ', products);
 
-const updateById = async ({
-  id,
-  payload,
-}: {
-  id: number;
-  payload: PerformancePostIF;
-}) => {
-  return await new BaseRepo(model).updateById({ id, payload });
-};
+    return await new BaseRepo(this.prisma.performaceManagement).insertMany(
+      products
+    );
+  };
 
-const updateManyById = async (updates: PerformancePostIF[]) => {
-  return await new BaseRepo(model).updateManyById(updates);
-};
+  updateById = async ({
+    id,
+    payload,
+  }: {
+    id: number;
+    payload: PerformancePostIF;
+  }) => {
+    return await new BaseRepo(this.prisma.performaceManagement).updateById({
+      id,
+      payload,
+    });
+  };
 
-const deleteById = async (id: number) => {
-  return await new BaseRepo(model).deleteById(id);
-};
+  updateManyById = async (updates: PerformancePostIF[]) => {
+    return await new BaseRepo(this.prisma.performaceManagement).updateManyById(
+      updates
+    );
+  };
 
-const deleteManyById = async (ids: number[]) => {
-  return await new BaseRepo(model).deleteManyById(ids);
-};
+  deleteById = async (id: number) => {
+    return await new BaseRepo(this.prisma.performaceManagement).deleteById(id);
+  };
 
-export {
-  getAll,
-  count,
-  getOneById,
-  insert,
-  updateById,
-  deleteById,
-  updateManyById,
-  insertMany,
-  getAllWithQuery,
-  deleteManyById,
-  getOneAndParent,
-  getAllAndParent,
-};
+  deleteManyById = async (ids: number[]) => {
+    return await new BaseRepo(this.prisma.performaceManagement).deleteManyById(
+      ids
+    );
+  };
+}
+
+export default new PerformanceRepo();

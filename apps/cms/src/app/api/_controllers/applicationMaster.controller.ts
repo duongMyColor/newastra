@@ -65,12 +65,12 @@ class AplicationMasterController {
     });
   };
 
-  getOneAndChildAndParent = async (id: number) => {
-    return new OK({
-      message: 'get AplicationMaster success!',
-      metadata: await AplicationMasterService.getOneAndChildAndParent(id),
-    });
-  };
+  // getOneAndChildAndParent = async (id: number) => {
+  //   return new OK({
+  //     message: 'get AplicationMaster success!',
+  //     metadata: await AplicationMasterService.getOneAndChildAndParent(id),
+  //   });
+  // };
 
   update = async (request: NextRequest, id: number) => {
     const payload: FormData = await request.formData();

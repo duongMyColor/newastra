@@ -1,16 +1,5 @@
 import { PerformanceTypeMasterPostIF } from '@repo/types/performanceTypeMaster';
-import {
-  getAll,
-  getOneById,
-  insert,
-  updateById,
-  deleteById,
-  // getByIdWithDetail,
-  deleteManyById,
-  deleteWithRelation,
-  getAllWithQuery,
-  getAllPerformanceTypeMaster,
-} from '../_repos/performanceTypeMaster.repo';
+import PerformanceTypeMasterRepo from '../_repos/performanceTypeMaster.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 
 class PerformanceTypeMasterFactory {
@@ -19,7 +8,7 @@ class PerformanceTypeMasterFactory {
   }
 
   static async getOneById(id: number) {
-    return await getOneById(id);
+    return await PerformanceTypeMasterRepo.getOneById(id);
   }
 
   // static async getByIdWithDetail(id: number) {
@@ -27,11 +16,15 @@ class PerformanceTypeMasterFactory {
   // }
 
   static async getAll() {
-    return await getAll();
+    return await PerformanceTypeMasterRepo.getAll();
   }
 
   static async getAllWithQuery({ filter, range, sort }: GetAllQueryIF) {
-    return await getAllWithQuery({ filter, range, sort });
+    return await PerformanceTypeMasterRepo.getAllWithQuery({
+      filter,
+      range,
+      sort,
+    });
   }
 
   static async getAllPerformanceTypeMaster({
@@ -39,7 +32,11 @@ class PerformanceTypeMasterFactory {
     range,
     sort,
   }: GetAllQueryIF) {
-    return await getAllPerformanceTypeMaster({ filter, range, sort });
+    return await PerformanceTypeMasterRepo.getAllPerformanceTypeMaster({
+      filter,
+      range,
+      sort,
+    });
   }
 
   static async updateById({
@@ -53,15 +50,15 @@ class PerformanceTypeMasterFactory {
   }
 
   static async deleteById(id: number) {
-    return await deleteById(id);
+    return await PerformanceTypeMasterRepo.deleteById(id);
   }
 
   static async deleteWithRelation(id: number) {
-    return await deleteById(id);
+    return await PerformanceTypeMasterRepo.deleteById(id);
   }
 
   static async deleteManyById(ids: number[]) {
-    return await deleteManyById(ids);
+    return await PerformanceTypeMasterRepo.deleteManyById(ids);
   }
 }
 
@@ -77,13 +74,13 @@ class PerformanceTypeMaster implements PerformanceTypeMasterPostIF {
   public async create() {
     const payload: PerformanceTypeMasterPostIF = this;
     // TODO: validate payload
-    return await insert(payload);
+    return await PerformanceTypeMasterRepo.insert(payload);
   }
 
   public async updateById({ id }: { id: number }) {
     const payload: PerformanceTypeMasterPostIF = this;
     // TODO: validate payload
-    return await updateById({ id, payload });
+    return await PerformanceTypeMasterRepo.updateById({ id, payload });
   }
 }
 

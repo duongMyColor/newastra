@@ -1,44 +1,52 @@
 import { UserIF } from '@repo/types/user';
-import { prisma } from '@/lib/prisma';
+import { generateClient } from '@/lib/prisma';
 import { exclude } from '@repo/utils/excludeKey';
 import { BaseRepo } from './base/base.repo';
+import type { PrismaClient } from '@prisma/client/extension';
 
-const model = prisma.bootUpdate;
+// const this.prisma.bootUpdate = prisma.bootUpdate;
 
-const getAll = async () => {
-  const res = (await new BaseRepo(model).getAll()).map((user: UserIF) =>
-    exclude(user, ['password'])
-  );
+class BootUpdateRepo {
+  public prisma: PrismaClient;
 
-  return res;
-};
+  constructor() {
+    this.prisma = generateClient();
+  }
+  getAll = async () => {
+    const res = (await new BaseRepo(this.prisma.bootUpdate).getAll()).map(
+      (user: UserIF) => exclude(user, ['password'])
+    );
 
-const count = async () => {
-  return await new BaseRepo(model).count();
-};
+    return res;
+  };
 
-const insertMany = async (users: UserIF[]) => {
-  return await new BaseRepo(model).insertMany(users);
-};
+  count = async () => {
+    return await new BaseRepo(this.prisma.bootUpdate).count();
+  };
 
-const updateById = async ({ id }: { id: number }) => {
-  return await new BaseRepo(model).updateById({
-    id,
-    payload: { updateAt: new Date() },
-  });
-};
+  insertMany = async (users: UserIF[]) => {
+    return await new BaseRepo(this.prisma.bootUpdate).insertMany(users);
+  };
 
-const updateByTableName = async (tableName: string) => {
-  return await prisma.bootUpdate.update({
-    where: {
-      tableName: tableName,
-    },
-    data: { updatedAt: new Date() },
-  });
-};
+  updateById = async ({ id }: { id: number }) => {
+    return await new BaseRepo(this.prisma.bootUpdate).updateById({
+      id,
+      payload: { updateAt: new Date() },
+    });
+  };
 
-const deleteById = async (id: number) => {
-  return await new BaseRepo(model).deleteById(id);
-};
+  updateByTableName = async (tableName: string) => {
+    return await this.prisma.bootUpdate.update({
+      where: {
+        tableName: tableName,
+      },
+      data: { updatedAt: new Date() },
+    });
+  };
 
-export { getAll, updateById, deleteById, insertMany, count, updateByTableName };
+  deleteById = async (id: number) => {
+    return await new BaseRepo(this.prisma.bootUpdate).deleteById(id);
+  };
+}
+
+export default new BootUpdateRepo();

@@ -2,7 +2,7 @@ import ProductService from '../_services/performanceTypeMaster.service';
 import { OK, CREATED } from '../_core/success.response';
 
 import { PerformanceTypeMasterPostIF } from '@repo/types/performanceTypeMaster';
-import { count } from '../_repos/performanceTypeMaster.repo';
+import PerformanceTypeMasterRepo from '../_repos/performanceTypeMaster.repo';
 import type { NextRequest } from 'next/server';
 import { parseSearchParams } from '@repo/utils/parseParams';
 
@@ -22,7 +22,7 @@ class ProductController {
     return new OK({
       message: 'get all Products success!',
       metadata: await ProductService.getAll(),
-      count: await count(),
+      count: await PerformanceTypeMasterRepo.count(),
     });
   };
 
@@ -34,7 +34,7 @@ class ProductController {
     return new OK({
       message: 'get all Products success!',
       metadata: await ProductService.getAllWithQuery({ filter, range, sort }),
-      count: await count(),
+      count: await PerformanceTypeMasterRepo.count(),
     });
   };
 
@@ -46,7 +46,7 @@ class ProductController {
     return new OK({
       message: 'get all performance type master success!',
       metadata: await ProductService.getAllPerformanceTypeMaster({ filter, range, sort }),
-      count: await count(),
+      count: await PerformanceTypeMasterRepo.count(),
     });
   };
 

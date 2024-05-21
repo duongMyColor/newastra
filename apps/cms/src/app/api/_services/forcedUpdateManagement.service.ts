@@ -1,20 +1,5 @@
 import { ForcedUpdateManagementPostIF } from '@repo/types/forceUpdateManagement';
-import {
-  getAll,
-  getOneById,
-  insert,
-  insertMany,
-  updateById,
-  updateManyById,
-  deleteById,
-  deleteManyById,
-  getAllWithQuery,
-  getAllWithFilters,
-  getManyReference,
-  getOneAndParent,
-  getAllAndParentWithFilters,
-  getAllParen,
-} from '../_repos/forcedUpdateManagement.repo';
+import ForcedUpdateRepo from '../_repos/forcedUpdateManagement.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
 import { convertFormDataToObject } from '@repo/utils/objectUtils';
@@ -33,41 +18,45 @@ class ForcedUpdateManagementFactory {
     const payload = body.map(
       (terms_and_conditions) => new ForcedUpdateManagement(terms_and_conditions)
     );
-    return await insertMany(payload);
+    return await ForcedUpdateRepo.insertMany(payload);
   }
 
   static async getOneById(id: number) {
-    return await getOneById(id);
+    return await ForcedUpdateRepo.getOneById(id);
   }
   static async getOneAndParent(id: number) {
-    return await await getOneAndParent(id);
+    return await await ForcedUpdateRepo.getOneAndParent(id);
   }
 
   static async getAll() {
-    return await getAll();
+    return await ForcedUpdateRepo.getAll();
   }
 
   static async getAllParen() {
-    return await getAllParen();
+    return await ForcedUpdateRepo.getAllParen();
   }
 
   static async getAllWithQuery({ filter, range, sort }: GetAllQueryIF) {
-    return await getAllWithQuery({ filter, range, sort });
+    return await ForcedUpdateRepo.getAllWithQuery({ filter, range, sort });
   }
 
   static async getAllWithFilters({ filter, range, sort }: GetAllQueryIF) {
-    return await getAllWithFilters({ filter, range, sort });
+    return await ForcedUpdateRepo.getAllWithFilters({ filter, range, sort });
   }
   static async getAllAndParentWithFilters({
     filter,
     range,
     sort,
   }: GetAllQueryIF) {
-    return await await getAllAndParentWithFilters({ filter, range, sort });
+    return await await ForcedUpdateRepo.getAllAndParentWithFilters({
+      filter,
+      range,
+      sort,
+    });
   }
 
   static async getManyReference(params: GetManyReferenceParams) {
-    return await getManyReference(params);
+    return await ForcedUpdateRepo.getManyReference(params);
   }
 
   static async updateById({ id, payload }: { id: number; payload: FormData }) {
@@ -84,15 +73,15 @@ class ForcedUpdateManagementFactory {
   static async updateMany(updates: ForcedUpdateManagementPostIF[]) {
     const payload = updates.map((update) => new ForcedUpdateManagement(update));
 
-    return await updateManyById(payload);
+    return await ForcedUpdateRepo.updateManyById(payload);
   }
 
   static async deleteById(id: number) {
-    return await deleteById(id);
+    return await ForcedUpdateRepo.deleteById(id);
   }
 
   static async deleteManyById(ids: number[]) {
-    return await deleteManyById(ids);
+    return await ForcedUpdateRepo.deleteManyById(ids);
   }
 }
 
@@ -126,12 +115,12 @@ class ForcedUpdateManagement implements ForcedUpdateManagementPostIF {
   public async create() {
     const payload: ForcedUpdateManagementPostIF = this;
     payload['operateSystem'] = payload['operateSystem'].toString();
-    return await insert(payload);
+    return await ForcedUpdateRepo.insert(payload);
   }
 
   public async updateById({ id }: { id: number }) {
     const payload: ForcedUpdateManagementPostIF = this;
-    return await updateById({ id, payload });
+    return await ForcedUpdateRepo.updateById({ id, payload });
   }
 }
 

@@ -1,17 +1,5 @@
 import { LicensePostIF } from '@repo/types/license';
-import {
-  getAll,
-  getOneById,
-  insert,
-  insertMany,
-  updateById,
-  updateManyById,
-  deleteById,
-  deleteManyById,
-  getAllWithQuery,
-  getAllWithFilters,
-  getManyReference,
-} from '../_repos/license.repo';
+import LicenseRepo from '../_repos/license.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
 
@@ -35,27 +23,27 @@ class LicenseFactory {
     const payload = body.map(
       (terms_and_conditions) => new License(terms_and_conditions)
     );
-    return await insertMany(payload);
+    return await LicenseRepo.insertMany(payload);
   }
 
   static async getOneById(id: number) {
-    return await getOneById(id);
+    return await LicenseRepo.getOneById(id);
   }
 
   static async getAll() {
-    return await getAll();
+    return await LicenseRepo.getAll();
   }
 
   static async getAllWithQuery({ filter, range, sort }: GetAllQueryIF) {
-    return await getAllWithQuery({ filter, range, sort });
+    return await LicenseRepo.getAllWithQuery({ filter, range, sort });
   }
 
   static async getAllWithFilters({ filter, range, sort }: GetAllQueryIF) {
-    return await getAllWithFilters({ filter, range, sort });
+    return await LicenseRepo.getAllWithFilters({ filter, range, sort });
   }
 
   static async getManyReference(params: GetManyReferenceParams) {
-    return await getManyReference(params);
+    return await LicenseRepo.getManyReference(params);
   }
 
   static async updateById({ id, payload }: { id: number; payload: FormData }) {
@@ -72,15 +60,15 @@ class LicenseFactory {
   static async updateMany(updates: LicensePostIF[]) {
     const payload = updates.map((update) => new License(update));
 
-    return await updateManyById(payload);
+    return await LicenseRepo.updateManyById(payload);
   }
 
   static async deleteById(id: number) {
-    return await deleteById(id);
+    return await LicenseRepo.deleteById(id);
   }
 
   static async deleteManyById(ids: number[]) {
-    return await deleteManyById(ids);
+    return await LicenseRepo.deleteManyById(ids);
   }
 }
 
@@ -110,12 +98,12 @@ class License implements LicensePostIF {
 
   public async create() {
     const payload: LicensePostIF = this;
-    return await insert(payload);
+    return await LicenseRepo.insert(payload);
   }
 
   public async updateById({ id }: { id: number }) {
     const payload: LicensePostIF = this;
-    return await updateById({ id, payload });
+    return await LicenseRepo.updateById({ id, payload });
   }
 }
 

@@ -1,10 +1,15 @@
-import { prisma } from '@/lib/prisma';
+import { generateClient } from '@/lib/prisma';
 import { KeyTokenPostIF } from '@repo/types/access';
 import UserService from './user.service';
-const keyTokenModel = prisma.keyToken;
+import { PrismaClient } from '@prisma/client/extension';
 
 class KeyTokenService {
-  static async createKeyToken({
+  public prisma: PrismaClient;
+  constructor() {
+    this.prisma = generateClient();
+  }
+
+  async createKeyToken({
     userId,
     publicKey,
     privateKey,
@@ -20,15 +25,13 @@ class KeyTokenService {
         refreshToken,
       };
 
-
-      const tokens = await keyTokenModel.upsert({
+      const tokens = await this.prisma.keyToken.upsert({
         where: {
           userId: userId,
         },
         update: data,
         create: { userId, ...data },
       });
-
 
       await UserService.updateLastLogin({
         id: userId,
@@ -39,34 +42,33 @@ class KeyTokenService {
     }
   }
 
-  static async findByUserId(userId: number) {
-
-    return await keyTokenModel.findUnique({ where: { userId } });
+  async findByUserId(userId: number) {
+    return await this.prisma.keyToken.findUnique({ where: { userId } });
   }
 
-  static async removeToken(id: number) {
-    return await keyTokenModel.delete({ where: { id } });
+  async removeToken(id: number) {
+    return await this.prisma.keyToken.delete({ where: { id } });
   }
 
-  static async removeTokenByUserId(userId: number) {
-    return await keyTokenModel.delete({ where: { userId } });
+  async removeTokenByUserId(userId: number) {
+    return await this.prisma.keyToken.delete({ where: { userId } });
   }
 
-  static async findByRefreshTokenUsed(refreshToken: string) {
-    return await keyTokenModel.findUnique({
+  async findByRefreshTokenUsed(refreshToken: string) {
+    return await this.prisma.keyToken.findUnique({
       where: { refreshToken },
     });
   }
 
-  static async findByRefreshToken(refreshToken: string) {
-    return await keyTokenModel.findUnique({ where: { refreshToken } });
+  async findByRefreshToken(refreshToken: string) {
+    return await this.prisma.keyToken.findUnique({ where: { refreshToken } });
   }
 
-  static async deleteKeyById(userId: number) {
-    return await keyTokenModel.delete({ where: { userId } });
+  async deleteKeyById(userId: number) {
+    return await this.prisma.keyToken.delete({ where: { userId } });
   }
 
-  static async updateKeyById({
+  async updateKeyById({
     id,
     oldToken,
     newToken,
@@ -75,7 +77,7 @@ class KeyTokenService {
     oldToken: string;
     newToken: string;
   }) {
-    const keyToken = await keyTokenModel.findUnique({ where: { id } });
+    const keyToken = await this.prisma.keyToken.findUnique({ where: { id } });
 
     let refreshTokensUsed = keyToken?.refreshTokensUsed
       ? JSON.parse(keyToken.refreshTokensUsed.toString())
@@ -83,7 +85,7 @@ class KeyTokenService {
 
     refreshTokensUsed.push(oldToken);
 
-    return await keyTokenModel.update({
+    return await this.prisma.keyToken.update({
       where: { id },
       data: {
         refreshToken: newToken,
@@ -93,4 +95,4 @@ class KeyTokenService {
   }
 }
 
-export default KeyTokenService;
+export default new KeyTokenService();

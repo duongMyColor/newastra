@@ -1,6 +1,6 @@
 import LicenseService from '../_services/license.service';
 import { OK, CREATED } from '../_core/success.response';
-import { count } from '../_repos/license.repo';
+import LicenseRepo from '../_repos/license.repo';
 
 import { LicensePostIF } from '@repo/types/license';
 import type { NextRequest } from 'next/server';
@@ -9,7 +9,7 @@ import { parseParams, parseSearchParams } from '@repo/utils/parseParams';
 class LicenseController {
   create = async (request: NextRequest) => {
     const payload: FormData = await request.formData();
-    console.log({payload});
+    console.log({ payload });
 
     return new CREATED({
       message: 'created License OK!',
@@ -32,7 +32,7 @@ class LicenseController {
     return new OK({
       message: 'get all License success!',
       metadata: await LicenseService.getAll(),
-      count: await count(),
+      count: await LicenseRepo.count(),
     });
   };
 
@@ -58,7 +58,7 @@ class LicenseController {
         range,
         sort,
       }),
-      count: await count(),
+      count: await LicenseRepo.count(),
     });
   };
 

@@ -1,100 +1,113 @@
 import { AplicationMasterPostIF } from '@repo/types/applicationMaster';
-import { prisma } from '@/lib/prisma';
+import { generateClient } from '@/lib/prisma';
 import { BaseRepo } from './base/base.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
+import type { PrismaClient } from '@prisma/client/extension';
 
-const model = prisma.aplicationMaster;
-const child = 'memo';
-const parent = 'classification';
+// const this.prisma.applicationMaster = prisma.aplicationMaster;
+// const child = 'memo';
+// const parent = 'classification';
 
-const getAll = async () => {
-  return await new BaseRepo(model).getAll();
-};
+class AplicationMasterRepo {
+  public prisma: PrismaClient;
 
-const getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
-  return await new BaseRepo(model).getAllWithQuery({ sort, range, filter });
-};
-const getAllWithFilters = async ({ sort, range, filter }: GetAllQueryIF) => {
-  return await new BaseRepo(model).getAllWithFilters({ sort, range, filter });
-};
+  constructor() {
+    this.prisma = generateClient();
+  }
 
-const getManyReference = async (params: GetManyReferenceParams) => {
-  return new BaseRepo(model).getManyReference(params);
-};
+  getAll = async () => {
+    return await new BaseRepo(this.prisma.applicationMaster).getAll();
+  };
 
-const getOneById = async (id: number) => {
-  return await new BaseRepo(model).getOneById(id);
-};
+  getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
+    return await new BaseRepo(this.prisma.applicationMaster).getAllWithQuery({
+      sort,
+      range,
+      filter,
+    });
+  };
+  getAllWithFilters = async ({ sort, range, filter }: GetAllQueryIF) => {
+    return await new BaseRepo(this.prisma.applicationMaster).getAllWithFilters({
+      sort,
+      range,
+      filter,
+    });
+  };
 
-const getOneAndParent = async (id: number) => {
-  return await new BaseRepo(model).getOneByIdWithParam(id, {
-    include: {
-      classification: true,
-    },
-  });
-};
+  getManyReference = async (params: GetManyReferenceParams) => {
+    return new BaseRepo(this.prisma.applicationMaster).getManyReference(params);
+  };
 
-const getOneAndChildren = async (id: number, child: string) => {
-  return await new BaseRepo(model).getOneByIdWithParam(id, {
-    include: {
-      [child]: true,
-    },
-  });
-};
+  getOneById = async (id: number) => {
+    return await new BaseRepo(this.prisma.applicationMaster).getOneById(id);
+  };
 
-const getOneAndChildAndParent = async (id: number) => {
-  return await new BaseRepo(model).getOneByIdWithParam(id, {
-    include: {
-      [child]: true,
-      [parent]: true,
-    },
-  });
-};
+  getOneAndParent = async (id: number) => {
+    return await new BaseRepo(
+      this.prisma.applicationMaster
+    ).getOneByIdWithParam(id, {
+      include: {
+        classification: true,
+      },
+    });
+  };
 
-const insert = async (payload: AplicationMasterPostIF) => {
-  return await new BaseRepo(model).insert(payload);
-};
+  // const getOneAndChildren = async (id: number, child: string) => {
+  //   return await new BaseRepo(this.prisma.applicationMaster).getOneByIdWithParam(id, {
+  //     include: {
+  //       [child]: true,
+  //     },
+  //   });
+  // };
 
-const insertMany = async (animals: AplicationMasterPostIF[]) => {
-  return await new BaseRepo(model).insertMany(animals);
-};
+  // const getOneAndChildAndParent = async (id: number) => {
+  //   return await new BaseRepo(this.prisma.applicationMaster).getOneByIdWithParam(id, {
+  //     include: {
+  //       [child]: true,
+  //       [parent]: true,
+  //     },
+  //   });
+  // };
 
-const updateById = async ({
-  id,
-  payload,
-}: {
-  id: number;
-  payload: AplicationMasterPostIF;
-}) => {
-  return await new BaseRepo(model).updateById({ id, payload });
-};
+  insert = async (payload: AplicationMasterPostIF) => {
+    return await new BaseRepo(this.prisma.applicationMaster).insert(payload);
+  };
 
-const updateManyById = async (updates: AplicationMasterPostIF[]) => {
-  return await new BaseRepo(model).updateManyById(updates);
-};
+  insertMany = async (animals: AplicationMasterPostIF[]) => {
+    return await new BaseRepo(this.prisma.applicationMaster).insertMany(
+      animals
+    );
+  };
 
-const deleteById = async (id: number) => {
-  return await new BaseRepo(model).deleteById(id);
-};
+  updateById = async ({
+    id,
+    payload,
+  }: {
+    id: number;
+    payload: AplicationMasterPostIF;
+  }) => {
+    return await new BaseRepo(this.prisma.applicationMaster).updateById({
+      id,
+      payload,
+    });
+  };
 
-const deleteManyById = async (ids: number[]) => {
-  return await new BaseRepo(model).deleteManyById(ids);
-};
+  updateManyById = async (updates: AplicationMasterPostIF[]) => {
+    return await new BaseRepo(this.prisma.applicationMaster).updateManyById(
+      updates
+    );
+  };
 
-export {
-  getAll,
-  getOneById,
-  insert,
-  updateById,
-  deleteById,
-  updateManyById,
-  insertMany,
-  getAllWithQuery,
-  deleteManyById,
-  getOneAndParent,
-  getOneAndChildren,
-  getOneAndChildAndParent,
-  getAllWithFilters,
-  getManyReference,
-};
+  deleteById = async (id: number) => {
+    return await new BaseRepo(this.prisma.applicationMaster).deleteById(id);
+  };
+
+  deleteManyById = async (ids: number[]) => {
+    return await new BaseRepo(this.prisma.applicationMaster).deleteManyById(
+      ids
+    );
+  };
+}
+
+export default new AplicationMasterRepo();

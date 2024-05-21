@@ -1,7 +1,5 @@
-import LicenseService from '../_services/license.service';
-import { OK, CREATED } from '../_core/success.response';
+import { OK } from '../_core/success.response';
 import type { NextRequest } from 'next/server';
-import { parseParams } from '@repo/utils/parseParams';
 import { BaseRepo } from '../_repos/base/base.repo';
 import { prisma } from '@/lib/prisma';
 
