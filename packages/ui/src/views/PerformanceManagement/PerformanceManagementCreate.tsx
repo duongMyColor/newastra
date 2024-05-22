@@ -11,7 +11,7 @@ import {
 } from 'react-admin';
 
 import { TextField } from '@mui/material';
-import { validateUserCreation } from './formValidator';
+import { validateCreation } from './formValidator';
 import CryptoJS from 'crypto-js';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps, RAFile, RecordValue } from '@repo/types/general';
@@ -130,7 +130,7 @@ const PerformanceManagementCreate = ({
     <Create title="演出管理　新规作成">
       <CustomForm
         pathTo={resourcePath}
-        validate={validateUserCreation}
+        validate={validateCreation}
         showSaveButton={true}
         showCancelButton={true}
         handleSave={handleSave}
