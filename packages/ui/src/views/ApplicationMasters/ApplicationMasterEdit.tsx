@@ -39,16 +39,19 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
   const handleSave = async (values: RecordValue) => {
     const encryptKey = record.encryptKey;
 
-    const { assetBundleIOS, assetBundleAndroid, ...rest } = values;
+    const { assetDataIOS, assetDataAndroid, ...rest } = values;
 
-    if (assetBundleIOS?.rawFile) {
-      const assetBundleIOSFile = extractFile(assetBundleIOS);
+
+    if (assetDataIOS?.rawFile ) {
+
+      const assetBundleIOSFile = extractFile(assetDataIOS);
       const keyIOS = await uploadMuiltpart(assetBundleIOSFile, encryptKey);
       rest.assetBundleIOS = keyIOS;
+
     }
 
-    if (assetBundleAndroid?.rawFile) {
-      const assetBundleAndroidFile = extractFile(assetBundleAndroid);
+    if (assetDataAndroid?.rawFile) {
+      const assetBundleAndroidFile = extractFile(assetDataAndroid);
       const keyAndroid = await uploadMuiltpart(
         assetBundleAndroidFile,
         encryptKey

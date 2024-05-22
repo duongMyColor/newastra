@@ -70,7 +70,7 @@ const PerformanceEditForm = ({ actions, resource }: BaseComponentProps) => {
       const formData = convertToFormData(rest);
 
       const data = await update(resource, {
-        id: values.id,
+        id: record.id,
         data: formData,
         previousData: record,
       });
