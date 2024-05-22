@@ -9,6 +9,7 @@
     "lint": "eslint . --max-warnings 0",
     "pages:build": "npx @cloudflare/next-on-pages",
     "db:migrate": "npx tsx prisma/migrate.mts",
+    "db:seed": "npx tsx prisma/seed.ts",
     "preview": "npm run pages:build && wrangler pages dev",
     "deploy": "npm run pages:build && wrangler pages deploy"
   },
