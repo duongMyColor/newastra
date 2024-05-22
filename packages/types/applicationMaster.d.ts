@@ -8,7 +8,7 @@ export interface AplicationMasterResponseIF {
   licenseId: string;
   assetBundleIOS: string;
   assetBundleAndroid: string;
-  outlineUrl: number;
+  outlineUrl: string;
   encryptKey: string;
 
   createdAt: string | Date;
@@ -25,6 +25,6 @@ export interface AplicationMasterPostIF {
   assetBundleIOS: string;
   assetBundleAndroid: string;
   encryptKey: string;
-  outlineUrl: number;
+  outlineUrl: string;
   updatedAt?: string | Date;
 }

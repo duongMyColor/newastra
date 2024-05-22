@@ -24,6 +24,7 @@ app.openapi(
         description: 'Ok Response',
       },
     },
+    tags: ['Product'],
   }),
   async (c): Promise<any> => {
     return c.json(await performanceController.getAll());
@@ -48,6 +49,7 @@ app.openapi(
         description: 'Ok Response',
       },
     },
+    tags: ['Product'],
   }),
   async (c): Promise<any> => {
     const ids = c.req.query('ids');
@@ -74,6 +76,7 @@ app.openapi(
         description: 'Ok Response',
       },
     },
+    tags: ['Product'],
   }),
   async (c): Promise<any> => {
     const id = c.req.param('id');

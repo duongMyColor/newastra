@@ -19,6 +19,7 @@ app.openapi(
         description: 'Ok Response',
       },
     },
+    tags: ['Data'],
   }),
   async (c): Promise<any> => {
     return c.json(await getDataController.getInitData());
@@ -43,6 +44,7 @@ app.openapi(
         description: 'Ok Response',
       },
     },
+    tags: ['Data'],
   }),
   async (c): Promise<any> => {
     const lastSyncDate = c.req.param('lastSyncDate');
