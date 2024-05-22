@@ -5,8 +5,13 @@ import { OpenAPIHono } from '@hono/zod-openapi';
 // import { bearerAuth } from 'hono/bearer-auth';
 
 import routes from './routes';
+import { generateS3Client } from './lib/cloudflare-r2';
 type Bindings = {
   DB: D1Database;
+  CLOUDFLARE_ACCOUNT_ID: string;
+  CLOUDFLARE_ACCESS_KEY_ID: string;
+  CLOUDFLARE_SECRET_ACCESS_KEY: string;
+  CLOUDFLARE_BUCKET_NAME: string;
 };
 
 const app = new OpenAPIHono<{ Bindings: Bindings }>();
@@ -14,6 +19,11 @@ const app = new OpenAPIHono<{ Bindings: Bindings }>();
 // Init prism client
 app.use(async (c, next) => {
   generateClient(c.env.DB);
+  generateS3Client(
+    c.env.CLOUDFLARE_ACCOUNT_ID,
+    c.env.CLOUDFLARE_ACCESS_KEY_ID,
+    c.env.CLOUDFLARE_SECRET_ACCESS_KEY
+  );
   return next();
 });
 

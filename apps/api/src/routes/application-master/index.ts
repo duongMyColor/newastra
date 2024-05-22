@@ -24,6 +24,7 @@ app.openapi(
         description: 'Ok Response',
       },
     },
+    tags: ['Application Master'],
   }),
   async (c): Promise<any> => {
     return c.json(await applicationMasterController.getAll());
@@ -48,6 +49,7 @@ app.openapi(
         description: 'Ok Response',
       },
     },
+    tags: ['Application Master'],
   }),
   async (c): Promise<any> => {
     const ids = c.req.query('ids');
@@ -76,6 +78,7 @@ app.openapi(
         description: 'Ok Response',
       },
     },
+    tags: ['Application Master'],
   }),
   async (c): Promise<any> => {
     const id = c.req.param('id');
