@@ -29,10 +29,13 @@ const OPERATE_SYSTEM = [
   { id: '1', name: 'Android' },
 ];
 
+const ACCEPT_TYPE_FILE = ['jpg','png',"jpeg",'html','hml','assetbundle']
+
 export {
   baseUploadFolder,
   REDIRECT_ROUTE,
   UPLOAD_FOLDER_MAP,
   MAP_RESOURE,
   OPERATE_SYSTEM,
+  ACCEPT_TYPE_FILE
 };

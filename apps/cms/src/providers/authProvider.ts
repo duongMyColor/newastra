@@ -4,7 +4,7 @@ import type { AuthProvider } from 'react-admin';
 import { fetchUtils } from 'react-admin';
 import { generateRole } from '../views/_core/permissions';
 
-const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api`;
+const apiUrl = `/api`;
 const httpClient = fetchUtils.fetchJson;
 
 const authProvider: AuthProvider = {

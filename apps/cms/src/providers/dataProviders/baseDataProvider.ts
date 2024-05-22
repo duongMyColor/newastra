@@ -32,7 +32,7 @@ import {
 } from '@repo/types/upload';
 import { GetObjectType } from '@repo/types/response';
 
-const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api`;
+const apiUrl = `/api`;
 const httpClient = fetchUtils.fetchJson;
 
 const baseDataProvider: DataProvider = {
