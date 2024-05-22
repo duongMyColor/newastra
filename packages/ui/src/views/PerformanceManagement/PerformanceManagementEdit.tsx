@@ -15,7 +15,7 @@ import {
 } from 'react-admin';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { useNavigate } from 'react-router-dom';
-import { validateUserCreation, validateUserEdition } from './formValidator';
+import { validateUserEdition } from './formValidator';
 import { BaseComponentProps, RAFile, RecordValue } from '@repo/types/general';
 import { Box } from '@mui/material';
 import { validRole } from '../_core/permissions';

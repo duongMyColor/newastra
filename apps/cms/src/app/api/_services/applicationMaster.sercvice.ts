@@ -104,7 +104,7 @@ class ApplicationMaster implements AplicationMasterPostIF {
   public licenseId: string;
   public assetBundleIOS: string;
   public assetBundleAndroid: string;
-  public outlineUrl: number;
+  public outlineUrl: string;
   public encryptKey: string;
   public updatedAt?: string | Date;
 

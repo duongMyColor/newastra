@@ -1,12 +1,5 @@
-import { countryList, userRoles } from '@repo/consts/user';
-import {
-  TextInput,
-  PasswordInput,
-  Create,
-  SelectInput,
-  AutocompleteInput,
-  BooleanInput,
-} from 'react-admin';
+import { userRoles } from '@repo/consts/user';
+import { TextInput, PasswordInput, Create, SelectInput } from 'react-admin';
 
 import { validateUserCreation } from './formValidator';
 import CustomForm from '@repo/ui/src/components/CustomForm';
@@ -17,7 +10,7 @@ const UserCreate = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
 
   return (
-    <Create redirect={REDIRECT_ROUTE.list} title="管理ユーザー管理　新規作成">
+    <Create title="管理ユーザー管理　新規作成">
       <CustomForm
         pathTo={resourcePath}
         validate={validateUserCreation}
