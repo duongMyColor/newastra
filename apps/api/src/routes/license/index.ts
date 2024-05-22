@@ -19,6 +19,7 @@ app.openapi(
         description: 'Ok Response',
       },
     },
+    tags: ['License'],
   }),
   async (c): Promise<any> => {
     return c.json(await licenseController.getCurrentLicense());
@@ -43,6 +44,7 @@ app.openapi(
         description: 'Ok Response',
       },
     },
+    tags: ['License'],
   }),
   async (c): Promise<any> => {
     const id = c.req.param('id');
