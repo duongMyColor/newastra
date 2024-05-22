@@ -150,7 +150,7 @@ const getPresignedUrl = async (bucketName: string, key: string) => {
       { expiresIn: 3600 }
     );
   } catch (error) {
-    console.error('Failed to get presigned URL:', error);
+    console.error('Failed to get presigned URL: ' + bucketName + key, error);
     throw new Error('Error getting presigned URL');
   }
 };

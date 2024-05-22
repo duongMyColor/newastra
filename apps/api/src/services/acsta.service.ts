@@ -77,8 +77,8 @@ class Acsta {
       appId: applicationId,
       acstaName,
 
-      thumbnailUrl: await getPresignedUrl('da-acsta', thumbnailUrl),
-      scanImageUrl: await getPresignedUrl('da-acsta', scanImageUrl),
+      thumbnailUrl: await getPresignedUrl('da-acsta-bucket', thumbnailUrl),
+      scanImageUrl: await getPresignedUrl('da-acsta-bucket', scanImageUrl),
       scanOriginX: scanOriginX,
       scanOriginY: scanOriginY,
       scanWidth: scanWidth,

@@ -12,8 +12,9 @@ class TermOfUseService {
 
   static async getCurrentTermOfUse() {
     const currentTermsOfUse = await getCurrentTermOfUse();
+
     const contentUrl = await getPresignedUrl(
-      'da-acsta',
+      'da-acsta-bucket',
       currentTermsOfUse?.content as string
     );
     return { contentUrl };
@@ -22,7 +23,7 @@ class TermOfUseService {
   static async getOneById(id: number) {
     const termOfUse = await getOneById(id);
     const contentUrl = await getPresignedUrl(
-      'da-acsta',
+      'da-acsta-bucket',
       termOfUse?.content as string
     );
     return { contentUrl };
