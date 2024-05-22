@@ -13,7 +13,7 @@ const MAP_RESOURE: Record<string, string> = {
   licenses: 'license',
   performances: 'performaceManagement',
   'forced-update-managements': 'forcedUpdateManagements',
-  'application-masters': 'applicationMaster',
+  'application-masters': 'aplicationMaster',
 };
 
 const UPLOAD_FOLDER_MAP = {
@@ -29,10 +29,13 @@ const OPERATE_SYSTEM = [
   { id: '1', name: 'Android' },
 ];
 
+const ACCEPT_TYPE_FILE = ['jpg','png',"jpeg",'html','hml','assetbundle']
+
 export {
   baseUploadFolder,
   REDIRECT_ROUTE,
   UPLOAD_FOLDER_MAP,
   MAP_RESOURE,
   OPERATE_SYSTEM,
+  ACCEPT_TYPE_FILE
 };
