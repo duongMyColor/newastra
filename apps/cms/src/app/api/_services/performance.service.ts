@@ -1,17 +1,5 @@
 import { PerformancePostIF } from '@repo/types/performance';
-import {
-  getAll,
-  getOneById,
-  insert,
-  insertMany,
-  updateById,
-  updateManyById,
-  deleteById,
-  deleteManyById,
-  getAllWithQuery,
-  getOneAndParent,
-  getAllAndParent,
-} from '../_repos/performance.repo';
+import PerfromanceRepo from '../_repos/performance.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 import UploadFileService from './upload.service';
 import { UPLOAD_FOLDER_MAP } from '@repo/consts/general';
@@ -31,25 +19,25 @@ class PerformanceFactory {
 
   static async createMany(products: PerformancePostIF[]) {
     const payload = products.map((product) => new Performance(product));
-    return await insertMany(payload);
+    return await PerfromanceRepo.insertMany(payload);
   }
 
   static async getOneById(id: number) {
-    return await getOneById(id);
+    return await PerfromanceRepo.getOneById(id);
   }
   static async getOneAndParent(id: number) {
-    return await await getOneAndParent(id);
+    return await await PerfromanceRepo.getOneAndParent(id);
   }
 
   static async getAllAndParent({ filter, range, sort }: GetAllQueryIF) {
-    return await await getAllAndParent({ filter, range, sort });
+    return await await PerfromanceRepo.getAllAndParent({ filter, range, sort });
   }
 
   static async getAll() {
-    return await getAll();
+    return await PerfromanceRepo.getAll();
   }
   static async getAllWithQuery({ filter, range, sort }: GetAllQueryIF) {
-    return await getAllWithQuery({ filter, range, sort });
+    return await PerfromanceRepo.getAllWithQuery({ filter, range, sort });
   }
 
   static async updateById({ id, payload }: { id: number; payload: FormData }) {
@@ -67,15 +55,15 @@ class PerformanceFactory {
   static async updateMany(updates: PerformancePostIF[]) {
     const payload = updates.map((update) => new Performance(update));
 
-    return await updateManyById(payload);
+    return await PerfromanceRepo.updateManyById(payload);
   }
 
   static async deleteById(id: number) {
-    return await deleteById(id);
+    return await PerfromanceRepo.deleteById(id);
   }
 
   static async deleteManyById(ids: number[]) {
-    return await deleteManyById(ids);
+    return await PerfromanceRepo.deleteManyById(ids);
   }
 }
 
@@ -114,13 +102,13 @@ class Performance implements PerformancePostIF {
 
     console.log({ payload });
     // TODO: validate payload
-    return await insert(payload);
+    return await PerfromanceRepo.insert(payload);
   }
 
   public async updateById({ id }: { id: number }) {
     const payload: PerformancePostIF = this;
     // TODO: validate payload
-    return await updateById({ id, payload });
+    return await PerfromanceRepo.updateById({ id, payload });
   }
 }
 

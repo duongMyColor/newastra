@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { updateByTableName } from '@/app/api/_repos/bootUpdate.repo';
+import BootUpdateRepo from '@/app/api/_repos/bootUpdate.repo';
 import { MAP_RESOURE } from '@repo/consts/general';
 
 const setResponseHeaders = (response: NextResponse) => {
@@ -52,7 +52,7 @@ const baseMiddleware = async (request: NextRequest) => {
   console.log('tableName', tableName);
 
   if (response.status === 200) {
-    await updateByTableName(tableName);
+    await BootUpdateRepo.updateByTableName(tableName);
   } else {
     console.log('Response was not successful');
   }

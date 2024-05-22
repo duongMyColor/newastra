@@ -1,109 +1,105 @@
 import { UserIF } from '@repo/types/user';
-import { prisma } from '@/lib/prisma';
+import { generateClient } from '@/lib/prisma';
 import { exclude } from '@repo/utils/excludeKey';
 import { BaseRepo } from './base/base.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 import { RecordValue } from '@repo/types/general';
 
-const model = prisma.user;
+class UserRepo {
+  getAll = async () => {
+    const res = (await new BaseRepo(generateClient().user).getAll()).map(
+      (user: UserIF) => exclude(user, ['password'])
+    );
 
-const getAll = async () => {
-  const res = (await new BaseRepo(model).getAll()).map((user: UserIF) =>
-    exclude(user, ['password'])
-  );
+    return res;
+  };
 
-  return res;
-};
+  count = async () => {
+    return await new BaseRepo(generateClient().user).count();
+  };
 
-const count = async () => {
-  return await new BaseRepo(model).count();
-};
+  getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
+    const res = (
+      await new BaseRepo(generateClient().user).getAllWithQueryAndSafety({
+        sort,
+        range,
+        filter,
+      })
+    ).map((user: UserIF) => exclude(user, ['password']));
 
-const getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
-  const res = (
-    await new BaseRepo(model).getAllWithQueryAndSafety({ sort, range, filter })
-  ).map((user: UserIF) => exclude(user, ['password']));
+    return res;
+  };
 
-  return res;
-};
+  getOneById = async (id: number) => {
+    const res = exclude(
+      await new BaseRepo(generateClient().user).getOneById(id),
+      ['password']
+    );
 
-const getOneById = async (id: number) => {
-  const res = exclude(await new BaseRepo(model).getOneById(id), ['password']);
+    return res;
+  };
 
-  return res;
-};
+  getOneWithParam = async (params: RecordValue) => {
+    const res = await new BaseRepo(generateClient().user).getOneWithParam(
+      params
+    );
+    return res;
+  };
 
-const getOneWithParam = async (params: RecordValue) => {
-  const res = await new BaseRepo(model).getOneWithParam(params);
-  return res;
-};
+  getPermission = async (userId: number) => {
+    const res = await generateClient().user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        role: true,
+      },
+    });
 
-const getPermission = async (userId: number) => {
-  const res = await prisma.user.findUnique({
-    where: {
-      id: userId,
-    },
-    select: {
-      role: true,
-    },
-  });
+    return res;
+  };
 
-  return res;
-};
+  insert = async (payload: UserIF) => {
+    return await new BaseRepo(generateClient().user).insert(payload);
+  };
 
-const insert = async (payload: UserIF) => {
-  return await new BaseRepo(model).insert(payload);
-};
+  insertMany = async (users: UserIF[]) => {
+    return await new BaseRepo(generateClient().user).insertMany(users);
+  };
 
-const insertMany = async (users: UserIF[]) => {
-  return await new BaseRepo(model).insertMany(users);
-};
+  updateManyById = async (updates: { id: number; data: UserIF }[]) => {
+    return await new BaseRepo(generateClient().user).updateManyById(updates);
+  };
 
-const updateManyById = async (updates: { id: number; data: UserIF }[]) => {
-  return await new BaseRepo(model).updateManyById(updates);
-};
+  updateLastLogin = async ({ id }: { id: number }) => {
+    return await new BaseRepo(generateClient().user).updateById({
+      id,
+      payload: { lastLogin: new Date() },
+    });
+  };
 
-const updateLastLogin = async ({ id }: { id: number }) => {
-  return await new BaseRepo(model).updateById({
-    id,
-    payload: { lastLogin: new Date() },
-  });
-};
+  updateById = async ({ id, payload }: { id: number; payload: UserIF }) => {
+    return await new BaseRepo(generateClient().user).updateById({
+      id,
+      payload,
+    });
+  };
 
-const updateById = async ({ id, payload }: { id: number; payload: UserIF }) => {
-  return await new BaseRepo(model).updateById({ id, payload });
-};
+  deleteById = async (id: number) => {
+    return await new BaseRepo(generateClient().user).deleteById(id);
+  };
 
-const deleteById = async (id: number) => {
-  return await new BaseRepo(model).deleteById(id);
-};
+  deleteManyById = async (ids: number[]) => {
+    return await new BaseRepo(generateClient().user).deleteManyById(ids);
+  };
 
-const deleteManyById = async (ids: number[]) => {
-  return await new BaseRepo(model).deleteManyById(ids);
-};
+  safetyDeleteById = async (id: number) => {
+    return await new BaseRepo(generateClient().user).safetyDeleteById(id);
+  };
 
-const safetyDeleteById = async (id: number) => {
-  return await new BaseRepo(model).safetyDeleteById(id);
-};
+  safetyDeleteManyById = async (ids: number[]) => {
+    return await new BaseRepo(generateClient().user).safetyDeleteManyById(ids);
+  };
+}
 
-const safetyDeleteManyById = async (ids: number[]) => {
-  return await new BaseRepo(model).safetyDeleteManyById(ids);
-};
-
-export {
-  getAll,
-  getOneById,
-  insert,
-  updateById,
-  deleteById,
-  insertMany,
-  updateManyById,
-  getAllWithQuery,
-  deleteManyById,
-  getOneWithParam,
-  getPermission,
-  safetyDeleteById,
-  safetyDeleteManyById,
-  count,
-  updateLastLogin,
-};
+export default new UserRepo();

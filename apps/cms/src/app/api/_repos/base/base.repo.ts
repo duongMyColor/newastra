@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma';
+import { generateClient } from '@/lib/prisma';
 import { ModelDeligate, RecordValue } from '@repo/types/general';
 import { GetAllQueryIF } from '@repo/types/response';
 import removeEmptyProperties from '@repo/utils/removeEmptyProperties';
@@ -128,6 +128,8 @@ class BaseRepo {
 
   getOneByIdPerformaceTypeMaster = async (idPerformanceTypeMaster: number) => {
     try {
+      const prisma = generateClient();
+
       const response = await prisma.performaceManagement.findFirst({
         where: { performanceTypeMasterId: idPerformanceTypeMaster },
       });
@@ -315,6 +317,7 @@ class BaseRepo {
       return this.tableModel.create({ data });
     });
 
+    const prisma = generateClient();
     return await prisma.$transaction(operations);
   };
 
@@ -347,6 +350,7 @@ class BaseRepo {
         data: updateContent,
       });
     });
+    const prisma = generateClient();
 
     return await prisma.$transaction(operations);
   };
@@ -414,6 +418,7 @@ class BaseRepo {
         where: { id },
       })
     );
+    const prisma = generateClient();
 
     return await prisma.$transaction(operations);
   };
@@ -427,6 +432,7 @@ class BaseRepo {
         },
       })
     );
+    const prisma = generateClient();
 
     return await prisma.$transaction(operations);
   };

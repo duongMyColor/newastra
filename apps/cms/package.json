@@ -7,7 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --max-warnings 0",
-    "db:migrate": "npx tsx prisma/migrate.mts"
+    "pages:build": "npx @cloudflare/next-on-pages",
+    "db:migrate": "npx tsx prisma/migrate.mts",
+    "db:seed": "npx tsx prisma/seed.ts",
+    "preview": "npm run pages:build && wrangler pages dev",
+    "deploy": "npm run pages:build && wrangler pages deploy"
   },
   "dependencies": {
     "@bicstone/ra-language-japanese": "^4.13.0",
@@ -44,6 +48,7 @@
     "eslint-config-next": "14.0.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
+    "vercel": "^34.2.0",
     "wrangler": "^3.53.1"
   }
 }

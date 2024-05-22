@@ -1,12 +1,13 @@
 import UserService from '../_services/user.service';
 import { OK, CREATED } from '../_core/success.response';
-import { count } from '../_repos/user.repo';
+import UserRepo from '../_repos/user.repo';
 
 import { UserIF } from '@repo/types/user';
 import type { NextRequest } from 'next/server';
 import { getServerCookieValue } from '@repo/utils/server_actions/cookies';
 import { HEADER } from '@repo/consts/access';
 import { parseSearchParams } from '@repo/utils/parseParams';
+import { RecordValue } from '@repo/types/general';
 
 class UserController {
   create = async (request: NextRequest) => {
@@ -25,7 +26,7 @@ class UserController {
     return new OK({
       message: 'get all Users success!',
       metadata: await UserService.getAll(),
-      count: await count(),
+      count: await UserRepo.count(),
     });
   };
   getAllWithQuery = async (request: NextRequest) => {
@@ -35,7 +36,7 @@ class UserController {
     return new OK({
       message: 'get all Users success!',
       metadata: await UserService.getAllWithQuery({ filter, range, sort }),
-      count: await count(),
+      count: await UserRepo.count(),
     });
   };
 
@@ -51,7 +52,7 @@ class UserController {
 
     return new OK({
       message: 'get User permissions success!',
-      metadata: await UserService.getPermission(userId),
+      metadata: (await UserService.getPermission(userId)) as RecordValue,
     });
   };
 

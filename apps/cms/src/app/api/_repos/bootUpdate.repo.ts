@@ -1,44 +1,44 @@
 import { UserIF } from '@repo/types/user';
-import { prisma } from '@/lib/prisma';
+import { generateClient } from '@/lib/prisma';
 import { exclude } from '@repo/utils/excludeKey';
 import { BaseRepo } from './base/base.repo';
 
-const model = prisma.bootUpdate;
+class BootUpdateRepo {
+  getAll = async () => {
+    const res = (await new BaseRepo(generateClient().bootUpdate).getAll()).map(
+      (user: UserIF) => exclude(user, ['password'])
+    );
 
-const getAll = async () => {
-  const res = (await new BaseRepo(model).getAll()).map((user: UserIF) =>
-    exclude(user, ['password'])
-  );
+    return res;
+  };
 
-  return res;
-};
+  count = async () => {
+    return await new BaseRepo(generateClient().bootUpdate).count();
+  };
 
-const count = async () => {
-  return await new BaseRepo(model).count();
-};
+  insertMany = async (users: UserIF[]) => {
+    return await new BaseRepo(generateClient().bootUpdate).insertMany(users);
+  };
 
-const insertMany = async (users: UserIF[]) => {
-  return await new BaseRepo(model).insertMany(users);
-};
+  updateById = async ({ id }: { id: number }) => {
+    return await new BaseRepo(generateClient().bootUpdate).updateById({
+      id,
+      payload: { updateAt: new Date() },
+    });
+  };
 
-const updateById = async ({ id }: { id: number }) => {
-  return await new BaseRepo(model).updateById({
-    id,
-    payload: { updateAt: new Date() },
-  });
-};
+  updateByTableName = async (tableName: string) => {
+    return await generateClient().bootUpdate.update({
+      where: {
+        tableName: tableName,
+      },
+      data: { updatedAt: new Date() },
+    });
+  };
 
-const updateByTableName = async (tableName: string) => {
-  return await prisma.bootUpdate.update({
-    where: {
-      tableName: tableName,
-    },
-    data: { updatedAt: new Date() },
-  });
-};
+  deleteById = async (id: number) => {
+    return await new BaseRepo(generateClient().bootUpdate).deleteById(id);
+  };
+}
 
-const deleteById = async (id: number) => {
-  return await new BaseRepo(model).deleteById(id);
-};
-
-export { getAll, updateById, deleteById, insertMany, count, updateByTableName };
+export default new BootUpdateRepo();

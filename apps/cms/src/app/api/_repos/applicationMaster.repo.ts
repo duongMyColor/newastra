@@ -1,100 +1,110 @@
 import { AplicationMasterPostIF } from '@repo/types/applicationMaster';
-import { prisma } from '@/lib/prisma';
+import { generateClient } from '@/lib/prisma';
 import { BaseRepo } from './base/base.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
 
-const model = prisma.aplicationMaster;
-const child = 'memo';
-const parent = 'classification';
+class AplicationMasterRepo {
+  getAll = async () => {
+    return await new BaseRepo(generateClient().aplicationMaster).getAll();
+  };
 
-const getAll = async () => {
-  return await new BaseRepo(model).getAll();
-};
+  getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
+    return await new BaseRepo(
+      generateClient().aplicationMaster
+    ).getAllWithQuery({
+      sort,
+      range,
+      filter,
+    });
+  };
+  getAllWithFilters = async ({ sort, range, filter }: GetAllQueryIF) => {
+    return await new BaseRepo(
+      generateClient().aplicationMaster
+    ).getAllWithFilters({
+      sort,
+      range,
+      filter,
+    });
+  };
 
-const getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
-  return await new BaseRepo(model).getAllWithQuery({ sort, range, filter });
-};
-const getAllWithFilters = async ({ sort, range, filter }: GetAllQueryIF) => {
-  return await new BaseRepo(model).getAllWithFilters({ sort, range, filter });
-};
+  getManyReference = async (params: GetManyReferenceParams) => {
+    return new BaseRepo(generateClient().aplicationMaster).getManyReference(
+      params
+    );
+  };
 
-const getManyReference = async (params: GetManyReferenceParams) => {
-  return new BaseRepo(model).getManyReference(params);
-};
+  getOneById = async (id: number) => {
+    return await new BaseRepo(generateClient().aplicationMaster).getOneById(id);
+  };
 
-const getOneById = async (id: number) => {
-  return await new BaseRepo(model).getOneById(id);
-};
+  getOneAndParent = async (id: number) => {
+    return await new BaseRepo(
+      generateClient().aplicationMaster
+    ).getOneByIdWithParam(id, {
+      include: {
+        classification: true,
+      },
+    });
+  };
 
-const getOneAndParent = async (id: number) => {
-  return await new BaseRepo(model).getOneByIdWithParam(id, {
-    include: {
-      classification: true,
-    },
-  });
-};
+  // const getOneAndChildren = async (id: number, child: string) => {
+  //   return await new BaseRepo(generateClient().aplicationMaster).getOneByIdWithParam(id, {
+  //     include: {
+  //       [child]: true,
+  //     },
+  //   });
+  // };
 
-const getOneAndChildren = async (id: number, child: string) => {
-  return await new BaseRepo(model).getOneByIdWithParam(id, {
-    include: {
-      [child]: true,
-    },
-  });
-};
+  // const getOneAndChildAndParent = async (id: number) => {
+  //   return await new BaseRepo(generateClient().aplicationMaster).getOneByIdWithParam(id, {
+  //     include: {
+  //       [child]: true,
+  //       [parent]: true,
+  //     },
+  //   });
+  // };
 
-const getOneAndChildAndParent = async (id: number) => {
-  return await new BaseRepo(model).getOneByIdWithParam(id, {
-    include: {
-      [child]: true,
-      [parent]: true,
-    },
-  });
-};
+  insert = async (payload: AplicationMasterPostIF) => {
+    return await new BaseRepo(generateClient().aplicationMaster).insert(
+      payload
+    );
+  };
 
-const insert = async (payload: AplicationMasterPostIF) => {
-  return await new BaseRepo(model).insert(payload);
-};
+  insertMany = async (animals: AplicationMasterPostIF[]) => {
+    return await new BaseRepo(generateClient().aplicationMaster).insertMany(
+      animals
+    );
+  };
 
-const insertMany = async (animals: AplicationMasterPostIF[]) => {
-  return await new BaseRepo(model).insertMany(animals);
-};
+  updateById = async ({
+    id,
+    payload,
+  }: {
+    id: number;
+    payload: AplicationMasterPostIF;
+  }) => {
+    return await new BaseRepo(generateClient().aplicationMaster).updateById({
+      id,
+      payload,
+    });
+  };
 
-const updateById = async ({
-  id,
-  payload,
-}: {
-  id: number;
-  payload: AplicationMasterPostIF;
-}) => {
-  return await new BaseRepo(model).updateById({ id, payload });
-};
+  updateManyById = async (updates: AplicationMasterPostIF[]) => {
+    return await new BaseRepo(generateClient().aplicationMaster).updateManyById(
+      updates
+    );
+  };
 
-const updateManyById = async (updates: AplicationMasterPostIF[]) => {
-  return await new BaseRepo(model).updateManyById(updates);
-};
+  deleteById = async (id: number) => {
+    return await new BaseRepo(generateClient().aplicationMaster).deleteById(id);
+  };
 
-const deleteById = async (id: number) => {
-  return await new BaseRepo(model).deleteById(id);
-};
+  deleteManyById = async (ids: number[]) => {
+    return await new BaseRepo(generateClient().aplicationMaster).deleteManyById(
+      ids
+    );
+  };
+}
 
-const deleteManyById = async (ids: number[]) => {
-  return await new BaseRepo(model).deleteManyById(ids);
-};
-
-export {
-  getAll,
-  getOneById,
-  insert,
-  updateById,
-  deleteById,
-  updateManyById,
-  insertMany,
-  getAllWithQuery,
-  deleteManyById,
-  getOneAndParent,
-  getOneAndChildren,
-  getOneAndChildAndParent,
-  getAllWithFilters,
-  getManyReference,
-};
+export default new AplicationMasterRepo();
