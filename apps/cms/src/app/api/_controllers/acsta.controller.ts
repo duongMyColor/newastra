@@ -2,7 +2,7 @@ import AcstaService from '../_services/acsta.service';
 import { OK, CREATED } from '../_core/success.response';
 
 import { AcstaPostIF } from '@repo/types/acsta';
-import { count } from '../_repos/acsta.repo';
+import AcstaRepo from '../_repos/acsta.repo';
 import type { NextRequest } from 'next/server';
 import { parseParams, parseSearchParams } from '@repo/utils/parseParams';
 import { RectData } from '@repo/types/rectangleEditor';
@@ -34,7 +34,7 @@ class AcstaController {
     return new OK({
       message: 'get all Acsta success!',
       metadata: await AcstaService.getAll(),
-      count: await count(),
+      count: await AcstaRepo.count(),
     });
   };
 
@@ -60,7 +60,7 @@ class AcstaController {
         range,
         sort,
       }),
-      count: await count(),
+      count: await AcstaRepo.count(),
     });
   };
 

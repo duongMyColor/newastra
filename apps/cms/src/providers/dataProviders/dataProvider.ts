@@ -1,11 +1,8 @@
 import { withLifecycleCallbacks } from 'react-admin';
 
 import baseDataProvider from './baseDataProvider';
-import fakeProvider from './fakeDataProvider';
-import userCallbackHandler from './userCallbackHandlers';
 import applicationMasterCallbackHandler from './applicationMasterCallbackHandlers';
 import acstaManagementCallbackHandler from './acstaManagementCallbackHandlers';
-import PerformanceTypeMasterCallbackHandler from './performanceTypeMasterCallbackHandlers';
 import performanceManagementCallbackHandlers from './performanceManagementCallbackHandlers';
 import termOfUseManagementCallbackHandlers from './termOfUseManagementCallbackHandlers';
 import licenseManagementCallbackHandlers from './licenseManagementCallbackHandlers';

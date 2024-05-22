@@ -1,17 +1,5 @@
 import { TermOfUsePostIF } from '@repo/types/termOfUse';
-import {
-  getAll,
-  getOneById,
-  insert,
-  insertMany,
-  updateById,
-  updateManyById,
-  deleteById,
-  deleteManyById,
-  getAllWithQuery,
-  getAllWithFilters,
-  getManyReference,
-} from '../_repos/termOfUse.repo';
+import TermsOfUseRepo from '../_repos/termOfUse.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
 import { convertFormDataToObject } from '@repo/utils/objectUtils';
@@ -34,27 +22,27 @@ class TermOfUseFactory {
     const payload = body.map(
       (terms_and_conditions) => new TermOfUse(terms_and_conditions)
     );
-    return await insertMany(payload);
+    return await TermsOfUseRepo.insertMany(payload);
   }
 
   static async getOneById(id: number) {
-    return await getOneById(id);
+    return await TermsOfUseRepo.getOneById(id);
   }
 
   static async getAll() {
-    return await getAll();
+    return await TermsOfUseRepo.getAll();
   }
 
   static async getAllWithQuery({ filter, range, sort }: GetAllQueryIF) {
-    return await getAllWithQuery({ filter, range, sort });
+    return await TermsOfUseRepo.getAllWithQuery({ filter, range, sort });
   }
 
   static async getAllWithFilters({ filter, range, sort }: GetAllQueryIF) {
-    return await getAllWithFilters({ filter, range, sort });
+    return await TermsOfUseRepo.getAllWithFilters({ filter, range, sort });
   }
 
   static async getManyReference(params: GetManyReferenceParams) {
-    return await getManyReference(params);
+    return await TermsOfUseRepo.getManyReference(params);
   }
 
   static async updateById({ id, payload }: { id: number; payload: FormData }) {
@@ -71,15 +59,15 @@ class TermOfUseFactory {
   static async updateMany(updates: TermOfUsePostIF[]) {
     const payload = updates.map((update) => new TermOfUse(update));
 
-    return await updateManyById(payload);
+    return await TermsOfUseRepo.updateManyById(payload);
   }
 
   static async deleteById(id: number) {
-    return await deleteById(id);
+    return await TermsOfUseRepo.deleteById(id);
   }
 
   static async deleteManyById(ids: number[]) {
-    return await deleteManyById(ids);
+    return await TermsOfUseRepo.deleteManyById(ids);
   }
 }
 
@@ -109,12 +97,12 @@ class TermOfUse implements TermOfUsePostIF {
 
   public async create() {
     const payload: TermOfUsePostIF = this;
-    return await insert(payload);
+    return await TermsOfUseRepo.insert(payload);
   }
 
   public async updateById({ id }: { id: number }) {
     const payload: TermOfUsePostIF = this;
-    return await updateById({ id, payload });
+    return await TermsOfUseRepo.updateById({ id, payload });
   }
 }
 

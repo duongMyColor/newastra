@@ -1,18 +1,5 @@
 import { Role, UserIF } from '@repo/types/user';
-import {
-  getAll,
-  getOneById,
-  insert,
-  updateById,
-  deleteById,
-  deleteManyById,
-  getOneWithParam,
-  getPermission,
-  getAllWithQuery,
-  safetyDeleteById,
-  safetyDeleteManyById,
-  updateLastLogin,
-} from '../_repos/user.repo';
+import UserRepo from '../_repos/user.repo';
 import { hashPassword } from '@repo/utils/password';
 import { GetAllQueryIF } from '@repo/types/response';
 
@@ -22,19 +9,19 @@ class UserFactory {
   }
 
   static async getOneById(id: number) {
-    return await getOneById(id);
+    return await UserRepo.getOneById(id);
   }
 
   static async getAll() {
-    return await getAll();
+    return await UserRepo.getAll();
   }
 
   static async getAllWithQuery({ filter, range, sort }: GetAllQueryIF) {
-    return await getAllWithQuery({ filter, range, sort });
+    return await UserRepo.getAllWithQuery({ filter, range, sort });
   }
 
   static async getPermission(userId: number) {
-    return await getPermission(userId);
+    return await UserRepo.getPermission(userId);
   }
 
   static async updateById({ id, payload }: { id: number; payload: UserIF }) {
@@ -42,31 +29,31 @@ class UserFactory {
   }
 
   static async deleteById(id: number) {
-    return await deleteById(id);
+    return await UserRepo.deleteById(id);
   }
 
   static async deleteManyById(ids: number[]) {
-    return await deleteManyById(ids);
+    return await UserRepo.deleteManyById(ids);
   }
 
   static async safetyDeleteById(id: number) {
-    return await safetyDeleteById(id);
+    return await UserRepo.safetyDeleteById(id);
   }
 
   static async safetyDeleteManyById(ids: number[]) {
-    return await safetyDeleteManyById(ids);
+    return await UserRepo.safetyDeleteManyById(ids);
   }
 
   static async findByEmail({ email }: { email: string }) {
-    return await getOneWithParam({ where: { email } });
+    return await UserRepo.getOneWithParam({ where: { email } });
   }
 
   static async findByUsername({ username }: { username: string }) {
-    return await getOneWithParam({ where: { username } });
+    return await UserRepo.getOneWithParam({ where: { username } });
   }
 
   static async updateLastLogin({ id }: { id: number }) {
-    return await updateLastLogin({ id });
+    return await UserRepo.updateLastLogin({ id });
   }
 }
 
@@ -107,13 +94,13 @@ class User implements UserIF {
     console.log('payload', payload);
 
     // TODO: validate payload
-    return await insert(payload);
+    return await UserRepo.insert(payload);
   }
 
   public async updateById({ id }: { id: number }) {
     const payload: UserIF = this;
     // TODO: validate payload
-    return await updateById({ id, payload });
+    return await UserRepo.updateById({ id, payload });
   }
 }
 

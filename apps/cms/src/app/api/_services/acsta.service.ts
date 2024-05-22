@@ -1,26 +1,11 @@
 import { AcstaPostIF } from '@repo/types/acsta';
-import {
-  getAll,
-  getOneById,
-  insert,
-  insertMany,
-  updateById,
-  updateManyById,
-  deleteById,
-  deleteManyById,
-  getAllWithQuery,
-  getAllWithFilters,
-  getManyReference,
-} from '../_repos/acsta.repo';
+import AcstaRepo from '../_repos/acsta.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
 import { convertFormDataToObject } from '@repo/utils/objectUtils';
 import { UPLOAD_FOLDER_MAP } from '@repo/consts/general';
 import UploadFileService from './upload.service';
 import { RectData } from '@repo/types/rectangleEditor';
-import { getObject } from '@/lib/cloudflare-r2';
-import { convertReadableStreamToBase64 } from '@repo/utils/fileUtils';
-import extractColorDistribution from '@repo/utils/scanImage';
 class AcstaFactory {
   static async create({ payload }: { payload: FormData }) {
     const paylodObj = convertFormDataToObject(payload);
@@ -37,27 +22,27 @@ class AcstaFactory {
     const payload = body.map(
       (acsta_and_conditions) => new Acsta(acsta_and_conditions)
     );
-    return await insertMany(payload);
+    return await AcstaRepo.insertMany(payload);
   }
 
   static async getOneById(id: number) {
-    return await getOneById(id);
+    return await AcstaRepo.getOneById(id);
   }
 
   static async getAll() {
-    return await getAll();
+    return await AcstaRepo.getAll();
   }
 
   static async getAllWithQuery({ filter, range, sort }: GetAllQueryIF) {
-    return await getAllWithQuery({ filter, range, sort });
+    return await AcstaRepo.getAllWithQuery({ filter, range, sort });
   }
 
   static async getAllWithFilters({ filter, range, sort }: GetAllQueryIF) {
-    return await getAllWithFilters({ filter, range, sort });
+    return await AcstaRepo.getAllWithFilters({ filter, range, sort });
   }
 
   static async getManyReference(params: GetManyReferenceParams) {
-    return await getManyReference(params);
+    return await AcstaRepo.getManyReference(params);
   }
 
   static async updateById({ id, payload }: { id: number; payload: FormData }) {
@@ -92,15 +77,15 @@ class AcstaFactory {
   static async updateMany(updates: AcstaPostIF[]) {
     const payload = updates.map((update) => new Acsta(update));
 
-    return await updateManyById(payload);
+    return await AcstaRepo.updateManyById(payload);
   }
 
   static async deleteById(id: number) {
-    return await deleteById(id);
+    return await AcstaRepo.deleteById(id);
   }
 
   static async deleteManyById(ids: number[]) {
-    return await deleteManyById(ids);
+    return await AcstaRepo.deleteManyById(ids);
   }
 }
 
@@ -164,13 +149,13 @@ class Acsta implements AcstaPostIF {
     const payload: AcstaPostIF = this;
     console.log('payload', payload);
 
-    return await insert(payload);
+    return await AcstaRepo.insert(payload);
   }
 
   public async updateById({ id }: { id: number }) {
     const payload: AcstaPostIF = this;
 
-    return await updateById({ id, payload });
+    return await AcstaRepo.updateById({ id, payload });
   }
 }
 

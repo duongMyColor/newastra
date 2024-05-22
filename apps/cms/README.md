@@ -29,12 +29,7 @@ ex:
 
 ## Add seed remote (for deployment)
 
-- db_name: see `apps/cms/wrangler.toml`
-- `npx wrangler d1 execute <db_name> --remote --file=./prisma/seed.sql `
-
-ex: 
-
-`npx wrangler d1 execute da-acsta-db --remote --file=./prisma/seed.sql`
+`yarn db:seed`
 
 # 3. App URL
 

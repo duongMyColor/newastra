@@ -4,7 +4,7 @@ import { OK, CREATED } from '../_core/success.response';
 import { PerformancePostIF } from '@repo/types/performance';
 import type { NextRequest } from 'next/server';
 import { parseSearchParams } from '@repo/utils/parseParams';
-import { count } from '../_repos/performance.repo';
+import PerfromanceRepo from '../_repos/performance.repo';
 
 class PerformanceController {
   create = async (request: NextRequest) => {
@@ -45,7 +45,7 @@ class PerformanceController {
         range,
         sort,
       }),
-      count: await count(),
+      count: await PerfromanceRepo.count(),
     });
   };
 
@@ -62,7 +62,7 @@ class PerformanceController {
         range,
         sort,
       }),
-      count: await count(),
+      count: await PerfromanceRepo.count(),
     });
   };
 

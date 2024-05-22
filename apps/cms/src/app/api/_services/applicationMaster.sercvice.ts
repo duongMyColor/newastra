@@ -1,19 +1,5 @@
 import { AplicationMasterPostIF } from '@repo/types/applicationMaster';
-import {
-  getAll,
-  getOneById,
-  insert,
-  insertMany,
-  updateById,
-  updateManyById,
-  deleteById,
-  deleteManyById,
-  getOneAndParent,
-  getOneAndChildAndParent,
-  getAllWithQuery,
-  getAllWithFilters,
-  getManyReference,
-} from '../_repos/applicationMaster.repo';
+import ApplicationMasterRepo from '../_repos/applicationMaster.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
 import { convertFormDataToObject } from '@repo/utils/objectUtils';
@@ -36,34 +22,38 @@ class ApplicationMasterFactory {
 
   static async createMany(animals: AplicationMasterPostIF[]) {
     const payload = animals.map((animal) => new ApplicationMaster(animal));
-    return await insertMany(payload);
+    return await ApplicationMasterRepo.insertMany(payload);
   }
 
   static async getOneById(id: number) {
-    return await await getOneById(id);
+    return await await ApplicationMasterRepo.getOneById(id);
   }
   static async getOneAndParent(id: number) {
-    return await await getOneAndParent(id);
+    return await await ApplicationMasterRepo.getOneAndParent(id);
   }
 
-  static async getOneAndChildAndParent(id: number) {
-    return await await getOneAndChildAndParent(id);
-  }
+  // static async getOneAndChildAndParent(id: number) {
+  //   return await await getOneAndChildAndParent(id);
+  // }
 
   static async getAll() {
-    return await getAll();
+    return await ApplicationMasterRepo.getAll();
   }
 
   static async getAllWithQuery({ filter, range, sort }: GetAllQueryIF) {
-    return await getAllWithQuery({ filter, range, sort });
+    return await ApplicationMasterRepo.getAllWithQuery({ filter, range, sort });
   }
 
   static async getAllWithFilters({ filter, range, sort }: GetAllQueryIF) {
-    return await getAllWithFilters({ filter, range, sort });
+    return await ApplicationMasterRepo.getAllWithFilters({
+      filter,
+      range,
+      sort,
+    });
   }
 
   static async getManyReference(params: GetManyReferenceParams) {
-    return await getManyReference(params);
+    return await ApplicationMasterRepo.getManyReference(params);
   }
 
   static async updateById({ id, payload }: { id: number; payload: FormData }) {
@@ -79,7 +69,7 @@ class ApplicationMasterFactory {
   static async updateMany(updates: AplicationMasterPostIF[]) {
     const payload = updates.map((update) => new ApplicationMaster(update));
 
-    return await updateManyById(payload);
+    return await ApplicationMasterRepo.updateManyById(payload);
   }
 
   static async deleteById(id: number) {
@@ -99,17 +89,17 @@ class ApplicationMasterFactory {
     //   }
     // });
 
-    return await deleteById(id);
+    return await ApplicationMasterRepo.deleteById(id);
   }
 
   static async deleteManyById(ids: number[]) {
-    return await deleteManyById(ids);
+    return await ApplicationMasterRepo.deleteManyById(ids);
   }
 }
 
 class ApplicationMaster implements AplicationMasterPostIF {
   public appName: string;
-  public packageName: string|number;
+  public packageName: string | number;
   public termsOfUseId: number;
   public licenseId: string;
   public assetBundleIOS: string;
@@ -143,13 +133,13 @@ class ApplicationMaster implements AplicationMasterPostIF {
     const payload: AplicationMasterPostIF = this;
 
     // TODO: validate payload
-    return await insert(payload);
+    return await ApplicationMasterRepo.insert(payload);
   }
 
   public async updateById({ id }: { id: number }) {
     const payload: AplicationMasterPostIF = this;
     // TODO: validate payload
-    return await updateById({ id, payload });
+    return await ApplicationMasterRepo.updateById({ id, payload });
   }
 }
 

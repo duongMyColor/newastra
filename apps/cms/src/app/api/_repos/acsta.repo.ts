@@ -1,79 +1,91 @@
 import { AcstaPostIF } from '@repo/types/acsta';
-import { prisma } from '@/lib/prisma';
 import { BaseRepo } from './base/base.repo';
 import { GetAllQueryIF } from '@repo/types/response';
 import { GetManyReferenceParams } from 'react-admin';
+import { generateClient } from '@/lib/prisma';
 
-const model = prisma.acstaManagement;
+class AcstaRepo {
+  getAll = async () => {
+    return await new BaseRepo(generateClient().acstaManagement).getAll();
+  };
 
-const getAll = async () => {
-  return await new BaseRepo(model).getAll();
-};
+  count = async () => {
+    return await new BaseRepo(generateClient().acstaManagement).count();
+  };
 
-const count = async () => {
-  return await new BaseRepo(model).count();
-};
+  getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
+    return await new BaseRepo(generateClient().acstaManagement).getAllWithQuery(
+      {
+        sort,
+        range,
+        filter,
+      }
+    );
+  };
+  getAllWithFilters = async ({ sort, range, filter }: GetAllQueryIF) => {
+    return await new BaseRepo(
+      generateClient().acstaManagement
+    ).getAllWithFilters({
+      sort,
+      range,
+      filter,
+    });
+  };
 
-const getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
-  return await new BaseRepo(model).getAllWithQuery({ sort, range, filter });
-};
-const getAllWithFilters = async ({ sort, range, filter }: GetAllQueryIF) => {
-  return await new BaseRepo(model).getAllWithFilters({ sort, range, filter });
-};
+  getManyReference = async (params: GetManyReferenceParams) => {
+    return new BaseRepo(generateClient().acstaManagement).getManyReference(
+      params
+    );
+  };
 
-const getManyReference = async (params: GetManyReferenceParams) => {
-  return new BaseRepo(model).getManyReference(params);
-};
+  getOneById = async (id: number) => {
+    return await new BaseRepo(generateClient().acstaManagement).getOneById(id);
+  };
 
-const getOneById = async (id: number) => {
-  return await new BaseRepo(model).getOneById(id);
-};
+  insert = async (payload: AcstaPostIF) => {
+    await new BaseRepo(
+      generateClient().idLastestOfRecord
+    ).updateIdLastestOfRecord({
+      record: payload.record,
+    });
+    delete payload.record;
+    return await new BaseRepo(generateClient().acstaManagement).insert(payload);
+  };
 
-const insert = async (payload: AcstaPostIF) => {
-  await new BaseRepo(prisma.idLastestOfRecord).updateIdLastestOfRecord({
-    record: payload.record,
-  });
-  delete payload.record;
-  return await new BaseRepo(model).insert(payload);
-};
+  insertMany = async (body: AcstaPostIF[]) => {
+    return await new BaseRepo(generateClient().acstaManagement).insertMany(
+      body
+    );
+  };
 
-const insertMany = async (body: AcstaPostIF[]) => {
-  return await new BaseRepo(model).insertMany(body);
-};
+  updateById = async ({
+    id,
+    payload,
+  }: {
+    id: number;
+    payload: AcstaPostIF;
+  }) => {
+    return await new BaseRepo(generateClient().acstaManagement).updateById({
+      id,
+      payload,
+    });
+  };
 
-const updateById = async ({
-  id,
-  payload,
-}: {
-  id: number;
-  payload: AcstaPostIF;
-}) => {
-  return await new BaseRepo(model).updateById({ id, payload });
-};
+  updateManyById = async (updates: AcstaPostIF[]) => {
+    return await new BaseRepo(generateClient().acstaManagement).updateManyById(
+      updates
+    );
+  };
 
-const updateManyById = async (updates: AcstaPostIF[]) => {
-  return await new BaseRepo(model).updateManyById(updates);
-};
+  deleteById = async (id: number) => {
+    return await new BaseRepo(generateClient().acstaManagement).deleteById(id);
+  };
 
-const deleteById = async (id: number) => {
-  return await new BaseRepo(model).deleteById(id);
-};
+  deleteManyById = async (ids: number[]) => {
+    return await new BaseRepo(generateClient().acstaManagement).deleteManyById(
+      ids
+    );
+  };
+}
 
-const deleteManyById = async (ids: number[]) => {
-  return await new BaseRepo(model).deleteManyById(ids);
-};
-
-export {
-  getAll,
-  getOneById,
-  insert,
-  updateById,
-  deleteById,
-  updateManyById,
-  insertMany,
-  getAllWithQuery,
-  deleteManyById,
-  getAllWithFilters,
-  getManyReference,
-  count,
-};
+export default new AcstaRepo();

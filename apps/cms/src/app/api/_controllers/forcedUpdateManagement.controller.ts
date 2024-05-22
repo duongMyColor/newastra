@@ -2,7 +2,7 @@ import ForcedUpdateManagementService from '../_services/forcedUpdateManagement.s
 import { OK, CREATED } from '../_core/success.response';
 
 import { ForcedUpdateManagementPostIF } from '@repo/types/forceUpdateManagement';
-import { count } from '../_repos/forcedUpdateManagement.repo';
+import ForcedUpdateRepo from '../_repos/forcedUpdateManagement.repo';
 import type { NextRequest } from 'next/server';
 import { parseParams, parseSearchParams } from '@repo/utils/parseParams';
 
@@ -31,7 +31,7 @@ class ForcedUpdateManagementController {
     return new OK({
       message: 'get all Term Of Use success!',
       metadata: await ForcedUpdateManagementService.getAll(),
-      count: await count(),
+      count: await ForcedUpdateRepo.count(),
     });
   };
 
@@ -57,7 +57,7 @@ class ForcedUpdateManagementController {
         range,
         sort,
       }),
-      count: await count(),
+      count: await ForcedUpdateRepo.count(),
     });
   };
   getAllAndParentWithFilters = async (request: NextRequest) => {
@@ -72,7 +72,7 @@ class ForcedUpdateManagementController {
         range,
         sort,
       }),
-      count: await count(),
+      count: await ForcedUpdateRepo.count(),
     });
   };
 
@@ -80,7 +80,7 @@ class ForcedUpdateManagementController {
     return new OK({
       message: 'get all forced for update success!',
       metadata: await ForcedUpdateManagementService.getAllParen(),
-      count: await count(),
+      count: await ForcedUpdateRepo.count(),
     });
   };
 
