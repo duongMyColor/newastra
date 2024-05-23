@@ -8,6 +8,7 @@ import { getServerCookieValue } from '@repo/utils/server_actions/cookies';
 import { HEADER } from '@repo/consts/access';
 import { parseSearchParams } from '@repo/utils/parseParams';
 import { RecordValue } from '@repo/types/general';
+import { BadRequestError } from '../_core/error.response';
 
 class UserController {
   create = async (request: NextRequest) => {
@@ -49,6 +50,11 @@ class UserController {
 
   getPermission = async () => {
     const userId = Number(getServerCookieValue(HEADER.CLIENT_ID));
+    if (!userId) {
+      return new BadRequestError({
+        message: 'Invalid User ID!',
+      });
+    }
 
     return new OK({
       message: 'get User permissions success!',

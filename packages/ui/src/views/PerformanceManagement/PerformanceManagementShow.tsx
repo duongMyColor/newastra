@@ -2,7 +2,6 @@ import {
   TextInput,
   ShowBase,
   Title,
-  TextField,
   SimpleShowLayout,
   FunctionField,
 } from 'react-admin';

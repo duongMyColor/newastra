@@ -1,15 +1,11 @@
-import { userRoles } from '@repo/consts/user';
 import {
   TextInput,
   SelectInput,
   EditBase,
   Title,
-  usePermissions,
   FileInput,
   FileField,
-  DateInput,
   useDataProvider,
-  useUpdate,
   useRecordContext,
   useNotify,
 } from 'react-admin';
@@ -18,7 +14,6 @@ import { useNavigate } from 'react-router-dom';
 import { validateUserEdition } from './formValidator';
 import { BaseComponentProps, RAFile, RecordValue } from '@repo/types/general';
 import { Box } from '@mui/material';
-import { validRole } from '../_core/permissions';
 import { boxStyles } from '@repo/styles';
 import { useEffect, useState } from 'react';
 import { AcstaResponseIF } from '@repo/types/acsta';
@@ -39,7 +34,6 @@ const PerformanceEditForm = ({ actions, resource }: BaseComponentProps) => {
     Array<typeFormSelected>
   >([]);
   const notify = useNotify();
-  const [update] = useUpdate();
   const navigate = useNavigate();
   const record = useRecordContext();
 
@@ -69,8 +63,8 @@ const PerformanceEditForm = ({ actions, resource }: BaseComponentProps) => {
     try {
       const formData = convertToFormData(rest);
 
-      const data = await update(resource, {
-        id: values.id,
+      await dataProvider.update(resource, {
+        id: record.id,
         data: formData,
         previousData: record,
       });

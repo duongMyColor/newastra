@@ -28,7 +28,6 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
 
   const notify = useNotify();
   const navigate = useNavigate();
-  const [update] = useUpdate();
   const [termsOfUseIds, settermsOfUseIds] = useState([]);
   const [licenseIDs, setLicenseIDs] = useState([]);
 
@@ -39,16 +38,16 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
   const handleSave = async (values: RecordValue) => {
     const encryptKey = record.encryptKey;
 
-    const { assetBundleIOS, assetBundleAndroid, ...rest } = values;
+    const { assetDataIOS, assetDataAndroid, ...rest } = values;
 
-    if (assetBundleIOS?.rawFile) {
-      const assetBundleIOSFile = extractFile(assetBundleIOS);
+    if (assetDataIOS?.rawFile) {
+      const assetBundleIOSFile = extractFile(assetDataIOS);
       const keyIOS = await uploadMuiltpart(assetBundleIOSFile, encryptKey);
       rest.assetBundleIOS = keyIOS;
     }
 
-    if (assetBundleAndroid?.rawFile) {
-      const assetBundleAndroidFile = extractFile(assetBundleAndroid);
+    if (assetDataAndroid?.rawFile) {
+      const assetBundleAndroidFile = extractFile(assetDataAndroid);
       const keyAndroid = await uploadMuiltpart(
         assetBundleAndroidFile,
         encryptKey
@@ -59,7 +58,7 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
     try {
       const formData = convertToFormData(rest, ['outlineUrl']);
 
-      await update(resource, {
+      await dataProvider.update(resource, {
         id: record.id,
         data: formData,
         previousData: record,
@@ -70,12 +69,9 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
       });
       navigate(resourcePath);
     } catch (error) {
-      notify(
-        'エラー: アプリケーション マスターの更新に失敗しました:' + error,
-        {
-          type: 'warning',
-        }
-      );
+      notify('エラー: アプリケーション マスターの更新に失敗しました:' + error, {
+        type: 'warning',
+      });
     }
   };
 
