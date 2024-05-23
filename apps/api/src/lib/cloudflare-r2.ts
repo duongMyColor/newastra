@@ -147,7 +147,7 @@ const getPresignedUrl = async (bucketName: string, key: string) => {
     return await getSignedUrl(
       s3Client,
       new GetObjectCommand({ Bucket: bucketName, Key: key }),
-      { expiresIn: 86400 }
+      { expiresIn: 7200 }
     );
   } catch (error) {
     console.error('Failed to get presigned URL: ' + bucketName + key, error);
