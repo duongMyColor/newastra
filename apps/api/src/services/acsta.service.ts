@@ -12,38 +12,34 @@ import { getPresignedUrl } from '@/lib/cloudflare-r2';
 class AcstaFactory {
   static async getAll() {
     const acstas = await getAll();
-    const res = acstas.map((acsta: AcstaApiResponseIF) => {
-      return new Acsta().getData(acsta);
-    });
-    return res;
+
+    if (!acstas?.length) {
+      return [];
+    }
+
+    return await this.convertArrayData(acstas);
   }
 
   static async getOneById(id: number) {
-    return new Acsta().getData(await getOneById(id));
+    return await new Acsta().getData(await getOneById(id));
   }
 
   static async getManyByIds(ids: number[]) {
     const acstas = await getManyByIds(ids);
-    console.log('acstas', acstas);
     if (!acstas?.length) {
       return [];
     }
 
-    return acstas.map((acsta: AcstaApiResponseIF) => {
-      return new Acsta().getData(acsta);
-    });
+    return await this.convertArrayData(acstas);
   }
 
   static async getManyByIdsAndChildren(ids: number[]) {
     const acstas = await getManyByIdsAndChildren(ids);
-    console.log('acstas', acstas);
     if (!acstas?.length) {
       return [];
     }
 
-    return acstas.map((acsta: AcstaApiResponseIF) => {
-      return new Acsta().getData(acsta);
-    });
+    return await this.convertArrayData(acstas);
   }
 
   static async getUpdateData(lastSyncDate: Date | string) {
@@ -52,9 +48,15 @@ class AcstaFactory {
     if (!acstas?.length) {
       return [];
     }
-    return acstas.map((acsta: AcstaApiResponseIF) => {
-      return new Acsta().getData(acsta);
-    });
+    return await this.convertArrayData(acstas);
+  }
+
+  static async convertArrayData(apps: AcstaApiResponseIF[]) {
+    let result = [];
+    for (const app of apps) {
+      result.push(await new Acsta().getData(app));
+    }
+    return result;
   }
 }
 

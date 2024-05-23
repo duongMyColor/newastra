@@ -16,18 +16,14 @@ class ApplicationMasterFactory {
     if (!applicationMasters?.length) {
       return [];
     }
-    const res = applicationMasters.map(
-      (applicationMaster: AplicationMasterResponseIF) => {
-        return new ApplicationMaster().getData(applicationMaster);
-      }
-    );
-    return res;
+
+    return await this.convertArrayData(applicationMasters);
   }
 
   static async getOneById(id: number) {
     const applicationMaster: AplicationMasterResponseIF = await getOneById(id);
 
-    return new ApplicationMaster().getData(applicationMaster);
+    return await new ApplicationMaster().getData(applicationMaster);
   }
 
   static async getManyByIds(ids: number[]) {
@@ -36,9 +32,7 @@ class ApplicationMasterFactory {
       return [];
     }
 
-    return applicationMasters.map((app: AplicationMasterResponseIF) => {
-      return new ApplicationMaster().getData(app);
-    });
+    return await this.convertArrayData(applicationMasters);
   }
 
   static async getUpdateData(lastSyncDate: Date | string) {
@@ -47,9 +41,16 @@ class ApplicationMasterFactory {
     if (!apps?.length) {
       return [];
     }
-    return apps.map((app: AplicationMasterResponseIF) => {
-      return new ApplicationMaster().getData(app);
-    });
+
+    return await this.convertArrayData(apps);
+  }
+
+  static async convertArrayData(apps: AplicationMasterResponseIF[]) {
+    let result = [];
+    for (const app of apps) {
+      result.push(await new ApplicationMaster().getData(app));
+    }
+    return result;
   }
 }
 

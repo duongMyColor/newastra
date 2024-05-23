@@ -19,6 +19,10 @@ const app = new OpenAPIHono<{ Bindings: Bindings }>();
 // Init prism client
 app.use(async (c, next) => {
   generateClient(c.env.DB);
+  return next();
+});
+
+app.use(async (c, next) => {
   generateS3Client(
     c.env.CLOUDFLARE_ACCOUNT_ID,
     c.env.CLOUDFLARE_ACCESS_KEY_ID,

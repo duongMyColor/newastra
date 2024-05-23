@@ -16,31 +16,36 @@ class PerformanceFactory {
     const res = await getOneById(id);
     if (!res) throw new BadRequestError('Performance not found');
 
-    return new Performance().getData(await getOneById(id));
+    return await new Performance().getData(await getOneById(id));
   }
 
   static async getAll() {
     const performances = await getAll();
     if (!performances?.length) return [];
-    return performances.map((performance: PerformanceResponseIF) =>
-      new Performance().getData(performance)
-    );
+
+    return await this.convertArrayData(performances);
   }
 
   static async getManyByIds(ids: number[]) {
     const performances = await getManyByIds(ids);
     if (!performances?.length) return [];
-    return performances.map((performance: PerformanceResponseIF) =>
-      new Performance().getData(performance)
-    );
+
+    return await this.convertArrayData(performances);
   }
 
   static async getUpdateData(lastSyncDate: Date | string) {
     const performances = await getUpdateData(lastSyncDate);
     if (!performances?.length) return [];
-    return performances.map((performance: PerformanceResponseIF) =>
-      new Performance().getData(performance)
-    );
+
+    return await this.convertArrayData(performances);
+  }
+
+  static async convertArrayData(apps: PerformanceResponseIF[]) {
+    let result = [];
+    for (const app of apps) {
+      result.push(await new Performance().getData(app));
+    }
+    return result;
   }
 }
 
