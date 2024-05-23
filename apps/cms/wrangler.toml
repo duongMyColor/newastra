@@ -1,15 +1,19 @@
-name = "cms"
+name = "da-acsta-cms"
 compatibility_date = "2024-04-26"
 compatibility_flags = ["nodejs_compat"]
 
-# account_id = "a44770b6d89c0ca3f00ef61b49135478" # ← Replace with your Account ID.
+# account_id = "b068d51adac82f13a69a676e90a559a3" # ← Replace with your Account ID.
 # workers_dev = f
 pages_build_output_dir = "./.vercel/output/static"
+
+# [vars]
+# CLOUDFLARE_ACCOUNT_ID='b068d51adac82f13a69a676e90a559a3'
 
 [[d1_databases]]
 binding = "DB" # i.e. available in your Worker on env.DB
 database_name = "da-acsta-db"
 database_id = "010bc5b5-c591-4ef7-ac09-00ccf739c274"
+
 [[r2_buckets]]
 binding = 'BUCKET' # <~ valid JavaScript variable name
 bucket_name = 'da-acsta'

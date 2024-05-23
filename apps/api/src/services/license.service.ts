@@ -10,7 +10,7 @@ class LicenseService {
   static async getCurrentLicense() {
     const currentLicense = await getCurrentLicense();
     const contentUrl = await getPresignedUrl(
-      'da-acsta',
+      'da-acsta-bucket',
       currentLicense?.content as string
     );
 
@@ -20,7 +20,7 @@ class LicenseService {
   static async getOneById(id: number) {
     const license = await getOneById(id);
     const contentUrl = await getPresignedUrl(
-      'da-acsta',
+      'da-acsta-bucket',
       license?.content as string
     );
     return { contentUrl };

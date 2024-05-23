@@ -10,8 +10,8 @@ const statements = sql.split(';').map(
   (statement: string) =>
     statement
       .trim()
-      .replace(/\r|\n/g, ' ') // remove line breaks
-      .replace(/^--.*$/gm, '') // remove comments
+      .replace(/--.*$/gm, '') // remove comments
+      .replace(/[\r\n]/g, ' ') // remove line breaks
 );
 const asyncExec = (command: string) =>
   new Promise<string>((resolve, reject) => {
@@ -31,7 +31,6 @@ const asyncExec = (command: string) =>
       continue;
     }
     const command = `npx wrangler d1 execute da-acsta-db --remote --command="${statement}"`;
-    console.log({ command });
 
     await asyncExec(command);
   }
