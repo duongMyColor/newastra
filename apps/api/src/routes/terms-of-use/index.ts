@@ -1,6 +1,7 @@
 import termsOfUseController from '@/controllers/termOfUse.controller';
 import { OpenAPIHono, createRoute, z } from '@hono/zod-openapi';
 import { ParamsSchema, ResponseSchema } from '@/openapi/terms-of-use';
+import { BadRequestError } from '@/core/error.response';
 const app = new OpenAPIHono();
 
 // app.openapi(
@@ -95,6 +96,10 @@ app.openapi(
   }),
   async (c): Promise<any> => {
     const id = c.req.param('id');
+    if (!id) {
+      throw new BadRequestError('Invalid id');
+    }
+
     const numId = parseInt(id, 10);
     return c.json(await termsOfUseController.getOneById(numId));
   }

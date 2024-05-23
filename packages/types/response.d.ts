@@ -18,3 +18,7 @@ export interface GetAllQueryIF {
 }
 
 export type GetObjectType = 'image' | 'text-file';
+
+export interface ErrorResponse extends Error {
+  status?: StatusCode;
+}

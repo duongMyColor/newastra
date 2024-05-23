@@ -1,11 +1,9 @@
 import { generateClient } from './lib/prisma';
 import { swaggerUI } from '@hono/swagger-ui';
 import { OpenAPIHono } from '@hono/zod-openapi';
-// import { basicAuth } from 'hono/basic-auth';
-// import { bearerAuth } from 'hono/bearer-auth';
-
 import routes from './routes';
 import { generateS3Client } from './lib/cloudflare-r2';
+import { ErrorResponse } from '@repo/types/response';
 type Bindings = {
   DB: D1Database;
   CLOUDFLARE_ACCOUNT_ID: string;
@@ -20,6 +18,17 @@ const app = new OpenAPIHono<{ Bindings: Bindings }>();
 app.use(async (c, next) => {
   generateClient(c.env.DB);
   return next();
+});
+
+// Handle global error
+app.onError((err: ErrorResponse, c) => {
+  return c.json(
+    {
+      message: err.message || 'Internal Server Error',
+      status: err.status || 500,
+    },
+    err?.status || 500
+  );
 });
 
 app.use(async (c, next) => {

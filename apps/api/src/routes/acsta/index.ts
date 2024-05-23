@@ -6,6 +6,7 @@ import {
   ParamsSchema,
   QueySchema,
 } from '@/openapi/acsta';
+import { BadRequestError } from '@/core/error.response';
 const app = new OpenAPIHono();
 
 app.openapi(
@@ -52,6 +53,9 @@ app.openapi(
   }),
   async (c): Promise<any> => {
     const ids = c.req.query('ids');
+    if (!ids) {
+      throw new BadRequestError('Invalid ids');
+    }
     const numIds = ids?.split(',').map((id) => parseInt(id, 10));
     return c.json(
       await acstaController.getManyByIdsAndChildren(numIds as number[])
@@ -81,6 +85,9 @@ app.openapi(
   }),
   async (c): Promise<any> => {
     const id = c.req.param('id');
+    if (!id) {
+      throw new BadRequestError('Invalid id');
+    }
     const numId = parseInt(id, 10);
     return c.json(await acstaController.getOneById(numId));
   }

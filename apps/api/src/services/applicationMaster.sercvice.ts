@@ -1,3 +1,4 @@
+import { NotFoundError } from '@/core/error.response';
 import { getPresignedUrl } from '../lib/cloudflare-r2';
 import {
   getAll,
@@ -14,7 +15,7 @@ class ApplicationMasterFactory {
     const applicationMasters = await getAll();
 
     if (!applicationMasters?.length) {
-      return [];
+      throw new NotFoundError('Application not found');
     }
 
     return await this.convertArrayData(applicationMasters);
@@ -29,7 +30,7 @@ class ApplicationMasterFactory {
   static async getManyByIds(ids: number[]) {
     const applicationMasters = await getManyByIds(ids);
     if (!applicationMasters?.length) {
-      return [];
+      throw new NotFoundError('Application not found');
     }
 
     return await this.convertArrayData(applicationMasters);
@@ -39,7 +40,7 @@ class ApplicationMasterFactory {
     const apps = await getUpdateData(lastSyncDate);
 
     if (!apps?.length) {
-      return [];
+      throw new NotFoundError('Application not found');
     }
 
     return await this.convertArrayData(apps);

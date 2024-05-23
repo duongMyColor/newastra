@@ -8,26 +8,32 @@ import {
 } from '../repos/acsta.repo';
 import { PerformanceResponseIF } from '@repo/types/performance';
 import { getPresignedUrl } from '@/lib/cloudflare-r2';
+import { NotFoundError } from '@/core/error.response';
 
 class AcstaFactory {
   static async getAll() {
     const acstas = await getAll();
 
     if (!acstas?.length) {
-      return [];
+      throw new NotFoundError('No Acsta found');
     }
 
     return await this.convertArrayData(acstas);
   }
 
   static async getOneById(id: number) {
-    return await new Acsta().getData(await getOneById(id));
+    const result = await getOneById(id);
+    if (!result) {
+      throw new NotFoundError('Acsta not found');
+    }
+
+    return result;
   }
 
   static async getManyByIds(ids: number[]) {
     const acstas = await getManyByIds(ids);
     if (!acstas?.length) {
-      return [];
+      throw new NotFoundError('Acsta not found');
     }
 
     return await this.convertArrayData(acstas);
@@ -36,7 +42,7 @@ class AcstaFactory {
   static async getManyByIdsAndChildren(ids: number[]) {
     const acstas = await getManyByIdsAndChildren(ids);
     if (!acstas?.length) {
-      return [];
+      throw new NotFoundError('Acsta not found');
     }
 
     return await this.convertArrayData(acstas);
@@ -46,7 +52,7 @@ class AcstaFactory {
     const acstas = await getUpdateData(lastSyncDate);
 
     if (!acstas?.length) {
-      return [];
+      throw new NotFoundError('Acsta not found');
     }
     return await this.convertArrayData(acstas);
   }

@@ -6,6 +6,7 @@ import {
   updateCheckSchema,
   updateCheckResponseSchema,
 } from '@/openapi/check-update';
+import { BadRequestError } from '@/core/error.response';
 const app = new OpenAPIHono();
 
 app.openapi(
@@ -49,11 +50,11 @@ app.openapi(
       const osMap = OS_MAP[os];
 
       if (osMap == null || osMap == undefined) {
-        return c.json({ error: 'Invalid OS' }, 400);
+        throw new BadRequestError('Invalid OS');
       }
 
       if (!version) {
-        return c.json({ error: 'Invalid version' }, 400);
+        throw new BadRequestError('Invalid version');
       }
 
       // Find the latest mandatory update for the specified OS that is newer than the provided version

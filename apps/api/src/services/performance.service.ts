@@ -8,34 +8,33 @@ import {
   getManyByIds,
   getUpdateData,
 } from '../repos/performance.repo';
-import { BadRequestError } from '@/core/error.response';
+import { NotFoundError } from '@/core/error.response';
 import { getPresignedUrl } from '@/lib/cloudflare-r2';
 
 class PerformanceFactory {
   static async getOneById(id: number) {
     const res = await getOneById(id);
-    if (!res) throw new BadRequestError('Performance not found');
+    if (!res) throw new NotFoundError('Project not found');
 
     return await new Performance().getData(await getOneById(id));
   }
 
   static async getAll() {
     const performances = await getAll();
-    if (!performances?.length) return [];
-
+    if (!performances?.length) throw new NotFoundError('Project not found');
     return await this.convertArrayData(performances);
   }
 
   static async getManyByIds(ids: number[]) {
     const performances = await getManyByIds(ids);
-    if (!performances?.length) return [];
+    if (!performances?.length) throw new NotFoundError('Project not found');
 
     return await this.convertArrayData(performances);
   }
 
   static async getUpdateData(lastSyncDate: Date | string) {
     const performances = await getUpdateData(lastSyncDate);
-    if (!performances?.length) return [];
+    if (!performances?.length) throw new NotFoundError('Project not found');
 
     return await this.convertArrayData(performances);
   }
