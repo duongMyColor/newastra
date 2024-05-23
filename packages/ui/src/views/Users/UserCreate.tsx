@@ -10,7 +10,7 @@ const UserCreate = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
 
   return (
-    <Create title="管理ユーザー管理　新規作成">
+    <Create redirect={REDIRECT_ROUTE.list} title="管理ユーザー管理　新規作成">
       <CustomForm
         pathTo={resourcePath}
         validate={validateUserCreation}

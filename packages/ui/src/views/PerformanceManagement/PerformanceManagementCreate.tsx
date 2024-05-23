@@ -1,4 +1,3 @@
-import { userRoles } from '@repo/consts/user';
 import {
   TextInput,
   Create,
@@ -15,7 +14,6 @@ import { validateCreation } from './formValidator';
 import CryptoJS from 'crypto-js';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps, RAFile, RecordValue } from '@repo/types/general';
-import { REDIRECT_ROUTE } from '@repo/consts/general';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PerformanceTypeMasterResponseIF } from '@repo/types/performanceTypeMaster';
@@ -71,7 +69,7 @@ const PerformanceManagementCreate = ({
 
     try {
       const formData = convertToFormData(req);
-      const data = await create(resource, {
+      await dataProvider.create(resource, {
         data: formData,
       });
 

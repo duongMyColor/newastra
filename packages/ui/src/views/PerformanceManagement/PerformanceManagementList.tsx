@@ -9,7 +9,6 @@ import {
 import { BaseComponentProps } from '@repo/types/general';
 import { validRole } from '../_core/permissions';
 import { ListToolBar } from '@repo/ui/src/components/ListToolBar';
-import { AplicationMasterResponseIF } from '@repo/types/applicationMaster';
 import { PerformanceTypeMasterResponseIF } from '@repo/types/performanceTypeMaster';
 
 const PerformanceManagementList = ({

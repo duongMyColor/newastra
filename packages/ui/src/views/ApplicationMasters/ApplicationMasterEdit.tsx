@@ -28,7 +28,6 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
 
   const notify = useNotify();
   const navigate = useNavigate();
-  const [update] = useUpdate();
   const [termsOfUseIds, settermsOfUseIds] = useState([]);
   const [licenseIDs, setLicenseIDs] = useState([]);
 
@@ -41,13 +40,10 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
 
     const { assetDataIOS, assetDataAndroid, ...rest } = values;
 
-
-    if (assetDataIOS?.rawFile ) {
-
+    if (assetDataIOS?.rawFile) {
       const assetBundleIOSFile = extractFile(assetDataIOS);
       const keyIOS = await uploadMuiltpart(assetBundleIOSFile, encryptKey);
       rest.assetBundleIOS = keyIOS;
-
     }
 
     if (assetDataAndroid?.rawFile) {
@@ -62,7 +58,7 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
     try {
       const formData = convertToFormData(rest, ['outlineUrl']);
 
-      await update(resource, {
+      await dataProvider.update(resource, {
         id: record.id,
         data: formData,
         previousData: record,
@@ -73,12 +69,9 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
       });
       navigate(resourcePath);
     } catch (error) {
-      notify(
-        'エラー: アプリケーション マスターの更新に失敗しました:' + error,
-        {
-          type: 'warning',
-        }
-      );
+      notify('エラー: アプリケーション マスターの更新に失敗しました:' + error, {
+        type: 'warning',
+      });
     }
   };
 
