@@ -7,6 +7,7 @@ import {
   QueySchema,
 } from '@/openapi/acsta';
 import { validateId, validateIds } from '@repo/utils/validateRequest';
+import { QuerySchemaBundleId } from '@/openapi';
 
 const app = new OpenAPIHono();
 
@@ -14,7 +15,10 @@ app.openapi(
   createRoute({
     method: 'get',
     path: '/',
-    description: 'Get all Acsta masters',
+    description: 'Get all Acsta  by bundleId',
+    request: {
+      query: QuerySchemaBundleId,
+    },
     responses: {
       200: {
         content: {
@@ -28,7 +32,7 @@ app.openapi(
     tags: ['Acsta'],
   }),
   async (c): Promise<any> => {
-    return c.json(await acstaController.getAll());
+    return c.json(await acstaController.getAllByBundleId());
   }
 );
 

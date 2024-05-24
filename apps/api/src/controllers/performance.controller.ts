@@ -22,6 +22,13 @@ class PerformanceController {
       metadata: await PerformanceService.getManyByIds(ids),
     });
   };
+
+  getAllByBundleId = async () => {
+    return new OK({
+      message: 'get many Acsta by bundleId success!',
+      metadata: await PerformanceService.getAllByBundleId(),
+    });
+  };
 }
 
 const performanceController = new PerformanceController();

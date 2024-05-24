@@ -7,13 +7,17 @@ import {
   ParamsSchema,
   QueySchema,
 } from '@/openapi/product';
+import { QuerySchemaBundleId } from '@/openapi';
 const app = new OpenAPIHono();
 
 app.openapi(
   createRoute({
     method: 'get',
     path: '/',
-    description: 'Get all Product masters',
+    description: 'Get all Products by bundleId',
+    request: {
+      query: QuerySchemaBundleId,
+    },
     responses: {
       200: {
         content: {

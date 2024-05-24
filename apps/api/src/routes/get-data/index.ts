@@ -1,7 +1,8 @@
 import { OpenAPIHono, createRoute } from '@hono/zod-openapi';
 import getDataController from '@/controllers/getData.controller';
-import { ResponseSchema, ParamsSchema, QuerySchema } from '@/openapi/get-data';
+import { ResponseSchema, ParamsSchema } from '@/openapi/get-data';
 import { validateDate } from '@repo/utils/validateRequest';
+import { QuerySchemaBundleId } from '@/openapi';
 
 const app = new OpenAPIHono();
 
@@ -11,7 +12,7 @@ app.openapi(
     path: '/init',
     description: 'Get intialize data',
     request: {
-      query: QuerySchema,
+      query: QuerySchemaBundleId,
     },
     responses: {
       200: {
@@ -37,6 +38,7 @@ app.openapi(
     description: 'Get updated data',
     request: {
       params: ParamsSchema,
+      query: QuerySchemaBundleId,
     },
     responses: {
       200: {

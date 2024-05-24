@@ -144,19 +144,18 @@ const ListObjects = async (): Promise<ListObjectsV2CommandOutput> => {
  * https://my-bucket-name.<accountid>.r2.cloudflarestorage.com/dog.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential<credential>&X-Amz-Date=<timestamp>&X-Amz-Expires=3600&X-Amz-Signature=<signature>&X-Amz-SignedHeaders=host&x-id=GetObject
  */
 const getPresignedUrl = async (key: string) => {
-  // try {
-  // const bucketName = getBucketName();
-
-  //   return await getSignedUrl(
-  //     s3Client,
-  //     new GetObjectCommand({ Bucket: bucketName, Key: key }),
-  //     { expiresIn: 7200 }
-  //   );
-  // } catch (error) {
-  //   console.error('Failed to get presigned URL: ' + bucketName + key, error);
-  //   throw new Error('Error getting presigned URL');
-  // }
-  return key;
+  const bucketName = getBucketName();
+  try {
+    const s3Client = getS3Client();
+    return await getSignedUrl(
+      s3Client,
+      new GetObjectCommand({ Bucket: bucketName, Key: key }),
+      { expiresIn: 7200 }
+    );
+  } catch (error) {
+    console.error('Failed to get presigned URL: ' + bucketName + key, error);
+    throw new Error('Error getting presigned URL');
+  }
 };
 
 // You can also create links for operations such as putObject to allow temporary write access to a specific key.

@@ -27,7 +27,7 @@ class DataController {
         license: await LicenseService.getCurrentLicense(),
         termOfUse: await TermOfUseService.getCurrentTermOfUse(),
         applicationMaster: await ApplicationMasterService.getOneByBundleId(),
-        acsta: await AcstaService.getAllByAppId(),
+        acsta: await AcstaService.getAllByBundleId(),
         performance: await PerformanceService.getAllByBundleId(),
       },
     });

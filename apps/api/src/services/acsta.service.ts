@@ -24,7 +24,7 @@ class AcstaFactory {
     return await this.convertArrayData(acstas);
   }
 
-  static async getAllByAppId() {
+  static async getAllByBundleId() {
     const applicationId = await getApplicationId();
 
     const acstas = await getAllByAppId(applicationId);

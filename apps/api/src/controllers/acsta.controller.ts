@@ -29,6 +29,13 @@ class AcstaController {
       metadata: await AcstaService.getManyByIdsAndChildren(ids),
     });
   };
+
+  getAllByBundleId = async () => {
+    return new OK({
+      message: 'get many Acsta by bundleId success!',
+      metadata: await AcstaService.getAllByBundleId(),
+    });
+  };
 }
 
 const acstaController = new AcstaController();

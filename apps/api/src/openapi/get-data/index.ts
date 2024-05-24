@@ -30,14 +30,3 @@ export const ParamsSchema = z.object({
   }),
 });
 
-export const QuerySchema = z.object({
-  bundleId: z.string().openapi({
-    param: {
-      name: 'bundleId',
-      in: 'query',
-    },
-    type: 'string',
-    example: 'abc.com',
-    description: 'bundleId or package name of the application',
-  }),
-});
