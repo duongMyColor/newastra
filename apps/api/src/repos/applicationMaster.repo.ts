@@ -19,10 +19,20 @@ export const getManyByIds = async (ids: number[]) => {
   return await new BaseRepo(prisma.aplicationMaster).getManyByIds(ids);
 };
 
-export const getUpdateData = async (lastSyncDate: Date | string) => {
+export const getUpdateData = async (
+  lastSyncDate: Date | string,
+  bundleId: string
+) => {
   const prisma = getDb();
 
-  return await new BaseRepo(prisma.aplicationMaster).getUpdated(lastSyncDate);
+  return await prisma.aplicationMaster.findUnique({
+    where: {
+      updatedAt: {
+        gt: lastSyncDate,
+      },
+      packageName: bundleId,
+    },
+  });
 };
 
 export const getOneByBundleId = async (bundleId: string) => {

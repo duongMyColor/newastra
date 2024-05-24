@@ -45,8 +45,11 @@ class PerformanceFactory {
   }
 
   static async getUpdateData(lastSyncDate: Date | string) {
-    const performances = await getUpdateData(lastSyncDate);
-    if (!performances?.length) throw new NotFoundError('Product not found');
+    const acstaId = await getAcstaIdByBundleId();
+    if (!acstaId) return [];
+
+    const performances = await getUpdateData(lastSyncDate, acstaId);
+    if (!performances?.length) return [];
 
     return await this.convertArrayData(performances);
   }

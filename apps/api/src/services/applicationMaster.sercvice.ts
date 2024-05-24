@@ -54,13 +54,18 @@ class ApplicationMasterFactory {
   }
 
   static async getUpdateData(lastSyncDate: Date | string) {
-    const apps = await getUpdateData(lastSyncDate);
-
-    if (!apps?.length) {
-      throw new NotFoundError('Application not found');
+    const bundleId = getBundleId();
+    if (!bundleId) {
+      throw new NotFoundError('bundleId not found');
     }
 
-    return await this.convertArrayData(apps);
+    const app = await getUpdateData(lastSyncDate, bundleId);
+
+    if (!app) {
+      return {};
+    }
+
+    return await new ApplicationMaster().convertData(app);
   }
 
   static async convertArrayData(apps: AplicationMasterResponseIF[]) {

@@ -38,10 +38,18 @@ export const getManyByIds = async (ids: number[]) => {
 //   });
 // };
 
-export const getUpdateData = async (lastSyncDate: Date | string) => {
+export const getUpdateData = async (
+  lastSyncDate: Date | string,
+  acstaId: number
+) => {
   const prisma = getDb();
 
-  return await new BaseRepo(prisma.performaceManagement).getUpdated(
-    lastSyncDate
-  );
+  return await prisma.performaceManagement.findMany({
+    where: {
+      updatedAt: {
+        gt: lastSyncDate,
+      },
+      acstaId: acstaId,
+    },
+  });
 };

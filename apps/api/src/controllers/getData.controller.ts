@@ -29,7 +29,7 @@ class DataController {
         applicationMaster: await ApplicationMasterService.getOneByBundleId(),
         acsta: await AcstaService.getAllByAppId(),
         performance: await PerformanceService.getAllByBundleId(),
-    },
+      },
     });
   };
 
@@ -44,31 +44,39 @@ class DataController {
 
     let updatedData = {} as any;
 
-    for (const table of updatedTables) {
-      switch (table) {
-        case 'license':
-          updatedData.license = await LicenseService.getCurrentLicense();
-          break;
-        case 'termOfUse':
-          updatedData.termOfUse = await TermOfUseService.getCurrentTermOfUse();
-          break;
-        case 'applicationMaster':
-          updatedData.applicationMaster =
-            await ApplicationMasterService.getUpdateData(lastSyncDate);
-          break;
-        case 'acsta':
-          updatedData.acsta = await AcstaService.getUpdateData(lastSyncDate);
-          break;
-        case 'performance':
-          updatedData.performance =
-            await PerformanceService.getUpdateData(lastSyncDate);
-          break;
-      }
-    }
+    // for (const table of updatedTables) {
+    //   switch (table) {
+    //     case 'license':
+    //       updatedData.license = await LicenseService.getCurrentLicense();
+    //       break;
+    //     case 'termOfUse':
+    //       updatedData.termOfUse = await TermOfUseService.getCurrentTermOfUse();
+    //       break;
+    //     case 'applicationMaster':
+    //       updatedData.applicationMaster =
+    //         await ApplicationMasterService.getUpdateData(lastSyncDate);
+    //       break;
+    //     case 'acsta':
+    //       updatedData.acsta = await AcstaService.getUpdateData();
+    //       break;
+    //     case 'performance':
+    //       updatedData.performance =
+    //         await PerformanceService.getUpdateData(lastSyncDate);
+    //       break;
+    //   }
+    // }
 
     return new OK({
       message: 'get updated data success!',
-      metadata: updatedData,
+      metadata: {
+        license: await LicenseService.getCurrentLicense(),
+        termOfUse: await TermOfUseService.getCurrentTermOfUse(),
+        applicationMaster:
+          await ApplicationMasterService.getUpdateData(lastSyncDate),
+        acsta: await AcstaService.getUpdateData(lastSyncDate),
+        performance: await PerformanceService.getUpdateData(lastSyncDate),
+      },
+      // metadata: updatedData,
     });
   };
 }
