@@ -96,6 +96,7 @@ app.openapi(
   }),
   async (c): Promise<any> => {
     const id = c.req.param('id');
+    
     if (!id) {
       throw new BadRequestError('Invalid id');
     }

@@ -1,5 +1,4 @@
 import { OpenAPIHono, createRoute, z } from '@hono/zod-openapi';
-import { prisma } from '@/lib/prisma';
 import { OK } from '@/core/success.response';
 import { OS_MAP } from '@repo/consts/forceUpdate';
 import {
@@ -7,6 +6,7 @@ import {
   updateCheckResponseSchema,
 } from '@/openapi/check-update';
 import { BadRequestError } from '@/core/error.response';
+import { getDb } from '@/lib/globalObject';
 const app = new OpenAPIHono();
 
 app.openapi(
@@ -57,6 +57,7 @@ app.openapi(
         throw new BadRequestError('Invalid version');
       }
 
+      const prisma = getDb();
       // Find the latest mandatory update for the specified OS that is newer than the provided version
       const updateInfo = await prisma.forcedUpdateManagement.findFirst({
         where: {

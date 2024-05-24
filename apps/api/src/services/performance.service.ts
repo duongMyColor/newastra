@@ -60,11 +60,8 @@ class Performance {
       modeId: id,
       modeTypeId: performanceTypeMasterId,
       acstaId,
-      assetBundleIOS: await getPresignedUrl('da-acsta-bucket', assetBundleIOS),
-      assetBundleAndroid: await getPresignedUrl(
-        'da-acsta-bucket',
-        assetBundleAndroid
-      ),
+      assetBundleIOS: await getPresignedUrl(assetBundleIOS),
+      assetBundleAndroid: await getPresignedUrl(assetBundleAndroid),
     };
   }
 }

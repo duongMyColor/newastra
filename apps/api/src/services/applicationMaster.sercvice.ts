@@ -66,12 +66,9 @@ class ApplicationMaster {
     return {
       appId: id,
       appName,
-      assetBundleIOS: await getPresignedUrl('da-acsta-bucket', assetBundleIOS),
-      assetBundleAndroid: await getPresignedUrl(
-        'da-acsta-bucket',
-        assetBundleAndroid
-      ),
-      outlineUrl: await getPresignedUrl('da-acsta-bucket', outlineUrl),
+      assetBundleIOS: await getPresignedUrl(assetBundleIOS),
+      assetBundleAndroid: await getPresignedUrl(assetBundleAndroid),
+      outlineUrl: await getPresignedUrl(outlineUrl),
     };
   }
 }

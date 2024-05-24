@@ -54,9 +54,9 @@ app.openapi(
   }),
   async (c): Promise<any> => {
     const ids = c.req.query('ids');
-    if (!ids) {
-      throw new BadRequestError('Invalid ids');
-    }
+
+    validateIds(ids);
+
     const numIds = ids?.split(',').map((id) => parseInt(id, 10));
     return c.json(await performanceController.getManyByIds(numIds as number[]));
   }
@@ -90,3 +90,6 @@ app.openapi(
 );
 
 export default app;
+function validateIds(ids: string | undefined) {
+  throw new Error('Function not implemented.');
+}

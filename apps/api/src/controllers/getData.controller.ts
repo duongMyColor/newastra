@@ -4,9 +4,11 @@ import TermOfUseService from '@/services/termOfUse.service';
 import ApplicationMasterService from '@/services/applicationMaster.sercvice';
 import AcstaService from '@/services/acsta.service';
 import PerformanceService from '@/services/performance.service';
-import { prisma } from '@/lib/prisma';
+import { getDb } from '@/lib/globalObject';
 
 async function getUpdatedTables(lastSyncDate: Date | string) {
+  const prisma = getDb();
+
   const updatedTables = await prisma.bootUpdate.findMany({
     where: {
       updatedAt: {
@@ -14,7 +16,7 @@ async function getUpdatedTables(lastSyncDate: Date | string) {
       },
     },
   });
-  return updatedTables.map((entry) => entry.tableName);
+  return updatedTables.map((entry: { tableName: string }) => entry.tableName);
 }
 
 class DataController {

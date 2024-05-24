@@ -16,10 +16,7 @@ class LicenseService {
     if (!currentLicense) {
       throw new NotFoundError('License not found');
     }
-    const contentUrl = await getPresignedUrl(
-      'da-acsta-bucket',
-      currentLicense?.content as string
-    );
+    const contentUrl = await getPresignedUrl(currentLicense?.content as string);
 
     return { contentUrl };
   }
@@ -29,10 +26,7 @@ class LicenseService {
     if (!license) {
       throw new NotFoundError('License not found');
     }
-    const contentUrl = await getPresignedUrl(
-      'da-acsta-bucket',
-      license?.content as string
-    );
+    const contentUrl = await getPresignedUrl(license?.content as string);
     return { contentUrl };
   }
 }

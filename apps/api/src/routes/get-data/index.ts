@@ -1,7 +1,7 @@
 import { OpenAPIHono, createRoute } from '@hono/zod-openapi';
 import getDataController from '@/controllers/getData.controller';
 import { ResponseSchema, ParamsSchema } from '@/openapi/get-data';
-import { BadRequestError } from '@/core/error.response';
+import { validateDate } from '@repo/utils/validateRequest';
 
 const app = new OpenAPIHono();
 
@@ -50,9 +50,7 @@ app.openapi(
   async (c): Promise<any> => {
     const lastSyncDate = c.req.param('lastSyncDate');
 
-    if (!lastSyncDate) {
-      throw new BadRequestError('Invalid lastSyncDate');
-    }
+    validateDate(lastSyncDate);
 
     return c.json(await getDataController.getUpdateData(lastSyncDate));
   }

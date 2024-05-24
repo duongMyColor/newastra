@@ -1,11 +1,15 @@
-import { prisma } from '@/lib/prisma';
+import { getDb } from '@/lib/globalObject';
 import { BaseRepo } from './base/base.repo';
 
 export const getAll = async () => {
+  const prisma = getDb();
+
   return await new BaseRepo(prisma.termsOfUse).getAll();
 };
 
 export const getCurrentTermOfUse = async () => {
+  const prisma = getDb();
+
   const currentLicense = await prisma.termsOfUse.findFirst({
     where: {
       publishedDate: {
@@ -21,6 +25,6 @@ export const getCurrentTermOfUse = async () => {
 };
 
 export const getOneById = async (id: number) => {
-  console.log('getOneById');
+  const prisma = getDb();
   return await new BaseRepo(prisma.termsOfUse).getOneById(id);
 };

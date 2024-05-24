@@ -22,7 +22,6 @@ class TermOfUseService {
     }
 
     const contentUrl = await getPresignedUrl(
-      'da-acsta-bucket',
       currentTermsOfUse?.content as string
     );
     return { contentUrl };
@@ -34,10 +33,7 @@ class TermOfUseService {
       throw new NotFoundError('Term of use not found');
     }
 
-    const contentUrl = await getPresignedUrl(
-      'da-acsta-bucket',
-      termOfUse?.content as string
-    );
+    const contentUrl = await getPresignedUrl(termOfUse?.content as string);
     return { contentUrl };
   }
 }
