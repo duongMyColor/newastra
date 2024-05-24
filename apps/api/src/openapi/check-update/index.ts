@@ -6,6 +6,9 @@ export const updateCheckSchema = z.object({
   version: z.string().openapi({
     example: '1.1',
   }),
+  bundleId: z.string().openapi({
+    example: 'com.example.app',
+  }),
 });
 
 export const metadata = z.object({

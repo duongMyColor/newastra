@@ -7,7 +7,6 @@ import {
   ParamsSchema,
   QueySchema,
 } from '@/openapi/product';
-import { BadRequestError } from '@/core/error.response';
 const app = new OpenAPIHono();
 
 app.openapi(

@@ -50,6 +50,7 @@ app.use(
   }))
 );
 
+// Add root route
 app.route('/api/v1', routes);
 
 // app.use('/ui', bearerAuth({ token: 'bearer-token' })).use(

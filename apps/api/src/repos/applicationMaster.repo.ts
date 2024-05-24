@@ -24,3 +24,11 @@ export const getUpdateData = async (lastSyncDate: Date | string) => {
 
   return await new BaseRepo(prisma.aplicationMaster).getUpdated(lastSyncDate);
 };
+
+export const getOneByBundleId = async (bundleId: string) => {
+  const prisma = getDb();
+
+  return await new BaseRepo(prisma.aplicationMaster).getOneByCondition({
+    packageName: bundleId,
+  });
+};

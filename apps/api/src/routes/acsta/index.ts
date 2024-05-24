@@ -6,12 +6,8 @@ import {
   ParamsSchema,
   QueySchema,
 } from '@/openapi/acsta';
-import {
-  validateBundleId,
-  validateId,
-  validateIds,
-} from '@repo/utils/validateRequest';
-import { getBundleId, getDb } from '@/lib/globalObject';
+import { validateId, validateIds } from '@repo/utils/validateRequest';
+import { getBundleId } from '@/lib/globalObject';
 
 const app = new OpenAPIHono();
 

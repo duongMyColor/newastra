@@ -1,5 +1,5 @@
 // books.ts
-import { OpenAPIHono, createRoute, z } from '@hono/zod-openapi';
+import { OpenAPIHono, createRoute } from '@hono/zod-openapi';
 import applicationMasterController from '@/controllers/applicationMaster.controller';
 import {
   ResponseSchemaObject,
@@ -7,7 +7,6 @@ import {
   ParamsSchema,
   QueySchema,
 } from '@/openapi/application-master';
-import { BadRequestError } from '@/core/error.response';
 const app = new OpenAPIHono();
 
 app.openapi(

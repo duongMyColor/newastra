@@ -53,7 +53,7 @@ model KeyToken {
 model AplicationMaster {
   id                 Int      @id @default(autoincrement())
   appName            String   @unique
-  packageName        String
+  packageName        String   @unique
   termsOfUseId       Int
   licenseId          Int
   assetBundleIOS     String
