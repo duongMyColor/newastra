@@ -1,17 +1,14 @@
-import { countryList, userRoles } from '@repo/consts/user';
+import { userRoles } from '@repo/consts/user';
 import {
-  Edit,
   TextInput,
   SelectInput,
-  AutocompleteInput,
-  BooleanInput,
   PasswordInput,
   EditBase,
   Title,
   usePermissions,
 } from 'react-admin';
 import CustomForm from '@repo/ui/src/components/CustomForm';
-import { validateUserCreation, validateUserEdition } from './formValidator';
+import { validateUserEdition } from './formValidator';
 import { BaseComponentProps } from '@repo/types/general';
 import { Box } from '@mui/material';
 import { validRole } from '../_core/permissions';

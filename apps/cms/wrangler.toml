@@ -12,10 +12,10 @@ pages_build_output_dir = "./.vercel/output/static"
 [[d1_databases]]
 binding = "DB" # i.e. available in your Worker on env.DB
 database_name = "da-acsta-db"
-database_id = "010bc5b5-c591-4ef7-ac09-00ccf739c274"
+database_id = "cb4e05a4-4daf-4850-ae88-cf78c6117465"
 migrations_dir = "./prisma/migrations" # Customize this value to rename the `migrations` folder
 
 
 [[r2_buckets]]
 binding = 'BUCKET' # <~ valid JavaScript variable name
-bucket_name = 'da-acsta'
+bucket_name = 'da-acsta-bucket'

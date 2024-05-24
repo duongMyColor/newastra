@@ -65,7 +65,6 @@ const creationRules: ValidationRule[] = [
 ];
 
 const validateCreation = async (values: RecordValue) => {
-  console.log({ values });
   const baseValidation = validateForm(values, creationRules);
 
   const validateFileIOS = await validateTypeFile(values.assetBundleIOS?.rawFile?.path)
@@ -87,8 +86,27 @@ const validateCreation = async (values: RecordValue) => {
   return validationMessages;
 };
 
-const validateUserEdition = (values: RecordValue): RecordValue => {
-  return validateForm(values, editionRules);
+const validateUserEdition = async(values: RecordValue) => {
+
+  const baseValidation = validateForm(values, editionRules);
+
+  const validateFileIOS = await validateTypeFile(values?.assetDataIOS?.rawFile?.path)
+  const validateFileAndroid = await validateTypeFile(values?.assetDataAndroid?.rawFile?.path)
+
+  
+  const validationMessages = { ...baseValidation };
+
+  
+  if (validateFileIOS === false) {
+    validationMessages.assetDataIOS =
+      'ファイルの種類が正しくありません';
+  }
+
+  if (validateFileAndroid === false) {
+    validationMessages.assetDataAndroid = 'ファイルの種類が正しくありません';
+  }
+
+  return validationMessages;
 };
 
 export { validateCreation, validateUserEdition };

@@ -72,11 +72,11 @@ const MasterCreate = ({
     try {
       const formData = convertToFormData(req, ['outlineUrl']);
 
-      const data = await create(resource, {
+      await dataProvider.create(resource, {
         data: formData,
       });
 
-      await notify('成功: アプリケーション マスターが正常に作成されました', {
+      notify('成功: アプリケーション マスターが正常に作成されました', {
         type: 'success',
       });
       navigate(resourcePath);

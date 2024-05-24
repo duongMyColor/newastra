@@ -6,7 +6,6 @@ import errorHandlerMiddleware from '@/middlewares/errorHandler';
 export const GET = errorHandlerMiddleware(
   async (request: NextRequest, { params }: { params: { id: string } }) => {
     const id = Number(params.id);
-    console.log("iad lấy;l.", id);
     return NextResponse.json(await performanceController.getOneAndChildAndParent(id));
   }
 );
