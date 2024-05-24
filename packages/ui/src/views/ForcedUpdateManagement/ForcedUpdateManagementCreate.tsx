@@ -13,7 +13,7 @@ import { TextField } from '@mui/material';
 import { validateUserCreation } from './formValidator';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps, RecordValue } from '@repo/types/general';
-import { OPERATE_SYSTEM, REDIRECT_ROUTE } from '@repo/consts/general';
+import { CREATED_SUCCESS, OPERATE_SYSTEM, REDIRECT_ROUTE } from '@repo/consts/general';
 import { useEffect, useState } from 'react';
 import { convertToFormData } from '@repo/utils/formData';
 import { useNavigate } from 'react-router-dom';
@@ -39,12 +39,12 @@ const ForcedUpdateManagementCreate = ({
     try {
       const formData = convertToFormData(values);
 
-      const data = await create(resource, {
+      const data = await dataProvider.create(resource, {
         data: formData,
       });
 
       
-      await notify('成功: ライセンスが正常に作成されました', {
+      notify(CREATED_SUCCESS, {
         type: 'success',
       });
       navigate(resourcePath);
@@ -97,7 +97,7 @@ const ForcedUpdateManagementCreate = ({
   return (
     <Create
       redirect={REDIRECT_ROUTE.list}
-      title="強制アップデート管理　新规作成"
+      title="強制アップデート管理　新規作成"
     >
       <CustomForm
         pathTo={resourcePath}

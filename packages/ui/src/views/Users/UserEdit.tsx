@@ -6,21 +6,43 @@ import {
   EditBase,
   Title,
   usePermissions,
+  useNotify,
+  useRecordContext,
 } from 'react-admin';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { validateUserEdition } from './formValidator';
-import { BaseComponentProps } from '@repo/types/general';
+import { BaseComponentProps, RecordValue } from '@repo/types/general';
 import { Box } from '@mui/material';
 import { validRole } from '../_core/permissions';
 import { boxStyles } from '@repo/styles';
+import { useNavigate } from 'react-router-dom';
+import { UPDATED_SUCCESS } from '@repo/consts/general';
 
-const UserEdit = ({ actions, resource }: BaseComponentProps) => {
+const UserEditForm = ({ actions, resource,dataProvider }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
+  const notify = useNotify();
+  const navigate = useNavigate();
+  const record = useRecordContext();
 
-  const { permissions } = usePermissions();
+  const handleUpdate = async (values: RecordValue) => {
+    try{
+ 
+      await dataProvider.update(resource, {
+        id: record.id,
+        data: values,
+        previousData: record,
+      });
 
-  console.log({ permissions });
-  console.log({ actions });
+      await notify(UPDATED_SUCCESS, {
+        type: 'success',
+      });
+      navigate(resourcePath);
+    } catch (error) {
+      notify('エラー: 生産管理の更新に失敗しました: ' + error, {
+        type: 'warning',
+      });
+    }
+  };
 
   return (
     <Box sx={boxStyles}>
@@ -34,6 +56,7 @@ const UserEdit = ({ actions, resource }: BaseComponentProps) => {
           showSaveButton={true}
           showReferenceButton={true}
           showCancelButton={true}
+          handleSave={handleUpdate}
         >
           <TextInput
             source="username"
@@ -68,6 +91,17 @@ const UserEdit = ({ actions, resource }: BaseComponentProps) => {
             isRequired
           />
         </CustomForm>
+      </EditBase>
+    </Box>
+  );
+};
+
+
+const UserEdit = (props: BaseComponentProps) => {
+  return (
+    <Box sx={boxStyles}>
+      <EditBase>
+        <UserEditForm {...props} />
       </EditBase>
     </Box>
   );

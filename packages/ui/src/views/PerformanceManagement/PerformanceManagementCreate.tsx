@@ -20,6 +20,7 @@ import { PerformanceTypeMasterResponseIF } from '@repo/types/performanceTypeMast
 import { AcstaResponseIF } from '@repo/types/acsta';
 import { convertToFormData } from '@repo/utils/formData';
 import { uploadMuiltpart } from '@repo/utils/multipartUpload';
+import { CREATED_SUCCESS } from '@repo/consts/general';
 
 interface typeFormSelected {
   id: string;
@@ -73,7 +74,7 @@ const PerformanceManagementCreate = ({
         data: formData,
       });
 
-      await notify('成功: 生産管理が正常に作成されました', {
+      await notify(CREATED_SUCCESS, {
         type: 'success',
       });
       navigate(resourcePath);
@@ -125,7 +126,7 @@ const PerformanceManagementCreate = ({
   }, []);
 
   return (
-    <Create title="演出管理　新规作成">
+    <Create title="演出管理　新規作成">
       <CustomForm
         pathTo={resourcePath}
         validate={validateCreation}

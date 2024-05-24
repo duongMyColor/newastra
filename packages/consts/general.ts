@@ -1,3 +1,5 @@
+import { RecordValue } from "@repo/types/general";
+
 const baseUploadFolder = 'src/app/api/_uploads/';
 
 const REDIRECT_ROUTE = {
@@ -29,7 +31,14 @@ const OPERATE_SYSTEM = [
   { id: '1', name: 'Android' },
 ];
 
-const ACCEPT_TYPE_FILE = ['jpg','png',"jpeg",'html','hml','assetbundle']
+const MAP_ACCEPT_TYPE_FILE: RecordValue ={
+  'performanceManagement':['assetbundle'],
+  'applicationMaster':['jpg','png','jpeg','html','hml','assetbundle']
+}
+
+
+const CREATED_SUCCESS = '作成しました'
+const UPDATED_SUCCESS = '更新しました'
 
 export {
   baseUploadFolder,
@@ -37,5 +46,7 @@ export {
   UPLOAD_FOLDER_MAP,
   MAP_RESOURE,
   OPERATE_SYSTEM,
-  ACCEPT_TYPE_FILE
+  MAP_ACCEPT_TYPE_FILE,
+  CREATED_SUCCESS,
+  UPDATED_SUCCESS
 };

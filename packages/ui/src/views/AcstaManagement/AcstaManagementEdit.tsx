@@ -18,6 +18,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AplicationMasterResponseIF } from '@repo/types/applicationMaster';
 import { convertToFormData } from '@repo/utils/formData';
+import { UPDATED_SUCCESS } from '@repo/consts/general';
 
 const EditForm = ({ actions, resource, dataProvider }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
@@ -49,7 +50,7 @@ const EditForm = ({ actions, resource, dataProvider }: BaseComponentProps) => {
       });
 
       navigate(resourcePath);
-      await notify('成功: アクスタ管理が正常に更新されました。', {
+      notify(UPDATED_SUCCESS, {
         type: 'success',
       });
     } catch (error) {

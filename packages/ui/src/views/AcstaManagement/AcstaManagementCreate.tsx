@@ -16,7 +16,7 @@ import { TextField, Box } from '@mui/material';
 import { validateAcstaCreation } from './formValidator';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps, RecordValue } from '@repo/types/general';
-import { REDIRECT_ROUTE } from '@repo/consts/general';
+import { CREATED_SUCCESS, REDIRECT_ROUTE } from '@repo/consts/general';
 import { AplicationMasterResponseIF } from '@repo/types/applicationMaster';
 import { convertToFormData } from '@repo/utils/formData';
 
@@ -43,7 +43,7 @@ const AcstaManagementCreate = ({
         data: formData,
       });
 
-      await notify('成功: アクスタ管理が正常に作成されました。', {
+      notify(CREATED_SUCCESS, {
         type: 'success',
       });
       navigate(resourcePath);
@@ -80,7 +80,7 @@ const AcstaManagementCreate = ({
   }, []);
 
   return (
-    <Create redirect={REDIRECT_ROUTE.list} title="アクスタ管理　新规作成">
+    <Create redirect={REDIRECT_ROUTE.list} title="アクスタ管理　新規作成">
       <CustomForm
         pathTo={resourcePath}
         validate={validateAcstaCreation}
