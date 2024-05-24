@@ -26,10 +26,10 @@ class DataController {
       metadata: {
         license: await LicenseService.getCurrentLicense(),
         termOfUse: await TermOfUseService.getCurrentTermOfUse(),
-        applicationMaster: await ApplicationMasterService.getAll(),
-        acsta: await AcstaService.getAll(),
-        performance: await PerformanceService.getAll(),
-      },
+        applicationMaster: await ApplicationMasterService.getOneByBundleId(),
+        acsta: await AcstaService.getAllByAppId(),
+        performance: await PerformanceService.getAllByBundleId(),
+    },
     });
   };
 

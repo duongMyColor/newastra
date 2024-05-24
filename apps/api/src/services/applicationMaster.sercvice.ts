@@ -5,11 +5,13 @@ import {
   getOneById,
   getManyByIds,
   getUpdateData,
+  getOneByBundleId,
 } from '../repos/applicationMaster.repo';
 import {
   AplicationMasterPostIF,
   AplicationMasterResponseIF,
 } from '@repo/types/applicationMaster';
+import { getBundleId } from '@/lib/globalObject';
 class ApplicationMasterFactory {
   static async getAll() {
     const applicationMasters = await getAll();
@@ -24,7 +26,22 @@ class ApplicationMasterFactory {
   static async getOneById(id: number) {
     const applicationMaster: AplicationMasterResponseIF = await getOneById(id);
 
-    return await new ApplicationMaster().getData(applicationMaster);
+    return await new ApplicationMaster().convertData(applicationMaster);
+  }
+
+  static async getOneByBundleId() {
+    const bundleId = getBundleId();
+
+    if (!bundleId) {
+      throw new NotFoundError('bundleId not found');
+    }
+
+    const application = await getOneByBundleId(bundleId);
+    if (!application) {
+      return {};
+    }
+
+    return await new ApplicationMaster().convertData(application);
   }
 
   static async getManyByIds(ids: number[]) {
@@ -49,14 +66,14 @@ class ApplicationMasterFactory {
   static async convertArrayData(apps: AplicationMasterResponseIF[]) {
     let result = [];
     for (const app of apps) {
-      result.push(await new ApplicationMaster().getData(app));
+      result.push(await new ApplicationMaster().convertData(app));
     }
     return result;
   }
 }
 
 class ApplicationMaster {
-  async getData({
+  async convertData({
     id,
     appName,
     assetBundleIOS,

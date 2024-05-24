@@ -7,7 +7,6 @@ import {
   QueySchema,
 } from '@/openapi/acsta';
 import { validateId, validateIds } from '@repo/utils/validateRequest';
-import { getBundleId } from '@/lib/globalObject';
 
 const app = new OpenAPIHono();
 
@@ -56,9 +55,6 @@ app.openapi(
   async (c): Promise<any> => {
     const ids = c.req.query('ids');
     validateIds(ids as string);
-
-    const bundleId = getBundleId();
-    console.log('============getBundleId', bundleId);
 
     const numIds = ids?.split(',').map((id) => parseInt(id, 10));
     return c.json(

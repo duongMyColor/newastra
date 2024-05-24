@@ -1,9 +1,10 @@
 import type { PrismaClient } from '@prisma/client/extension';
 import { asyncLocalStorage } from './asyncLocalStorage';
 import type { S3Client } from '@aws-sdk/client-s3';
+import { BadRequestError } from '@/core/error.response';
 
 export type GlobalObject = {
-  bundleId: () => string;
+  bundleId: string;
   db: PrismaClient;
   s3client: S3Client;
   bucketName: string;

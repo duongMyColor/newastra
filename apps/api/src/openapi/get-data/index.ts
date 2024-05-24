@@ -12,7 +12,7 @@ export const ResponseSchema = z.object({
   metadata: z.object({
     license: ResponseSchemaLicense,
     termOfUse: ResponseSchemaTerm,
-    applicationMaster: z.array(ResponseSchemaArrayApp),
+    applicationMaster: ResponseSchemaArrayApp,
     acsta: z.array(ResponseSchemaArrayAcsta),
     performance: z.array(ResponseSchemaPerformance),
   }),
@@ -27,5 +27,17 @@ export const ParamsSchema = z.object({
     type: 'string',
     example: '2021-09-01T00:00:00.000Z',
     description: 'The last sync date. Zulu time (GMT)',
+  }),
+});
+
+export const QuerySchema = z.object({
+  bundleId: z.string().openapi({
+    param: {
+      name: 'bundleId',
+      in: 'query',
+    },
+    type: 'string',
+    example: 'abc.com',
+    description: 'bundleId or package name of the application',
   }),
 });

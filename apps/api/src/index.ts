@@ -34,12 +34,7 @@ app.onError((err: ErrorResponse, c) => {
 // Init global object
 app.use(
   globalObject.store<Env>((c) => ({
-    bundleId: () => {
-      if (!c.req.query('bundleId')) {
-        throw new BadRequestError('bundleId is required');
-      }
-      return c.req.query('bundleId') as string;
-    },
+    bundleId: c.req.query('bundleId') as string,
     db: generatePrismaClient(c.env?.DB as D1Database),
     s3client: generateS3Client(
       c.env?.CLOUDFLARE_ACCOUNT_ID as string,

@@ -32,8 +32,6 @@ class BaseRepo {
     return res;
   };
 
-
-  
   getOneById = async (id: number) => {
     const res = await this.tableModel.findUnique({
       where: {
@@ -44,7 +42,7 @@ class BaseRepo {
     return res;
   };
 
-  getOneByCondition = async (condition: RecordValue) => {
+  getOneByCondition = async (condition: RecordValue, select = {}) => {
     return await this.tableModel.findUnique({
       where: condition,
     });
