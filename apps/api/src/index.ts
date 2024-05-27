@@ -7,7 +7,7 @@ import { ErrorResponse } from '@repo/types/response';
 import { generateS3Client } from './lib/cloudflare-r2';
 import { generatePrismaClient } from './lib/prisma';
 import { globalObject } from './lib/globalObject';
-import { BadRequestError } from './core/error.response';
+import { basicAuthMiddware } from './auth';
 
 type Bindings = {
   DB: D1Database;
@@ -16,6 +16,8 @@ type Bindings = {
   CLOUDFLARE_SECRET_ACCESS_KEY: string;
   CLOUDFLARE_BUCKET_NAME: string;
   bundleId: string;
+  USERNAME: string;
+  PASSWORD: string;
 };
 
 const app = new OpenAPIHono<{ Bindings: Bindings }>();
@@ -31,31 +33,6 @@ app.onError((err: ErrorResponse, c) => {
   );
 });
 
-// Init global object
-app.use(
-  globalObject.store<Env>((c) => ({
-    bundleId: c.req.query('bundleId') as string,
-    db: generatePrismaClient(c.env?.DB as D1Database),
-    s3client: generateS3Client(
-      c.env?.CLOUDFLARE_ACCOUNT_ID as string,
-      c.env?.CLOUDFLARE_ACCESS_KEY_ID as string,
-      c.env?.CLOUDFLARE_SECRET_ACCESS_KEY as string
-    ),
-    bucketName: c.env?.CLOUDFLARE_BUCKET_NAME as string,
-  }))
-);
-
-// Add root route
-app.route('/api/v1', routes);
-
-// app.use('/ui', bearerAuth({ token: 'bearer-token' })).use(
-//   '/doc',
-//   basicAuth({
-//     username: 'user',
-//     password: 'password',
-//   })
-// );
-
 app.get(
   '/ui',
   swaggerUI({
@@ -68,6 +45,32 @@ app.doc('/doc', {
     version: 'v1',
   },
   openapi: '3.1.0',
+});
+
+app.use(basicAuthMiddware);
+
+// Init global object
+app.use(
+  globalObject.store<Env>((c) => ({
+    bundleId: c.req.query('bundleId') as string,
+    db: generatePrismaClient(c.env?.DB as D1Database),
+    s3client: generateS3Client(
+      c.env?.CLOUDFLARE_ACCOUNT_ID as string,
+      c.env?.CLOUDFLARE_ACCESS_KEY_ID as string,
+      c.env?.CLOUDFLARE_SECRET_ACCESS_KEY as string
+    ),
+    bucketName: c.env?.CLOUDFLARE_BUCKET_NAME as string,
+    USERNAME: c.env?.USERNAME as string,
+    PASSWORD: c.env?.PASSWORD as string,
+  }))
+);
+
+// Add root route
+app.route('/api/v1', routes);
+
+// root route
+app.get('/', (c) => {
+  return c.json({ message: 'Acsta API' });
 });
 
 export default app;

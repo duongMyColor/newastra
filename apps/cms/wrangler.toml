@@ -6,8 +6,6 @@ compatibility_flags = ["nodejs_compat"]
 # workers_dev = f
 pages_build_output_dir = "./.vercel/output/static"
 
-# [vars]
-# CLOUDFLARE_ACCOUNT_ID='b068d51adac82f13a69a676e90a559a3'
 
 [[d1_databases]]
 binding = "DB" # i.e. available in your Worker on env.DB
