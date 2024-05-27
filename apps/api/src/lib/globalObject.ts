@@ -3,12 +3,12 @@ import { asyncLocalStorage } from './asyncLocalStorage';
 import type { S3Client } from '@aws-sdk/client-s3';
 
 export type GlobalObject = {
-  bundleId: string;
-  db: PrismaClient;
-  s3client: S3Client;
-  bucketName: string;
-  USERNAME: string;
-  PASSWORD: string;
+  bundleId?: string;
+  db?: PrismaClient;
+  s3client?: S3Client;
+  bucketName?: string;
+  USERNAME?: string;
+  PASSWORD?: string;
 };
 
 export const globalObject = asyncLocalStorage<GlobalObject>();

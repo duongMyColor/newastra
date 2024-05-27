@@ -17,8 +17,8 @@ import { createMiddleware } from 'hono/factory';
  * @returns {Promise<Response>}
  */
 export const basicAuthMiddware = createMiddleware(async (c, next) => {
-
   const Authorization = c.req.header('Authorization');
+  console.log('Authorization', Authorization);
 
   if (!Authorization) {
     throw new BadRequestError('Authorization header is missing.');
@@ -39,11 +39,20 @@ export const basicAuthMiddware = createMiddleware(async (c, next) => {
  */
 function verifyCredentials(user: string, pass: string) {
   const USERNAME = getUSERNAME();
+  if (!USERNAME) {
+    throw new AuthFailureError('Not found USERNAME in environment variables.');
+  }
+
   if (USERNAME !== user) {
     throw new AuthFailureError('Invalid credentials.');
   }
 
   const PASSWORD = getPASSWORD();
+
+  if (!PASSWORD) {
+    throw new AuthFailureError('Not found PASSWORD in environment variables.');
+  }
+
   if (PASSWORD !== pass) {
     throw new AuthFailureError('Invalid credentials.');
   }
@@ -59,6 +68,8 @@ function basicAuthentication(Authorization: string): {
   user: string;
   pass: string;
 } {
+  console.log('Authorization', Authorization);
+
   const [scheme, encoded] = Authorization.split(' ');
 
   // The Authorization header must start with Basic, followed by a space.

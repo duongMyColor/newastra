@@ -47,6 +47,13 @@ app.doc('/doc', {
   openapi: '3.1.0',
 });
 
+app.use(
+  globalObject.store<Env>((c) => ({
+    USERNAME: c.env?.USERNAME as string,
+    PASSWORD: c.env?.PASSWORD as string,
+  }))
+);
+
 app.use(basicAuthMiddware);
 
 // Init global object
@@ -60,8 +67,6 @@ app.use(
       c.env?.CLOUDFLARE_SECRET_ACCESS_KEY as string
     ),
     bucketName: c.env?.CLOUDFLARE_BUCKET_NAME as string,
-    USERNAME: c.env?.USERNAME as string,
-    PASSWORD: c.env?.PASSWORD as string,
   }))
 );
 

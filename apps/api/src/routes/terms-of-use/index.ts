@@ -2,6 +2,7 @@ import termsOfUseController from '@/controllers/termOfUse.controller';
 import { OpenAPIHono, createRoute } from '@hono/zod-openapi';
 import { ParamsSchema, ResponseSchema } from '@/openapi/terms-of-use';
 import { BadRequestError } from '@/core/error.response';
+import { Authorization } from '@/openapi';
 const app = new OpenAPIHono();
 
 // app.openapi(
@@ -57,6 +58,9 @@ app.openapi(
     method: 'get',
     path: '/latest',
     description: 'Get the latest Term Of Use',
+    request: {
+      headers: Authorization,
+    },
     responses: {
       200: {
         content: {
@@ -81,6 +85,7 @@ app.openapi(
     description: 'Get Term Of Use by id',
     request: {
       params: ParamsSchema,
+      headers: Authorization,
     },
     responses: {
       200: {
