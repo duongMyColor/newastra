@@ -1,4 +1,8 @@
-import { AuthFailureError, BadRequestError } from '@/core/error.response';
+import {
+  AuthFailureError,
+  BadRequestError,
+  InternalServerError,
+} from '@/core/error.response';
 import { getPASSWORD, getUSERNAME } from '@/lib/globalObject';
 import { createMiddleware } from 'hono/factory';
 
@@ -18,7 +22,6 @@ import { createMiddleware } from 'hono/factory';
  */
 export const basicAuthMiddware = createMiddleware(async (c, next) => {
   const Authorization = c.req.header('Authorization');
-  console.log('Authorization', Authorization);
 
   if (!Authorization) {
     throw new BadRequestError('Authorization header is missing.');
@@ -40,7 +43,9 @@ export const basicAuthMiddware = createMiddleware(async (c, next) => {
 function verifyCredentials(user: string, pass: string) {
   const USERNAME = getUSERNAME();
   if (!USERNAME) {
-    throw new AuthFailureError('Not found USERNAME in environment variables.');
+    throw new InternalServerError(
+      'Not found USERNAME in environment variables.'
+    );
   }
 
   if (USERNAME !== user) {
@@ -50,7 +55,9 @@ function verifyCredentials(user: string, pass: string) {
   const PASSWORD = getPASSWORD();
 
   if (!PASSWORD) {
-    throw new AuthFailureError('Not found PASSWORD in environment variables.');
+    throw new InternalServerError(
+      'Not found PASSWORD in environment variables.'
+    );
   }
 
   if (PASSWORD !== pass) {
