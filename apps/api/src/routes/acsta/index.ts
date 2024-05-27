@@ -6,13 +6,19 @@ import {
   ParamsSchema,
   QueySchema,
 } from '@/openapi/acsta';
+import { validateId, validateIds } from '@repo/utils/validateRequest';
+import { QuerySchemaBundleId } from '@/openapi';
+
 const app = new OpenAPIHono();
 
 app.openapi(
   createRoute({
     method: 'get',
     path: '/',
-    description: 'Get all Acsta masters',
+    description: 'Get all Acsta  by bundleId',
+    request: {
+      query: QuerySchemaBundleId,
+    },
     responses: {
       200: {
         content: {
@@ -26,7 +32,7 @@ app.openapi(
     tags: ['Acsta'],
   }),
   async (c): Promise<any> => {
-    return c.json(await acstaController.getAll());
+    return c.json(await acstaController.getAllByBundleId());
   }
 );
 
@@ -52,6 +58,8 @@ app.openapi(
   }),
   async (c): Promise<any> => {
     const ids = c.req.query('ids');
+    validateIds(ids as string);
+
     const numIds = ids?.split(',').map((id) => parseInt(id, 10));
     return c.json(
       await acstaController.getManyByIdsAndChildren(numIds as number[])
@@ -81,6 +89,9 @@ app.openapi(
   }),
   async (c): Promise<any> => {
     const id = c.req.param('id');
+
+    validateId(id);
+
     const numId = parseInt(id, 10);
     return c.json(await acstaController.getOneById(numId));
   }

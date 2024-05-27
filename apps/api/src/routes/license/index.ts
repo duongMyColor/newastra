@@ -1,6 +1,7 @@
 import { OpenAPIHono, createRoute } from '@hono/zod-openapi';
 import licenseController from '@/controllers/license.controller';
 import { ParamsSchema, ResponseSchema } from '@/openapi/license';
+import { validateId } from '@repo/utils/validateRequest';
 
 const app = new OpenAPIHono();
 
@@ -48,6 +49,9 @@ app.openapi(
   }),
   async (c): Promise<any> => {
     const id = c.req.param('id');
+
+    validateId(id);
+
     const numId = parseInt(id, 10);
     return c.json(await licenseController.getOneById(numId));
   }

@@ -7,13 +7,17 @@ import {
   ParamsSchema,
   QueySchema,
 } from '@/openapi/product';
+import { QuerySchemaBundleId } from '@/openapi';
 const app = new OpenAPIHono();
 
 app.openapi(
   createRoute({
     method: 'get',
     path: '/',
-    description: 'Get all Product masters',
+    description: 'Get all Products by bundleId',
+    request: {
+      query: QuerySchemaBundleId,
+    },
     responses: {
       200: {
         content: {
@@ -53,6 +57,9 @@ app.openapi(
   }),
   async (c): Promise<any> => {
     const ids = c.req.query('ids');
+
+    validateIds(ids);
+
     const numIds = ids?.split(',').map((id) => parseInt(id, 10));
     return c.json(await performanceController.getManyByIds(numIds as number[]));
   }
@@ -86,3 +93,6 @@ app.openapi(
 );
 
 export default app;
+function validateIds(ids: string | undefined) {
+  throw new Error('Function not implemented.');
+}

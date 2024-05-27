@@ -1,5 +1,5 @@
 // books.ts
-import { OpenAPIHono, createRoute, z } from '@hono/zod-openapi';
+import { OpenAPIHono, createRoute } from '@hono/zod-openapi';
 import applicationMasterController from '@/controllers/applicationMaster.controller';
 import {
   ResponseSchemaObject,
@@ -7,18 +7,23 @@ import {
   ParamsSchema,
   QueySchema,
 } from '@/openapi/application-master';
+import { validateId, validateIds } from '@repo/utils/validateRequest';
+import { QuerySchemaBundleId } from '@/openapi';
 const app = new OpenAPIHono();
 
 app.openapi(
   createRoute({
     method: 'get',
     path: '/',
-    description: 'Get all application masters',
+    description: 'Get application masters by bundleId',
+    request: {
+      query: QuerySchemaBundleId,
+    },
     responses: {
       200: {
         content: {
           'application/json': {
-            schema: ResponseSchemaArray,
+            schema: ResponseSchemaObject,
           },
         },
         description: 'Ok Response',
@@ -27,7 +32,7 @@ app.openapi(
     tags: ['Application Master'],
   }),
   async (c): Promise<any> => {
-    return c.json(await applicationMasterController.getAll());
+    return c.json(await applicationMasterController.getByBundleId());
   }
 );
 
@@ -53,6 +58,9 @@ app.openapi(
   }),
   async (c): Promise<any> => {
     const ids = c.req.query('ids');
+
+    validateIds(ids as string);
+
     const numIds = ids?.split(',').map((id) => parseInt(id, 10));
     return c.json(
       await applicationMasterController.getManyByIds(numIds as number[])
@@ -82,6 +90,9 @@ app.openapi(
   }),
   async (c): Promise<any> => {
     const id = c.req.param('id');
+
+    validateId(id);
+
     const numId = parseInt(id, 10);
     return c.json(await applicationMasterController.getOneById(numId));
   }

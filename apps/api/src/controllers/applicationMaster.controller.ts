@@ -23,7 +23,12 @@ class AplicationMasterController {
     });
   };
 
-  
+  getByBundleId = async () => {
+    return new OK({
+      message: 'get AplicationMaster by bundleId success!',
+      metadata: await AplicationMasterService.getOneByBundleId(),
+    });
+  };
 }
 
 const applicationMasterController = new AplicationMasterController();

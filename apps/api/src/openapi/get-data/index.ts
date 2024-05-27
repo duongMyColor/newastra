@@ -12,7 +12,7 @@ export const ResponseSchema = z.object({
   metadata: z.object({
     license: ResponseSchemaLicense,
     termOfUse: ResponseSchemaTerm,
-    applicationMaster: z.array(ResponseSchemaArrayApp),
+    applicationMaster: ResponseSchemaArrayApp,
     acsta: z.array(ResponseSchemaArrayAcsta),
     performance: z.array(ResponseSchemaPerformance),
   }),
@@ -29,3 +29,4 @@ export const ParamsSchema = z.object({
     description: 'The last sync date. Zulu time (GMT)',
   }),
 });
+

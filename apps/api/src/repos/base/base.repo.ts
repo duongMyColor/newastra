@@ -1,8 +1,4 @@
-import { prisma } from '../../lib/prisma';
 import { ModelDeligate, RecordValue } from '@repo/types/general';
-import { GetAllQueryIF } from '@repo/types/response';
-import removeEmptyProperties from '@repo/utils/removeEmptyProperties';
-import { GetManyReferenceParams, GetManyReferenceResult } from 'react-admin';
 
 class BaseRepo {
   private tableModel: ModelDeligate;
@@ -44,6 +40,12 @@ class BaseRepo {
     });
 
     return res;
+  };
+
+  getOneByCondition = async (condition: RecordValue, select = {}) => {
+    return await this.tableModel.findUnique({
+      where: condition,
+    });
   };
 
   getManyByIds = async (ids: number[]) => {

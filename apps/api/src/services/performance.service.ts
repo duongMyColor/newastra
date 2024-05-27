@@ -7,34 +7,48 @@ import {
   getOneById,
   getManyByIds,
   getUpdateData,
+  getAllByAcstaId,
 } from '../repos/performance.repo';
-import { BadRequestError } from '@/core/error.response';
+import { NotFoundError } from '@/core/error.response';
 import { getPresignedUrl } from '@/lib/cloudflare-r2';
+import { getAcstaIdByBundleId } from '@/helpers/getRecordId';
 
 class PerformanceFactory {
   static async getOneById(id: number) {
     const res = await getOneById(id);
-    if (!res) throw new BadRequestError('Performance not found');
+    if (!res) throw new NotFoundError('Product not found');
 
-    return await new Performance().getData(await getOneById(id));
+    return await new Performance().getData(res);
+  }
+
+  static async getAllByBundleId() {
+    const acstaId = await getAcstaIdByBundleId();
+    if (!acstaId) return [];
+
+    const performances = await getAllByAcstaId(acstaId);
+
+    if (!performances?.length) return [];
+    return await this.convertArrayData(performances);
   }
 
   static async getAll() {
     const performances = await getAll();
-    if (!performances?.length) return [];
-
+    if (!performances?.length) throw new NotFoundError('Product not found');
     return await this.convertArrayData(performances);
   }
 
   static async getManyByIds(ids: number[]) {
     const performances = await getManyByIds(ids);
-    if (!performances?.length) return [];
+    if (!performances?.length) throw new NotFoundError('Product not found');
 
     return await this.convertArrayData(performances);
   }
 
   static async getUpdateData(lastSyncDate: Date | string) {
-    const performances = await getUpdateData(lastSyncDate);
+    const acstaId = await getAcstaIdByBundleId();
+    if (!acstaId) return [];
+
+    const performances = await getUpdateData(lastSyncDate, acstaId);
     if (!performances?.length) return [];
 
     return await this.convertArrayData(performances);
@@ -61,11 +75,8 @@ class Performance {
       modeId: id,
       modeTypeId: performanceTypeMasterId,
       acstaId,
-      assetBundleIOS: await getPresignedUrl('da-acsta-bucket', assetBundleIOS),
-      assetBundleAndroid: await getPresignedUrl(
-        'da-acsta-bucket',
-        assetBundleAndroid
-      ),
+      assetBundleIOS: await getPresignedUrl(assetBundleIOS),
+      assetBundleAndroid: await getPresignedUrl(assetBundleAndroid),
     };
   }
 }

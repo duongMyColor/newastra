@@ -1,11 +1,13 @@
 import { OpenAPIHono, createRoute, z } from '@hono/zod-openapi';
-import { prisma } from '@/lib/prisma';
 import { OK } from '@/core/success.response';
 import { OS_MAP } from '@repo/consts/forceUpdate';
 import {
   updateCheckSchema,
   updateCheckResponseSchema,
 } from '@/openapi/check-update';
+import { BadRequestError, InternalServerError } from '@/core/error.response';
+import { getDb } from '@/lib/globalObject';
+import { getOneByBundleId } from '@/repos/applicationMaster.repo';
 const app = new OpenAPIHono();
 
 app.openapi(
@@ -41,21 +43,31 @@ app.openapi(
       const result = updateCheckSchema.safeParse(await c.req.json());
 
       if (!result.success) {
-        return c.json({ error: 'Invalid request' }, 400);
+        throw new BadRequestError('Invalid request');
       }
 
-      const { os, version } = result.data;
+      const { os, version, bundleId } = result.data;
 
       const osMap = OS_MAP[os];
 
       if (osMap == null || osMap == undefined) {
-        return c.json({ error: 'Invalid OS' }, 400);
+        throw new BadRequestError('Invalid OS');
       }
 
       if (!version) {
-        return c.json({ error: 'Invalid version' }, 400);
+        throw new BadRequestError('Invalid version');
       }
 
+      if (!bundleId) {
+        throw new BadRequestError('Invalid bundleId');
+      }
+
+      const application = await getOneByBundleId(bundleId);
+      if (!application) {
+        throw new BadRequestError('Application not found');
+      }
+
+      const prisma = getDb();
       // Find the latest mandatory update for the specified OS that is newer than the provided version
       const updateInfo = await prisma.forcedUpdateManagement.findFirst({
         where: {
@@ -63,6 +75,7 @@ app.openapi(
           version: {
             gt: version,
           },
+          appMasterId: application.id,
         },
         orderBy: {
           version: 'asc',
@@ -91,8 +104,7 @@ app.openapi(
         );
       }
     } catch (error) {
-      console.error(error);
-      return c.json({ error: 'Internal server error' }, 500);
+      throw new InternalServerError((error as Error).message);
     }
   }
 );

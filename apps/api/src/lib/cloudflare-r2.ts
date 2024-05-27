@@ -10,6 +10,7 @@ import type {
   ListObjectsV2CommandOutput,
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { getBucketName, getS3Client } from './globalObject';
 
 // const ACOUNT_ID = CLOUDFLARE_ACCOUNT_ID;
 // const ACCESS_KEY_ID = CLOUDFLARE_ACCESS_KEY_ID;
@@ -27,14 +28,13 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 //     secretAccessKey: CLOUDFLARE_SECRET_ACCESS_KEY as string,
 //   },
 // });
-var s3Client: S3Client;
 
 const generateS3Client = (
   accountId: string,
   accessKeyId: string,
   secretAccessKey: string
 ) => {
-  s3Client = new S3Client({
+  return new S3Client({
     region: 'auto',
     endpoint: `https://${accountId}.r2.cloudflarestorage.com`,
     credentials: {
@@ -68,6 +68,7 @@ const generateS3Client = (
  */
 const listBuckets = async (): Promise<ListBucketsCommandOutput> => {
   try {
+    const s3Client = getS3Client();
     return await s3Client.send(new ListBucketsCommand(''));
   } catch (error) {
     console.error('Failed to list buckets:', error);
@@ -121,10 +122,10 @@ const listBuckets = async (): Promise<ListBucketsCommandOutput> => {
  *     StartAfter: undefined
  *   }
  */
-const ListObjects = async (
-  bucketName: string
-): Promise<ListObjectsV2CommandOutput> => {
+const ListObjects = async (): Promise<ListObjectsV2CommandOutput> => {
   try {
+    const s3Client = getS3Client();
+    const bucketName = getBucketName();
     return await s3Client.send(
       new ListObjectsV2Command({ Bucket: bucketName })
     );
@@ -142,8 +143,10 @@ const ListObjects = async (
  * @returns Presigned URL
  * https://my-bucket-name.<accountid>.r2.cloudflarestorage.com/dog.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential<credential>&X-Amz-Date=<timestamp>&X-Amz-Expires=3600&X-Amz-Signature=<signature>&X-Amz-SignedHeaders=host&x-id=GetObject
  */
-const getPresignedUrl = async (bucketName: string, key: string) => {
+const getPresignedUrl = async (key: string) => {
+  const bucketName = getBucketName();
   try {
+    const s3Client = getS3Client();
     return await getSignedUrl(
       s3Client,
       new GetObjectCommand({ Bucket: bucketName, Key: key }),
@@ -162,8 +165,11 @@ const getPresignedUrl = async (bucketName: string, key: string) => {
  * @param key
  * @returns Presigned URL for put operation
  */
-const getPresignedUrlForPut = async (bucketName: string, key: string) => {
+const getPresignedUrlForPut = async (key: string) => {
   try {
+    const s3Client = getS3Client();
+    const bucketName = getBucketName();
+
     return await getSignedUrl(
       s3Client,
       new PutObjectCommand({ Bucket: bucketName, Key: key }),
@@ -181,5 +187,4 @@ export {
   getPresignedUrl,
   getPresignedUrlForPut,
   generateS3Client,
-  s3Client,
 };

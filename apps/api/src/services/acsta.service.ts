@@ -5,13 +5,29 @@ import {
   getManyByIdsAndChildren,
   getManyByIds,
   getUpdateData,
+  getAllByAppId,
 } from '../repos/acsta.repo';
 import { PerformanceResponseIF } from '@repo/types/performance';
 import { getPresignedUrl } from '@/lib/cloudflare-r2';
+import { NotFoundError } from '@/core/error.response';
+
+import { getApplicationId } from '@/helpers/getRecordId';
 
 class AcstaFactory {
   static async getAll() {
     const acstas = await getAll();
+
+    if (!acstas?.length) {
+      throw new NotFoundError('No Acsta found');
+    }
+
+    return await this.convertArrayData(acstas);
+  }
+
+  static async getAllByBundleId() {
+    const applicationId = await getApplicationId();
+
+    const acstas = await getAllByAppId(applicationId);
 
     if (!acstas?.length) {
       return [];
@@ -21,29 +37,43 @@ class AcstaFactory {
   }
 
   static async getOneById(id: number) {
-    return await new Acsta().getData(await getOneById(id));
+    const applicationId = await getApplicationId();
+
+    const result = await getOneById(id, applicationId);
+
+    if (!result) {
+      throw new NotFoundError('No Acsta found');
+    }
+
+    return result;
   }
 
   static async getManyByIds(ids: number[]) {
-    const acstas = await getManyByIds(ids);
+    const applicationId = await getApplicationId();
+
+    const acstas = await getManyByIds(ids, applicationId);
     if (!acstas?.length) {
-      return [];
+      throw new NotFoundError('No Acsta found');
     }
 
     return await this.convertArrayData(acstas);
   }
 
   static async getManyByIdsAndChildren(ids: number[]) {
-    const acstas = await getManyByIdsAndChildren(ids);
+    const applicationId = await getApplicationId();
+
+    const acstas = await getManyByIdsAndChildren(ids, applicationId);
     if (!acstas?.length) {
-      return [];
+      throw new NotFoundError('No Acsta found');
     }
 
     return await this.convertArrayData(acstas);
   }
 
   static async getUpdateData(lastSyncDate: Date | string) {
-    const acstas = await getUpdateData(lastSyncDate);
+    const applicationId = await getApplicationId();
+
+    const acstas = await getUpdateData(lastSyncDate, applicationId);
 
     if (!acstas?.length) {
       return [];
@@ -79,8 +109,8 @@ class Acsta {
       appId: applicationId,
       acstaName,
 
-      thumbnailUrl: await getPresignedUrl('da-acsta-bucket', thumbnailUrl),
-      scanImageUrl: await getPresignedUrl('da-acsta-bucket', scanImageUrl),
+      thumbnailUrl: await getPresignedUrl(thumbnailUrl),
+      scanImageUrl: await getPresignedUrl(scanImageUrl),
       scanOriginX: scanOriginX,
       scanOriginY: scanOriginY,
       scanWidth: scanWidth,
