@@ -14,7 +14,7 @@ import { TextField } from '@mui/material';
 import { validateCreation } from './formValidator';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps, RecordValue } from '@repo/types/general';
-import { REDIRECT_ROUTE } from '@repo/consts/general';
+import { CREATED_SUCCESS, REDIRECT_ROUTE } from '@repo/consts/general';
 import { useEffect, useState } from 'react';
 import { convertToFormData } from '@repo/utils/formData';
 import { useNavigate } from 'react-router-dom';
@@ -32,12 +32,12 @@ const LicenseManagementCreate = ({ actions, resource }: BaseComponentProps) => {
     try {
       const formData = convertToFormData(values, ['content']);
 
-      await create('licenses', {
+      await dataProvider.create('licenses', {
         data: formData,
       });
 
       navigate(resourcePath);
-      await notify('成功: ライセンスが正常に作成されました', {
+      notify(CREATED_SUCCESS, {
         type: 'success',
       });
     } catch (error) {
@@ -63,7 +63,7 @@ const LicenseManagementCreate = ({ actions, resource }: BaseComponentProps) => {
   }, []);
 
   return (
-    <Create redirect={REDIRECT_ROUTE.list} title="ライセンス管理　新规作成">
+    <Create redirect={REDIRECT_ROUTE.list} title="ライセンス管理　新規作成">
       <CustomForm
         pathTo={resourcePath}
         validate={validateCreation}

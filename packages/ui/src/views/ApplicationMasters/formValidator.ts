@@ -67,8 +67,8 @@ const creationRules: ValidationRule[] = [
 const validateCreation = async (values: RecordValue) => {
   const baseValidation = validateForm(values, creationRules);
 
-  const validateFileIOS = await validateTypeFile(values.assetBundleIOS?.rawFile?.path)
-  const validateFileAndroid = await validateTypeFile(values.assetBundleAndroid?.rawFile?.path)
+  const validateFileIOS = await validateTypeFile(values.assetBundleIOS?.rawFile?.path,'applicationMaster')
+  const validateFileAndroid = await validateTypeFile(values.assetBundleAndroid?.rawFile?.path,'applicationMaster')
 
   
   const validationMessages = { ...baseValidation };
@@ -90,8 +90,8 @@ const validateUserEdition = async(values: RecordValue) => {
 
   const baseValidation = validateForm(values, editionRules);
 
-  const validateFileIOS = await validateTypeFile(values?.assetDataIOS?.rawFile?.path)
-  const validateFileAndroid = await validateTypeFile(values?.assetDataAndroid?.rawFile?.path)
+  const validateFileIOS = await validateTypeFile(values?.assetDataIOS?.rawFile?.path,'applicationMaster')
+  const validateFileAndroid = await validateTypeFile(values?.assetDataAndroid?.rawFile?.path,'applicationMaster')
 
   
   const validationMessages = { ...baseValidation };

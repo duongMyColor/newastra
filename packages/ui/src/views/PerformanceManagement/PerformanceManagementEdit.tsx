@@ -20,6 +20,7 @@ import { AcstaResponseIF } from '@repo/types/acsta';
 import { PerformanceTypeMasterResponseIF } from '@repo/types/performanceTypeMaster';
 import { convertToFormData } from '@repo/utils/formData';
 import { uploadMuiltpart } from '@repo/utils/multipartUpload';
+import { UPDATED_SUCCESS } from '@repo/consts/general';
 
 interface typeFormSelected {
   id: string;
@@ -69,7 +70,7 @@ const PerformanceEditForm = ({ actions, resource }: BaseComponentProps) => {
         previousData: record,
       });
 
-      await notify('成功: 生産管理が正常に更新されました', {
+      await notify(UPDATED_SUCCESS, {
         type: 'success',
       });
       navigate(resourcePath);

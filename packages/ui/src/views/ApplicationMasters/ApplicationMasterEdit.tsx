@@ -21,6 +21,7 @@ import { TermOfUseResponseIF } from '@repo/types/termOfUse';
 import { useEffect, useState } from 'react';
 import { convertToFormData } from '@repo/utils/formData';
 import { uploadMuiltpart } from '@repo/utils/multipartUpload';
+import { UPDATED_SUCCESS } from '@repo/consts/general';
 
 const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
@@ -64,7 +65,7 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
         previousData: record,
       });
 
-      await notify('成功: アプリケーション マスターを正常に更新しました', {
+      await notify(UPDATED_SUCCESS, {
         type: 'success',
       });
       navigate(resourcePath);

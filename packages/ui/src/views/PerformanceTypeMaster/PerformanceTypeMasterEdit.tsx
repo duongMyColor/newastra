@@ -1,21 +1,43 @@
 import { userRoles } from '@repo/consts/user';
-import { TextInput, EditBase, Title, usePermissions } from 'react-admin';
+import { TextInput, EditBase, Title, usePermissions, useNotify, useRecordContext } from 'react-admin';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { validateUserCreation } from './formValidator';
-import { BaseComponentProps } from '@repo/types/general';
+import { BaseComponentProps, RecordValue } from '@repo/types/general';
 import { Box } from '@mui/material';
 import { boxStyles } from '@repo/styles';
+import { useNavigate } from 'react-router-dom';
+import { UPDATED_SUCCESS } from '@repo/consts/general';
 
-const PerformanceTypeMasterEdit = ({
+const PerformanceTypeMasterEditForm = ({
   actions,
   resource,
+  dataProvider
 }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
 
-  const { permissions } = usePermissions();
+  const notify = useNotify();
+  const navigate = useNavigate();
+  const record = useRecordContext();
 
-  console.log({ permissions });
-  console.log({ actions });
+    const handleUpdate = async (values: RecordValue) => {
+    try{
+ 
+      await dataProvider.update(resource, {
+        id: record.id,
+        data: values,
+        previousData: record,
+      });
+
+      notify(UPDATED_SUCCESS, {
+        type: 'success',
+      });
+      navigate(resourcePath);
+    } catch (error) {
+      notify('エラー: 生産管理の更新に失敗しました: ' + error, {
+        type: 'warning',
+      });
+    }
+  };
 
   return (
     <Box sx={boxStyles}>
@@ -27,6 +49,7 @@ const PerformanceTypeMasterEdit = ({
           showSaveButton={true}
           showReferenceButton={true}
           showCancelButton={true}
+          handleSave={handleUpdate}
         >
           <TextInput
             source="id"
@@ -42,6 +65,16 @@ const PerformanceTypeMasterEdit = ({
             fullWidth
           />
         </CustomForm>
+      </EditBase>
+    </Box>
+  );
+};
+
+const PerformanceTypeMasterEdit = (props: BaseComponentProps) => {
+  return (
+    <Box sx={boxStyles}>
+      <EditBase>
+        <PerformanceTypeMasterEditForm {...props} />
       </EditBase>
     </Box>
   );

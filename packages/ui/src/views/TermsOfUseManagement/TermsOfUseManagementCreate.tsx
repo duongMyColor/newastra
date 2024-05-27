@@ -14,7 +14,7 @@ import {
 import { validateCreation } from './formValidator';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps, RecordValue } from '@repo/types/general';
-import { REDIRECT_ROUTE } from '@repo/consts/general';
+import { CREATED_SUCCESS, REDIRECT_ROUTE } from '@repo/consts/general';
 import { convertToFormData } from '@repo/utils/formData';
 import { TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
@@ -37,12 +37,12 @@ const TermsOfUseManagementCreate = ({
     try {
       const formData = convertToFormData(values, ['content']);
 
-      await create(resource, {
+      await dataProvider.create(resource, {
         data: formData,
       });
 
       navigate(resourcePath);
-      await notify('成功: 利用規約が正常に作成されました', { type: 'success' });
+      notify(CREATED_SUCCESS, { type: 'success' });
     } catch (error) {
       notify('エラー: 利用規約の作成に失敗しました:' + error, {
         type: 'warning',
@@ -68,7 +68,7 @@ const TermsOfUseManagementCreate = ({
   }, []);
 
   return (
-    <Create redirect={REDIRECT_ROUTE.list} title="利用規約管理　新规作成">
+    <Create redirect={REDIRECT_ROUTE.list} title="利用規約管理　新規作成">
       <CustomForm
         pathTo={resourcePath}
         validate={validateCreation}

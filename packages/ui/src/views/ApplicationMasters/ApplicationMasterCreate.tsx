@@ -14,7 +14,7 @@ import { LicenseResponseIF } from '@repo/types/license';
 import { validateCreation } from './formValidator';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps, RAFile, RecordValue } from '@repo/types/general';
-import { REDIRECT_ROUTE } from '@repo/consts/general';
+import { CREATED_SUCCESS, REDIRECT_ROUTE } from '@repo/consts/general';
 import { useEffect, useState } from 'react';
 import { uploadMuiltpart } from '@repo/utils/multipartUpload';
 import { convertToFormData } from '@repo/utils/formData';
@@ -76,7 +76,7 @@ const MasterCreate = ({
         data: formData,
       });
 
-      notify('成功: アプリケーション マスターが正常に作成されました', {
+      notify(CREATED_SUCCESS, {
         type: 'success',
       });
       navigate(resourcePath);
@@ -114,7 +114,7 @@ const MasterCreate = ({
   return (
     <Create
       redirect={REDIRECT_ROUTE.list}
-      title="アプリケーションマスタ　新规作成"
+      title="アプリケーションマスタ　新規作成"
     >
       <CustomForm
         pathTo={resourcePath}
