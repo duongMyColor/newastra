@@ -13,7 +13,7 @@ const ADMIN: Permission = {
   'forced-update-managements': '*',
 };
 const GENERAL: Permission = {
-  users: ['list', 'show','edit','delete'],
+  users: ['list', 'show'],
   'application-masters': ['create', 'list', 'show', 'edit', 'delete'],
   acstas: ['create', 'list', 'show', 'edit', 'delete'],
   'performance-type-masters': ['create', 'list', 'show', 'edit', 'delete'],
@@ -25,7 +25,7 @@ const GENERAL: Permission = {
   // products: ['list', 'create', 'edit', 'delete', 'show'],
 };
 const READ_ONLY: Permission = {
-  users: ['list', 'show'],
+  users: [],
   'application-masters': ['list', 'show'],
   acstas: ['list', 'show'],
   'performance-type-masters': ['list', 'show'],

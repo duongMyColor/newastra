@@ -46,18 +46,12 @@ const AcstaManagementList = ({ actions, resource }: BaseComponentProps) => {
         />
 
         {validRole('delete', actions) && true && (
-          <CustomButtonByRole
-            source="status"
-            condition="アクティブ"
+          <DeleteWithConfirmButton
+            confirmContent="よろしいですか?"
+            confirmTitle="削除"
             label="削除"
-          >
-            <DeleteWithConfirmButton
-              confirmContent="よろしいですか?"
-              confirmTitle="削除"
-              label="削除"
-              confirmColor="warning"
-            ></DeleteWithConfirmButton>
-          </CustomButtonByRole>
+            confirmColor="warning"
+          ></DeleteWithConfirmButton>
         )}
         {validRole('edit', actions) && <EditButton label="編集"></EditButton>}
       </Datagrid>
