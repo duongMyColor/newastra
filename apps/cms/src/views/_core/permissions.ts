@@ -25,7 +25,7 @@ const GENERAL: Permission = {
   // products: ['list', 'create', 'edit', 'delete', 'show'],
 };
 const READ_ONLY: Permission = {
-  users: ['list', 'show'],
+  users: [],
   'application-masters': ['list', 'show'],
   acstas: ['list', 'show'],
   'performance-type-masters': ['list', 'show'],
