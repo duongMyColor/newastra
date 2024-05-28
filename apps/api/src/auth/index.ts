@@ -75,8 +75,6 @@ function basicAuthentication(Authorization: string): {
   user: string;
   pass: string;
 } {
-  console.log('Authorization', Authorization);
-
   const [scheme, encoded] = Authorization.split(' ');
 
   // The Authorization header must start with Basic, followed by a space.
