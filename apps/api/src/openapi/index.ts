@@ -14,8 +14,9 @@ export const QuerySchemaBundleId = z.object({
 
 export const Authorization = z.object({
   // Header keys must be in lowercase, `Authorization` is not allowed.
-  Authorization: z.string().openapi({
-    description: 'Basic Authorization header. Ref: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization',
+  authorization: z.string().openapi({
+    description:
+      'Basic Authorization header. Ref: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization',
     example: 'Basic <Base64 encoded username and password>',
   }),
 });
