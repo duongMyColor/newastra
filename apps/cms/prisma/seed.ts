@@ -45,6 +45,10 @@ const asyncExec = (command: string) =>
     }
     const command = `npx wrangler d1 execute ${databaseName} --remote --command="${statement}"`;
 
-    await asyncExec(command);
+    try {
+      await asyncExec(command);
+    } catch (error) {
+      console.error(error);
+    }
   }
 })();
