@@ -66,6 +66,9 @@ R2 API tokens can have full permission to interact with you data. But in this ca
 - Create migration
 `yarn db:migrate create`
 
+- Apply the migration for local
+`yarn db:migrate apply`
+
 - Apply remote DB
 `yarn db:migrate apply --remote`
 - If you got error from selecting account_id. Go to step 4 and do again after sucess
