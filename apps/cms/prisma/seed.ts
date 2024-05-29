@@ -2,9 +2,22 @@
 
 const fs = require('fs');
 import { exec } from 'node:child_process';
+import toml from '@iarna/toml';
 
 // Read the SQL file
 const sql = fs.readFileSync('prisma/seed.sql').toString();
+const wranglerConfig = fs.readFileSync('wrangler.toml').toString();
+const parsedConfig: ParsedConfig = toml.parse(wranglerConfig);
+
+interface ParsedConfig {
+  d1_databases?: {
+    database_name: string;
+  }[];
+}
+
+const databaseName = parsedConfig.d1_databases
+  ? parsedConfig.d1_databases[0]?.database_name
+  : undefined;
 
 const statements = sql.split(';').map(
   (statement: string) =>
@@ -30,7 +43,7 @@ const asyncExec = (command: string) =>
     if (!statement) {
       continue;
     }
-    const command = `npx wrangler d1 execute da-acsta-db --remote --command="${statement}"`;
+    const command = `npx wrangler d1 execute ${databaseName} --remote --command="${statement}"`;
 
     await asyncExec(command);
   }
