@@ -8,6 +8,7 @@ import {
 import { BadRequestError, InternalServerError } from '@/core/error.response';
 import { getDb } from '@/lib/globalObject';
 import { getOneByBundleId } from '@/repos/applicationMaster.repo';
+import { Authorization } from '@/openapi';
 const app = new OpenAPIHono();
 
 app.openapi(
@@ -24,6 +25,7 @@ app.openapi(
           },
         },
       },
+      headers: Authorization
     },
     responses: {
       200: {

@@ -2,7 +2,7 @@ import { OpenAPIHono, createRoute } from '@hono/zod-openapi';
 import getDataController from '@/controllers/getData.controller';
 import { ResponseSchema, ParamsSchema } from '@/openapi/get-data';
 import { validateDate } from '@repo/utils/validateRequest';
-import { QuerySchemaBundleId } from '@/openapi';
+import { Authorization, QuerySchemaBundleId } from '@/openapi';
 
 const app = new OpenAPIHono();
 
@@ -13,6 +13,7 @@ app.openapi(
     description: 'Get intialize data',
     request: {
       query: QuerySchemaBundleId,
+      headers: Authorization,
     },
     responses: {
       200: {
@@ -39,6 +40,7 @@ app.openapi(
     request: {
       params: ParamsSchema,
       query: QuerySchemaBundleId,
+      headers: Authorization,
     },
     responses: {
       200: {

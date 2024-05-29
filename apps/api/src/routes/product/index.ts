@@ -7,7 +7,7 @@ import {
   ParamsSchema,
   QueySchema,
 } from '@/openapi/product';
-import { QuerySchemaBundleId } from '@/openapi';
+import { Authorization, QuerySchemaBundleId } from '@/openapi';
 const app = new OpenAPIHono();
 
 app.openapi(
@@ -17,6 +17,8 @@ app.openapi(
     description: 'Get all Products by bundleId',
     request: {
       query: QuerySchemaBundleId,
+      headers: Authorization,
+
     },
     responses: {
       200: {
@@ -42,6 +44,8 @@ app.openapi(
     description: 'Get many Product by ids',
     request: {
       query: QueySchema,
+      headers: Authorization,
+
     },
     responses: {
       200: {

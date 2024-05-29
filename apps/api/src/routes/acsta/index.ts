@@ -7,9 +7,14 @@ import {
   QueySchema,
 } from '@/openapi/acsta';
 import { validateId, validateIds } from '@repo/utils/validateRequest';
-import { QuerySchemaBundleId } from '@/openapi';
+import { Authorization, QuerySchemaBundleId } from '@/openapi';
 
 const app = new OpenAPIHono();
+
+app.openAPIRegistry.registerComponent('securitySchemes', 'Bearer', {
+  type: 'http',
+  scheme: 'bearer',
+});
 
 app.openapi(
   createRoute({
@@ -18,6 +23,7 @@ app.openapi(
     description: 'Get all Acsta  by bundleId',
     request: {
       query: QuerySchemaBundleId,
+      headers: Authorization,
     },
     responses: {
       200: {
@@ -43,6 +49,7 @@ app.openapi(
     description: 'Get many Acsta  by ids',
     request: {
       query: QueySchema,
+      headers: Authorization,
     },
     responses: {
       200: {
@@ -54,6 +61,7 @@ app.openapi(
         description: 'Ok Response',
       },
     },
+
     tags: ['Acsta'],
   }),
   async (c): Promise<any> => {
@@ -74,6 +82,7 @@ app.openapi(
     description: 'Get one Acsta by id',
     request: {
       params: ParamsSchema,
+      headers: Authorization,
     },
     responses: {
       200: {
@@ -85,6 +94,8 @@ app.openapi(
         description: 'Ok Response',
       },
     },
+    headers: Authorization,
+
     tags: ['Acsta'],
   }),
   async (c): Promise<any> => {

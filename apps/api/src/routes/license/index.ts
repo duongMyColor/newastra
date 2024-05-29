@@ -2,6 +2,7 @@ import { OpenAPIHono, createRoute } from '@hono/zod-openapi';
 import licenseController from '@/controllers/license.controller';
 import { ParamsSchema, ResponseSchema } from '@/openapi/license';
 import { validateId } from '@repo/utils/validateRequest';
+import { Authorization } from '@/openapi';
 
 const app = new OpenAPIHono();
 
@@ -10,6 +11,9 @@ app.openapi(
     method: 'get',
     path: '/latest',
     description: 'Get the latest License',
+    request: {
+      headers: Authorization,
+    },
     responses: {
       200: {
         content: {
@@ -20,6 +24,7 @@ app.openapi(
         description: 'Ok Response',
       },
     },
+
     tags: ['License'],
   }),
   async (c): Promise<any> => {
@@ -34,6 +39,7 @@ app.openapi(
     description: 'Get License by id',
     request: {
       params: ParamsSchema,
+      headers: Authorization,
     },
     responses: {
       200: {
@@ -45,6 +51,8 @@ app.openapi(
         description: 'Ok Response',
       },
     },
+    // headers: Authorization,
+
     tags: ['License'],
   }),
   async (c): Promise<any> => {

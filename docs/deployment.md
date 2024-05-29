@@ -94,5 +94,8 @@ R2 API tokens can have full permission to interact with you data. But in this ca
   - `CLOUDFLARE_ACCOUNT_ID`: your account_id
   - `CLOUDFLARE_ACCESS_KEY_ID`: access key from step 2.2
   - `CLOUDFLARE_SECRET_ACCESS_KEY`: secret key from step 2.2
+  - `CLOUDFLARE_SECRET_BUCKET_NAME`: your bucket name
+  - `USERNAME`: your username using for Basic Authentication
+  - `PASSWORD`: your password using for Basic Authentication
 
 - Select deploy button to deploy again
