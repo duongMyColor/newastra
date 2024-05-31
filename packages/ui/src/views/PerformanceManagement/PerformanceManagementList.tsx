@@ -10,6 +10,7 @@ import { BaseComponentProps } from '@repo/types/general';
 import { validRole } from '../_core/permissions';
 import { ListToolBar } from '@repo/ui/src/components/ListToolBar';
 import { PerformanceTypeMasterResponseIF } from '@repo/types/performanceTypeMaster';
+import { AcstaResponseIF } from '@repo/types/acsta';
 
 const PerformanceManagementList = ({
   actions,
@@ -24,6 +25,12 @@ const PerformanceManagementList = ({
         <TextField source="no" label="No" />
         <TextField source="name" label="演出名" />
         <TextField source="id" label="演出ID" />
+        <FunctionField
+          label="アクスタ ID"
+          render={({ acsta }: { acsta: AcstaResponseIF }) => {
+            return `${acsta.id} : ${acsta.acstaName}`;
+          }}
+        />
         <FunctionField
           label="演出種別ID"
           render={({
