@@ -24,7 +24,7 @@ const LicenseManagementShow = ({ actions, resource }: BaseComponentProps) => {
           <CustomForm pathTo={resourcePath} showCancelButton={true}>
             <TextInput
               source="id"
-              label="利用規約ID"
+              label="ライセンスID"
               fullWidth
               disabled
               sx={disabledInputBackgroundStyle}
