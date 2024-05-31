@@ -8,7 +8,7 @@ import {
 import { BadRequestError, InternalServerError } from '@/core/error.response';
 import { getDb } from '@/lib/globalObject';
 import { getOneByBundleId } from '@/repos/applicationMaster.repo';
-import { Authorization } from '@/openapi';
+import { Authorization, securitySchemes } from '@/openapi';
 const app = new OpenAPIHono();
 
 app.openapi(
@@ -16,6 +16,8 @@ app.openapi(
     method: 'post',
     path: '/',
     description: 'Check update',
+    security: securitySchemes,
+
     request: {
       body: {
         required: true,
@@ -25,7 +27,7 @@ app.openapi(
           },
         },
       },
-      headers: Authorization
+      headers: Authorization,
     },
     responses: {
       200: {

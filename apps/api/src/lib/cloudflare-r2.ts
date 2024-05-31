@@ -69,6 +69,9 @@ const generateS3Client = (
 const listBuckets = async (): Promise<ListBucketsCommandOutput> => {
   try {
     const s3Client = getS3Client();
+    if (!s3Client) {
+      throw new Error('S3 client not found');
+    }
     return await s3Client.send(new ListBucketsCommand(''));
   } catch (error) {
     console.error('Failed to list buckets:', error);
@@ -126,6 +129,10 @@ const ListObjects = async (): Promise<ListObjectsV2CommandOutput> => {
   try {
     const s3Client = getS3Client();
     const bucketName = getBucketName();
+    if (!s3Client) {
+      throw new Error('S3 client not found');
+    }
+
     return await s3Client.send(
       new ListObjectsV2Command({ Bucket: bucketName })
     );
@@ -147,6 +154,11 @@ const getPresignedUrl = async (key: string) => {
   const bucketName = getBucketName();
   try {
     const s3Client = getS3Client();
+
+    if (!s3Client) {
+      throw new Error('S3 client not found');
+    }
+
     return await getSignedUrl(
       s3Client,
       new GetObjectCommand({ Bucket: bucketName, Key: key }),
@@ -156,6 +168,7 @@ const getPresignedUrl = async (key: string) => {
     console.error('Failed to get presigned URL: ' + bucketName + key, error);
     throw new Error('Error getting presigned URL');
   }
+  // return key;
 };
 
 // You can also create links for operations such as putObject to allow temporary write access to a specific key.
@@ -169,6 +182,10 @@ const getPresignedUrlForPut = async (key: string) => {
   try {
     const s3Client = getS3Client();
     const bucketName = getBucketName();
+
+    if (!s3Client) {
+      throw new Error('S3 client not found');
+    }
 
     return await getSignedUrl(
       s3Client,

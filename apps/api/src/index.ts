@@ -1,6 +1,7 @@
 import { swaggerUI } from '@hono/swagger-ui';
 import { OpenAPIHono } from '@hono/zod-openapi';
 import { Env } from 'hono/types';
+import { bearerAuth } from 'hono/bearer-auth';
 
 import routes from './routes';
 import { ErrorResponse } from '@repo/types/response';
@@ -8,6 +9,8 @@ import { generateS3Client } from './lib/cloudflare-r2';
 import { generatePrismaClient } from './lib/prisma';
 import { globalObject } from './lib/globalObject';
 import { basicAuthMiddware } from './auth';
+import { createMiddleware } from 'hono/factory';
+import { swaggerBasicAuth } from './auth/swaggerAuth';
 
 type Bindings = {
   DB: D1Database;
@@ -33,10 +36,40 @@ app.onError((err: ErrorResponse, c) => {
   );
 });
 
-app.get(
+// Add security scheme
+app.openAPIRegistry.registerComponent(
+  'securitySchemes',
+  'BasicAuth', // <- Add security name
+  {
+    type: 'apiKey',
+    name: 'Authorization',
+    in: 'header',
+  }
+);
+
+app.use(
+  globalObject.store<Env>((c) => ({
+    USERNAME: c.env?.USERNAME as string,
+    PASSWORD: c.env?.PASSWORD as string,
+  }))
+);
+// Add swagger ui for dev
+app.use(
   '/ui',
-  swaggerUI({
-    url: '/doc',
+  createMiddleware(async (c, next) => {
+    if (c.env.NODE_ENV !== 'development') {
+      return c.json({ message: 'Not Found' }, 404);
+    } else {
+      return next();
+    }
+  })
+);
+// Config auth for swagger ui
+app.use('/ui', swaggerBasicAuth);
+app.use(
+  '/doc',
+  bearerAuth({
+    token: 'bearer-token',
   })
 );
 app.doc('/doc', {
@@ -46,14 +79,22 @@ app.doc('/doc', {
   },
   openapi: '3.1.0',
 });
-
-app.use(
-  globalObject.store<Env>((c) => ({
-    USERNAME: c.env?.USERNAME as string,
-    PASSWORD: c.env?.PASSWORD as string,
-  }))
+app.get(
+  '/ui',
+  swaggerUI({
+    url: '/doc',
+    requestInterceptor: `
+      request => {
+        if (request.url === '/doc') {
+          request.headers['authorization'] = \`Bearer bearer-token\`;
+        }
+        return request;
+      }
+    `,
+  })
 );
 
+// API basic auth
 app.use(basicAuthMiddware);
 
 // Init global object

@@ -2,7 +2,7 @@ import { OpenAPIHono, createRoute } from '@hono/zod-openapi';
 import licenseController from '@/controllers/license.controller';
 import { ParamsSchema, ResponseSchema } from '@/openapi/license';
 import { validateId } from '@repo/utils/validateRequest';
-import { Authorization } from '@/openapi';
+import { Authorization, securitySchemes } from '@/openapi';
 
 const app = new OpenAPIHono();
 
@@ -11,6 +11,7 @@ app.openapi(
     method: 'get',
     path: '/latest',
     description: 'Get the latest License',
+    security: securitySchemes,
     request: {
       headers: Authorization,
     },
@@ -37,6 +38,8 @@ app.openapi(
     method: 'get',
     path: '/{id}',
     description: 'Get License by id',
+    security: securitySchemes,
+
     request: {
       params: ParamsSchema,
       headers: Authorization,

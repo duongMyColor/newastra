@@ -20,3 +20,9 @@ export const Authorization = z.object({
     example: 'Basic <Base64 encoded username and password>',
   }),
 });
+
+export const securitySchemes = [
+  {
+    BasicAuth: [],
+  },
+];
