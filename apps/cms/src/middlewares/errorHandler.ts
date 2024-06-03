@@ -16,15 +16,15 @@ function errorHandlerMiddleware(fn: Function) {
     } catch (error: ErrorIF | any) {
       const status = error.status ?? statusCodes.INTERNAL_SERVER_ERROR;
 
-      // logger.error(
-      //   `${status} - ${error.message} - ${request.method} - ${request.url}
-      //   ${error.stack}
-      //   `
-      // );
-
-      return new NextResponse(error.message, {
-        status: status,
-      });
+      return NextResponse.json(
+        {
+          message: error.message,
+          code: status,
+        },
+        {
+          status: status,
+        }
+      );
     }
   };
 }
