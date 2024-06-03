@@ -8,7 +8,7 @@ import {
   QueySchema,
 } from '@/openapi/application-master';
 import { validateId, validateIds } from '@repo/utils/validateRequest';
-import { Authorization, QuerySchemaBundleId } from '@/openapi';
+import { Authorization, QuerySchemaBundleId, securitySchemes } from '@/openapi';
 const app = new OpenAPIHono();
 
 app.openapi(
@@ -16,6 +16,8 @@ app.openapi(
     method: 'get',
     path: '/',
     description: 'Get application masters by bundleId',
+    security: securitySchemes,
+
     request: {
       query: QuerySchemaBundleId,
       headers: Authorization,
@@ -42,6 +44,8 @@ app.openapi(
     method: 'get',
     path: '/many',
     description: 'Get many application masters by ids',
+    security: securitySchemes,
+
     request: {
       query: QueySchema,
       headers: Authorization,
@@ -75,6 +79,8 @@ app.openapi(
     method: 'get',
     path: '/{id}',
     description: 'Get one application master by id',
+    security: securitySchemes,
+
     request: {
       params: ParamsSchema,
       headers: Authorization,

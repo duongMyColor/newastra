@@ -7,7 +7,7 @@ import {
   QueySchema,
 } from '@/openapi/acsta';
 import { validateId, validateIds } from '@repo/utils/validateRequest';
-import { Authorization, QuerySchemaBundleId } from '@/openapi';
+import { Authorization, QuerySchemaBundleId, securitySchemes } from '@/openapi';
 
 const app = new OpenAPIHono();
 
@@ -21,6 +21,8 @@ app.openapi(
     method: 'get',
     path: '/',
     description: 'Get all Acsta  by bundleId',
+    security: securitySchemes,
+
     request: {
       query: QuerySchemaBundleId,
       headers: Authorization,
@@ -47,6 +49,8 @@ app.openapi(
     method: 'get',
     path: '/many',
     description: 'Get many Acsta  by ids',
+    security: securitySchemes,
+
     request: {
       query: QueySchema,
       headers: Authorization,
@@ -80,6 +84,8 @@ app.openapi(
     method: 'get',
     path: '/{id}',
     description: 'Get one Acsta by id',
+    security: securitySchemes,
+
     request: {
       params: ParamsSchema,
       headers: Authorization,

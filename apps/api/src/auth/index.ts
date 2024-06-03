@@ -40,7 +40,7 @@ export const basicAuthMiddware = createMiddleware(async (c, next) => {
  * @param {string} pass
  * @throws {AuthFailureError}
  */
-function verifyCredentials(user: string, pass: string) {
+export const verifyCredentials = (user: string, pass: string) => {
   const USERNAME = getUSERNAME();
   if (!USERNAME) {
     throw new InternalServerError(
@@ -63,7 +63,7 @@ function verifyCredentials(user: string, pass: string) {
   if (PASSWORD !== pass) {
     throw new AuthFailureError('Invalid credentials.');
   }
-}
+};
 
 /**
  * Parse HTTP Basic Authorization value.
@@ -71,10 +71,12 @@ function verifyCredentials(user: string, pass: string) {
  * @throws {BadRequestError}
  * @returns {{ user: string, pass: string }}
  */
-function basicAuthentication(Authorization: string): {
+export const basicAuthentication = (
+  Authorization: string
+): {
   user: string;
   pass: string;
-} {
+} => {
   const [scheme, encoded] = Authorization.split(' ');
 
   // The Authorization header must start with Basic, followed by a space.
@@ -104,4 +106,4 @@ function basicAuthentication(Authorization: string): {
     user: decoded.substring(0, index),
     pass: decoded.substring(index + 1),
   };
-}
+};

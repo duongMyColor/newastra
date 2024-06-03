@@ -90,7 +90,7 @@ const AcstaManagementCreate = ({
       >
         <TextField
           id="filled-basic"
-          label="利用規約ID"
+          label="アクスタID"
           variant="filled"
           value={idAcsta}
           disabled

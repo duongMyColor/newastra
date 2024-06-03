@@ -77,7 +77,7 @@ const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
 
               <TextInput
                 source="applicationId"
-                label="利用規約ID"
+                label="アプリケーションID"
                 disabled
                 fullWidth
                 sx={disabledInputBackgroundStyle}

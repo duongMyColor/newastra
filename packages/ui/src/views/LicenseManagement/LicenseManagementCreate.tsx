@@ -73,7 +73,7 @@ const LicenseManagementCreate = ({ actions, resource }: BaseComponentProps) => {
       >
         <TextField
           id="filled-basic"
-          label="利用規約ID"
+          label="ライセンスID"
           variant="filled"
           value={idLicense}
           disabled
