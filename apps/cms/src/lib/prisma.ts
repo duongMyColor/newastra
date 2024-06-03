@@ -1,35 +1,25 @@
 import { PrismaD1 } from '@prisma/adapter-d1';
 import { PrismaClient } from '@prisma/client';
 import { getRequestContext } from '@cloudflare/next-on-pages';
-import { AsyncLocalStorage } from 'node:async_hooks';
 
 interface Env extends CloudflareEnv {
   DB: D1Database;
 }
+var prisma: PrismaClient;
 
-interface Storage {
-  [key: string]: PrismaClient;
-}
+const generateClient = () => {
+  if (prisma) {
+    return prisma;
+  }
 
-const localStorage = new AsyncLocalStorage();
-
-const getStorageKey = (key: string) => {
-  const store = localStorage.getStore() as Storage;
-  return store ? store[key] : null;
-};
-
-const createPrismaClient = () => {
   const env = getRequestContext().env as Env;
   const DB = env.DB;
   const adapter = new PrismaD1(DB);
-  const prismaObj = new PrismaClient({ adapter });
-  localStorage.run({ prisma: prismaObj }, () => {});
-  return prismaObj;
-};
+  prisma = new PrismaClient({
+    adapter,
+  });
 
-const generateClient = () => {
-  const existingClient = getStorageKey('prisma');
-  return existingClient ? existingClient : createPrismaClient();
+  return prisma;
 };
 
 export { generateClient };
