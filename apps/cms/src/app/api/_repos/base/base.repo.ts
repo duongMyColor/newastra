@@ -127,20 +127,30 @@ class BaseRepo {
   };
 
   getOneByIdPerformaceTypeMaster = async (idPerformanceTypeMaster: number) => {
-    const prisma = generateClient();
+    try {
+      const prisma = generateClient();
 
-    const response = await prisma.performaceManagement.findFirst({
-      where: { performanceTypeMasterId: idPerformanceTypeMaster },
-    });
+      const response = await prisma.performaceManagement.findFirst({
+        where: { performanceTypeMasterId: idPerformanceTypeMaster },
+      });
 
-    return response;
+      console.log({ response });
+
+      return response;
+    } catch (error) {
+      console.log({ error });
+    }
   };
   getOneByPacketName = async (packageName: string) => {
-    const response = await this.tableModel.findFirst({
-      where: { packageName },
-    });
+    try {
+      const response = await this.tableModel.findFirst({
+        where: { packageName },
+      });
 
-    return response;
+      return response;
+    } catch (error) {
+      console.log({ error });
+    }
   };
 
   getAllWithFilters = async ({ sort, range, filter }: GetAllQueryIF) => {

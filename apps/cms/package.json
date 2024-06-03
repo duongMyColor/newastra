@@ -27,7 +27,7 @@
     "toml": "^3.0.0"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.11.3",
+    "@cloudflare/next-on-pages": "^1.11.1",
     "@cloudflare/workers-types": "^4.20240423.0",
     "@next/eslint-plugin-next": "^14.1.1",
     "@repo/assets": "*",
