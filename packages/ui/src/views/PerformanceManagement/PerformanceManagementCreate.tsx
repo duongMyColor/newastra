@@ -79,7 +79,7 @@ const PerformanceManagementCreate = ({
       });
       navigate(resourcePath);
     } catch (error) {
-      notify('エラー: 生産管理の作成に失敗しました:' + error, {
+      notify('エラー: 作成に失敗しました:' + error, {
         type: 'warning',
       });
     }

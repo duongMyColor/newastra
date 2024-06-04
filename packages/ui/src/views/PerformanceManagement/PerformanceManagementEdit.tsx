@@ -75,7 +75,7 @@ const PerformanceEditForm = ({ actions, resource }: BaseComponentProps) => {
       });
       navigate(resourcePath);
     } catch (error) {
-      notify('エラー: 生産管理の更新に失敗しました: ' + error, {
+      notify('エラー: 更新に失敗しました: ' + error, {
         type: 'warning',
       });
     }
