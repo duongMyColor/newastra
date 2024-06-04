@@ -38,7 +38,7 @@ const UserEditForm = ({ actions, resource,dataProvider }: BaseComponentProps) =>
       });
       navigate(resourcePath);
     } catch (error) {
-      notify('エラー: 生産管理の更新に失敗しました: ' + error, {
+      notify('エラー: 更新に失敗しました: ' + error, {
         type: 'warning',
       });
     }
@@ -86,7 +86,7 @@ const UserEditForm = ({ actions, resource,dataProvider }: BaseComponentProps) =>
           />
           <PasswordInput
             source="confirmNewPassword"
-            label="バスワード辟涊"
+            label="パスワード確認"
             fullWidth
             isRequired
           />
