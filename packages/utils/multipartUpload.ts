@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import dataProvider from '../../apps/cms/src/providers/dataProviders/dataProvider';
 import { UPLOAD_FOLDER_MAP } from '@repo/consts/general';
 const CHUNK_SIZE = 5 * 1024 * 1024; // 5MB in bytes
@@ -81,7 +82,7 @@ export const completeMultipartUpload = async (
 };
 
 export const uploadMuiltpart = async (file: File) => {
-  const timeStamp = new Date().getTime();
+  const timeStamp = dayjs().format('YYYYMMDD_HHmmss');
   const key = `${UPLOAD_FOLDER_MAP.applicationMaster}/${timeStamp}/${file.name}`;
 
   const { resKey, uploadId } = await createMultipartUpload(key);
