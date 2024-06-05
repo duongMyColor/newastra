@@ -1,4 +1,4 @@
-import { encryptFile } from '@repo/utils/fileUtils';
+import dayjs from 'dayjs';
 import dataProvider from '../../apps/cms/src/providers/dataProviders/dataProvider';
 import { UPLOAD_FOLDER_MAP } from '@repo/consts/general';
 const CHUNK_SIZE = 5 * 1024 * 1024; // 5MB in bytes
@@ -80,15 +80,14 @@ export const completeMultipartUpload = async (
   });
 };
 
-export const uploadMuiltpart = async (file: File, encryptKey: string) => {
+export const uploadMuiltpart = async (file: File) => {
   try {
-    const encryptedFile = await encryptFile(file, encryptKey);
-    const timeStamp = new Date().getTime();
-    const key = `${UPLOAD_FOLDER_MAP.applicationMaster}/${timeStamp}/${file.name}`;
+    const timestamp = dayjs().format('YYYYMMDD_HHmmss');
+    const key = `${UPLOAD_FOLDER_MAP.applicationMaster}/${timestamp}/${file.name}`;
 
     const { resKey, uploadId } = await createMultipartUpload(key);
 
-    const parts = await uploadParts(encryptedFile, resKey, uploadId);
+    const parts = await uploadParts(file, resKey, uploadId);
 
     await completeMultipartUpload(resKey, uploadId, parts);
 
