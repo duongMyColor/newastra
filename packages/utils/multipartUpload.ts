@@ -1,5 +1,7 @@
+import { encryptFile } from '@repo/utils/fileUtils';
 import dataProvider from '../../apps/cms/src/providers/dataProviders/dataProvider';
 import { UPLOAD_FOLDER_MAP } from '@repo/consts/general';
+import dayjs from 'dayjs';
 const CHUNK_SIZE = 5 * 1024 * 1024; // 5MB in bytes
 
 interface UploadedPart {
@@ -20,16 +22,15 @@ export const createMultipartUpload = async (key: string) => {
 };
 
 export const uploadParts = async (
-  file: File,
+  encryptedFile: any,
   resKey: string,
   uploadId: string
 ) => {
   let promises = [];
   const MAX_RETRIES = 3; // define the maximum number of retries
 
-  for (let i = 0; i < file.size; i += CHUNK_SIZE) {
-    const chunk = file.slice(i, i + CHUNK_SIZE);
-
+  for (let i = 0; i < encryptedFile.length; i += CHUNK_SIZE) {
+    const chunk = encryptedFile.slice(i, i + CHUNK_SIZE);
     const partNumber = i / CHUNK_SIZE + 1;
 
     let attempt = 0;
@@ -81,14 +82,18 @@ export const completeMultipartUpload = async (
 };
 
 export const uploadMuiltpart = async (file: File) => {
-  const timeStamp = new Date().getTime();
-  const key = `${UPLOAD_FOLDER_MAP.applicationMaster}/${timeStamp}/${file.name}`;
+  try {
+    const timestamp = dayjs().format('YYYYMMDD_HHmmss');
+    const key = `${UPLOAD_FOLDER_MAP.applicationMaster}/${timestamp}/${file.name}`;
 
-  const { resKey, uploadId } = await createMultipartUpload(key);
+    const { resKey, uploadId } = await createMultipartUpload(key);
 
-  const parts = await uploadParts(file, resKey, uploadId);
+    const parts = await uploadParts(file, resKey, uploadId);
 
-  await completeMultipartUpload(resKey, uploadId, parts);
+    await completeMultipartUpload(resKey, uploadId, parts);
 
-  return key;
+    return key;
+  } catch (error) {
+    console.error('Error during multipart upload:', error);
+  }
 };

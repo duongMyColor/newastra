@@ -63,8 +63,16 @@ export const PUT = errorHandlerMiddleware(
     const bodyObj = convertFormDataToObject(body);
     // Destructure the body object
 
-    const { key, uploadId, partNumberString, part } =
-      bodyObj as MultipartUploadBody;
+    if (
+      !('key' in bodyObj) ||
+      !('uploadId' in bodyObj) ||
+      !('partNumberString' in bodyObj) ||
+      !('part' in bodyObj)
+    ) {
+      throw new BadRequestError('Missing required multipart upload fields');
+    }
+
+    const { key, uploadId, partNumberString, part } = bodyObj;
 
     switch (action) {
       case 'mpu-uploadpart': {
