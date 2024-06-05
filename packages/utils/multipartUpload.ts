@@ -21,15 +21,15 @@ export const createMultipartUpload = async (key: string) => {
 };
 
 export const uploadParts = async (
-  encryptedFile: any,
+  file: File,
   resKey: string,
   uploadId: string
 ) => {
   let promises = [];
   const MAX_RETRIES = 3; // define the maximum number of retries
 
-  for (let i = 0; i < encryptedFile.length; i += CHUNK_SIZE) {
-    const chunk = encryptedFile.slice(i, i + CHUNK_SIZE);
+  for (let i = 0; i < file.size; i += CHUNK_SIZE) {
+    const chunk = file.slice(i, i + CHUNK_SIZE);
     const partNumber = i / CHUNK_SIZE + 1;
 
     let attempt = 0;
@@ -82,7 +82,7 @@ export const completeMultipartUpload = async (
 
 export const uploadMuiltpart = async (file: File) => {
   try {
-    const timestamp = dayjs().format('YYYYMMDD_HHmmss');
+    const timestamp = dayjs().format('YYYYMMDD_HHmmssSSS');
     const key = `${UPLOAD_FOLDER_MAP.applicationMaster}/${timestamp}/${file.name}`;
 
     const { resKey, uploadId } = await createMultipartUpload(key);
