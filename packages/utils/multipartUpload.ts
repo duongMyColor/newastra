@@ -1,7 +1,6 @@
-import { encryptFile } from '@repo/utils/fileUtils';
+import dayjs from 'dayjs';
 import dataProvider from '../../apps/cms/src/providers/dataProviders/dataProvider';
 import { UPLOAD_FOLDER_MAP } from '@repo/consts/general';
-import dayjs from 'dayjs';
 const CHUNK_SIZE = 5 * 1024 * 1024; // 5MB in bytes
 
 interface UploadedPart {
