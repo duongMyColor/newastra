@@ -1,4 +1,4 @@
-import { fetchUtils, withLifecycleCallbacks } from 'react-admin';
+import { fetchUtils } from 'react-admin';
 import type {
   CreateParams,
   CreateResult,
@@ -31,6 +31,7 @@ import {
   MultipartUploadBody,
 } from '@repo/types/upload';
 import { GetObjectType } from '@repo/types/response';
+import { convertToFormData } from '@repo/utils/formData';
 
 const apiUrl = `/api`;
 const httpClient = fetchUtils.fetchJson;
@@ -318,6 +319,18 @@ const baseDataProvider: DataProvider = {
     params: { body: MultipartUploadBody }
   ) => {
     const url = `${apiUrl}/upload/multipart/${action}`;
+
+    if (method === 'PUT') {
+      const body = convertToFormData(params.body);
+      const response = await httpClient(url, {
+        method: method,
+        body: body,
+      });
+
+      return {
+        data: response,
+      };
+    }
 
     const response = await httpClient(url, {
       method: method,

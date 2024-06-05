@@ -43,21 +43,18 @@ const PerformanceEditForm = ({ actions, resource }: BaseComponentProps) => {
   };
   const handleUpdate = async (values: RecordValue) => {
     console.log('handle values;', values);
-    const { assetDataAndroid, assetDataIOS, encryptKey, ...rest } = values;
+    const { assetDataAndroid, assetDataIOS, ...rest } = values;
 
     if (assetDataAndroid?.rawFile) {
       const assetBundleAndroidFile = extractFile(assetDataAndroid);
-      const keyAndroid = await uploadMuiltpart(
-        assetBundleAndroidFile,
-        encryptKey
-      );
+      const keyAndroid = await uploadMuiltpart(assetBundleAndroidFile);
       rest.assetBundleAndroid = keyAndroid;
     }
 
     if (assetDataIOS?.rawFile) {
       const assetBundleIOSFile = extractFile(assetDataIOS);
 
-      const keyIOS = await uploadMuiltpart(assetBundleIOSFile, encryptKey);
+      const keyIOS = await uploadMuiltpart(assetBundleIOSFile);
       rest.assetBundleIOS = keyIOS;
     }
 

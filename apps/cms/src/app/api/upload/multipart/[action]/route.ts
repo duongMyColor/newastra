@@ -8,6 +8,7 @@ import {
   resumeMultipartUpload,
 } from '@/lib/cloudflare-r2';
 import { BadRequestError } from '@/app/api/_core/error.response';
+import { convertFormDataToObject } from '@repo/utils/objectUtils';
 
 export const POST = errorHandlerMiddleware(
   async (
@@ -58,9 +59,12 @@ export const PUT = errorHandlerMiddleware(
     request: NextRequest,
     { params: { action } }: { params: { action: string } }
   ) => {
-    const { body }: MultipartUploadBody = await request.json();
+    const body = await request.formData();
+    const bodyObj = convertFormDataToObject(body);
+    // Destructure the body object
 
-    const { key, uploadId, partNumberString, part } = body;
+    const { key, uploadId, partNumberString, part } =
+      bodyObj as MultipartUploadBody;
 
     switch (action) {
       case 'mpu-uploadpart': {

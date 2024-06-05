@@ -49,16 +49,12 @@ const PerformanceManagementCreate = ({
     const encryptKey = CryptoJS.lib.WordArray.random(16).toString();
 
     const { assetBundleIOS, assetBundleAndroid, ...rest } = values;
-    console.log({ ...rest });
     const assetBundleIOSFile = extractFile(assetBundleIOS);
     const assetBundleAndroidFile = extractFile(assetBundleAndroid);
 
-    const keyIOS = await uploadMuiltpart(assetBundleIOSFile, encryptKey);
+    const keyIOS = await uploadMuiltpart(assetBundleIOSFile);
     console.log('encryptedIOS', keyIOS);
-    const keyAndroid = await uploadMuiltpart(
-      assetBundleAndroidFile,
-      encryptKey
-    );
+    const keyAndroid = await uploadMuiltpart(assetBundleAndroidFile);
 
     const req = {
       ...rest,
