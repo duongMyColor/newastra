@@ -7,6 +7,7 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "dev:cms": "turbo run dev --filter=cms",
+    "dev:api": "turbo run dev --filter=api",
     "test": "jest"
   },
   "dependencies": {

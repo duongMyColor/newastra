@@ -1,27 +1,115 @@
 # Overview
-This is Monorepo using Turborepo as the management tool.
 
-## 1. Install turborepo
+DA 大相撲AR Project.
 
-`npm i -g turbo`
+This is Monorepo using Turborepo as the management tool. Nextjs framework to run a React-Admin-based CMS. Hono framework to run the API.
 
-## 2. Install dependencies
+## System diagram
 
-`yarn install`
+```mermaid
+graph TB
+    subgraph Cloudflare_Edge
+        Pages["Pages (CMS)"]
+        Workers1["Workers (API for CMS)"]
+        D1["D1 (SQLite)"]
+        R2["R2 (File)"]
+        Workers2["Workers (API)"]
 
-## 3. Create `.env` file base on `.sample.env` of each `apps`
+        Pages --> Workers1
+        Workers1 --> D1
+        Workers1 --> R2
+        Workers2 ==> D1
+        Workers2 ==> R2
+    end
+
+    管理者["admin user\nPC"] --> Pages
+    user["user\nSmart Phone App"] ==> Workers2
+```
+
+💡Bold lines have a lot of access.
+
+## Technology used
+<!-- https://t8csp.csb.app/ -->
+
+<p style="display: inline">
+  <img src="https://img.shields.io/badge/-Turborepo-000000.svg?logo=turborepo&style=for-the-badge">
+   <img src="https://img.shields.io/badge/-githubactions-000000.svg?logo=github-actions&style=for-the-badge">
+</p>
+
+### CMS
+
+<p style="display: inline">
+  <img src="https://img.shields.io/badge/-Node.js-000000.svg?logo=node.js&style=for-the-badge">
+  <img src="https://img.shields.io/badge/-Next.js-000000.svg?logo=next.js&style=for-the-badge">
+  <img src="https://img.shields.io/badge/-React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB">
+  <img src="https://img.shields.io/badge/-Prisma-000000.svg?logo=prisma&style=for-the-badge">
+  <img src="https://img.shields.io/badge/-Cloudflare-000000.svg?logo=cloudflare&style=for-the-badge">
+</p>
+
+### API
+
+<p style="display: inline">
+  <img src="https://img.shields.io/badge/-Node.js-000000.svg?logo=node.js&style=for-the-badge">
+  <img src="https://img.shields.io/badge/-Hono-000000.svg?logo=hono&style=for-the-badge">
+  <img src="https://img.shields.io/badge/-Prisma-000000.svg?logo=prisma&style=for-the-badge">
+  <img src="https://img.shields.io/badge/-Cloudflare-000000.svg?logo=cloudflare&style=for-the-badge">
+</p>
+
+## Table of Contents
+
+- [Project Structure](#project-structure)
+- [Pre-installation](#pre-installation)
+- [Installation](#installation)
+- [Environment building](#environment-building)
+- [Deploy](#deploy)
+
+## Project structure
+
+See [project-structure.md](./docs/project-structure.md)
+
+## Pre-installation
+
+The following must be installed.
+
+- [Nodes(v18 or higher)](https://nodejs.org/en/learn/getting-started/how-to-install-nodejs)
+- [yarn](https://classic.yarnpkg.com/lang/en/docs/install/)
+- [turborepo](https://turbo.build/repo/docs/getting-started/installation#global-installation)
+
+## Installation(for Local)
+
+### Install dependencies
+
+```bash
+yarn install
+```
+
+### Create `.env` file base on `.sample.env` of each `apps`
+
+If the set value is not known, ask [Ishida](m.ishida@miraiplay.jp)/[Takahashi](takahashi@miraiplay.jp).
+
+### Follow [README](./apps/cms/README.md) to setup local environment
+
+### Run app in dev mode
 
 
-## 4. Follow [README]('./apps/cms/README.md') to setup local environment
+```bash
+yarn dev:cms
+```
 
-## 6. Run app in dev mode
+```bash
+yarn dev:api
+```
 
-### 6.1 cms
+## Installation(for Cloudflare)
 
-`yarn dev:cms`
+### Environment building
 
+See [environment-building.md](./docs/environment-building.md)
 
-## 7. Project structure
-See [project-structure.md]('docs/project-structure.md')
+### Migration DB & Seed DB
 
-# Node version: 20.11.1
+See [migration-db.md](./docs/migration-db.md)
+
+### Deploy
+
+See [deployment.md](./docs/deployment.md)
