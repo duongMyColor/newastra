@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "wrangler dev src/index.ts --persist-to ../cms/.wrangler/state --local",
     "deploy": "wrangler deploy --minify src/index.ts",
-    "db:migrate": "npx tsx prisma/migrate.mts"
+    "db:migrate": "npx tsx prisma/migrate.mts",
+    "db:seed": "npx tsx prisma/seed.ts"
   },
   "dependencies": {
     "@hono/swagger-ui": "^0.2.2",

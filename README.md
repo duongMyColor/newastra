@@ -29,6 +29,7 @@ graph TB
 💡Bold lines have a lot of access.
 
 ## Technology used
+
 <!-- https://t8csp.csb.app/ -->
 
 <p style="display: inline">
@@ -57,11 +58,23 @@ graph TB
 
 ## Table of Contents
 
-- [Project Structure](#project-structure)
+- [Environment Structure](#environment-structure)
+- [Project structure](#project-structure)
 - [Pre-installation](#pre-installation)
-- [Installation](#installation)
-- [Environment building](#environment-building)
-- [Deploy](#deploy)
+- [Installation(for Local)](#installationfor-local)
+- [Installation(for Cloudflare)](#installationfor-cloudflare)
+
+## Environment Structure
+
+各環境ごとにCloudflare(CF)の Pages, D1, R2が別れている。
+
+| Environment Name | Deploy Pipeline Branch | Who                 | CF Pages Project        | CF D1 DB Name          | CF R2 Bucket Name          |
+| ---------------- | ---------------------- | ------------------- | ----------------------- | ---------------------- | -------------------------- |
+| develop          | develop                | Miraiplay Developer | da-acsta-cms-develop    | da-acsta-db-develop    | da-acsta-bucket-develop    |
+| staging          | staging                | Miraiplay Tester    | da-acsta-cms-staging    | da-acsta-db-staging    | da-acsta-bucket-staging    |
+| stress           | stress                 | Miraiplay Developer | da-acsta-cms-stress     | da-acsta-db-stress     | da-acsta-bucket-stress     |
+| qa               | qa                     | Outside QA Tester   | da-acsta-cms-qa         | da-acsta-db-qa         | da-acsta-bucket-qa         |
+| production       | main                   | Digital Art         | da-acsta-cms-production | da-acsta-db-production | da-acsta-bucket-production |
 
 ## Project structure
 
@@ -90,7 +103,6 @@ If the set value is not known, ask [Ishida](m.ishida@miraiplay.jp)/[Takahashi](t
 ### Follow [README](./apps/cms/README.md) to setup local environment
 
 ### Run app in dev mode
-
 
 ```bash
 yarn dev:cms

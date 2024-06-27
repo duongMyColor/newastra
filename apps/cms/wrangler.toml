@@ -1,19 +1,15 @@
-name = "da-acsta-cms"
+name = "da-acsta-cms-develop"
 compatibility_date = "2024-04-26"
 compatibility_flags = ["nodejs_compat"]
 
-# account_id = "b068d51adac82f13a69a676e90a559a3" # ← Replace with your Account ID.
-# workers_dev = f
 pages_build_output_dir = "./.vercel/output/static"
 
-
 [[d1_databases]]
-binding = "DB" # i.e. available in your Worker on env.DB
-database_name = "da-acsta-db"
-database_id = "cb4e05a4-4daf-4850-ae88-cf78c6117465"
-migrations_dir = "./prisma/migrations" # Customize this value to rename the `migrations` folder
-
+binding = "DB"
+database_name = "da-acsta-db-develop"
+database_id = "70af6666-d0a1-4322-82d9-4f4aced6c587"
+migrations_dir = "./prisma/migrations"
 
 [[r2_buckets]]
-binding = 'BUCKET' # <~ valid JavaScript variable name
-bucket_name = 'da-acsta-bucket'
+binding = "BUCKET"
+bucket_name = 'da-acsta-bucket-develop'

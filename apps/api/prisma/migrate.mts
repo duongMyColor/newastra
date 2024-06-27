@@ -1,19 +1,19 @@
 // Ref: https://gist.github.com/alexanderson1993/0852a8162ebac591b62a79883a81e1a8
 
-import fs from 'node:fs/promises';
-import path from 'node:path';
-import { exec } from 'node:child_process';
 import {
   intro,
-  outro,
-  log,
-  select,
-  text,
-  spinner,
   isCancel,
+  log,
+  outro,
+  select,
+  spinner,
+  text,
 } from '@clack/prompts';
-import toml from 'toml';
+import { exec } from 'node:child_process';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import parseArgv from 'tiny-parse-argv';
+import toml from 'toml';
 
 const args = parseArgv(process.argv.slice(2));
 const command = args._[0];
@@ -51,6 +51,7 @@ if (args.help || !command) {
   Options:
     -d, --database - The name of the D1 database
     --remote - Apply migrations to your remote database
+    --env - The environment to apply migrations to (ex: preview)
     --schema - Custom path to the Prisma schema
     -h, --help - Show this help message`);
       break;
@@ -77,11 +78,17 @@ try {
   process.exit(1);
 }
 
-const databases: { value: string; label: string }[] =
-  wranglerConfig.d1_databases?.map((db: { database_name: string }) => ({
-    value: db.database_name,
-    label: db.database_name,
-  })) || [];
+const databases: { value: string; label: string }[] = args.env
+  ? wranglerConfig.env[args.env].d1_databases?.map(
+      (db: { database_name: string }) => ({
+        value: db.database_name,
+        label: db.database_name,
+      })
+    ) || []
+  : wranglerConfig.d1_databases?.map((db: { database_name: string }) => ({
+      value: db.database_name,
+      label: db.database_name,
+    })) || [];
 
 let database = args.d || args.database || databases[0]?.value;
 
@@ -109,7 +116,7 @@ if (command === 'create') {
   const result = await asyncExec(
     `npx wrangler d1 migrations create ${database} "${migrationName}"`
   );
-
+  console.log(result);
   s.stop('Creating migration');
 
   const resultLines = result.trim().split('\n');
@@ -129,7 +136,8 @@ if (command === 'create') {
   while (
     pathIndex >= 0 &&
     !migrationPath.startsWith('/') &&
-    !resultLines[pathIndex]?.includes('editing here')
+    !resultLines[pathIndex]?.includes('editing here') &&
+    !resultLines[pathIndex]?.includes('/Users/')
   ) {
     console.log({ pathIndex, migrationPath });
 
@@ -151,7 +159,7 @@ if (command === 'create') {
   await asyncExec(
     `npx prisma migrate diff --from-local-d1 --to-schema-datamodel ${
       args.schema || './prisma/schema.prisma'
-    } --script --output ${migrationPath}`
+    } --script --output ./prisma/migrations${migrationPath}`
   );
 
   s.stop('Generating migration diff from Prisma schema');
@@ -168,12 +176,13 @@ if (command === 'apply') {
   const s = spinner();
   s.start('Applying migrations');
 
-  await asyncExec(
-    `npx wrangler d1 migrations apply ${database} ${
-      args.remote ? '--remote' : '--local'
-    }`
-  );
+  const applyCommand = `npx wrangler d1 migrations apply ${database} ${
+    args.remote ? '--remote' : '--local'
+  } ${args.env ? `--env ${args.env}` : ''}`;
 
+  await asyncExec(applyCommand);
+
+  console.log(applyCommand);
   s.stop('Applying migrations');
 
   s.start('Generating Prisma client');

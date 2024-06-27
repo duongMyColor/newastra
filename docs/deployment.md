@@ -7,7 +7,10 @@
 
 ```bash
 cd apps/cms
-yarn deploy
+# production
+yarn deploy:production
+# preview
+yarn deploy:preview
 ```
 
 ## API

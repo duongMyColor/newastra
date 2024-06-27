@@ -1,8 +1,13 @@
 // Ref: https://gist.github.com/alexanderson1993/0852a8162ebac591b62a79883a81e1a8
 
-const fs = require('fs');
+import fs from 'fs';
 import { exec } from 'node:child_process';
+// biome-ignore lint/style/useNodejsImportProtocol: <explanation>
 import toml from '@iarna/toml';
+
+// Get the --env argument
+const envArgIndex = process.argv.indexOf('--env');
+const env = envArgIndex !== -1 ? process.argv[envArgIndex + 1] : undefined;
 
 // Read the SQL file
 const sql = fs.readFileSync('prisma/seed.sql').toString();
@@ -13,11 +18,18 @@ interface ParsedConfig {
   d1_databases?: {
     database_name: string;
   }[];
+  env?: {
+    [key: string]: {
+      d1_databases: {
+        database_name: string;
+      }[];
+    };
+  };
 }
 
-const databaseName = parsedConfig.d1_databases
-  ? parsedConfig.d1_databases[0]?.database_name
-  : undefined;
+const databaseName = env
+  ? parsedConfig.env?.[env]?.d1_databases?.[0]?.database_name
+  : parsedConfig.d1_databases?.[0]?.database_name;
 
 const statements = sql.split(';').map(
   (statement: string) =>
@@ -44,7 +56,8 @@ const asyncExec = (command: string) =>
       continue;
     }
     const command = `npx wrangler d1 execute ${databaseName} --remote --command="${statement}"`;
-
+    // const command = `npx wrangler d1 execute ${databaseName} --remote ${env ? `--env ${env}` : ''} --command="${statement}"`;
+    console.log(command);
     try {
       await asyncExec(command);
     } catch (error) {

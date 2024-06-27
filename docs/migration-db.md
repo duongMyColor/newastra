@@ -2,10 +2,10 @@
 
 ## Migration
 
-### To create local DB for migration
+Pagesは環境にpreviewとproductionしか使用できないため、Workersのapi側のアプリでDBのマイグレーションを行う。
 
 ```bash
-yarn db:migrate apply
+cd apps/api
 ```
 
 ### Create migration
@@ -14,16 +14,32 @@ yarn db:migrate apply
 yarn db:migrate create
 ```
 
-### Apply the migration for local
+> [!NOTE]
+> If you get the error "D1 database is not local", please run the following A: Apply the migration for local first.
+
+### A: Apply the migration for local
 
 ```bash
 yarn db:migrate apply
 ```
 
-### Apply remote DB
+### B: Apply the migration for remote DB
 
 ```bash
-yarn db:migrate apply --remote
+# develop
+yarn db:migrate apply --remote --env develop -d da-acsta-db-develop
+
+# staging
+yarn db:migrate apply --remote --env staging -d da-acsta-db-staging
+
+# stress
+yarn db:migrate apply --remote --env stress -d da-acsta-db-stress
+
+# qa
+yarn db:migrate apply --remote --env qa -d da-acsta-db-qa
+
+# production
+yarn db:migrate apply --remote --env production -d da-acsta-db-production
 ```
 
 > [!NOTE]
@@ -32,5 +48,18 @@ yarn db:migrate apply --remote
 ## Seed DB
 
 ```bash
-yarn db:seed
+# develop
+yarn db:seed --env develop
+
+# staging
+yarn db:seed --env staging
+
+# stress
+yarn db:seed --env stress
+
+# qa
+yarn db:seed --env qa
+
+# production
+yarn db:seed --env production
 ```
