@@ -1,16 +1,15 @@
 import { swaggerUI } from '@hono/swagger-ui';
 import { OpenAPIHono } from '@hono/zod-openapi';
-import { Env } from 'hono/types';
+import type { ErrorResponse } from '@repo/types/response';
 import { bearerAuth } from 'hono/bearer-auth';
-
-import routes from './routes';
-import { ErrorResponse } from '@repo/types/response';
-import { generateS3Client } from './lib/cloudflare-r2';
-import { generatePrismaClient } from './lib/prisma';
-import { globalObject } from './lib/globalObject';
-import { basicAuthMiddware } from './auth';
 import { createMiddleware } from 'hono/factory';
+import type { Env } from 'hono/types';
+import { basicAuthMiddware } from './auth';
 import { swaggerBasicAuth } from './auth/swaggerAuth';
+import { generateS3Client } from './lib/cloudflare-r2';
+import { globalObject } from './lib/globalObject';
+import { generatePrismaClient } from './lib/prisma';
+import routes from './routes';
 
 type Bindings = {
   DB: D1Database;
@@ -57,11 +56,7 @@ app.use(
 app.use(
   '/ui',
   createMiddleware(async (c, next) => {
-    if (c.env.NODE_ENV !== 'development') {
-      return c.json({ message: 'Not Found' }, 404);
-    } else {
-      return next();
-    }
+    return next();
   })
 );
 // Config auth for swagger ui
