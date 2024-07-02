@@ -9,6 +9,9 @@ workers_dev = true
 [env.develop]
 name = "da-acsta-api-develop"
 
+[env.develop.vars]
+CLOUDFLARE_BUCKET_NAME = "da-acsta-bucket-develop"
+
 [[env.develop.d1_databases]]
 binding = "DB"
 database_name = "da-acsta-db-develop"
@@ -17,10 +20,13 @@ migrations_dir = "./prisma/migrations"
 
 [[env.develop.r2_buckets]]
 binding = "BUCKET"
-bucket_name = 'da-acsta-bucket-develop'
+bucket_name = "da-acsta-bucket-develop"
 
 [env.staging]
 name = "da-acsta-api-staging"
+
+[env.staging.vars]
+CLOUDFLARE_BUCKET_NAME = "da-acsta-bucket-staging"
 
 [[env.staging.d1_databases]]
 binding = "DB"
@@ -30,10 +36,13 @@ migrations_dir = "./prisma/migrations"
 
 [[env.staging.r2_buckets]]
 binding = "BUCKET"
-bucket_name = 'da-acsta-bucket-staging'
+bucket_name = "da-acsta-bucket-staging"
 
 [env.stress]
 name = "da-acsta-api-stress"
+
+[env.stress.vars]
+CLOUDFLARE_BUCKET_NAME = "da-acsta-bucket-stress"
 
 [[env.stress.d1_databases]]
 binding = "DB"
@@ -43,10 +52,13 @@ migrations_dir = "./prisma/migrations"
 
 [[env.stress.r2_buckets]]
 binding = "BUCKET"
-bucket_name = 'da-acsta-bucket-stress'
+bucket_name = "da-acsta-bucket-stress"
 
 [env.qa]
 name = "da-acsta-api-qa"
+
+[env.qa.vars]
+CLOUDFLARE_BUCKET_NAME = "da-acsta-bucket-qa"
 
 [[env.qa.d1_databases]]
 binding = "DB"
@@ -56,10 +68,13 @@ migrations_dir = "./prisma/migrations"
 
 [[env.qa.r2_buckets]]
 binding = "BUCKET"
-bucket_name = 'da-acsta-bucket-qa'
+bucket_name = "da-acsta-bucket-qa"
 
 [env.production]
 name = "da-acsta-api-production"
+
+[env.production.vars]
+CLOUDFLARE_BUCKET_NAME = "da-acsta-bucket-production"
 
 [[env.production.d1_databases]]
 binding = "DB"
@@ -68,5 +83,5 @@ database_id = "d4878e13-21b3-4514-9d38-754b5ebe2953"
 migrations_dir = "./prisma/migrations"
 
 [[env.production.r2_buckets]]
-binding = 'BUCKET'
-bucket_name = 'da-acsta-bucket-production'
+binding = "BUCKET"
+bucket_name = "da-acsta-bucket-production"
