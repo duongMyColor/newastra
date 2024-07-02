@@ -43,7 +43,7 @@ yarn db:migrate apply --remote --env production -d da-acsta-db-production
 ```
 
 > [!NOTE]
-> If you got error from selecting account_id. Go to step 4 and do again after sucess
+> If you got error from selecting account_id. Deploy api using API section from [deployment.md](deployment.md)
 
 ## Seed DB
 

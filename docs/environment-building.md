@@ -86,8 +86,8 @@ R2 API tokens can have full permission to interact with you data. But in this ca
 - Select application `da-acsta-api` -> Settings -> Variables -> Add variable:
 
   - `CLOUDFLARE_ACCOUNT_ID`: your account_id
-  - `CLOUDFLARE_ACCESS_KEY_ID`: access key from step 2.2
-  - `CLOUDFLARE_SECRET_ACCESS_KEY`: secret key from step 2.2
+  - `CLOUDFLARE_ACCESS_KEY_ID`: access key from step [Create R2 API Tokens for bucket](#create-r2-api-tokens-for-bucket)
+  - `CLOUDFLARE_SECRET_ACCESS_KEY`: secret key from step [Create R2 API Tokens for bucket](#create-r2-api-tokens-for-bucket)
   - `CLOUDFLARE_BUCKET_NAME`: your bucket name
   - `USERNAME`: your username using for Basic Authentication
   - `PASSWORD`: your password using for Basic Authentication
