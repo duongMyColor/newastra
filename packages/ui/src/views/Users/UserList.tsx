@@ -24,7 +24,7 @@ const UserList = ({ actions, resource }: BaseComponentProps) => {
         <TextField source="no" label="No" />
         <TextField source="username" label="CMS-ID" />
         <FunctionField
-          label="最新ログイン"
+          label="最終ログイン"
           render={({ lastLogin }: { lastLogin: string }) => {
             return formatDateAcstar(lastLogin);
           }}

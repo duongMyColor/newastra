@@ -47,6 +47,9 @@ class AplicationMasterRepo {
       },
     });
   };
+  count = async () => {
+    return await new BaseRepo(generateClient().aplicationMaster).count();
+  };
 
   // const getOneAndChildren = async (id: number, child: string) => {
   //   return await new BaseRepo(generateClient().aplicationMaster).getOneByIdWithParam(id, {

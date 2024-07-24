@@ -85,7 +85,7 @@ const Login = () => {
                 // eslint-disable-next-line jsx-a11y/no-autofocus
                 autoFocus
                 source="username"
-                label={translate('ra.auth.username')}
+                label="メールアドレス"
                 disabled={loading}
                 validate={required()}
                 fullWidth
