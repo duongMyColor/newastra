@@ -7,7 +7,7 @@ export const StatusChipField = ({
 }: {
   source: string;
   label: string;
-  sortable: boolean;
+  sortable?: boolean;
 }) => {
   const record = useRecordContext();
   return (

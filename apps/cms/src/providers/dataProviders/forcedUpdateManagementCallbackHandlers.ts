@@ -53,9 +53,9 @@ const forcedUpdateManagementCallbackHandlers = {
     } else {
       newData = listUpdateAllStorage;
 
-      if (listParams.order === 'ASC') {
-        newData.sort((a: RecordValue, b: RecordValue) => a.no - b.no);
-      } else newData.sort((a: RecordValue, b: RecordValue) => b.no - a.no);
+      newData.sort((a: RecordValue, b: RecordValue) =>
+        listParams.order === 'ASC' ? a.no - b.no : b.no - a.no
+      );
 
       response.data = await newData.slice(
         (listParams.page - 1) * listParams.perPage,
@@ -112,7 +112,6 @@ const forcedUpdateManagementCallbackHandlers = {
     console.log('response data:', response);
 
     let data = response.data;
-
 
     let listAllStorage = JSON.parse(
       localStorage.getItem('listUpdateAll') || 'null'
