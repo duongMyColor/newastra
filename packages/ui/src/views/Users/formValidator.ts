@@ -11,8 +11,8 @@ const editionRules: ValidationRule[] = [
   {
     field: 'username',
     required: true,
-    minLength: userContentLength.name.min,
-    maxLength: userContentLength.name.max,
+    minLength: userContentLength.username.min,
+    maxLength: userContentLength.username.max,
   },
   {
     field: 'email',
@@ -23,15 +23,15 @@ const editionRules: ValidationRule[] = [
   {
     field: 'newPassword',
     required: false,
-    match: 'confirmNewPassword',
-    minLength: userContentLength.newPassword.min,
-    maxLength: userContentLength.newPassword.max,
+    // match: 'confirmNewPassword',
+    minLength: userContentLength.password.min,
+    maxLength: userContentLength.password.max,
   },
   {
     field: 'confirmNewPassword',
     required: false,
-    minLength: userContentLength.newPassword.min,
-    maxLength: userContentLength.newPassword.max,
+    // minLength: userContentLength.newPassword.min,
+    // maxLength: userContentLength.newPassword.max,
     match: 'newPassword',
     unMatchMessage: 'パスワードが一致しません',
   },
@@ -63,8 +63,8 @@ const creationRules: ValidationRule[] = [
   {
     field: 'confirmPassword',
     required: true,
-    minLength: userContentLength.password.min,
-    maxLength: userContentLength.password.max,
+    // minLength: userContentLength.password.min,
+    // maxLength: userContentLength.password.max,
     match: 'password',
     unMatchMessage: 'パスワードが一致しません',
   },
@@ -89,9 +89,10 @@ const validateUserEdition = (values: RecordValue): RecordValue => {
   const baseValidation = validateForm(values, editionRules);
 
   const validPassword =
-    values.newPassword && values.confirmNewPassword
+    values.newPassword || values.confirmNewPassword
       ? validatePassword(values.newPassword)
       : true;
+  // const validPassword = validatePassword(values.newPassword);
 
   return validPassword
     ? baseValidation

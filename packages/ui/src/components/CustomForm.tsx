@@ -55,6 +55,7 @@ const CustomForm = ({
       warnWhenUnsavedChanges={true}
       toolbar={false}
       validate={validate}
+      mode="onTouched"
     >
       <Stack
         direction="row"

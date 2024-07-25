@@ -81,8 +81,7 @@ class User implements UserIF {
     this.email = email;
     this.isDeleted = isDeleted;
     this.updatedAt = new Date();
-
-    if (password) {
+    if (newPassword) {
       this.password = newPassword
         ? hashPassword(newPassword)
         : hashPassword(password);
