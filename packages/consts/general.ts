@@ -1,4 +1,4 @@
-import { RecordValue } from "@repo/types/general";
+import { RecordValue } from '@repo/types/general';
 
 const baseUploadFolder = 'src/app/api/_uploads/';
 

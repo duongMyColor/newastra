@@ -53,6 +53,10 @@ const forcedUpdateManagementCallbackHandlers = {
     } else {
       newData = listUpdateAllStorage;
 
+      if (listParams.order === 'ASC') {
+        newData.sort((a: RecordValue, b: RecordValue) => a.no - b.no);
+      } else newData.sort((a: RecordValue, b: RecordValue) => b.no - a.no);
+
       response.data = await newData.slice(
         (listParams.page - 1) * listParams.perPage,
         (listParams.page - 1) * listParams.perPage + listParams.perPage
@@ -120,9 +124,12 @@ const forcedUpdateManagementCallbackHandlers = {
 
     dataGetOne.data['no'] = listAllStorage.length + 1;
     dataGetOne.data['textOperate'] =
-    dataGetOne.data['operateSystem'] === OPERATE_IOS ? 'iOS' : 'Android';
+      dataGetOne.data['operateSystem'] === OPERATE_IOS ? 'iOS' : 'Android';
 
-    let newDataAfterStatus = updateStatusAll([...listAllStorage, dataGetOne.data]);
+    let newDataAfterStatus = updateStatusAll([
+      ...listAllStorage,
+      dataGetOne.data,
+    ]);
 
     localStorage.setItem('listUpdateAll', JSON.stringify(newDataAfterStatus));
 

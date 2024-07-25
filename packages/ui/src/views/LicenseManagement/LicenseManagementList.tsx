@@ -1,9 +1,4 @@
-import {
-  List,
-  Datagrid,
-  TextField,
-  FunctionField,
-} from 'react-admin';
+import { List, Datagrid, TextField, FunctionField } from 'react-admin';
 import { BaseComponentProps } from '@repo/types/general';
 import { validRole } from '../_core/permissions';
 import { ListToolBar } from '@repo/ui/src/components/ListToolBar';
@@ -17,9 +12,9 @@ const LicenseManagementList = ({ actions, resource }: BaseComponentProps) => {
     >
       <Datagrid rowClick="show" bulkActionButtons={false}>
         <TextField source="no" label="No" />
-        <TextField source="id" label="ライセンスID" />
-        <TextField source="memo" label="メモ" />
-        <TextField source="version" label="バージョン" />
+        <TextField source="id" label="ライセンスID" sortable={false} />
+        <TextField source="memo" label="メモ" sortable={false} />
+        <TextField source="version" label="バージョン" sortable={false} />
         <FunctionField
           label="公開開始日"
           render={({ publishedDate }: { publishedDate: string }) => {

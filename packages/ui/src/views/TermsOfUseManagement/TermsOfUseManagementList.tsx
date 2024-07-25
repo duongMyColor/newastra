@@ -25,9 +25,9 @@ const TermsOfUseManagementList = ({
     >
       <Datagrid rowClick="show" bulkActionButtons={false}>
         <TextField source="no" label="No" />
-        <TextField source="id" label="利用規約ID" />
-        <TextField source="memo" label="メモ" />
-        <TextField source="version" label="バージョン" />
+        <TextField source="id" label="利用規約ID" sortable={false} />
+        <TextField source="memo" label="メモ" sortable={false} />
+        <TextField source="version" label="バージョン" sortable={false} />
         <FunctionField
           label="公開開始日"
           render={({ publishedDate }: { publishedDate: string }) => {
