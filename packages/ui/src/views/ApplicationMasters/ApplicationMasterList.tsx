@@ -18,9 +18,17 @@ const MasterList = ({ actions, resource }: BaseComponentProps) => {
     >
       <Datagrid rowClick="show" bulkActionButtons={false}>
         <TextField source="no" label="No" />
-        <TextField source="appName" label="アプリケーション名" />
-        <TextField source="id" label="アプリケーションID" />
-        <TextField source="packageName" label="バンドルID/パッケージ名" />
+        <TextField
+          source="appName"
+          label="アプリケーション名"
+          sortable={false}
+        />
+        <TextField source="id" label="アプリケーションID" sortable={false} />
+        <TextField
+          source="packageName"
+          label="バンドルID/パッケージ名"
+          sortable={false}
+        />
 
         <FunctionField
           label="登録日"

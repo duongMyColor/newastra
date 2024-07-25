@@ -23,8 +23,8 @@ const PerformanceManagementList = ({
     >
       <Datagrid rowClick="show" bulkActionButtons={false}>
         <TextField source="no" label="No" />
-        <TextField source="name" label="演出名" />
-        <TextField source="id" label="演出ID" />
+        <TextField source="name" label="演出名" sortable={false} />
+        <TextField source="id" label="演出ID" sortable={false} />
         <FunctionField
           label="アクスタ ID"
           render={({ acsta }: { acsta: AcstaResponseIF }) => {
@@ -42,7 +42,7 @@ const PerformanceManagementList = ({
           }}
         />
 
-        <TextField source="createdAt" label="登録日" />
+        <TextField source="createdAt" label="登録日" sortable={false} />
         {validRole('delete', actions) && (
           <DeleteWithConfirmButton
             confirmContent="よろしいですか?"

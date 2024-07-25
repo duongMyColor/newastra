@@ -3,9 +3,11 @@ import { ChipField, useRecordContext } from 'react-admin';
 export const StatusChipField = ({
   source,
   label,
+  sortable = false,
 }: {
   source: string;
   label: string;
+  sortable?: boolean;
 }) => {
   const record = useRecordContext();
   return (
@@ -18,6 +20,7 @@ export const StatusChipField = ({
             backgroundColor: '#41eb5d2b',
             color: 'green',
           }}
+          sortable={sortable}
         />
       )}
 
@@ -29,6 +32,7 @@ export const StatusChipField = ({
             backgroundColor: '#fcbaba78',
             color: 'red',
           }}
+          sortable={sortable}
         />
       )}
     </>

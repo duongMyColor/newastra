@@ -41,8 +41,8 @@ const PerformanceTypeMasterList = ({
     >
       <Datagrid rowClick="show" bulkActionButtons={false}>
         <TextField source="no" label="No" />
-        <TextField source="typeName" label="演出種別名" />
-        <TextField source="id" label="演出種別ID" />
+        <TextField source="typeName" label="演出種別名" sortable={false} />
+        <TextField source="id" label="演出種別ID" sortable={false} />
 
         <FunctionField
           label="登録日"

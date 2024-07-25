@@ -21,10 +21,14 @@ const AcstaManagementList = ({ actions, resource }: BaseComponentProps) => {
     >
       <Datagrid rowClick="show" bulkActionButtons={false}>
         <TextField source="no" label="No" />
-        <TextField source="managementName" label="管理名" />
-        <TextField source="acstaName" label="アクスタ名" />
-        <TextField source="id" label="アクスタID" />
-        <StatusChipField source="status" label="ステータス"></StatusChipField>
+        <TextField source="managementName" label="管理名" sortable={false} />
+        <TextField source="acstaName" label="アクスタ名" sortable={false} />
+        <TextField source="id" label="アクスタID" sortable={false} />
+        <StatusChipField
+          source="status"
+          label="ステータス"
+          sortable={false}
+        ></StatusChipField>
 
         <FunctionField
           label="公開開始日"
