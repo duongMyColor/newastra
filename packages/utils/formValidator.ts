@@ -22,13 +22,13 @@ const validateLength = (
   minLength: number,
   maxLength: number
 ) => {
-  if (minLength && value.length < minLength) {
+  if (minLength && value?.length < minLength) {
     return {
       message: 'ra.validation.minValue',
       args: { min: minLength },
     };
   }
-  if (maxLength && value.length > maxLength) {
+  if (maxLength && value?.length > maxLength) {
     return {
       message: 'ra.validation.maxValue',
       args: { max: maxLength },
