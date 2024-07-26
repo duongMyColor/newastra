@@ -139,14 +139,14 @@ const PerformanceManagementCreate = ({
           value={idPerformance}
           disabled
         />
+
         <TextInput
-          source="managementName"
-          label="管理名"
+          source="name"
+          label="演出名"
           fullWidth
           isRequired
+          sx={{ marginTop: '30px' }}
         />
-
-        <TextInput source="name" label="演出名" fullWidth isRequired />
         <SelectInput
           source="performanceTypeMasterId"
           choices={performanceTypeMasterId}
@@ -159,6 +159,7 @@ const PerformanceManagementCreate = ({
           source="assetBundleIOS"
           label="アセットバンドルデータ (iOS)"
           placeholder="アップロード"
+          accept=".assetbundle"
         >
           <FileField source="src" title="title" />
         </FileInput>
@@ -167,6 +168,7 @@ const PerformanceManagementCreate = ({
           source="assetBundleAndroid"
           label="アセットバンドルデータ (Android)"
           placeholder="アップロード"
+          accept=".assetbundle, assetbundle/plain"
         >
           <FileField source="src" title="title" />
         </FileInput>

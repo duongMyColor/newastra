@@ -116,7 +116,12 @@ const AcstaManagementCreate = ({
           placeholder="アップロード"
           isRequired
           fullWidth
-          accept={'image/*'}
+          accept="image/png, image/jpeg, image/jpg"
+          sx={{
+            '& .RaFileInput-removeButton button': {
+              opacity: '1 !important',
+            },
+          }}
         >
           <Box
             sx={{
@@ -142,7 +147,12 @@ const AcstaManagementCreate = ({
           placeholder="アップロード"
           isRequired
           fullWidth
-          accept={'image/*'}
+          accept="image/png, image/jpeg, image/jpg"
+          sx={{
+            '& .RaFileInput-removeButton button': {
+              opacity: '1 !important',
+            },
+          }}
         >
           <Box
             sx={{
