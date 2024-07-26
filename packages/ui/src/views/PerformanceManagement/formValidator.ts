@@ -28,10 +28,6 @@ const editionRules: ValidationRule[] = [
 
 const creationRules: ValidationRule[] = [
   {
-    field: 'managementName',
-    required: true,
-  },
-  {
     field: 'name',
     required: true,
   },
@@ -53,43 +49,47 @@ const creationRules: ValidationRule[] = [
   },
 ];
 
-const validateCreation = async(values: RecordValue) => {
-    console.log({ values });
+const validateCreation = async (values: RecordValue) => {
   const baseValidation = validateForm(values, creationRules);
 
-  const validateFileIOS = await validateTypeFile(values.assetBundleIOS?.rawFile?.path,'performanceManagement')
-  const validateFileAndroid = await validateTypeFile(values.assetBundleAndroid?.rawFile?.path,'performanceManagement')
+  const validateFileIOS = await validateTypeFile(
+    values.assetBundleIOS?.rawFile?.path,
+    'performanceManagement'
+  );
+  const validateFileAndroid = await validateTypeFile(
+    values.assetBundleAndroid?.rawFile?.path,
+    'performanceManagement'
+  );
 
-  
   const validationMessages = { ...baseValidation };
 
-  
   if (validateFileIOS === false) {
-    validationMessages.assetBundleIOS =
-      'ファイルの種類が正しくありません';
+    validationMessages.assetBundleIOS = 'ファイルの種類が正しくありません';
   }
 
   if (validateFileAndroid === false) {
     validationMessages.assetBundleAndroid = 'ファイルの種類が正しくありません';
   }
-  
+
   return validationMessages;
 };
 
-const validateUserEdition = async(values: RecordValue) => {
-  
+const validateUserEdition = async (values: RecordValue) => {
   const baseValidation = validateForm(values, editionRules);
 
-  const validateFileIOS = await validateTypeFile(values?.assetDataIOS?.rawFile?.path,'performanceManagement')
-  const validateFileAndroid = await validateTypeFile(values?.assetDataAndroid?.rawFile?.path,'performanceManagement')
+  const validateFileIOS = await validateTypeFile(
+    values?.assetDataIOS?.rawFile?.path,
+    'performanceManagement'
+  );
+  const validateFileAndroid = await validateTypeFile(
+    values?.assetDataAndroid?.rawFile?.path,
+    'performanceManagement'
+  );
 
-  
   const validationMessages = { ...baseValidation };
 
-  
   if (validateFileIOS === false) {
-    validationMessages.assetDataIOS =
-      'ファイルの種類が正しくありません';
+    validationMessages.assetDataIOS = 'ファイルの種類が正しくありません';
   }
 
   if (validateFileAndroid === false) {

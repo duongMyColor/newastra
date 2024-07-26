@@ -92,7 +92,7 @@ const LicenseManagementCreate = ({ actions, resource }: BaseComponentProps) => {
           source="content"
           label="規約本文"
           placeholder="アップロード"
-          accept="text/html,.txt,.htm"
+          accept=".html, .htm, text/html"
         >
           <FileField source="src" title="title" target="_blank" />
         </FileInput>

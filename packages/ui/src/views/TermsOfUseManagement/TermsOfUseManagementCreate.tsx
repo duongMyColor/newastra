@@ -97,7 +97,7 @@ const TermsOfUseManagementCreate = ({
           label="規約本文"
           placeholder="アップロード"
           isRequired
-          accept="text/html,.txt,.htm"
+          accept=".html, .htm, text/html"
         >
           <FileField source="src" target="_blank" title="title" />
         </FileInput>
