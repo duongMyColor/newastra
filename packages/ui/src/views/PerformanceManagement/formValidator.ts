@@ -50,7 +50,6 @@ const creationRules: ValidationRule[] = [
 ];
 
 const validateCreation = async (values: RecordValue) => {
-  console.log({ values });
   const baseValidation = validateForm(values, creationRules);
 
   const validateFileIOS = await validateTypeFile(

@@ -168,7 +168,7 @@ const PerformanceManagementCreate = ({
           source="assetBundleAndroid"
           label="アセットバンドルデータ (Android)"
           placeholder="アップロード"
-          accept=".assetbundle, assetbundle/plain"
+          accept=".assetbundle"
         >
           <FileField source="src" title="title" />
         </FileInput>
