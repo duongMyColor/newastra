@@ -28,6 +28,9 @@ class AcstaFactory {
   static async getOneById(id: number) {
     return await AcstaRepo.getOneById(id);
   }
+  static async getOneAndParent(id: number) {
+    return await await AcstaRepo.getOneAndParent(id);
+  }
 
   static async getAll() {
     return await AcstaRepo.getAll();

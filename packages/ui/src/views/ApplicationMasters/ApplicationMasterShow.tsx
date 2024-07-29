@@ -13,6 +13,7 @@ import { validRole } from '../_core/permissions';
 import { disabledInputBackgroundStyle, boxStyles } from '@repo/styles';
 import { formatDateAcstar } from '@repo/utils/dateFormat';
 import { extractFilename } from '@repo/utils/fileUtils';
+import FormatInputDateShow from '../../components/FormatInputDateShow';
 
 const MasterShow = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
@@ -34,6 +35,7 @@ const MasterShow = ({ actions, resource }: BaseComponentProps) => {
               label="アプリケーションID"
               disabled
               sx={disabledInputBackgroundStyle}
+              fullWidth
             />
 
             <TextInput
@@ -41,12 +43,14 @@ const MasterShow = ({ actions, resource }: BaseComponentProps) => {
               label="アプリケーション名"
               disabled
               sx={disabledInputBackgroundStyle}
+              fullWidth
             />
             <TextInput
               source="packageName"
               label="バンドルID/パッケージ名"
               disabled
               sx={disabledInputBackgroundStyle}
+              fullWidth
             />
 
             <TextInput
@@ -54,20 +58,17 @@ const MasterShow = ({ actions, resource }: BaseComponentProps) => {
               label="利用規約ID"
               disabled
               sx={disabledInputBackgroundStyle}
+              fullWidth
             />
             <TextInput
               source="licenseId"
               label="ライセンスID"
               disabled
               sx={disabledInputBackgroundStyle}
+              fullWidth
             />
 
-            <TextInput
-              source="date"
-              label="登録日時"
-              disabled
-              sx={disabledInputBackgroundStyle}
-            />
+            <FormatInputDateShow label="登録日時" source="createdAt" />
 
             <SimpleShowLayout spacing={3}>
               <FunctionField

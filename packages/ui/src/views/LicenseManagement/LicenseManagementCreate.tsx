@@ -9,7 +9,7 @@ import {
   useNotify,
   DateTimeInput,
 } from 'react-admin';
-import { TextField } from '@mui/material';
+import { TextField, Box } from '@mui/material';
 
 import { validateCreation } from './formValidator';
 import CustomForm from '@repo/ui/src/components/CustomForm';
@@ -27,6 +27,7 @@ const LicenseManagementCreate = ({ actions, resource }: BaseComponentProps) => {
   const dataProvider = useDataProvider();
   const [idLicense, setIdLicense] = useState<string>('');
   const [oldDate, setOldDate] = useState<Date>();
+  const [fileContent, setFileContent] = useState('');
 
   const handleSave = async (values: RecordValue) => {
     try {
@@ -57,6 +58,24 @@ const LicenseManagementCreate = ({ actions, resource }: BaseComponentProps) => {
       const formatDate = new Date(responseIdLastest.data[0]?.publishedDate);
       setOldDate(formatDate);
     }
+  };
+
+  const handleChangeFile = (event: any) => {
+    const file = event;
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        setFileContent(e.target.result);
+      };
+      reader.readAsText(file);
+    }
+  };
+
+  const BlankFile = (event: any) => {
+    event.preventDefault();
+    const newTab = window.open('', '_blank') as Window;
+    newTab.document.write(fileContent);
+    newTab.document.close();
   };
   useEffect(() => {
     fetchIdLastest();
@@ -92,9 +111,16 @@ const LicenseManagementCreate = ({ actions, resource }: BaseComponentProps) => {
           source="content"
           label="規約本文"
           placeholder="アップロード"
-          accept=".html, .htm, text/html"
+          isRequired
+          accept=".txt, .html, .htm, text/plain, text/html"
+          onChange={handleChangeFile}
         >
-          <FileField source="src" title="title" target="_blank" />
+          <Box
+            onClick={BlankFile}
+            style={{ position: 'relative', display: 'inline-block' }}
+          >
+            <FileField source="src" title="title" />
+          </Box>
         </FileInput>
       </CustomForm>
     </Create>
