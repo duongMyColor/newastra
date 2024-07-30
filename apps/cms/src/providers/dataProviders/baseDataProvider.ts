@@ -80,7 +80,7 @@ const baseDataProvider: DataProvider = {
     const {
       json: { metadata },
     } = await httpClient(url);
-    console.log('metadata:zxc zxdccxvv ', metadata);
+    console.log('metadata:', metadata);
 
     return {
       data: metadata,

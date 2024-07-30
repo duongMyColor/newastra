@@ -16,7 +16,7 @@ import CustomForm from '@repo/ui/src/components/CustomForm';
 import { BaseComponentProps, RecordValue } from '@repo/types/general';
 import { CREATED_SUCCESS, REDIRECT_ROUTE } from '@repo/consts/general';
 import { convertToFormData } from '@repo/utils/formData';
-import { TextField } from '@mui/material';
+import { TextField, Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -32,6 +32,8 @@ const TermsOfUseManagementCreate = ({
   const [oldDate, setOldDate] = useState<Date>();
 
   const [idTermOfUse, setIdTermOfUse] = useState<string>('');
+
+  const [fileContent, setFileContent] = useState('');
 
   const handleSave = async (values: RecordValue) => {
     try {
@@ -63,6 +65,27 @@ const TermsOfUseManagementCreate = ({
       setOldDate(formatDate);
     }
   };
+
+  const handleChangeFile = (event: any) => {
+    const file = event;
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        setFileContent(e.target.result);
+      };
+
+      reader.readAsText(file);
+    }
+  };
+
+  const BlankFile = (event: any) => {
+    event.preventDefault();
+    const newTab = window.open('', '_blank') as Window;
+    newTab.document.write(fileContent);
+    newTab.document.close();
+  };
+
   useEffect(() => {
     fetchIdLastest();
   }, []);
@@ -97,9 +120,15 @@ const TermsOfUseManagementCreate = ({
           label="規約本文"
           placeholder="アップロード"
           isRequired
-          accept=".html, .htm, text/html"
+          accept=".txt, .html, .htm, text/plain, text/html"
+          onChange={handleChangeFile}
         >
-          <FileField source="src" target="_blank" title="title" />
+          <Box
+            onClick={BlankFile}
+            style={{ position: 'relative', display: 'inline-block' }}
+          >
+            <FileField source="src" title="title" />
+          </Box>
         </FileInput>
       </CustomForm>
     </Create>

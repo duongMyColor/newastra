@@ -31,6 +31,15 @@ class AcstaRepo {
       filter,
     });
   };
+  getOneAndParent = async (id: number) => {
+    return await new BaseRepo(
+      generateClient().acstaManagement
+    ).getOneByIdWithParam(id, {
+      include: {
+        application: true,
+      },
+    });
+  };
 
   getManyReference = async (params: GetManyReferenceParams) => {
     return new BaseRepo(generateClient().acstaManagement).getManyReference(

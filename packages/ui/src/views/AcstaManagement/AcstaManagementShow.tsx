@@ -5,10 +5,10 @@ import {
   SimpleShowLayout,
   ImageField,
   useGetRecordId,
+  useRecordContext,
 } from 'react-admin';
-import { Box } from '@mui/material';
+import { Box, TextField } from '@mui/material';
 import { useState } from 'react';
-
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { StatusTextField } from '@repo/ui/src/components/CustomField/StatusTextField';
 import { ScanDataField } from '@repo/ui/src/components/CustomField/ScanDataField';
@@ -23,6 +23,32 @@ import {
 } from '@repo/styles';
 
 import { BaseComponentProps } from '@repo/types/general';
+import { ThumbnailDataField } from '../../components/CustomField/ThumbnailDataField';
+
+const InputCustom = () => {
+  const record = useRecordContext();
+
+  return (
+    <TextField
+      id="filled-basic"
+      label="アプリケーションID"
+      variant="filled"
+      value={`${record?.application?.id ?? ''} : ${record?.application?.appName ?? ''}`}
+      disabled
+      sx={{
+        width: '100%',
+        backgroundColor: '#f4f4f5c4 !important',
+        marginBottom: '25px',
+        '& .MuiFilledInput-input': {
+          backgroundColor: '#f4f4f5c4 !important',
+        },
+        '& .Mui-disabled': {
+          WebkitTextFillColor: '#4d4d4d !important',
+        },
+      }}
+    />
+  );
+};
 
 const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
@@ -59,7 +85,6 @@ const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
                 disabled
                 sx={disabledInputBackgroundStyle}
               />
-
               <TextInput
                 source="managementName"
                 label="管理名"
@@ -74,34 +99,17 @@ const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
                 fullWidth
                 sx={disabledInputBackgroundStyle}
               />
+              <InputCustom />
 
-              <TextInput
-                source="applicationId"
-                label="アプリケーションID"
-                disabled
-                fullWidth
-                sx={disabledInputBackgroundStyle}
-              />
-
-              <SimpleShowLayout spacing={3}>
-                <ImageField
-                  source="thumbnailUrl.src"
-                  label="アクスタサムネイル"
-                  sx={imageFieldStyles}
-                />
-              </SimpleShowLayout>
-
+              <ThumbnailDataField source="thumbnailUrl.src" />
               <ScanDataField
                 source="scanImageUrl.src"
                 moveScanRange={moveScanRange}
               ></ScanDataField>
-
               <StatusTextField source="status"></StatusTextField>
-
               <FormatInputDateShow label="公開開始日" source="dateStart" />
               <FormatInputDateShow label="公開終了日" source="dateEnd" />
               <FormatInputDateShow label="登録日時" source="createdAt" />
-
               {/* <TextInput
                 source="acstaBasicInfoId"
                 label="力士基本情報ID"
