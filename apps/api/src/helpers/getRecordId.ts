@@ -1,6 +1,6 @@
 import { BadRequestError, NotFoundError } from '@/core/error.response';
 import { getBundleId } from '@/lib/globalObject';
-import { getOneByAppId } from '@/repos/acsta.repo';
+import { getManyByAppId } from '@/repos/acsta.repo';
 import { getOneByBundleId } from '@/repos/applicationMaster.repo';
 import { AcstaApiResponseIF } from '@repo/types/acsta';
 
@@ -20,14 +20,12 @@ export const getApplicationId = async (): Promise<number> => {
   return application.id;
 };
 
-export const getAcstaIdByBundleId =
-  async (): Promise<number[] | null> => {
-    const applicationId = await getApplicationId();
+export const getAcstaIdByBundleId = async (): Promise<number[] | null> => {
+  const applicationId = await getApplicationId();
 
-    let acsta = await getOneByAppId(applicationId);
-    let arrayAcstaId = acsta.map((value: AcstaApiResponseIF) => value.id);
+  let acsta = await getManyByAppId(applicationId);
+  if (!acsta) return null;
+  let arrayAcstaId = acsta.map((value: AcstaApiResponseIF) => value.id);
 
-    if (!acsta) return null;
-
-    return arrayAcstaId;
-  };
+  return arrayAcstaId;
+};
