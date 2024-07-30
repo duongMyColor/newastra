@@ -40,7 +40,7 @@ export const getManyByIds = async (ids: number[]) => {
 
 export const getUpdateData = async (
   lastSyncDate: Date | string,
-  acstaId: number
+  acstaId: number | number[]
 ) => {
   const prisma = getDb();
 

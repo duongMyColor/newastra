@@ -25,7 +25,13 @@ class PerformanceFactory {
     const acstaId = await getAcstaIdByBundleId();
     if (!acstaId) return [];
 
-    const performances = await getAllByAcstaId(acstaId);
+    let performances: string | any[] = [];
+
+    const validAcstaIds = acstaId.filter((id) => id !== undefined);
+    for (const id of validAcstaIds) {
+      const performance = await getAllByAcstaId(id);
+      performances = [...performances, ...performance];
+    }
 
     if (!performances?.length) return [];
     return await this.convertArrayData(performances);
