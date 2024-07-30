@@ -27,13 +27,7 @@ const TermsOfUseManagementList = ({
         <TextField source="no" label="No" />
         <TextField source="id" label="利用規約ID" />
         <TextField source="memo" label="メモ" />
-        <TextField source="version" label="バージョン" />
-        <FunctionField
-          label="公開開始日"
-          render={({ publishedDate }: { publishedDate: string }) => {
-            return formatDateAcstar(publishedDate);
-          }}
-        />
+
         <FunctionField
           label="登録日"
           render={({ createdAt }: { createdAt: string }) => {

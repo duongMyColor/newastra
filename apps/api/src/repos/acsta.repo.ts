@@ -38,7 +38,7 @@ export const getOneById = async (id: number, applicationId: number) => {
 
 export const getOneByAppId = async (applicationId: number) => {
   const prisma = getDb();
-  return await prisma.acstaManagement.findFirst({
+  return await prisma.acstaManagement.findMany({
     where: {
       applicationId: applicationId,
     },
