@@ -13,6 +13,7 @@ import { BaseComponentProps, RecordValue } from '@repo/types/general';
 import { validRole } from '../_core/permissions';
 import { ListToolBar } from '@repo/ui/src/components/ListToolBar';
 import { formatDateAcstar } from '@repo/utils/dateFormat';
+import { BoxSortField } from '@repo/ui/src/components/BoxSortField';
 
 const TermsOfUseManagementList = ({
   actions,
@@ -25,21 +26,16 @@ const TermsOfUseManagementList = ({
     >
       <Datagrid rowClick="show" bulkActionButtons={false}>
         <TextField source="no" label="No" />
-        <TextField source="id" label="利用規約ID" sortable={false} />
-        <TextField source="memo" label="メモ" sortable={false} />
-        <TextField source="version" label="バージョン" sortable={false} />
-        <FunctionField
-          label="公開開始日"
-          render={({ publishedDate }: { publishedDate: string }) => {
-            return formatDateAcstar(publishedDate);
-          }}
-        />
-        <FunctionField
-          label="登録日"
-          render={({ createdAt }: { createdAt: string }) => {
-            return formatDateAcstar(createdAt);
-          }}
-        />
+        <TextField source="id" label="利用規約ID" />
+        <TextField source="memo" label="メモ" />
+        <BoxSortField source="createdAt" label="登録日">
+          <FunctionField
+            label="登録日"
+            render={({ createdAt }: { createdAt: string }) => {
+              return formatDateAcstar(createdAt);
+            }}
+          />
+        </BoxSortField>
       </Datagrid>
     </List>
   );

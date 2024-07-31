@@ -7,7 +7,7 @@ import type {
 
 import { RecordValue } from '@repo/types/general';
 import { updateStatusAll } from '@repo/utils/updateStatus';
-import { OPERATE_IOS } from '@repo/consts/forceUpdate';
+import { OPERATE_IOS, SORT_BY_TYPE } from '@repo/consts/forceUpdate';
 
 const forcedUpdateManagementCallbackHandlers = {
   resource: 'forced-update-managements',
@@ -25,6 +25,8 @@ const forcedUpdateManagementCallbackHandlers = {
         'null'
     );
     let newData;
+
+    console.log({ listUpdateAllStorage });
 
     if (!listUpdateAllStorage || !listParams) {
       localStorage.setItem(
@@ -53,10 +55,30 @@ const forcedUpdateManagementCallbackHandlers = {
     } else {
       newData = listUpdateAllStorage;
 
-      newData.sort((a: RecordValue, b: RecordValue) =>
-        listParams.order === 'ASC' ? a.no - b.no : b.no - a.no
-      );
+      if (SORT_BY_TYPE['number'].includes(listParams.sort)) {
+        newData.sort((a: RecordValue, b: RecordValue) =>
+          listParams.order === 'ASC'
+            ? a[listParams.sort] - b[listParams.sort]
+            : b[listParams.sort] - a[listParams.sort]
+        );
+      }
 
+      if (SORT_BY_TYPE['text'].includes(listParams.sort)) {
+        newData.sort((a: RecordValue, b: RecordValue) =>
+          listParams.order === 'ASC'
+            ? a[listParams.sort].localeCompare(b[listParams.sort])
+            : b[listParams.sort].localeCompare(a[listParams.sort])
+        );
+      }
+
+      if (SORT_BY_TYPE['date'].includes(listParams.sort)) {
+        newData.sort((a: RecordValue, b: RecordValue) => {
+          const dateA = new Date(a[listParams.sort] as string).getTime();
+          const dateB = new Date(b[listParams.sort] as string).getTime();
+
+          return listParams.order === 'ASC' ? dateA - dateB : dateB - dateA;
+        });
+      }
       response.data = await newData.slice(
         (listParams.page - 1) * listParams.perPage,
         (listParams.page - 1) * listParams.perPage + listParams.perPage

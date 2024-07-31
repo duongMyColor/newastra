@@ -3,6 +3,7 @@ import { ModelDeligate, RecordValue } from '@repo/types/general';
 import { GetAllQueryIF } from '@repo/types/response';
 import removeEmptyProperties from '@repo/utils/removeEmptyProperties';
 import { GetManyReferenceParams, GetManyReferenceResult } from 'react-admin';
+import { sortData } from '@repo/utils/sortData';
 
 class BaseRepo {
   private tableModel: ModelDeligate;
@@ -42,14 +43,19 @@ class BaseRepo {
 
     const res = await this.tableModel.findMany({
       orderBy: {
-        [String(sortField) === 'no' ? 'id' : String(sortField)]:
+        [String(sortField) === 'no' || 'status' ? 'id' : String(sortField)]:
           sortOrder?.toLowerCase() ?? '',
       },
       skip: start ?? 0,
       take: (end ?? 0) - (start ?? 0) + 1,
       where: whereClause,
-    });
-    return res;
+    }); 
+
+    const data = sortData(res);
+
+    console.log('response:', data);
+
+    return data;
   };
 
   getAllWithParm = async ({ sort, range, filter, include }: GetAllQueryIF) => {
@@ -72,7 +78,7 @@ class BaseRepo {
 
     const res = await this.tableModel.findMany({
       orderBy: {
-        [String(sortField) === 'no' ? 'id' : String(sortField)]:
+        [String(sortField) === 'no' || 'status' ? 'id' : String(sortField)]:
           sortOrder?.toLowerCase() ?? '',
       },
       skip: start ?? 0,
@@ -80,7 +86,9 @@ class BaseRepo {
       where: whereClause,
       include,
     });
-    return res;
+
+    const data = sortData(res);
+    return data;
   };
 
   getAllPerformanceTypeMaster = async ({
@@ -124,9 +132,9 @@ class BaseRepo {
       }
     }
 
-    console.log({ res });
+    const data = sortData(res);
 
-    return res;
+    return data;
   };
 
   getOneByIdPerformaceTypeMaster = async (idPerformanceTypeMaster: number) => {
@@ -240,7 +248,29 @@ class BaseRepo {
       where: { ...whereClause, isDeleted: false },
     });
 
-    return res;
+    let position = res.map((value: any) => value.id);
+
+    console.log({ position });
+
+    res.sort((a: any, b: any) => a.id - b.id);
+
+    for (let i = 0; i < res.length; i++) {
+      res[i].no = i + 1;
+    }
+
+    let data = [];
+    for (let i = 0; i < position.length; i++) {
+      for (let j = 0; j < res.length; j++) {
+        if (position[i] === res[j].id) {
+          data.push(res[j]);
+          break;
+        }
+      }
+    }
+
+    console.log('response:', data);
+
+    return data;
   };
 
   getOneById = (id: number) => {
