@@ -43,13 +43,14 @@ class BaseRepo {
 
     const res = await this.tableModel.findMany({
       orderBy: {
-        [String(sortField) === 'no' || 'status' ? 'id' : String(sortField)]:
-          sortOrder?.toLowerCase() ?? '',
+        [String(sortField) === 'no' || String(sortField) === 'status'
+          ? 'id'
+          : String(sortField)]: sortOrder?.toLowerCase() ?? '',
       },
       skip: start ?? 0,
       take: (end ?? 0) - (start ?? 0) + 1,
       where: whereClause,
-    }); 
+    });
 
     const data = sortData(res);
 
@@ -78,8 +79,9 @@ class BaseRepo {
 
     const res = await this.tableModel.findMany({
       orderBy: {
-        [String(sortField) === 'no' || 'status' ? 'id' : String(sortField)]:
-          sortOrder?.toLowerCase() ?? '',
+        [String(sortField) === 'no' || String(sortField) === 'status'
+          ? 'id'
+          : String(sortField)]: sortOrder?.toLowerCase() ?? '',
       },
       skip: start ?? 0,
       take: (end ?? 0) - (start ?? 0) + 1,
