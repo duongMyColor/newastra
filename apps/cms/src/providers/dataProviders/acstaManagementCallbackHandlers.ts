@@ -22,7 +22,7 @@ const AcstaManagementCallbackHandler = {
     let listParams = JSON.parse(
       localStorage.getItem('RaStore.acstas.listParams') as any
     );
-    if (SORT_BY_TYPE['text'].includes(listParams.sort)) {
+    if (listParams && SORT_BY_TYPE['text'].includes(listParams.sort)) {
       response.data.sort((a: RecordValue, b: RecordValue) =>
         listParams.order === 'ASC'
           ? a[listParams.sort].localeCompare(b[listParams.sort])

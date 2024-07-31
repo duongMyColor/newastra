@@ -43,7 +43,7 @@ const LicenseManagementShow = ({ actions, resource }: BaseComponentProps) => {
               fullWidth
               sx={disabledInputBackgroundStyle}
             />
-            <ButtonPreviewFile />
+            <ButtonPreviewFile label="ライセンス本文" />
             <FormatInputDateShow label="公開開始日" source="publishedDate" />
             <FormatInputDateShow label="登録日時" source="createdAt" />
           </CustomForm>

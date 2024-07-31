@@ -82,8 +82,8 @@ const PerformanceEditForm = ({ actions, resource }: BaseComponentProps) => {
     const setIdAcstaFunc = async () => {
       const resAcstaId = await dataProvider.getAll('acstas');
       setAcstaId(
-        resAcstaId.map(({ id }: AcstaResponseIF) => {
-          return { id, name: id };
+        resAcstaId.map(({ id, acstaName }: AcstaResponseIF) => {
+          return { id, name: `${id} : ${acstaName}` };
         })
       );
     };
@@ -96,7 +96,7 @@ const PerformanceEditForm = ({ actions, resource }: BaseComponentProps) => {
       setPerformanceTypeMasterId(
         resPerformanceTypeMasterId.map(
           ({ id, typeName }: PerformanceTypeMasterResponseIF) => {
-            return { id, name: `${id} :${typeName}` };
+            return { id, name: `${id} : ${typeName}` };
           }
         )
       );

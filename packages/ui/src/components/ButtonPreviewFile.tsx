@@ -1,8 +1,7 @@
 import { Button } from '@mui/material';
 import { useRecordContext } from 'react-admin';
-const ButtonPreviewFile = () => {
+const ButtonPreviewFile = ({label}:{label:string}) => {
   const record = useRecordContext();
-  console.log(':::record fdgvfg', record);
 
   const previewFile = () => {
     const newTab = window.open('', '_blank') as Window;
@@ -17,7 +16,7 @@ const ButtonPreviewFile = () => {
       color="primary"
       onClick={previewFile}
     >
-      別タブでプレビュー
+      {label} 別タブでプレビュー
     </Button>
   );
 };

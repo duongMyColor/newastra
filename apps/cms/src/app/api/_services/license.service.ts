@@ -90,7 +90,7 @@ class License implements LicensePostIF {
   }: LicensePostIF) {
     this.version = version.toString();
     this.content = content as string;
-    this.memo = memo.toString();
+    this.memo = memo ? memo.toString() : '';
     this.publishedDate = new Date(publishedDate).toISOString();
     this.updatedAt = new Date().toISOString();
     this.record = record;

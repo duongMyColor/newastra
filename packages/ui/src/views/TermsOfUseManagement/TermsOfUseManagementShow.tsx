@@ -42,7 +42,7 @@ const TermsOfUseManagementShow = ({
               fullWidth
               sx={disabledInputBackgroundStyle}
             />
-            <ButtonPreviewFile />
+            <ButtonPreviewFile label="規約本文" />
             <FormatInputDateShow label="公開開始日" source="publishedDate" />
             <FormatInputDateShow label="登録日時" source="createdAt" />
           </CustomForm>
