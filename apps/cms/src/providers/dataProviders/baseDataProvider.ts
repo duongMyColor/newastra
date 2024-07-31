@@ -55,16 +55,8 @@ const baseDataProvider: DataProvider = {
     } = await httpClient(url);
     console.log('metadata: ', metadata);
 
-    let newMetaData = metadata.map((value: RecordValue, idx: number) => {
-      value['no'] =
-        order === 'ASC'
-          ? (page - 1) * perPage + idx + 1
-          : count - ((page - 1) * perPage) - idx;
-      return value;
-    });
-
     return {
-      data: newMetaData,
+      data: metadata,
       total: count,
     };
   },

@@ -31,6 +31,7 @@ const Login = () => {
   const location = useLocation();
 
   const handleSubmit = (auth: FormValues) => {
+    localStorage.removeItem('listUpdateAll');
     setLoading(true);
     login(
       auth,

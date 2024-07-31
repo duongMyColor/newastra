@@ -32,6 +32,7 @@ const PerformanceManagementShow = ({
               source="id"
               label="演出ID"
               disabled
+              fullWidth
               sx={disabledInputBackgroundStyle}
             />
 
@@ -39,12 +40,14 @@ const PerformanceManagementShow = ({
               source="name"
               label="演出名"
               disabled
+              fullWidth
               sx={disabledInputBackgroundStyle}
             />
             <TextInput
               source="performanceTypeMasterIdAndName"
               label="演出種別ID"
               disabled
+              fullWidth
               sx={disabledInputBackgroundStyle}
             />
 
@@ -72,6 +75,7 @@ const PerformanceManagementShow = ({
               source="acstaIdAndName"
               label="アクスタ ID"
               disabled
+              fullWidth
               sx={disabledInputBackgroundStyle}
             />
           </CustomForm>

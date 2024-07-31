@@ -2,6 +2,8 @@ import type { DataProvider, GetListResult, GetOneResult } from 'react-admin';
 
 import dayjs from 'dayjs';
 import { extractFilename, generateFileName } from '@repo/utils/fileUtils';
+import { SORT_BY_TYPE } from '@repo/consts/forceUpdate';
+import { RecordValue } from '@repo/types/general';
 
 const determineStatus = (dateStart: Date | string, dateEnd: Date | string) => {
   const currentDate = dayjs();
@@ -17,6 +19,16 @@ const AcstaManagementCallbackHandler = {
     response.data.forEach((item) => {
       item.status = determineStatus(item.dateStart, item.dateEnd);
     });
+    let listParams = JSON.parse(
+      localStorage.getItem('RaStore.acstas.listParams') as any
+    );
+    if (SORT_BY_TYPE['text'].includes(listParams.sort)) {
+      response.data.sort((a: RecordValue, b: RecordValue) =>
+        listParams.order === 'ASC'
+          ? a[listParams.sort].localeCompare(b[listParams.sort])
+          : b[listParams.sort].localeCompare(a[listParams.sort])
+      );
+    }
 
     return response;
   },
