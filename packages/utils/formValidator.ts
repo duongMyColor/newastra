@@ -24,13 +24,13 @@ const validateLength = (
 ) => {
   if (minLength && value?.length < minLength) {
     return {
-      message: 'ra.validation.minValue',
+      message: `${minLength}文字以上である必要があります`,
       args: { min: minLength },
     };
   }
   if (maxLength && value?.length > maxLength) {
     return {
-      message: 'ra.validation.maxValue',
+      message: `${maxLength}文字以上である必要があります`,
       args: { max: maxLength },
     };
   }

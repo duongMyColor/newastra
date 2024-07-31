@@ -98,7 +98,7 @@ const LicenseManagementCreate = ({ actions, resource }: BaseComponentProps) => {
           disabled
         />
         <TextInput source="version" label="バージョン" isRequired fullWidth />
-        <TextInput source="memo" label="メモ" isRequired fullWidth />
+        <TextInput source="memo" label="メモ" fullWidth />
         <DateTimeInput
           source="publishedDate"
           fullWidth

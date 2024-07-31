@@ -40,7 +40,7 @@ const MAP_ROLE: OptionRole = {
 
 const userContentLength = {
   username: {
-    min: 8,
+    min: 3,
     max: 16,
   },
   name: {
