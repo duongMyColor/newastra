@@ -21,4 +21,25 @@ const subCategories = [
   { id: 7, name: 'Laptop', masterId: 3 },
   { id: 8, name: 'Desktop', masterId: 3 },
 ];
-export { productContentLength, masterCategories, subCategories };
+
+const statusActiveAppMaster = [
+  { id: 0, name: 'アクティブ' },
+  { id: 1, name: '非アクティブ' },
+];
+
+export interface TypeStatusAppMaster {
+  0: boolean;
+  1: boolean;
+}
+const STATUS_APP_MASTER: TypeStatusAppMaster = {
+  0: false,
+  1: true,
+};
+
+export {
+  productContentLength,
+  masterCategories,
+  subCategories,
+  statusActiveAppMaster,
+  STATUS_APP_MASTER,
+};

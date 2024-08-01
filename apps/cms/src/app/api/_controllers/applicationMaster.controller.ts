@@ -98,7 +98,7 @@ class AplicationMasterController {
   delete = async (id: number) => {
     return new OK({
       message: 'deleted AplicationMaster OK!',
-      metadata: await AplicationMasterService.deleteById(id),
+      metadata: await AplicationMasterService.safetyDeleteById(id),
     });
   };
 

@@ -4,6 +4,7 @@ import { GetAllQueryIF } from '@repo/types/response';
 import removeEmptyProperties from '@repo/utils/removeEmptyProperties';
 import { GetManyReferenceParams, GetManyReferenceResult } from 'react-admin';
 import { sortData } from '@repo/utils/sortData';
+import { STATUS_APP_MASTER, TypeStatusAppMaster } from '@repo/consts/product';
 
 class BaseRepo {
   private tableModel: ModelDeligate;
@@ -250,27 +251,47 @@ class BaseRepo {
       where: { ...whereClause, isDeleted: false },
     });
 
-    let position = res.map((value: any) => value.id);
+    const data = sortData(res);
 
-    console.log({ position });
+    return data;
+  };
 
-    res.sort((a: any, b: any) => a.id - b.id);
+  getAllWithFilter = async ({ sort, range, filter }: GetAllQueryIF) => {
+    const [sortField, sortOrder] = sort;
+    const [start, end] = range;
+    console.log(':::filter getAllWithQuery', filter);
 
-    for (let i = 0; i < res.length; i++) {
-      res[i].no = i + 1;
-    }
+    const statusActive = filter.isDeleted;
+    const isDeleted =
+      STATUS_APP_MASTER[statusActive as keyof TypeStatusAppMaster] ?? false;
+    delete filter.isDeleted;
 
-    let data = [];
-    for (let i = 0; i < position.length; i++) {
-      for (let j = 0; j < res.length; j++) {
-        if (position[i] === res[j].id) {
-          data.push(res[j]);
-          break;
-        }
-      }
-    }
+    console.log({ isDeleted });
 
-    console.log('response:', data);
+    const whereClause = Object.fromEntries(
+      Object.entries(filter).map(([key, value]) => [
+        key,
+        {
+          search: (value as string)
+            .trim()
+            .split(' ')
+            .map((word: string) => `${word} ${word}*`.toLowerCase())
+            .join(' '),
+        },
+      ])
+    );
+
+    const res = await this.tableModel.findMany({
+      orderBy: {
+        [String(sortField) === 'no' ? 'id' : String(sortField)]:
+          sortOrder?.toLowerCase() ?? '',
+      },
+      skip: start ?? 0,
+      take: (end ?? 0) - (start ?? 0) + 1,
+      where: { ...whereClause, isDeleted: isDeleted },
+    });
+
+    const data = sortData(res);
 
     return data;
   };

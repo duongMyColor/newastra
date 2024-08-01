@@ -54,6 +54,7 @@ model AplicationMaster {
   id                 Int      @id @default(autoincrement())
   appName            String   @unique
   packageName        String   @unique
+  isDeleted          Boolean   @default(false)
   termsOfUseId       Int
   licenseId          Int
   assetBundleIOS     String
