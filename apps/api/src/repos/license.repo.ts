@@ -7,17 +7,12 @@ export const getAll = async () => {
   return await new BaseRepo(prisma.license).getAll();
 };
 
-export const getCurrentLicense = async () => {
+export const getCurrentLicense = async (licenseId: number) => {
   const prisma = getDb();
 
   const currentLicense = await prisma.license.findFirst({
     where: {
-      publishedDate: {
-        lt: new Date(),
-      },
-    },
-    orderBy: {
-      publishedDate: 'desc',
+      id: licenseId,
     },
   });
 

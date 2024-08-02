@@ -1,6 +1,8 @@
 import { NotFoundError } from '@/core/error.response';
 import { getPresignedUrl } from '../lib/cloudflare-r2';
 import { getCurrentLicense, getOneById, getAll } from '../repos/license.repo';
+import { getBundleId } from '@/lib/globalObject';
+import { getOneByBundleId } from '@/repos/applicationMaster.repo';
 
 class LicenseService {
   static async getAll() {
@@ -12,7 +14,14 @@ class LicenseService {
   }
 
   static async getCurrentLicense() {
-    const currentLicense = await getCurrentLicense();
+    const bundleId = getBundleId();
+
+    if (!bundleId) {
+      throw new NotFoundError('bundleId not found');
+    }
+    const application = await getOneByBundleId(bundleId);
+
+    const currentLicense = await getCurrentLicense(application.licenseId);
     if (!currentLicense) {
       throw new NotFoundError('License not found');
     }

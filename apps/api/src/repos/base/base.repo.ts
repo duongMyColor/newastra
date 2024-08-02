@@ -43,7 +43,7 @@ class BaseRepo {
   };
 
   getOneByCondition = async (condition: RecordValue, select = {}) => {
-    return await this.tableModel.findUnique({
+    return await this.tableModel.findFirst({
       where: condition,
     });
   };

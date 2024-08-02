@@ -5,6 +5,8 @@ import {
 } from '../repos/termOfUse.repo';
 import { getPresignedUrl } from '../lib/cloudflare-r2';
 import { NotFoundError } from '@/core/error.response';
+import { getBundleId } from '@/lib/globalObject';
+import { getOneByBundleId } from '@/repos/applicationMaster.repo';
 
 class TermOfUseService {
   static async getAll() {
@@ -16,7 +18,16 @@ class TermOfUseService {
   }
 
   static async getCurrentTermOfUse() {
-    const currentTermsOfUse = await getCurrentTermOfUse();
+
+    const bundleId = getBundleId();
+
+    if (!bundleId) {
+      throw new NotFoundError('bundleId not found');
+    }
+    const application = await getOneByBundleId(bundleId);
+    const currentTermsOfUse = await getCurrentTermOfUse(
+      application.termsOfUseId
+    );
     if (!currentTermsOfUse) {
       throw new NotFoundError('Term of use not found');
     }
