@@ -66,7 +66,7 @@ const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
           <Title
             title={
               isScanRange
-                ? 'アクスタ管理　スキャン範囲指定'
+                ? 'アクスタ管理　色識別範囲指定'
                 : 'アクスタ管理　参照'
             }
           />

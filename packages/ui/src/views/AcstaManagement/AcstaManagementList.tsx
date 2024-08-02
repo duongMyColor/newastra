@@ -14,6 +14,7 @@ import { ListToolBar } from '@repo/ui/src/components/ListToolBar';
 import { formatDateAcstar } from '@repo/utils/dateFormat';
 import { CustomButtonByRole } from '../../components/CustomButtonByRole';
 import { BoxSortField } from '../../components/BoxSortField';
+import { Chip } from '@mui/material';
 
 const AcstaManagementList = ({ actions, resource }: BaseComponentProps) => {
   const record = useRecordContext();
@@ -29,6 +30,27 @@ const AcstaManagementList = ({ actions, resource }: BaseComponentProps) => {
         <TextField source="managementName" label="管理名" />
         <TextField source="acstaName" label="アクスタ名" />
         <TextField source="id" label="アクスタID" />
+        <BoxSortField source="scanColors" label="色範囲指定">
+          <FunctionField
+            label="公開開始日"
+            render={({ scanColors }: { scanColors: string }) => {
+              if (scanColors)
+                return (
+                  <Chip
+                    label="設定済み"
+                    sx={{ backgroundColor: '#41eb5d2b', color: 'green' }}
+                  />
+                );
+              return (
+                <Chip
+                  label="設定なし"
+                  sx={{ backgroundColor: '#fcbaba78', color: 'red' }}
+                />
+              );
+            }}
+          />
+        </BoxSortField>
+
         <StatusChipField source="status" label="ステータス"></StatusChipField>
         <BoxSortField source="dateStart" label="公開開始日">
           <FunctionField
@@ -46,7 +68,6 @@ const AcstaManagementList = ({ actions, resource }: BaseComponentProps) => {
             }}
           />
         </BoxSortField>
-
         <BoxSortField source="createdAt" label="公開終了日">
           <FunctionField
             label="登録日"
@@ -55,7 +76,6 @@ const AcstaManagementList = ({ actions, resource }: BaseComponentProps) => {
             }}
           />
         </BoxSortField>
-
         {validRole('delete', actions) && (
           <CustomButtonByRole source="role" label="削除" condition="status">
             <DeleteWithConfirmButton
