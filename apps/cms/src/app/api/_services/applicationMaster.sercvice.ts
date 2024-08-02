@@ -95,6 +95,9 @@ class ApplicationMasterFactory {
   static async deleteManyById(ids: number[]) {
     return await ApplicationMasterRepo.deleteManyById(ids);
   }
+  static async safetyDeleteById(id: number) {
+    return await ApplicationMasterRepo.safetyDeleteById(id);
+  }
 }
 
 class ApplicationMaster implements AplicationMasterPostIF {
