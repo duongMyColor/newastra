@@ -1,3 +1,4 @@
+import { chipStyles } from '@repo/consts/general';
 import { ChipField, useRecordContext } from 'react-admin';
 
 export const StatusChipField = ({
@@ -16,10 +17,7 @@ export const StatusChipField = ({
         <ChipField
           source={source}
           label={label}
-          sx={{
-            backgroundColor: '#41eb5d2b',
-            color: 'green',
-          }}
+          sx={chipStyles.configured}
           sortable={sortable}
         />
       )}
@@ -28,10 +26,7 @@ export const StatusChipField = ({
         <ChipField
           source={source}
           label={label}
-          sx={{
-            backgroundColor: '#fcbaba78',
-            color: 'red',
-          }}
+          sx={chipStyles.notConfigured}
           sortable={sortable}
         />
       )}

@@ -15,6 +15,7 @@ import { formatDateAcstar } from '@repo/utils/dateFormat';
 import { CustomButtonByRole } from '../../components/CustomButtonByRole';
 import { BoxSortField } from '../../components/BoxSortField';
 import { Chip } from '@mui/material';
+import { chipStyles } from '@repo/consts/general';
 
 const AcstaManagementList = ({ actions, resource }: BaseComponentProps) => {
   const record = useRecordContext();
@@ -34,19 +35,8 @@ const AcstaManagementList = ({ actions, resource }: BaseComponentProps) => {
           <FunctionField
             label="公開開始日"
             render={({ scanColors }: { scanColors: string }) => {
-              if (scanColors)
-                return (
-                  <Chip
-                    label="設定済み"
-                    sx={{ backgroundColor: '#41eb5d2b', color: 'green' }}
-                  />
-                );
-              return (
-                <Chip
-                  label="設定なし"
-                  sx={{ backgroundColor: '#fcbaba78', color: 'red' }}
-                />
-              );
+              if (scanColors) return <Chip label="設定済み" sx={chipStyles.configured} />;
+              return <Chip label="設定なし" sx={chipStyles.notConfigured} />;
             }}
           />
         </BoxSortField>
