@@ -9,7 +9,6 @@ export const ScanDataField = ({
   source: string;
   moveScanRange?: () => void;
 }) => {
-
   const record = useRecordContext();
   return (
     <>
@@ -44,7 +43,7 @@ export const ScanDataField = ({
           sx={{ height: '40px' }}
           onClick={moveScanRange}
         >
-          スキャン範囲指定
+          色識別範囲指定
         </Button>
       </Box>
     </>
