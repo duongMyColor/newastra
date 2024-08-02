@@ -4,6 +4,7 @@ import { OK, CREATED } from '../_core/success.response';
 import { AplicationMasterPostIF } from '@repo/types/applicationMaster';
 import type { NextRequest } from 'next/server';
 import { parseParams, parseSearchParams } from '@repo/utils/parseParams';
+import applicationMasterRepo from '../_repos/applicationMaster.repo';
 
 class AplicationMasterController {
   create = async (request: NextRequest) => {
@@ -55,6 +56,7 @@ class AplicationMasterController {
         range,
         sort,
       }),
+      count: await applicationMasterRepo.count(),
     });
   };
 
@@ -96,7 +98,7 @@ class AplicationMasterController {
   delete = async (id: number) => {
     return new OK({
       message: 'deleted AplicationMaster OK!',
-      metadata: await AplicationMasterService.deleteById(id),
+      metadata: await AplicationMasterService.safetyDeleteById(id),
     });
   };
 

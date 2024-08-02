@@ -3,7 +3,6 @@ import {
   Create,
   SelectInput,
   FileField,
-  useCreate,
   useNotify,
   ImageInput,
   ImageField,
@@ -11,7 +10,7 @@ import {
 } from 'react-admin';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { TextField, Box } from '@mui/material';
+import { TextField, Box, Tooltip } from '@mui/material';
 
 import { validateAcstaCreation } from './formValidator';
 import CustomForm from '@repo/ui/src/components/CustomForm';
@@ -19,6 +18,7 @@ import { BaseComponentProps, RecordValue } from '@repo/types/general';
 import { CREATED_SUCCESS, REDIRECT_ROUTE } from '@repo/consts/general';
 import { AplicationMasterResponseIF } from '@repo/types/applicationMaster';
 import { convertToFormData } from '@repo/utils/formData';
+import TooltipCustom from '../../components/TooltipCustom';
 
 const AcstaManagementCreate = ({
   actions,
@@ -94,69 +94,97 @@ const AcstaManagementCreate = ({
           variant="filled"
           value={idAcsta}
           disabled
+          sx={{
+            marginBottom:"20px"
+          }}
         />
-        <TextInput
-          source="managementName"
-          label="管理名"
-          fullWidth
-          isRequired
-        />
-        <TextInput source="acstaName" label="アクスタ名" fullWidth isRequired />
-        <SelectInput
-          source="applicationId"
-          choices={appIdIDs}
-          fullWidth
-          isRequired
-          label="アプリケーション ID"
-        />
-
-        <ImageInput
-          source="thumbnailUrl"
-          label="アクスタサムネイル"
-          placeholder="アップロード"
-          isRequired
-          fullWidth
-          accept={'image/*'}
-        >
-          <Box
+        <TooltipCustom>
+          <TextInput
+            source="managementName"
+            label="管理名"
+            fullWidth
+            isRequired
+          />
+        </TooltipCustom>
+        <TooltipCustom>
+          <TextInput
+            source="acstaName"
+            label="アクスタ名"
+            fullWidth
+            isRequired
+          />
+        </TooltipCustom>
+        <TooltipCustom>
+          <SelectInput
+            source="applicationId"
+            choices={appIdIDs}
+            fullWidth
+            isRequired
+            label="アプリケーション ID"
+          />
+        </TooltipCustom>
+        <TooltipCustom>
+          <ImageInput
+            source="thumbnailUrl"
+            label="アクスタサムネイル"
+            placeholder="アップロード"
+            isRequired
+            fullWidth
+            accept="image/png, image/jpeg, image/jpg"
             sx={{
-              display: 'flex',
-              width: '700px',
-              margin: '0 10%',
+              '& .RaFileInput-removeButton button': {
+                opacity: '1 !important',
+              },
             }}
           >
-            <FileField
-              source="src"
-              title="title"
+            <Box
               sx={{
-                width: '30%',
+                display: 'flex',
+                width: '700px',
+                margin: '0 10%',
               }}
-            />
-            <ImageField source="src" title="title" />
-          </Box>
-        </ImageInput>
+            >
+              <FileField
+                source="src"
+                title="title"
+                sx={{
+                  width: '30%',
+                }}
+              />
+              <ImageField source="src" title="title" />
+            </Box>
+          </ImageInput>
+        </TooltipCustom>
 
-        <ImageInput
-          source="scanImageUrl"
-          label="スキャン用データ"
-          placeholder="アップロード"
-          isRequired
-          fullWidth
-          accept={'image/*'}
-        >
-          <Box
+        <TooltipCustom>
+          <ImageInput
+            source="scanImageUrl"
+            label="スキャン用データ"
+            placeholder="アップロード"
+            isRequired
+            fullWidth
+            accept="image/png, image/jpeg, image/jpg"
             sx={{
-              display: 'flex',
-              width: '700px',
-              margin: '0 10%',
+              '& .RaFileInput-removeButton button': {
+                opacity: '1 !important',
+              },
             }}
           >
-            <FileField source="src" title="title" sx={{ width: '30%' }} />
-            <ImageField source="src" title="title" />
-          </Box>
-        </ImageInput>
-
-        <DateTimeInput source="dateStart" label="公開開始日" required />
+            <Box
+              sx={{
+                display: 'flex',
+                width: '700px',
+                margin: '0 10%',
+              }}
+            >
+              <FileField source="src" title="title" sx={{ width: '30%' }} />
+              <ImageField source="src" title="title" />
+            </Box>
+          </ImageInput>
+        </TooltipCustom>
+        <TooltipCustom width="fix-content">
+          <DateTimeInput source="dateStart" label="公開開始日" required />
+        </TooltipCustom>
         <DateTimeInput source="dateEnd" label="公開終了日" />
         {/* <TextInput
           source="acstaBasicInfoId"

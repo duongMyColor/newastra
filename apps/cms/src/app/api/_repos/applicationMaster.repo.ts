@@ -12,7 +12,7 @@ class AplicationMasterRepo {
   getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
     return await new BaseRepo(
       generateClient().aplicationMaster
-    ).getAllWithQuery({
+    ).getAllWithFilter({
       sort,
       range,
       filter,
@@ -46,6 +46,9 @@ class AplicationMasterRepo {
         classification: true,
       },
     });
+  };
+  count = async () => {
+    return await new BaseRepo(generateClient().aplicationMaster).count();
   };
 
   // const getOneAndChildren = async (id: number, child: string) => {
@@ -104,6 +107,11 @@ class AplicationMasterRepo {
     return await new BaseRepo(generateClient().aplicationMaster).deleteManyById(
       ids
     );
+  };
+  safetyDeleteById = async (id: number) => {
+    return await new BaseRepo(
+      generateClient().aplicationMaster
+    ).safetyDeleteById(id);
   };
 }
 

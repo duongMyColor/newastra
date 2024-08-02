@@ -3,6 +3,8 @@ import { ModelDeligate, RecordValue } from '@repo/types/general';
 import { GetAllQueryIF } from '@repo/types/response';
 import removeEmptyProperties from '@repo/utils/removeEmptyProperties';
 import { GetManyReferenceParams, GetManyReferenceResult } from 'react-admin';
+import { sortData } from '@repo/utils/sortData';
+import { STATUS_APP_MASTER, TypeStatusAppMaster } from '@repo/consts/product';
 
 class BaseRepo {
   private tableModel: ModelDeligate;
@@ -42,13 +44,20 @@ class BaseRepo {
 
     const res = await this.tableModel.findMany({
       orderBy: {
-        [String(sortField)]: sortOrder?.toLowerCase() ?? '',
+        [String(sortField) === 'no' || String(sortField) === 'status'
+          ? 'id'
+          : String(sortField)]: sortOrder?.toLowerCase() ?? '',
       },
       skip: start ?? 0,
       take: (end ?? 0) - (start ?? 0) + 1,
       where: whereClause,
     });
-    return res;
+
+    const data = sortData(res);
+
+    console.log('response:', data);
+
+    return data;
   };
 
   getAllWithParm = async ({ sort, range, filter, include }: GetAllQueryIF) => {
@@ -71,14 +80,18 @@ class BaseRepo {
 
     const res = await this.tableModel.findMany({
       orderBy: {
-        [String(sortField)]: sortOrder?.toLowerCase() ?? '',
+        [String(sortField) === 'no' || String(sortField) === 'status'
+          ? 'id'
+          : String(sortField)]: sortOrder?.toLowerCase() ?? '',
       },
       skip: start ?? 0,
       take: (end ?? 0) - (start ?? 0) + 1,
       where: whereClause,
       include,
     });
-    return res;
+
+    const data = sortData(res);
+    return data;
   };
 
   getAllPerformanceTypeMaster = async ({
@@ -104,7 +117,8 @@ class BaseRepo {
 
     let res = await this.tableModel.findMany({
       orderBy: {
-        [String(sortField)]: sortOrder?.toLowerCase() ?? '',
+        [String(sortField) === 'no' ? 'id' : String(sortField)]:
+          sortOrder?.toLowerCase() ?? '',
       },
       skip: start ?? 0,
       take: (end ?? 0) - (start ?? 0) + 1,
@@ -121,9 +135,9 @@ class BaseRepo {
       }
     }
 
-    console.log({ res });
+    const data = sortData(res);
 
-    return res;
+    return data;
   };
 
   getOneByIdPerformaceTypeMaster = async (idPerformanceTypeMaster: number) => {
@@ -169,7 +183,8 @@ class BaseRepo {
 
     const res = await this.tableModel.findMany({
       orderBy: {
-        [String(sortField)]: sortOrder?.toLowerCase() ?? '',
+        [String(sortField) === 'no' ? 'id' : String(sortField)]:
+          sortOrder?.toLowerCase() ?? '',
       },
       skip: start ?? 0,
       take: (end ?? 0) - (start ?? 0) + 1,
@@ -228,14 +243,57 @@ class BaseRepo {
 
     const res = await this.tableModel.findMany({
       orderBy: {
-        [String(sortField)]: sortOrder?.toLowerCase() ?? '',
+        [String(sortField) === 'no' ? 'id' : String(sortField)]:
+          sortOrder?.toLowerCase() ?? '',
       },
       skip: start ?? 0,
       take: (end ?? 0) - (start ?? 0) + 1,
       where: { ...whereClause, isDeleted: false },
     });
 
-    return res;
+    const data = sortData(res);
+
+    return data;
+  };
+
+  getAllWithFilter = async ({ sort, range, filter }: GetAllQueryIF) => {
+    const [sortField, sortOrder] = sort;
+    const [start, end] = range;
+    console.log(':::filter getAllWithQuery', filter);
+
+    const statusActive = filter.isDeleted;
+    const isDeleted =
+      STATUS_APP_MASTER[statusActive as keyof TypeStatusAppMaster] ?? false;
+    delete filter.isDeleted;
+
+    console.log({ isDeleted });
+
+    const whereClause = Object.fromEntries(
+      Object.entries(filter).map(([key, value]) => [
+        key,
+        {
+          search: (value as string)
+            .trim()
+            .split(' ')
+            .map((word: string) => `${word} ${word}*`.toLowerCase())
+            .join(' '),
+        },
+      ])
+    );
+
+    const res = await this.tableModel.findMany({
+      orderBy: {
+        [String(sortField) === 'no' ? 'id' : String(sortField)]:
+          sortOrder?.toLowerCase() ?? '',
+      },
+      skip: start ?? 0,
+      take: (end ?? 0) - (start ?? 0) + 1,
+      where: { ...whereClause, isDeleted: isDeleted },
+    });
+
+    const data = sortData(res);
+
+    return data;
   };
 
   getOneById = (id: number) => {

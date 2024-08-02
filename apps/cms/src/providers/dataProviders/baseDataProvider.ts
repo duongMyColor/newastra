@@ -50,19 +50,13 @@ const baseDataProvider: DataProvider = {
       filter: JSON.stringify(params.filter),
     };
     const url = `${apiUrl}/${resource}?${JSON.stringify(query)}`;
-
     const {
       json: { metadata, count },
     } = await httpClient(url);
     console.log('metadata: ', metadata);
 
-    let newMetaData = metadata.map((value: RecordValue, idx: number) => {
-      value['no'] = (page - 1) * perPage + idx + 1;
-      return value;
-    });
-
     return {
-      data: newMetaData,
+      data: metadata,
       total: count,
     };
   },
@@ -78,7 +72,7 @@ const baseDataProvider: DataProvider = {
     const {
       json: { metadata },
     } = await httpClient(url);
-    console.log('metadata:zxc zxdccxvv ', metadata);
+    console.log('metadata:', metadata);
 
     return {
       data: metadata,

@@ -75,23 +75,29 @@ class User implements UserIF {
     newPassword,
     isDeleted = false,
   }: UserIF) {
+    console.log({
+      username,
+      role,
+      email,
+      password,
+      newPassword,
+    });
     this.username = username;
     this.role = role;
     this.enabled = enabled;
     this.email = email;
     this.isDeleted = isDeleted;
     this.updatedAt = new Date();
-
+    if (newPassword) {
+      this.password = hashPassword(newPassword);
+    }
     if (password) {
-      this.password = newPassword
-        ? hashPassword(newPassword)
-        : hashPassword(password);
+      this.password = hashPassword(password);
     }
   }
 
   public async create() {
     const payload: UserIF = this;
-    console.log('payload', payload);
 
     // TODO: validate payload
     return await UserRepo.insert(payload);
@@ -99,6 +105,8 @@ class User implements UserIF {
 
   public async updateById({ id }: { id: number }) {
     const payload: UserIF = this;
+
+    console.log('this update', this);
     // TODO: validate payload
     return await UserRepo.updateById({ id, payload });
   }

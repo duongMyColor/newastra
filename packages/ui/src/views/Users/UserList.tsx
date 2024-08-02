@@ -13,6 +13,7 @@ import { CustomButtonByRole } from '@repo/ui/src/components/CustomButtonByRole';
 import { formatDateAcstar } from '@repo/utils/dateFormat';
 import { MAP_ROLE } from '@repo/consts/user';
 import { Role } from '@repo/types/user';
+import { BoxSortField } from '../../components/BoxSortField';
 
 const UserList = ({ actions, resource }: BaseComponentProps) => {
   return (
@@ -23,19 +24,23 @@ const UserList = ({ actions, resource }: BaseComponentProps) => {
       <Datagrid rowClick="show" bulkActionButtons={false}>
         <TextField source="no" label="No" />
         <TextField source="username" label="CMS-ID" />
-        <FunctionField
-          label="最新ログイン"
-          render={({ lastLogin }: { lastLogin: string }) => {
-            return formatDateAcstar(lastLogin);
-          }}
-        />
-
-        <FunctionField
-          label="権限"
-          render={({ role }: { role: Role }) => {
-            return MAP_ROLE[role];
-          }}
-        />
+        <BoxSortField source="lastLogin" label="最終ログイン">
+          <FunctionField
+            label="最終ログイン"
+            render={({ lastLogin }: { lastLogin: string }) => {
+              return formatDateAcstar(lastLogin);
+            }}
+          />
+        </BoxSortField>
+        <BoxSortField source="role" label="権限">
+          <FunctionField
+            label="権限"
+            sortable={true}
+            render={({ role }: { role: Role }) => {
+              return MAP_ROLE[role];
+            }}
+          />
+        </BoxSortField>
         <TextField source="email" label="メールアドレス" />
         {validRole('delete', actions) && (
           <CustomButtonByRole source="role" label="削除">

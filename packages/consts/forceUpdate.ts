@@ -8,4 +8,17 @@ const OS_MAP = {
   android: '1',
 };
 
-export { OPERATE_IOS, OPERATE_ANDROID, STATUS_ACTIVE, STATUS_DEACTIVE, OS_MAP };
+const SORT_BY_TYPE = {
+  number: ['version', 'no', 'id', 'appMasterId'],
+  date: ['publishedDate', 'createdAt'],
+  text: ['managementName', 'operateSystem', 'status'],
+};
+
+export {
+  OPERATE_IOS,
+  OPERATE_ANDROID,
+  STATUS_ACTIVE,
+  STATUS_DEACTIVE,
+  OS_MAP,
+  SORT_BY_TYPE,
+};

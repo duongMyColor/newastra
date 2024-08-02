@@ -1,13 +1,9 @@
-import {
-  List,
-  Datagrid,
-  TextField,
-  FunctionField,
-} from 'react-admin';
+import { List, Datagrid, TextField, FunctionField } from 'react-admin';
 import { BaseComponentProps } from '@repo/types/general';
 import { validRole } from '../_core/permissions';
 import { ListToolBar } from '@repo/ui/src/components/ListToolBar';
 import { formatDateAcstar } from '@repo/utils/dateFormat';
+import { BoxSortField } from '../../components/BoxSortField';
 
 const LicenseManagementList = ({ actions, resource }: BaseComponentProps) => {
   return (
@@ -19,12 +15,15 @@ const LicenseManagementList = ({ actions, resource }: BaseComponentProps) => {
         <TextField source="no" label="No" />
         <TextField source="id" label="ライセンスID" />
         <TextField source="memo" label="メモ" />
-        <FunctionField
-          label="登録日"
-          render={({ createdAt }: { createdAt: string }) => {
-            return formatDateAcstar(createdAt);
-          }}
-        />
+
+        <BoxSortField source="createdAt" label="登録日">
+          <FunctionField
+            label="登録日"
+            render={({ createdAt }: { createdAt: string }) => {
+              return formatDateAcstar(createdAt);
+            }}
+          />
+        </BoxSortField>
       </Datagrid>
     </List>
   );

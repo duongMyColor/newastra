@@ -11,6 +11,8 @@ import { validRole } from '../_core/permissions';
 import { ListToolBar } from '@repo/ui/src/components/ListToolBar';
 import { PerformanceTypeMasterResponseIF } from '@repo/types/performanceTypeMaster';
 import { AcstaResponseIF } from '@repo/types/acsta';
+import { BoxSortField } from '../../components/BoxSortField';
+import { formatDateAcstar } from '@repo/utils/dateFormat';
 
 const PerformanceManagementList = ({
   actions,
@@ -25,24 +27,36 @@ const PerformanceManagementList = ({
         <TextField source="no" label="No" />
         <TextField source="name" label="演出名" />
         <TextField source="id" label="演出ID" />
-        <FunctionField
-          label="アクスタ ID"
-          render={({ acsta }: { acsta: AcstaResponseIF }) => {
-            return `${acsta.id} : ${acsta.acstaName}`;
-          }}
-        />
-        <FunctionField
-          label="演出種別ID"
-          render={({
-            performanceTypeMaster,
-          }: {
-            performanceTypeMaster: PerformanceTypeMasterResponseIF;
-          }) => {
-            return `${performanceTypeMaster.id} : ${performanceTypeMaster.typeName}`;
-          }}
-        />
+        <BoxSortField source="acstaId" label="アクスタ ID">
+          <FunctionField
+            label="アクスタID"
+            render={({ acsta }: { acsta: AcstaResponseIF }) => {
+              return `${acsta.id} : ${acsta.acstaName}`;
+            }}
+          />
+        </BoxSortField>
 
-        <TextField source="createdAt" label="登録日" />
+        <BoxSortField source="performanceTypeMasterId" label="演出種別ID">
+          <FunctionField
+            label="演出種別ID"
+            render={({
+              performanceTypeMaster,
+            }: {
+              performanceTypeMaster: PerformanceTypeMasterResponseIF;
+            }) => {
+              return `${performanceTypeMaster.id} : ${performanceTypeMaster.typeName}`;
+            }}
+          />
+        </BoxSortField>
+
+        <BoxSortField source="createdAt" label="登録日">
+          <FunctionField
+            label="登録日"
+            render={({ createdAt }: { createdAt: string }) => {
+              return formatDateAcstar(createdAt);
+            }}
+          />
+        </BoxSortField>
         {validRole('delete', actions) && (
           <DeleteWithConfirmButton
             confirmContent="よろしいですか?"

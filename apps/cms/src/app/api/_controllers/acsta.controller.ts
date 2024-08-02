@@ -71,6 +71,13 @@ class AcstaController {
     });
   };
 
+  getOneAndChildAndParent = async (id: number) => {
+    return new OK({
+      message: 'get AplicationMaster success!',
+      metadata: await AcstaService.getOneAndParent(id),
+    });
+  };
+
   update = async (request: NextRequest, id: number) => {
     const payload: FormData = await request.formData();
 

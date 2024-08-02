@@ -2,13 +2,8 @@ import { ImageField, SimpleShowLayout, useRecordContext } from 'react-admin';
 import { Box, Button } from '@mui/material';
 import { imageFieldStyles } from '@repo/styles';
 
-export const ScanDataField = ({
-  source,
-  moveScanRange,
-}: {
-  source: string;
-  moveScanRange?: () => void;
-}) => {
+export const ThumbnailDataField = ({ source }: { source: string }) => {
+
   const record = useRecordContext();
   return (
     <>
@@ -19,7 +14,7 @@ export const ScanDataField = ({
           fontWeight: '500',
         }}
       >
-        スキャン用データ
+        アクスタサムネイル
       </Box>
       <Box sx={{ display: 'flex', gap: 4, alignItems: 'center' }}>
         <Box sx={{ display: 'flex', gap: 4, alignItems: 'center' }}>
@@ -30,21 +25,12 @@ export const ScanDataField = ({
               fontWeight: '400',
             }}
           >
-            {record?.scanImageUrl.title}
+            {record?.thumbnailUrl.title}
           </Box>
           <SimpleShowLayout spacing={3}>
             <ImageField source={source} label="" sx={imageFieldStyles} />
           </SimpleShowLayout>
         </Box>
-
-        <Button
-          variant="contained"
-          size="small"
-          sx={{ height: '40px' }}
-          onClick={moveScanRange}
-        >
-          色識別範囲指定
-        </Button>
       </Box>
     </>
   );

@@ -25,7 +25,7 @@ import { UPDATED_SUCCESS } from '@repo/consts/general';
 
 const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
-  const { record } = useEditContext();
+  let { record } = useEditContext();
 
   const notify = useNotify();
   const navigate = useNavigate();
@@ -37,18 +37,39 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
   };
 
   const handleSave = async (values: RecordValue) => {
-    const { assetDataIOS, assetDataAndroid, ...rest } = values;
+    const check = await dataProvider.getPacketName(
+      'application-masters',
+      values.packageName
+    );
+    if (check.data.packageName) {
+      notify('同一バンドルIDで登録ができない', {
+        type: 'warning',
+      });
+      return false;
+    }
+    const { assetDataIOS, assetDataAndroid, assetDataOutlineUrl, ...rest } =
+      values;
+
+    record.appName = values.appName;
+    record.packageName = values.packageName;
 
     if (assetDataIOS?.rawFile) {
       const assetBundleIOSFile = extractFile(assetDataIOS);
       const keyIOS = await uploadMuiltpart(assetBundleIOSFile);
       rest.assetBundleIOS = keyIOS;
+      record.assetDataIOS = values.assetDataIOS;
     }
 
     if (assetDataAndroid?.rawFile) {
       const assetBundleAndroidFile = extractFile(assetDataAndroid);
       const keyAndroid = await uploadMuiltpart(assetBundleAndroidFile);
       rest.assetBundleAndroid = keyAndroid;
+
+      record.assetDataAndroid = values.assetDataAndroid;
+    }
+    if (assetDataOutlineUrl?.rawFile) {
+      rest.outlineUrl = values.assetDataOutlineUrl;
+      record.assetDataOutlineUrl = values.assetDataOutlineUrl;
     }
 
     try {

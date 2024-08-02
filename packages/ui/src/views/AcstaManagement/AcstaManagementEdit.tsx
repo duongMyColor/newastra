@@ -115,6 +115,7 @@ const EditForm = ({ actions, resource, dataProvider }: BaseComponentProps) => {
           source="thumbnailUrl"
           label="アクスタサムネイル"
           placeholder="アップロード"
+          accept="image/png, image/jpeg, image/jpg"
         >
           <FileField source="src" title="title" />
         </FileInput>
@@ -123,10 +124,16 @@ const EditForm = ({ actions, resource, dataProvider }: BaseComponentProps) => {
           source="scanImageUrl"
           label="スキャン用データ"
           placeholder="アップロード"
+          accept="image/png, image/jpeg, image/jpg"
         >
           <FileField source="src" title="title" />
         </FileInput>
-        <DateTimeInput source="dateStart" fullWidth label="公開開始日" />
+        <DateTimeInput
+          source="dateStart"
+          fullWidth
+          label="公開開始日"
+          required
+        />
         <DateTimeInput source="dateEnd" fullWidth label="公開終了日" />
 
         {/* <TextInput

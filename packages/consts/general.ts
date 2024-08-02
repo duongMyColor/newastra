@@ -1,4 +1,4 @@
-import { RecordValue } from "@repo/types/general";
+import { RecordValue } from '@repo/types/general';
 
 const baseUploadFolder = 'src/app/api/_uploads/';
 
@@ -31,10 +31,15 @@ const OPERATE_SYSTEM = [
   { id: '1', name: 'Android' },
 ];
 
-const MAP_ACCEPT_TYPE_FILE: RecordValue ={
-  'performanceManagement':['assetbundle'],
-  'applicationMaster':['jpg','png','jpeg','html','hml','assetbundle']
-}
+const MAP_ACCEPT_TYPE_FILE: RecordValue = {
+  performanceManagement: ['assetbundle'],
+  applicationMaster: ['jpg', 'png', 'jpeg', 'html', 'hml', 'assetbundle'],
+};
+
+const chipStyles = {
+  configured: { backgroundColor: '#41eb5d2b', color: 'green' },
+  notConfigured: { backgroundColor: '#fcbaba78', color: 'red' },
+};
 
 
 const CREATED_SUCCESS = '作成しました'
@@ -42,6 +47,7 @@ const UPDATED_SUCCESS = '更新しました'
 
 export {
   baseUploadFolder,
+  chipStyles,
   REDIRECT_ROUTE,
   UPLOAD_FOLDER_MAP,
   MAP_RESOURE,

@@ -3,7 +3,7 @@ import { useRecordContext } from 'react-admin';
 interface CustomButtonByRoleProps {
   children: JSX.Element | JSX.Element[];
   condition?: any;
-  source: string;
+  source?: string;
   label?: string;
 }
 
@@ -14,7 +14,7 @@ interface CustomButtonByRoleProps {
  * @param source - source to match
  * @returns
  */
-export const CustomButtonByRole = ({
+export const BoxSortField = ({
   children,
   condition,
   source,
@@ -22,11 +22,7 @@ export const CustomButtonByRole = ({
 }: CustomButtonByRoleProps) => {
   const record = useRecordContext();
 
-  const defaultCondition = record && record[source] !== 'ADMIN';
-  let masterCondition = defaultCondition;
-  if (condition) {
-    masterCondition = record && record[condition] !== 'アクティブ';
-  }
 
-  return <>{masterCondition && children && <div>{children}</div>}</>;
+
+  return <>{children}</>;
 };

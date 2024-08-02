@@ -104,7 +104,7 @@ class ForcedUpdateManagement implements ForcedUpdateManagementPostIF {
     appMasterId,
   }: ForcedUpdateManagementPostIF) {
     this.version = version.toString();
-    this.managementName = managementName;
+    this.managementName = managementName.toString();
     this.operateSystem = operateSystem;
     this.publishedDate = new Date(publishedDate).toISOString();
     this.updatedAt = new Date().toISOString();

@@ -31,6 +31,7 @@ const Login = () => {
   const location = useLocation();
 
   const handleSubmit = (auth: FormValues) => {
+    localStorage.removeItem('listUpdateAll');
     setLoading(true);
     login(
       auth,
@@ -85,7 +86,7 @@ const Login = () => {
                 // eslint-disable-next-line jsx-a11y/no-autofocus
                 autoFocus
                 source="username"
-                label={translate('ra.auth.username')}
+                label="メールアドレス"
                 disabled={loading}
                 validate={required()}
                 fullWidth

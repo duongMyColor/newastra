@@ -26,6 +26,10 @@ const editionRules: ValidationRule[] = [
 
 const creationRules: ValidationRule[] = [
   {
+    field: 'appMasterId',
+    required: true,
+  },
+  {
     field: 'version',
     required: true,
   },

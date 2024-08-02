@@ -11,6 +11,7 @@ import { BaseComponentProps } from '@repo/types/general';
 import { validRole } from '../_core/permissions';
 import { ListToolBar } from '@repo/ui/src/components/ListToolBar';
 import { formatDateAcstar } from '@repo/utils/dateFormat';
+import { BoxSortField } from '../../components/BoxSortField';
 
 const CustomDeleteButton = ({ label }: { label: string }) => {
   const record = useRecordContext();
@@ -43,13 +44,14 @@ const PerformanceTypeMasterList = ({
         <TextField source="no" label="No" />
         <TextField source="typeName" label="演出種別名" />
         <TextField source="id" label="演出種別ID" />
-
-        <FunctionField
-          label="登録日"
-          render={({ createdAt }: { createdAt: string }) => {
-            return formatDateAcstar(createdAt);
-          }}
-        />
+        <BoxSortField source="createdAt" label="登録日">
+          <FunctionField
+            label="登録日"
+            render={({ createdAt }: { createdAt: string }) => {
+              return formatDateAcstar(createdAt);
+            }}
+          />
+        </BoxSortField>
 
         {validRole('delete', actions) && (
           <DeleteWithConfirmButton

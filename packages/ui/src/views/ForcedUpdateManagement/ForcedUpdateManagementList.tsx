@@ -5,6 +5,7 @@ import { ListToolBar } from '@repo/ui/src/components/ListToolBar';
 import { formatDateAcstar } from '@repo/utils/dateFormat';
 import { StatusChipField } from '@repo/ui/src/components/CustomField/StatusChipField';
 import { AplicationMasterResponseIF } from '@repo/types/applicationMaster';
+import { BoxSortField } from '../../components/BoxSortField';
 
 const ForcedUpdateManagementList = ({
   actions,
@@ -19,38 +20,47 @@ const ForcedUpdateManagementList = ({
         <TextField source="no" label="No" />
         <TextField source="managementName" label="管理タイトル" />
         <TextField source="id" label="強制アップデート ID" />
-        <FunctionField
-          label="アプリケーションID"
-          render={({
-            aplicationMaster,
-          }: {
-            aplicationMaster: AplicationMasterResponseIF;
-          }) => {
-            return `${aplicationMaster.id} : ${aplicationMaster.appName}`;
-          }}
-        />
-        <FunctionField
-          label="OS"
-          render={({ operateSystem }: { operateSystem: string }) => {
-            return operateSystem === '0' ? 'iOS' : 'Android';
-          }}
-        />
+
+        <BoxSortField source="appMasterId" label="アプリケーションID">
+          <FunctionField
+            label="アプリケーションID"
+            render={({
+              aplicationMaster,
+            }: {
+              aplicationMaster: AplicationMasterResponseIF;
+            }) => {
+              return `${aplicationMaster.id} : ${aplicationMaster.appName}`;
+            }}
+          />
+        </BoxSortField>
+
+        <BoxSortField source="operateSystem" label="OS">
+          <FunctionField
+            label="OS"
+            render={({ operateSystem }: { operateSystem: string }) => {
+              return operateSystem === '0' ? 'iOS' : 'Android';
+            }}
+          />
+        </BoxSortField>
         <TextField source="version" label="バージョン" />
 
         <StatusChipField source="status" label="ステータス"></StatusChipField>
-
-        <FunctionField
-          label="公開開始日"
-          render={({ publishedDate }: { publishedDate: string }) => {
-            return formatDateAcstar(publishedDate);
-          }}
-        />
-        <FunctionField
-          label="登録日"
-          render={({ createdAt }: { createdAt: string }) => {
-            return formatDateAcstar(createdAt);
-          }}
-        />
+        <BoxSortField source="publishedDate" label="公開開始日">
+          <FunctionField
+            label="公開開始日"
+            render={({ publishedDate }: { publishedDate: string }) => {
+              return formatDateAcstar(publishedDate);
+            }}
+          />
+        </BoxSortField>
+        <BoxSortField source="createdAt" label="登録日">
+          <FunctionField
+            label="登録日"
+            render={({ createdAt }: { createdAt: string }) => {
+              return formatDateAcstar(createdAt);
+            }}
+          />
+        </BoxSortField>
       </Datagrid>
     </List>
   );
