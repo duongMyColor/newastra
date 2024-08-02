@@ -48,6 +48,8 @@ migrations/
 
 # local uploaded files
 _uploads/
+_d1/
+_r2/
 
 # wrangler
 .wrangler/
