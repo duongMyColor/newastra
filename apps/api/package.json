@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "wrangler dev src/index.ts --persist-to ../cms/.wrangler/state --local",
+    "dev": "wrangler dev src/index.ts --persist-to .wrangler/state --local",
     "deploy": "wrangler deploy --minify src/index.ts",
     "db:migrate": "npx tsx prisma/migrate.mts",
     "db:seed": "npx tsx prisma/seed.ts"

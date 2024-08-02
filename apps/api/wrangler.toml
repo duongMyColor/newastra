@@ -6,6 +6,16 @@ compatibility_flags = [ "nodejs_compat" ]
 account_id = "d13a85c5ad0898a62c4f98154be549c7"
 workers_dev = true
 
+[[d1_databases]]
+binding = "DB"
+database_name = "da-acsta-db-develop"
+database_id = "70af6666-d0a1-4322-82d9-4f4aced6c587"
+migrations_dir = "./prisma/migrations"
+
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = 'da-acsta-bucket-develop'
+
 [env.develop]
 name = "da-acsta-api-develop"
 
