@@ -39,8 +39,8 @@ exportしたsqlファイルをテキストでAIに読み込ませてもらい、
 ```bash
 cd apps/api
 # stressにデータをインポートする場合
-# npx wrangler d1 import --env stress da-acsta-db-stress --remote --input=./_d1/export_develop_20240801.sql
-npx wrangler d1 import --env <env-name> <database-name> --remote --input=<input-path>
+# npx wrangler d1 execute --env stress da-acsta-db-stress --remote --file=./_d1/export_develop_20240801.sql
+npx wrangler d1 execute --env <env-name> <database-name> --remote --file=<input-path>
 ```
 
 ## R2
