@@ -125,3 +125,11 @@ See [migration-db.md](./docs/migration-db.md)
 ### Deploy
 
 See [deployment.md](./docs/deployment.md)
+
+### 環境間のデータ移行
+
+See [data-migration.md](./docs/data-migration.md)
+
+### 負荷テスト
+
+See [stress-test.md](./docs/stress-test.md)

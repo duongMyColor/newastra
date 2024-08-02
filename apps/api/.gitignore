@@ -8,3 +8,23 @@ package-lock.json
 yarn.lock
 pnpm-lock.yaml
 bun.lockb
+
+# local uploaded files
+_d1/
+_r2/
+
+### JMeter ###
+# JMeter common ignore files
+# http://jmeter.apache.org/
+
+# Ignore Summary/Aggregrate reports
+*.jtl
+jmeter/log
+jmeter/report
+jmeter/temp
+
+# Ignore log files
+jmeter/*.log
+
+# Ignore customized user.properties
+jmeter/user.properties
