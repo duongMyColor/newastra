@@ -6,7 +6,7 @@ import { generateClient } from '@/lib/prisma';
 
 class AcstaRepo {
   getAll = async () => {
-    return await new BaseRepo(generateClient().acstaManagement).getAll();
+    return await new BaseRepo(generateClient().acstaManagement).getAllActive();
   };
 
   count = async () => {
@@ -14,13 +14,13 @@ class AcstaRepo {
   };
 
   getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
-    return await new BaseRepo(generateClient().acstaManagement).getAllWithQuery(
-      {
-        sort,
-        range,
-        filter,
-      }
-    );
+    return await new BaseRepo(
+      generateClient().acstaManagement
+    ).getAllWithFilter({
+      sort,
+      range,
+      filter,
+    });
   };
   getAllWithFilters = async ({ sort, range, filter }: GetAllQueryIF) => {
     return await new BaseRepo(
@@ -87,7 +87,9 @@ class AcstaRepo {
   };
 
   deleteById = async (id: number) => {
-    return await new BaseRepo(generateClient().acstaManagement).deleteById(id);
+    return await new BaseRepo(
+      generateClient().acstaManagement
+    ).safetyDeleteAstraById(id);
   };
 
   deleteManyById = async (ids: number[]) => {

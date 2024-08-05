@@ -7,7 +7,7 @@ import type {
   IEvent,
   IPoint,
 } from 'fabric/fabric-impl';
-
+import { Box } from '@mui/material';
 // Internal imports
 import {
   CustomRect,
@@ -24,6 +24,7 @@ import {
 } from '@repo/consts/imgRectSelection';
 
 import './style.css';
+import { validRole } from '../../_core/permissions';
 
 const drawImgWithFabric = (
   canvas: Canvas,
@@ -156,6 +157,7 @@ const drawImgWithFabric = (
 const RectEditor = ({
   imagePath,
   data: propsData,
+  actions,
   onChange,
 }: RectEditorProps) => {
   useEffect(() => {
@@ -167,9 +169,16 @@ const RectEditor = ({
   }, [imagePath]);
 
   return (
-    <div className="flex-container">
+    <Box
+      className="flex-container"
+      sx={
+        !validRole('edit', actions)
+          ? { cursor: 'not-allowed', pointerEvents: 'none' }
+          : {}
+      }
+    >
       <canvas id="canvas"></canvas>
-    </div>
+    </Box>
   );
 };
 

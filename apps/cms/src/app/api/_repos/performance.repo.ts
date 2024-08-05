@@ -90,9 +90,9 @@ class PerformanceRepo {
   };
 
   deleteById = async (id: number) => {
-    return await new BaseRepo(generateClient().performaceManagement).deleteById(
-      id
-    );
+    return await new BaseRepo(
+      generateClient().performaceManagement
+    ).safetyDeletePerformById(id);
   };
 
   deleteManyById = async (ids: number[]) => {

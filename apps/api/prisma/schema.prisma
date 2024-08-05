@@ -76,6 +76,7 @@ model AcstaManagement {
   managementName   String
   acstaName        String
   applicationId    Int
+  isDeleted        Boolean   @default(false)
   thumbnailUrl     String
   scanImageUrl     String
   acstaBasicInfoId Int?
@@ -106,6 +107,7 @@ model PerformaceTypeMaster {
 model PerformaceManagement {
   id                      Int      @id @default(autoincrement())
   name                    String
+  isDeleted               Boolean   @default(false)
   performanceTypeMasterId Int
   assetBundleIOS          String
   acstaId                 Int

@@ -72,7 +72,11 @@ const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
           />
 
           {isScanRange ? (
-            <RectEditorArea moveScanRange={moveScanRange} resource={resource} />
+            <RectEditorArea
+              moveScanRange={moveScanRange}
+              resource={resource}
+              actions={actions}
+            />
           ) : (
             <CustomForm
               pathTo={resourcePath}

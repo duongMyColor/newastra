@@ -10,13 +10,17 @@ import dataProvider from '../../../../../apps/cms/src/providers/dataProviders/da
 
 import { RectData } from '@repo/types/rectangleEditor';
 import extractColorDistribution from './scanImageUsingPica';
+import { validRole } from '../_core/permissions';
+import { Actions } from '@repo/types/roles';
 
 const RectEditorArea = ({
   moveScanRange,
   resource,
+  actions,
 }: {
   moveScanRange: () => void;
   resource: string;
+  actions: Actions;
 }) => {
   const { record } = useShowContext();
   const refresh = useRefresh();
@@ -74,6 +78,7 @@ const RectEditorArea = ({
   };
 
   const onChange = (data: RectData) => {
+    if (!validRole('edit', actions)) return;
     setRectPosition(data);
   };
 
@@ -91,27 +96,30 @@ const RectEditorArea = ({
 
   return (
     <SimpleForm warnWhenUnsavedChanges={true} toolbar={false}>
-      <Stack
-        direction="row"
-        justifyContent="flex-end"
-        width="100%"
-        height="100%"
-        gap={3}
-        alignItems="center"
-      >
-        <Button
-          variant="contained"
-          startIcon={<SaveIcon />}
-          onClick={saveRectData}
+      {validRole('edit', actions) && (
+        <Stack
+          direction="row"
+          justifyContent="flex-end"
+          width="100%"
+          height="100%"
+          gap={3}
+          alignItems="center"
         >
-          保存
-        </Button>
-      </Stack>
+          <Button
+            variant="contained"
+            startIcon={<SaveIcon />}
+            onClick={saveRectData}
+          >
+            保存
+          </Button>
+        </Stack>
+      )}
 
       <RectEditor
         imagePath={scanImageUrl}
         data={positionData}
         onChange={onChange}
+        actions={actions}
       ></RectEditor>
       <Stack
         direction="row"

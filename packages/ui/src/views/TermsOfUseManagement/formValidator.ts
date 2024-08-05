@@ -37,7 +37,7 @@ const creationRules: ValidationRule[] = [
   },
   {
     field: 'memo',
-    required: true,
+    required: false,
   },
 ];
 
