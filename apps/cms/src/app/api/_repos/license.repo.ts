@@ -10,7 +10,7 @@ class LicenseRepo {
   };
 
   count = async () => {
-    return await new BaseRepo(generateClient().license).count();
+    return await new BaseRepo(generateClient().license).countAll();
   };
 
   getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {

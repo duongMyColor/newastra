@@ -7,6 +7,7 @@ import { sortData } from '@repo/utils/sortData';
 import { STATUS_APP_MASTER, TypeStatusAppMaster } from '@repo/consts/product';
 import UploadFileService from '../../_services/upload.service';
 import { AcstaApiResponseIF } from '@repo/types/acsta';
+import { PerformanceApiResponseIF } from '@repo/types/performance';
 
 class BaseRepo {
   private tableModel: ModelDeligate;
@@ -15,8 +16,15 @@ class BaseRepo {
     this.tableModel = tableModel;
   }
 
-  count = async () => {
+  countAll = async () => {
     return await this.tableModel.count();
+  };
+  count = async () => {
+    return await this.tableModel.count({
+      where: {
+        isDeleted: false,
+      },
+    });
   };
 
   getAll = async () => {
@@ -65,8 +73,6 @@ class BaseRepo {
 
     const data = sortData(res);
 
-    console.log('response:', data);
-
     return data;
   };
 
@@ -79,8 +85,6 @@ class BaseRepo {
     const isDeleted =
       STATUS_APP_MASTER[statusActive as keyof TypeStatusAppMaster] ?? false;
     delete filter.isDeleted;
-
-    console.log('include', include);
 
     const whereClause = Object.fromEntries(
       Object.entries(filter).map(([key, value]) => [
@@ -322,8 +326,6 @@ class BaseRepo {
       STATUS_APP_MASTER[statusActive as keyof TypeStatusAppMaster] ?? false;
     delete filter.isDeleted;
 
-    console.log({ isDeleted });
-
     const whereClause = Object.fromEntries(
       Object.entries(filter).map(([key, value]) => [
         key,
@@ -519,23 +521,54 @@ class BaseRepo {
   safetyDeleteById = async (id: number) => {
     const tableAstra = generateClient().acstaManagement;
     const tablePerformance = generateClient().performaceManagement;
+    const [resAstra, resAppMaster] = await Promise.all([
+      this.findManyById(tableAstra, 'applicationId', id),
+      this.findOneById(this.tableModel, 'id', id),
+    ]);
 
-    const resAstra = await this.findManyById(tableAstra, 'applicationId', id);
-    const resAppMaster = await this.findOneById(this.tableModel, 'id', id);
-
-    if (resAstra) {
+    if (resAstra.length > 0) {
       await this.updateStatusDelete(tableAstra, 'applicationId', id);
+
+      const fileUrlsToDelete = [
+        ...resAstra.flatMap(
+          (record: { thumbnailUrl: string; scanImageUrl: string }) => [
+            record.thumbnailUrl,
+            record.scanImageUrl,
+          ]
+        ),
+        resAppMaster.assetBundleIOS,
+        resAppMaster.assetBundleAndroid,
+      ].filter(Boolean);
+
+      await Promise.all(
+        fileUrlsToDelete.map((url) => new UploadFileService().deleteFile(url))
+      );
 
       const acstaIds = resAstra.map((record: AcstaApiResponseIF) => record.id);
 
-      const resPerformance = await tablePerformance.findMany({
-        where: { acstaId: { in: acstaIds } },
-      });
+      const resPerformance: PerformanceApiResponseIF[] =
+        await tablePerformance.findMany({
+          where: { acstaId: { in: acstaIds } },
+        });
 
-      await tablePerformance.updateMany({
-        where: { acstaId: { in: acstaIds } },
-        data: { isDeleted: true },
-      });
+      if (resPerformance.length > 0) {
+        await tablePerformance.updateMany({
+          where: { acstaId: { in: acstaIds } },
+          data: { isDeleted: true },
+        });
+        const performanceFileUrlsToDelete = [
+          ...resPerformance.flatMap((item) => [
+            item.assetBundleIOS,
+            item.assetBundleAndroid,
+          ]),
+        ].filter(Boolean);
+
+        await Promise.all(
+          performanceFileUrlsToDelete.map((url) =>
+            new UploadFileService().deleteFile(url)
+          )
+        );
+      }
     }
 
     const deleteAppMaster = await this.tableModel.update({
@@ -546,13 +579,14 @@ class BaseRepo {
         isDeleted: true,
       },
     });
-    await new UploadFileService().deleteFile(resAppMaster.encryptKey);
-
+    await new UploadFileService().deleteFile(resAppMaster.assetBundleIOS);
+    await new UploadFileService().deleteFile(resAppMaster.assetBundleAndroid);
     return deleteAppMaster;
   };
 
   safetyDeletePerformById = async (id: number) => {
-    return await this.tableModel.update({
+    const resPerformance = await this.findOneById(this.tableModel, 'id', id);
+    const deletePerfrom = await this.tableModel.update({
       where: {
         id: id,
       },
@@ -560,21 +594,38 @@ class BaseRepo {
         isDeleted: true,
       },
     });
+
+    await new UploadFileService().deleteFile(resPerformance.assetBundleIOS);
+    await new UploadFileService().deleteFile(resPerformance.assetBundleAndroid);
+
+    return deletePerfrom;
   };
 
   safetyDeleteAstraById = async (id: number) => {
     const tablePerformance = generateClient().performaceManagement;
-    const resPerform = await this.findOneById(tablePerformance, 'acstaId', id);
+    const [resPerform, resAcsta] = await Promise.all([
+      this.findManyById(tablePerformance, 'acstaId', id),
+      this.findOneById(this.tableModel, 'id', id),
+    ]);
 
-    if (resPerform) {
+    console.log({ resPerform });
+
+    if (resPerform.length > 0) {
       await this.updateStatusDelete(
         tablePerformance,
         'acstaId',
-        resPerform.acstaId
+        resPerform[0].acstaId
       );
+
+      for (let i = 0; i < resPerform.length; i++) {
+        await new UploadFileService().deleteFile(resPerform[i].assetBundleIOS);
+        await new UploadFileService().deleteFile(
+          resPerform[i].assetBundleAndroid
+        );
+      }
     }
 
-    return await this.tableModel.update({
+    const deleteAsta = await this.tableModel.update({
       where: {
         id: id,
       },
@@ -582,6 +633,10 @@ class BaseRepo {
         isDeleted: true,
       },
     });
+    await new UploadFileService().deleteFile(resAcsta.thumbnailUrl);
+    await new UploadFileService().deleteFile(resAcsta.scanImageUrl);
+
+    return deleteAsta;
   };
 
   deleteWithRelation = async (id: number, relationFieldName: string) => {

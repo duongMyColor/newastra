@@ -19,7 +19,9 @@ class ForcedUpdateRepo {
   };
 
   count = async () => {
-    return await new BaseRepo(generateClient().forcedUpdateManagement).count();
+    return await new BaseRepo(
+      generateClient().forcedUpdateManagement
+    ).countAll();
   };
 
   getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {

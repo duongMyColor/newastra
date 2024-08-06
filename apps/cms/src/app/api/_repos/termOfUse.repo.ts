@@ -10,7 +10,7 @@ class TermsOfUseRepo {
   };
 
   count = async () => {
-    return await new BaseRepo(generateClient().termsOfUse).count();
+    return await new BaseRepo(generateClient().termsOfUse).countAll();
   };
 
   getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {

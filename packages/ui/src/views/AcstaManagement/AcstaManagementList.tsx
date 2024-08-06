@@ -17,7 +17,11 @@ import { BoxSortField } from '../../components/BoxSortField';
 import { Chip } from '@mui/material';
 import { chipStyles } from '@repo/consts/general';
 
-const AcstaManagementList = ({ actions, resource }: BaseComponentProps) => {
+const AcstaManagementList = ({
+  actions,
+  resource,
+  dataProvider,
+}: BaseComponentProps) => {
   const record = useRecordContext();
 
   console.log({ record });
@@ -69,6 +73,7 @@ const AcstaManagementList = ({ actions, resource }: BaseComponentProps) => {
         {validRole('delete', actions) && (
           <CustomButtonByRole source="role" label="削除" condition="status">
             <DeleteWithConfirmButton
+              redirect="list"
               confirmContent="よろしいですか?"
               confirmTitle="削除"
               label="削除"

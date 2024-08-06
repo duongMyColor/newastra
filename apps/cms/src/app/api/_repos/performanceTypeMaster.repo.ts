@@ -11,7 +11,7 @@ class PerformanceTypeMasterRepo {
   };
 
   count = async () => {
-    return await new BaseRepo(generateClient().performaceTypeMaster).count();
+    return await new BaseRepo(generateClient().performaceTypeMaster).countAll();
   };
 
   getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
