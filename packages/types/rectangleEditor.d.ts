@@ -1,9 +1,11 @@
 import exp from 'constants';
 import type { Rect, Text } from 'fabric/fabric-impl';
+import { Actions } from './roles';
 
 export interface RectEditorProps {
   imagePath: string;
   data: RectData;
+  actions: Actions;
   onChange: (data: RectData) => void;
 }
 

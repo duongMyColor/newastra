@@ -73,7 +73,7 @@ class TermOfUseFactory {
 
 class TermOfUse implements TermOfUsePostIF {
   public id?: number;
-  public memo: string;
+  public memo: string | number | null;
   public version: string;
   public content: string;
   public publishedDate: string | Date;
@@ -87,9 +87,11 @@ class TermOfUse implements TermOfUsePostIF {
     publishedDate,
     record,
   }: TermOfUsePostIF) {
+    console.log({ version, content, memo, publishedDate, record });
     this.version = version.toString();
     this.content = content as string;
-    this.memo = memo.toString();
+    this.memo = memo ? memo.toString() : null;
+
     this.publishedDate = new Date(publishedDate).toISOString();
     this.updatedAt = new Date().toISOString();
     this.record = record;

@@ -74,7 +74,7 @@ class LicenseFactory {
 
 class License implements LicensePostIF {
   public id?: number;
-  public memo: string;
+  public memo: string | number | null;
   public version: string;
   public content: string;
   public publishedDate: string | Date;
@@ -90,7 +90,7 @@ class License implements LicensePostIF {
   }: LicensePostIF) {
     this.version = version.toString();
     this.content = content as string;
-    this.memo = memo ? memo.toString() : '';
+    this.memo = memo ? memo.toString() : null;
     this.publishedDate = new Date(publishedDate).toISOString();
     this.updatedAt = new Date().toISOString();
     this.record = record;

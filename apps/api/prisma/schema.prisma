@@ -76,6 +76,7 @@ model AcstaManagement {
   managementName   String
   acstaName        String
   applicationId    Int
+  isDeleted        Boolean   @default(false)
   thumbnailUrl     String
   scanImageUrl     String
   acstaBasicInfoId Int?
@@ -106,6 +107,7 @@ model PerformaceTypeMaster {
 model PerformaceManagement {
   id                      Int      @id @default(autoincrement())
   name                    String
+  isDeleted               Boolean   @default(false)
   performanceTypeMasterId Int
   assetBundleIOS          String
   acstaId                 Int
@@ -120,7 +122,7 @@ model PerformaceManagement {
 
 model TermsOfUse {
   id            Int      @id @default(autoincrement())
-  memo          String
+  memo          String?
   version       String
   content       String
   publishedDate DateTime
@@ -132,7 +134,7 @@ model TermsOfUse {
 
 model License {
   id            Int      @id @default(autoincrement())
-  memo          String
+  memo          String?
   version       String
   content       String
   publishedDate DateTime

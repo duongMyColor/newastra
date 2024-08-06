@@ -6,7 +6,7 @@ import { GetManyReferenceParams } from 'react-admin';
 
 class AplicationMasterRepo {
   getAll = async () => {
-    return await new BaseRepo(generateClient().aplicationMaster).getAll();
+    return await new BaseRepo(generateClient().aplicationMaster).getAllActive();
   };
 
   getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {

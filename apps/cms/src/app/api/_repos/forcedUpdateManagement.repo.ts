@@ -39,7 +39,7 @@ class ForcedUpdateRepo {
   }: GetAllQueryIF) => {
     return await new BaseRepo(
       generateClient().forcedUpdateManagement
-    ).getAllWithParm({
+    ).getAllWithParmForceUpdate({
       sort,
       range,
       filter,
