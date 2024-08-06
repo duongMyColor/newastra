@@ -73,7 +73,6 @@ class BaseRepo {
 
     const data = sortData(res);
 
-
     return data;
   };
 
@@ -86,7 +85,6 @@ class BaseRepo {
     const isDeleted =
       STATUS_APP_MASTER[statusActive as keyof TypeStatusAppMaster] ?? false;
     delete filter.isDeleted;
-
 
     const whereClause = Object.fromEntries(
       Object.entries(filter).map(([key, value]) => [
@@ -328,7 +326,6 @@ class BaseRepo {
       STATUS_APP_MASTER[statusActive as keyof TypeStatusAppMaster] ?? false;
     delete filter.isDeleted;
 
-
     const whereClause = Object.fromEntries(
       Object.entries(filter).map(([key, value]) => [
         key,
@@ -529,7 +526,7 @@ class BaseRepo {
       this.findOneById(this.tableModel, 'id', id),
     ]);
 
-    if (resAstra) {
+    if (resAstra.length > 0) {
       await this.updateStatusDelete(tableAstra, 'applicationId', id);
 
       const fileUrlsToDelete = [
@@ -554,7 +551,7 @@ class BaseRepo {
           where: { acstaId: { in: acstaIds } },
         });
 
-      if (resPerformance) {
+      if (resPerformance.length > 0) {
         await tablePerformance.updateMany({
           where: { acstaId: { in: acstaIds } },
           data: { isDeleted: true },
@@ -611,7 +608,9 @@ class BaseRepo {
       this.findOneById(this.tableModel, 'id', id),
     ]);
 
-    if (resPerform) {
+    console.log({ resPerform });
+
+    if (resPerform.length > 0) {
       await this.updateStatusDelete(
         tablePerformance,
         'acstaId',
