@@ -19,7 +19,7 @@ export interface LicenseResponseIF {
 export interface LicensePostIF {
   [key: string]: any;
   id?: number;
-  memo: string;
+  memo: string | number | null;
   version: string;
   content: string | Buffer | File;
   publishedDate: string | Date;
