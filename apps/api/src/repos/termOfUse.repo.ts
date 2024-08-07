@@ -7,17 +7,12 @@ export const getAll = async () => {
   return await new BaseRepo(prisma.termsOfUse).getAll();
 };
 
-export const getCurrentTermOfUse = async () => {
+export const getCurrentTermOfUse = async (termsOfUseId: number) => {
   const prisma = getDb();
 
   const currentLicense = await prisma.termsOfUse.findFirst({
     where: {
-      publishedDate: {
-        lt: new Date(),
-      },
-    },
-    orderBy: {
-      publishedDate: 'desc',
+      id: termsOfUseId,
     },
   });
 
