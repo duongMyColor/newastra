@@ -41,7 +41,7 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
       'application-masters',
       values.packageName
     );
-    if (check.data.packageName) {
+    if (check.data?.packageName && values.packageName !== record.packageName) {
       notify('同一バンドルIDで登録ができない', {
         type: 'warning',
       });
