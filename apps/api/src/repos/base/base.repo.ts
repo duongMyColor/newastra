@@ -14,7 +14,7 @@ class BaseRepo {
   getAllActive = async () => {
     return await this.tableModel.findMany({
       where: {
-        isDelete: false,
+        isDeleted: false,
       },
     });
   };

@@ -31,7 +31,7 @@ export const getUpdateData = async (
         gt: lastSyncDate,
       },
       packageName: bundleId,
-      isDeleted:false
+      isDeleted: false
     },
   });
 };

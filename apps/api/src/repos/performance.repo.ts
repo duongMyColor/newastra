@@ -55,7 +55,7 @@ export const getUpdateData = async (
         gt: lastSyncDate,
       },
       acstaId: acstaId,
-      isDeleted:false
+      isDeleted: false,
     },
   });
 };
