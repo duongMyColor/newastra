@@ -54,7 +54,9 @@ export const getUpdateData = async (
       updatedAt: {
         gt: lastSyncDate,
       },
-      acstaId: acstaId,
+      acstaId: {
+        in: acstaId,
+      },
       isDeleted: false,
     },
   });
