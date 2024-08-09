@@ -19,6 +19,7 @@ export const getAllByAppId = async (applicationId: number) => {
     },
     where: {
       applicationId: applicationId,
+      isDeleted: false,
     },
   });
 };
@@ -29,6 +30,7 @@ export const getOneById = async (id: number, applicationId: number) => {
     where: {
       id: id,
       applicationId: applicationId,
+      isDeleted: false,
     },
     include: {
       [child]: true,
@@ -41,6 +43,7 @@ export const getManyByAppId = async (applicationId: number) => {
   return await prisma.acstaManagement.findMany({
     where: {
       applicationId: applicationId,
+      isDeleted: false,
     },
   });
 };
@@ -54,6 +57,7 @@ export const getManyByIds = async (ids: number[], applicationId: number) => {
         in: ids,
       },
       applicationId: applicationId,
+      isDeleted: false,
     },
   });
 };
@@ -69,6 +73,7 @@ export const getManyByIdsAndChildren = async (
         in: ids,
       },
       applicationId: applicationId,
+      isDeleted: false,
     },
     include: {
       [child]: true,
@@ -88,6 +93,7 @@ export const getUpdateData = async (
         gt: lastSyncDate,
       },
       applicationId: applicationId,
+      isDeleted: false,
     },
     include: {
       performace: true,
