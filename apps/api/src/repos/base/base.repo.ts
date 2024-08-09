@@ -11,6 +11,14 @@ class BaseRepo {
     return await this.tableModel.findMany();
   };
 
+  getAllActive = async () => {
+    return await this.tableModel.findMany({
+      where: {
+        isDelete: false,
+      },
+    });
+  };
+
   getAllAndChild = async (child: string, select: any = {}) => {
     return await this.tableModel.findMany({
       include: {
@@ -41,6 +49,16 @@ class BaseRepo {
 
     return res;
   };
+  getActiveRecordById = async (id: number) => {
+    const res = await this.tableModel.findUnique({
+      where: {
+        id: id,
+        isDeleted: false,
+      },
+    });
+
+    return res;
+  };
 
   getOneByCondition = async (condition: RecordValue, select = {}) => {
     return await this.tableModel.findFirst({
@@ -54,6 +72,17 @@ class BaseRepo {
         id: {
           in: ids,
         },
+      },
+    });
+  };
+
+  getManyActiveRecordByIds = async (ids: number[]) => {
+    return await this.tableModel.findMany({
+      where: {
+        id: {
+          in: ids,
+        },
+        isDeleted: false,
       },
     });
   };

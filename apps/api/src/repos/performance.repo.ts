@@ -4,7 +4,7 @@ import { BaseRepo } from './base/base.repo';
 export const getAll = async () => {
   const prisma = getDb();
 
-  return await new BaseRepo(prisma.performaceManagement).getAll();
+  return await new BaseRepo(prisma.performaceManagement).getAllActive();
 };
 
 export const getAllByAcstaId = async (acstaId: number) => {
@@ -13,6 +13,7 @@ export const getAllByAcstaId = async (acstaId: number) => {
   return await prisma.performaceManagement.findMany({
     where: {
       acstaId: acstaId,
+      isDeleted: false,
     },
   });
 };
@@ -20,13 +21,17 @@ export const getAllByAcstaId = async (acstaId: number) => {
 export const getOneById = async (id: number) => {
   const prisma = getDb();
 
-  return await new BaseRepo(prisma.performaceManagement).getOneById(id);
+  return await new BaseRepo(prisma.performaceManagement).getActiveRecordById(
+    id
+  );
 };
 
 export const getManyByIds = async (ids: number[]) => {
   const prisma = getDb();
 
-  return await new BaseRepo(prisma.performaceManagement).getManyByIds(ids);
+  return await new BaseRepo(
+    prisma.performaceManagement
+  ).getManyActiveRecordByIds(ids);
 };
 
 // export const getOneByAcstaId = async (acstaId: number) => {
@@ -50,6 +55,7 @@ export const getUpdateData = async (
         gt: lastSyncDate,
       },
       acstaId: acstaId,
+      isDeleted:false
     },
   });
 };

@@ -14,7 +14,7 @@ export const getApplicationId = async (): Promise<number> => {
   const application = await getOneByBundleId(bundleId);
 
   if (!application) {
-    throw new BadRequestError('Application not found');
+    throw new NotFoundError('Application not found');
   }
 
   return application.id;

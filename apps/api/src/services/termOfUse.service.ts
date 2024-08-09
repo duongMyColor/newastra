@@ -25,6 +25,9 @@ class TermOfUseService {
       throw new NotFoundError('bundleId not found');
     }
     const application = await getOneByBundleId(bundleId);
+    if (!application) {
+      throw new NotFoundError('Application not found');
+    }
     const currentTermsOfUse = await getCurrentTermOfUse(
       application.termsOfUseId
     );

@@ -4,19 +4,19 @@ import { BaseRepo } from './base/base.repo';
 export const getAll = async () => {
   const prisma = getDb();
 
-  return await new BaseRepo(prisma.aplicationMaster).getAll();
+  return await new BaseRepo(prisma.aplicationMaster).getAllActive();
 };
 
 export const getOneById = async (id: number) => {
   const prisma = getDb();
 
-  return await new BaseRepo(prisma.aplicationMaster).getOneById(id);
+  return await new BaseRepo(prisma.aplicationMaster).getActiveRecordById(id);
 };
 
 export const getManyByIds = async (ids: number[]) => {
   const prisma = getDb();
 
-  return await new BaseRepo(prisma.aplicationMaster).getManyByIds(ids);
+  return await new BaseRepo(prisma.aplicationMaster).getManyActiveRecordByIds(ids);
 };
 
 export const getUpdateData = async (
@@ -31,6 +31,7 @@ export const getUpdateData = async (
         gt: lastSyncDate,
       },
       packageName: bundleId,
+      isDeleted:false
     },
   });
 };
@@ -40,5 +41,6 @@ export const getOneByBundleId = async (bundleId: string) => {
 
   return await new BaseRepo(prisma.aplicationMaster).getOneByCondition({
     packageName: bundleId,
+    isDeleted: false,
   });
 };

@@ -1,4 +1,4 @@
-import { NotFoundError } from '@/core/error.response';
+import { BadRequestError, NotFoundError } from '@/core/error.response';
 import { getPresignedUrl } from '../lib/cloudflare-r2';
 import { getCurrentLicense, getOneById, getAll } from '../repos/license.repo';
 import { getBundleId } from '@/lib/globalObject';
@@ -20,6 +20,9 @@ class LicenseService {
       throw new NotFoundError('bundleId not found');
     }
     const application = await getOneByBundleId(bundleId);
+    if (!application) {
+      throw new NotFoundError('Application not found');
+    }
 
     const currentLicense = await getCurrentLicense(application.licenseId);
     if (!currentLicense) {
