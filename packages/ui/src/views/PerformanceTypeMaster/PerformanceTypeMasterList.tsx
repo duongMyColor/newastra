@@ -53,14 +53,7 @@ const PerformanceTypeMasterList = ({
           />
         </BoxSortField>
 
-        {validRole('delete', actions) && (
-          <DeleteWithConfirmButton
-            confirmContent="よろしいですか?"
-            confirmTitle="削除"
-            label="削除"
-            confirmColor="warning"
-          ></DeleteWithConfirmButton>
-        )}
+        {validRole('delete', actions) && <CustomDeleteButton label="削除" />}
         {validRole('edit', actions) && <EditButton label="編集"></EditButton>}
       </Datagrid>
     </List>

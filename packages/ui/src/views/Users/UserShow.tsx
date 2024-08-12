@@ -61,7 +61,7 @@ const UserShow = ({ actions, resource }: BaseComponentProps) => {
           >
             <TextInput
               source="username"
-              label="管理ユーザーID  "
+              label="CMS-ID  "
               fullWidth
               disabled
               sx={disabledInputBackgroundStyle}

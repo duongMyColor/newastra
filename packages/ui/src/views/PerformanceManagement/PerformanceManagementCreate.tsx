@@ -157,18 +157,16 @@ const PerformanceManagementCreate = ({
 
         <FileInput
           source="assetBundleIOS"
-          label="アセットバンドルデータ (iOS)"
+          label="アセットバンドルデータ (iOS)*"
           placeholder="アップロード"
-          accept=".assetbundle"
         >
           <FileField source="src" title="title" />
         </FileInput>
 
         <FileInput
           source="assetBundleAndroid"
-          label="アセットバンドルデータ (Android)"
+          label="アセットバンドルデータ (Android)*"
           placeholder="アップロード"
-          accept=".assetbundle"
         >
           <FileField source="src" title="title" />
         </FileInput>

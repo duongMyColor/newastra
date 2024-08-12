@@ -19,6 +19,14 @@ const editionRules: ValidationRule[] = [
     field: 'dateStart',
     required: true,
   },
+  {
+    field: 'thumbnailUrl',
+    required: true,
+  },
+  {
+    field: 'scanImageUrl',
+    required: true,
+  },
 ];
 
 const creationRules: ValidationRule[] = [

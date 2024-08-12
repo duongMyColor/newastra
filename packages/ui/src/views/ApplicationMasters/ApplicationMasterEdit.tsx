@@ -141,7 +141,7 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
           source="licenseId"
           choices={licenseIDs}
           isRequired
-          label="椎ライセンスID限"
+          label="ライセンスID"
         />
         <TextInput
           source="packageName"
@@ -151,7 +151,7 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
         />
         <FileInput
           source="assetDataIOS"
-          label="iOS用共通アセットバンドル"
+          label="iOS用共通アセットバンドル*"
           placeholder="アップロード"
         >
           <FileField source="src" title="title" />
@@ -159,7 +159,7 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
 
         <FileInput
           source="assetDataAndroid"
-          label="Android用共通アセットバンドル"
+          label="Android用共通アセットバンドル*"
           placeholder="アップロード"
         >
           <FileField source="src" title="title" />
@@ -167,7 +167,7 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
 
         <FileInput
           source="assetDataOutlineUrl"
-          label="アクスタ枠データパス"
+          label="アクスタ枠データパス*"
           placeholder="アップロード"
           accept={'image/*'}
         >

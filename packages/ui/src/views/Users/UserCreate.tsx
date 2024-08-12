@@ -47,19 +47,14 @@ const UserCreate = ({
         showCancelButton={true}
         handleSave={handleSave}
       >
-        <TextInput
-          source="username"
-          label="管理ユーザーID "
-          isRequired
-          fullWidth
-        />
+        <TextInput source="username" label="CMS-ID " isRequired fullWidth />
 
         <SelectInput
           source="role"
           choices={userRoles}
           isRequired
           defaultValue={'GENERAL'}
-          label="椎限"
+          label="権限"
         />
         <TextInput source="email" label="メールアドレス" fullWidth isRequired />
         <PasswordInput

@@ -62,7 +62,8 @@ const validateUserCreation = (values: RecordValue): RecordValue => {
   }
 
   if (!validatePublishedDates) {
-    validationMessages.publishedDate = '発売開始日が前日より早い';
+    validationMessages.publishedDate =
+      '既存の強制アップデートより公開開始日を後にする必要があります';
   }
 
   return validationMessages;

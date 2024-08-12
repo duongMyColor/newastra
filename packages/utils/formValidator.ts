@@ -30,7 +30,7 @@ const validateLength = (
   }
   if (maxLength && value?.length > maxLength) {
     return {
-      message: `${maxLength}文字以上である必要があります`,
+      message: `${maxLength}文字以内である必要があります`,
       args: { max: maxLength },
     };
   }

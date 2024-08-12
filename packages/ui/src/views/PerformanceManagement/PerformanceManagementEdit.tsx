@@ -131,7 +131,7 @@ const PerformanceEditForm = ({ actions, resource }: BaseComponentProps) => {
 
         <FileInput
           source="assetDataIOS"
-          label="アセットバンドルデータ (iOS)"
+          label="アセットバンドルデータ (iOS)*"
           placeholder="アップロード"
         >
           <FileField source="src" title="title" />
@@ -139,7 +139,7 @@ const PerformanceEditForm = ({ actions, resource }: BaseComponentProps) => {
 
         <FileInput
           source="assetDataAndroid"
-          label="アセットバンドルデータ (Android)"
+          label="アセットバンドルデータ (Android)*"
           placeholder="アップロード"
         >
           <FileField source="src" title="title" />

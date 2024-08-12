@@ -147,7 +147,7 @@ const MasterCreate = ({
         />
         <FileInput
           source="assetBundleIOS"
-          label="共通アセットバンドルデータ (iOS)"
+          label="共通アセットバンドルデータ (iOS)*"
           placeholder="アップロード"
         >
           <FileField source="src" title="title" />
@@ -155,7 +155,7 @@ const MasterCreate = ({
 
         <FileInput
           source="assetBundleAndroid"
-          label="共通アセットバンドルデータ (Android)"
+          label="共通アセットバンドルデータ (Android)*"
           placeholder="アップロード"
         >
           <FileField source="src" title="title" />
@@ -163,7 +163,7 @@ const MasterCreate = ({
 
         <FileInput
           source="outlineUrl"
-          label="アクスタ枠データパス"
+          label="アクスタ枠データパス*"
           placeholder="アップロード"
           accept="image/png"
         >

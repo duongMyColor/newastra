@@ -112,7 +112,7 @@ const LicenseManagementCreate = ({ actions, resource }: BaseComponentProps) => {
           label="規約本文"
           placeholder="アップロード"
           isRequired
-          accept=".txt, .html, .htm, text/plain, text/html"
+          accept=".html, .htm, text/html"
           onChange={handleChangeFile}
         >
           <Box
