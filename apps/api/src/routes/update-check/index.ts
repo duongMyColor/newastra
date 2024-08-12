@@ -71,10 +71,7 @@ app.openapi(
       }
       const application = await getOneByBundleId(bundleId);
       if (!application) {
-        return c.json({
-          message: 'Application not found',
-          status: 404,
-        });
+        throw new NotFoundError('Application not found');
       }
 
       const prisma = getDb();
@@ -114,7 +111,12 @@ app.openapi(
         );
       }
     } catch (error) {
-      throw new InternalServerError((error as Error).message);
+      if (error instanceof BadRequestError || error instanceof NotFoundError) {
+        throw error;
+      } else {
+        console.error('Unexpected error occurred:', error);
+        throw new InternalServerError((error as Error).message);
+      }
     }
   }
 );

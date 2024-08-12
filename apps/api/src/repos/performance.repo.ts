@@ -45,17 +45,17 @@ export const getManyByIds = async (ids: number[]) => {
 
 export const getUpdateData = async (
   lastSyncDate: Date | string,
-  acstaId: number | number[]
+  acstaId: number[]
 ) => {
   const prisma = getDb();
-
+  const acstaIdArray = Array.isArray(acstaId) ? acstaId : [acstaId];
   return await prisma.performaceManagement.findMany({
     where: {
       updatedAt: {
         gt: lastSyncDate,
       },
       acstaId: {
-        in: acstaId,
+        in: acstaIdArray,
       },
       isDeleted: false,
     },
