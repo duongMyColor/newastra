@@ -5,7 +5,11 @@ import {
   updateCheckSchema,
   updateCheckResponseSchema,
 } from '@/openapi/check-update';
-import { BadRequestError, InternalServerError, NotFoundError } from '@/core/error.response';
+import {
+  BadRequestError,
+  InternalServerError,
+  NotFoundError,
+} from '@/core/error.response';
 import { getDb } from '@/lib/globalObject';
 import { getOneByBundleId } from '@/repos/applicationMaster.repo';
 import { Authorization, securitySchemes } from '@/openapi';
@@ -65,7 +69,6 @@ app.openapi(
       if (!bundleId) {
         throw new BadRequestError('Invalid bundleId');
       }
-
       const application = await getOneByBundleId(bundleId);
       if (!application) {
         throw new NotFoundError('Application not found');
@@ -108,7 +111,12 @@ app.openapi(
         );
       }
     } catch (error) {
-      throw new InternalServerError((error as Error).message);
+      if (error instanceof BadRequestError || error instanceof NotFoundError) {
+        throw error;
+      } else {
+        console.error('Unexpected error occurred:', error);
+        throw new InternalServerError((error as Error).message);
+      }
     }
   }
 );
