@@ -48,14 +48,13 @@ export const getUpdateData = async (
   acstaId: number[]
 ) => {
   const prisma = getDb();
-  const acstaIdArray = Array.isArray(acstaId) ? acstaId : [acstaId];
   return await prisma.performaceManagement.findMany({
     where: {
       updatedAt: {
         gt: lastSyncDate,
       },
       acstaId: {
-        in: acstaIdArray,
+        in: acstaId,
       },
       isDeleted: false,
     },
