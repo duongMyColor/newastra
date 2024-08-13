@@ -43,8 +43,9 @@ const validateCreation = async (values: RecordValue) => {
   const validationMessages = { ...baseValidation };
 
   if (!validateVersions) {
-    validationMessages.version =
-      '数値である必要があり、前のバージョンより大きくなければなりません';
+    validationMessages.version = validationMessages.version
+      ? '必須'
+      : '数値である必要があり、前のバージョンより大きくなければなりません';
   }
   return validationMessages;
 };

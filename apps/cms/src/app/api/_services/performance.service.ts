@@ -87,7 +87,7 @@ class Performance implements PerformancePostIF {
     assetBundleAndroid,
     record,
   }: PerformancePostIF) {
-    this.name = name;
+    this.name = name.toString();
     this.performanceTypeMasterId = performanceTypeMasterId;
     this.assetBundleIOS = assetBundleIOS;
     this.acstaId = acstaId;

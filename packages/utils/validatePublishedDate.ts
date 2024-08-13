@@ -7,6 +7,8 @@ export const validatePublishedDate = (values: RecordValue): boolean => {
     localStorage.getItem('listUpdateAll') || 'null'
   );
 
+  if (dayjs(values.publishedDate).valueOf() < dayjs().valueOf()) return false;
+
   let publicDateEnd = listUpdateAllStorage
     .filter(
       (value: ForcedUpdateManagementResponseIF) =>

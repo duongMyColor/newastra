@@ -121,7 +121,7 @@ class ApplicationMaster implements AplicationMasterPostIF {
     outlineUrl,
     encryptKey,
   }: AplicationMasterPostIF) {
-    this.appName = appName;
+    this.appName = appName.toString();
     this.packageName = packageName.toString();
     this.termsOfUseId = termsOfUseId;
     this.licenseId = licenseId;

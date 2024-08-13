@@ -43,14 +43,22 @@ const UserList = ({ actions, resource }: BaseComponentProps) => {
         </BoxSortField>
         <TextField source="email" label="メールアドレス" />
         {validRole('delete', actions) && (
-          <CustomButtonByRole source="role" label="削除">
-            <DeleteWithConfirmButton
-              confirmContent="よろしいですか?"
-              confirmTitle="削除"
-              label="削除"
-              confirmColor="warning"
-            ></DeleteWithConfirmButton>
-          </CustomButtonByRole>
+          <FunctionField
+            label="削除"
+            sortable={true}
+            render={() => {
+              return (
+                <CustomButtonByRole source="role" label="削除">
+                  <DeleteWithConfirmButton
+                    confirmContent="よろしいですか?"
+                    confirmTitle="削除"
+                    label="削除"
+                    confirmColor="warning"
+                  ></DeleteWithConfirmButton>
+                </CustomButtonByRole>
+              );
+            }}
+          />
         )}
         {validRole('edit', actions) && <EditButton label="編集"></EditButton>}
       </Datagrid>

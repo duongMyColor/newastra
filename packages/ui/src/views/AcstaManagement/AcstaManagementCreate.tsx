@@ -7,6 +7,7 @@ import {
   ImageInput,
   ImageField,
   DateTimeInput,
+  FileInput,
 } from 'react-admin';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -95,7 +96,7 @@ const AcstaManagementCreate = ({
           value={idAcsta}
           disabled
           sx={{
-            marginBottom:"20px"
+            marginBottom: '20px',
           }}
         />
         <TooltipCustom>
@@ -124,68 +125,31 @@ const AcstaManagementCreate = ({
           />
         </TooltipCustom>
         <TooltipCustom>
-          <ImageInput
+          <FileInput
             source="thumbnailUrl"
-            label="アクスタサムネイル"
+            label="アクスタサムネイル*"
             placeholder="アップロード"
-            isRequired
-            fullWidth
             accept="image/png, image/jpeg, image/jpg"
-            sx={{
-              '& .RaFileInput-removeButton button': {
-                opacity: '1 !important',
-              },
-            }}
           >
-            <Box
-              sx={{
-                display: 'flex',
-                width: '700px',
-                margin: '0 10%',
-              }}
-            >
-              <FileField
-                source="src"
-                title="title"
-                sx={{
-                  width: '30%',
-                }}
-              />
-              <ImageField source="src" title="title" />
-            </Box>
-          </ImageInput>
+            <FileField source="src" title="title" />
+          </FileInput>
         </TooltipCustom>
 
         <TooltipCustom>
-          <ImageInput
+          <FileInput
             source="scanImageUrl"
-            label="スキャン用データ"
+            label="スキャン用データ*"
             placeholder="アップロード"
-            isRequired
-            fullWidth
             accept="image/png, image/jpeg, image/jpg"
-            sx={{
-              '& .RaFileInput-removeButton button': {
-                opacity: '1 !important',
-              },
-            }}
           >
-            <Box
-              sx={{
-                display: 'flex',
-                width: '700px',
-                margin: '0 10%',
-              }}
-            >
-              <FileField source="src" title="title" sx={{ width: '30%' }} />
-              <ImageField source="src" title="title" />
-            </Box>
-          </ImageInput>
+            <FileField source="src" title="title" />
+          </FileInput>
         </TooltipCustom>
+
         <TooltipCustom width="fix-content">
-          <DateTimeInput source="dateStart" label="公開開始日" required />
+          <DateTimeInput source="dateStart" label="公開開始日" />
         </TooltipCustom>
-        <DateTimeInput source="dateEnd" label="公開終了日" />
+        <DateTimeInput source="dateEnd" label="登録日" />
         {/* <TextInput
           source="acstaBasicInfoId"
           label="力士基本情報ID"
