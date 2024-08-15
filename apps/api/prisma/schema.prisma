@@ -20,10 +20,10 @@ model UserRole {
 
 model User {
   id        Int       @id @default(autoincrement())
-  username  String    @unique
+  username  String    
   role      String    @default("READ_ONLY")
   enabled   Boolean   @default(true)
-  email     String    @unique
+  email     String    
   password  String
   isDeleted Boolean   @default(false)
   lastLogin DateTime?

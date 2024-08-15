@@ -10,7 +10,7 @@ const getVersionEnd = (
   let versionEnd = listUpdateAllStorage
     .filter(
       (value: ForcedUpdateManagementResponseIF) =>
-        value?.operateSystem === values?.operateSystem
+        value?.operateSystem === values?.operateSystem && value?.appMasterId === values.appMasterId
     )
     .sort(
       (

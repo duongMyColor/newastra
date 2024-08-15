@@ -47,7 +47,12 @@ class UserController {
       metadata: await UserService.getOneById(id),
     });
   };
-
+  getOneByEmail = async (email: string) => {
+    return new OK({
+      message: 'get User success!',
+      metadata: await UserService.findByEmail({email}),
+    });
+  };
   getPermission = async () => {
     const userId = Number(getServerCookieValue(HEADER.CLIENT_ID));
     if (!userId) {

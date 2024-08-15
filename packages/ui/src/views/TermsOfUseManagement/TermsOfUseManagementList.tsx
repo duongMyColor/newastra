@@ -1,15 +1,5 @@
-import {
-  List,
-  Datagrid,
-  TextField,
-  EditButton,
-  TopToolbar,
-  CreateButton,
-  DeleteWithConfirmButton,
-  DateField,
-  FunctionField,
-} from 'react-admin';
-import { BaseComponentProps, RecordValue } from '@repo/types/general';
+import { List, Datagrid, TextField, FunctionField } from 'react-admin';
+import { BaseComponentProps } from '@repo/types/general';
 import { validRole } from '../_core/permissions';
 import { ListToolBar } from '@repo/ui/src/components/ListToolBar';
 import { formatDateAcstar } from '@repo/utils/dateFormat';

@@ -61,11 +61,16 @@ class BaseRepo {
     );
 
     const res = await this.tableModel.findMany({
-      orderBy: {
-        [String(sortField) === 'no' || String(sortField) === 'status'
-          ? 'id'
-          : String(sortField)]: sortOrder?.toLowerCase() ?? '',
-      },
+      orderBy: [
+        {
+          [String(sortField) === 'no' ||
+          String(sortField) === 'status' ||
+          String(sortField) === 'scanColors'
+            ? 'id'
+            : String(sortField)]: sortOrder?.toLowerCase() ?? '',
+        },
+        { id: sortOrder?.toLowerCase() },
+      ],
       skip: start ?? 0,
       take: (end ?? 0) - (start ?? 0) + 1,
       where: whereClause,
@@ -100,11 +105,14 @@ class BaseRepo {
     );
 
     const res = await this.tableModel.findMany({
-      orderBy: {
-        [String(sortField) === 'no' || String(sortField) === 'status'
-          ? 'id'
-          : String(sortField)]: sortOrder?.toLowerCase() ?? '',
-      },
+      orderBy: [
+        {
+          [String(sortField) === 'no' || String(sortField) === 'status'
+            ? 'id'
+            : String(sortField)]: sortOrder?.toLowerCase() ?? '',
+        },
+        { id: sortOrder?.toLowerCase() },
+      ],
       skip: start ?? 0,
       take: (end ?? 0) - (start ?? 0) + 1,
       where: { ...whereClause, isDeleted: isDeleted },
@@ -139,11 +147,14 @@ class BaseRepo {
     );
 
     const res = await this.tableModel.findMany({
-      orderBy: {
-        [String(sortField) === 'no' || String(sortField) === 'status'
-          ? 'id'
-          : String(sortField)]: sortOrder?.toLowerCase() ?? '',
-      },
+      orderBy: [
+        {
+          [String(sortField) === 'no' || String(sortField) === 'status'
+            ? 'id'
+            : String(sortField)]: sortOrder?.toLowerCase() ?? '',
+        },
+        { id: sortOrder?.toLowerCase() },
+      ],
       skip: start ?? 0,
       take: (end ?? 0) - (start ?? 0) + 1,
       where: { ...whereClause },
@@ -176,10 +187,13 @@ class BaseRepo {
     );
 
     let res = await this.tableModel.findMany({
-      orderBy: {
-        [String(sortField) === 'no' ? 'id' : String(sortField)]:
-          sortOrder?.toLowerCase() ?? '',
-      },
+      orderBy: [
+        {
+          [String(sortField) === 'no' ? 'id' : String(sortField)]:
+            sortOrder?.toLowerCase() ?? '',
+        },
+        { id: sortOrder?.toLowerCase() },
+      ],
       skip: start ?? 0,
       take: (end ?? 0) - (start ?? 0) + 1,
       where: whereClause,
@@ -242,10 +256,13 @@ class BaseRepo {
     }
 
     const res = await this.tableModel.findMany({
-      orderBy: {
-        [String(sortField) === 'no' ? 'id' : String(sortField)]:
-          sortOrder?.toLowerCase() ?? '',
-      },
+      orderBy: [
+        {
+          [String(sortField) === 'no' ? 'id' : String(sortField)]:
+            sortOrder?.toLowerCase() ?? '',
+        },
+        { id: sortOrder?.toLowerCase() },
+      ],
       skip: start ?? 0,
       take: (end ?? 0) - (start ?? 0) + 1,
       where: whereClause,
@@ -302,10 +319,13 @@ class BaseRepo {
     );
 
     const res = await this.tableModel.findMany({
-      orderBy: {
-        [String(sortField) === 'no' ? 'id' : String(sortField)]:
-          sortOrder?.toLowerCase() ?? '',
-      },
+      orderBy: [
+        {
+          [String(sortField) === 'no' ? 'id' : String(sortField)]:
+            sortOrder?.toLowerCase() ?? '',
+        },
+        { id: sortOrder?.toLowerCase() },
+      ],
       skip: start ?? 0,
       take: (end ?? 0) - (start ?? 0) + 1,
       where: { ...whereClause, isDeleted: false },
@@ -340,10 +360,16 @@ class BaseRepo {
     );
 
     const res = await this.tableModel.findMany({
-      orderBy: {
-        [String(sortField) === 'no' ? 'id' : String(sortField)]:
-          sortOrder?.toLowerCase() ?? '',
-      },
+      orderBy: [
+        {
+          [String(sortField) === 'no' ||
+          String(sortField) === 'status' ||
+          String(sortField) === 'scanColors'
+            ? 'id'
+            : String(sortField)]: sortOrder?.toLowerCase() ?? '',
+        },
+        { id: sortOrder?.toLowerCase() },
+      ],
       skip: start ?? 0,
       take: (end ?? 0) - (start ?? 0) + 1,
       where: { ...whereClause, isDeleted: isDeleted },
@@ -362,9 +388,18 @@ class BaseRepo {
     });
     return res;
   };
+  getOneByIdHaveIsDeleted = (id: number) => {
+    const res = this.tableModel.findFirst({
+      where: {
+        id: id,
+        isDeleted: false,
+      },
+    });
+    return res;
+  };
 
   getOneWithParam = (params: RecordValue) => {
-    const res = this.tableModel.findUnique({
+    const res = this.tableModel.findFirst({
       ...params,
     });
     return res;
@@ -436,6 +471,22 @@ class BaseRepo {
   }) => {
     const data = removeEmptyProperties(payload);
     console.log(':::data', data);
+
+    return await this.tableModel.update({
+      where: {
+        id: id,
+      },
+      data,
+    });
+  };
+  updateByIdAcsta = async ({
+    id,
+    payload,
+  }: {
+    id: number;
+    payload: RecordValue;
+  }) => {
+    const data = payload;
 
     return await this.tableModel.update({
       where: {

@@ -24,7 +24,17 @@ const UserCreate = ({
   const navigate = useNavigate();
 
   const handleSave = async (values: RecordValue) => {
+    console.log({ values });
+
     try {
+      const findUser = await dataProvider.getOneByEmail(resource, values.email);
+
+      if (findUser.data.email) {
+        return notify('エラー: メールアドレスはすでに存在します', {
+          type: 'warning',
+        });
+      }
+
       await dataProvider.create(resource, {
         data: values,
       });

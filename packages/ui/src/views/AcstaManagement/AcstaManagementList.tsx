@@ -6,6 +6,8 @@ import {
   DeleteWithConfirmButton,
   FunctionField,
   useRecordContext,
+  useRefresh,
+  useNotify,
 } from 'react-admin';
 import { BaseComponentProps } from '@repo/types/general';
 import { validRole } from '../_core/permissions';
@@ -23,8 +25,16 @@ const AcstaManagementList = ({
   dataProvider,
 }: BaseComponentProps) => {
   const record = useRecordContext();
+  const refresh = useRefresh();
+  const notify = useNotify();
 
   console.log({ record });
+  const onSuccess = () => {
+    refresh();
+    notify('削除しました', {
+      type: 'success',
+    });
+  };
   return (
     <List
       title="アクスタ管理　一覧"
@@ -88,6 +98,7 @@ const AcstaManagementList = ({
                     confirmTitle="削除"
                     label="削除"
                     confirmColor="warning"
+                    mutationOptions={{ onSuccess }}
                   ></DeleteWithConfirmButton>
                 </CustomButtonByRole>
               );
