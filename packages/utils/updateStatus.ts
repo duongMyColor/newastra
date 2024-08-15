@@ -37,24 +37,61 @@ function sortAndFilterData(
     );
 }
 export const updateStatusAll = (data: ForcedUpdateManagementResponseIF[]) => {
-  /**
-   * b1: sorted according to the public time of each ios and android
-   * b2: find the location in the range time<=current_time< time, update the status of each OS
-   * b3: join again and sort by no
-   */
-
   data.forEach((value) => (value.status = STATUS_DEACTIVE));
-  const IOS = sortAndFilterData(data, OPERATE_IOS);
-  const android = sortAndFilterData(data, OPERATE_ANDROID);
-  updateStatus(IOS);
-  updateStatus(android);
 
-  data = [...IOS, ...android].sort(
-    (
-      a: ForcedUpdateManagementResponseIF,
-      b: ForcedUpdateManagementResponseIF
-    ) => a.no - b.no
-  );
+  const currentDate = new Date();
 
+  const groupedData: { [key: string]: { [key: string]: any } } = {};
+
+  data.forEach((item) => {
+    const key = `${item.appMasterId}_${item.textOperate ?? 'default'}`;
+
+    if (!groupedData[key]) {
+      groupedData[key] = [];
+    }
+
+    groupedData[key].push(item);
+  });
+
+  Object.values(groupedData).forEach((group) => {
+    const groupedByTextOperate: {
+      [key: string]: ForcedUpdateManagementResponseIF[];
+    } = {};
+
+    group.forEach((item: ForcedUpdateManagementResponseIF) => {
+      const textOperate = item.textOperate ?? 'default';
+
+      if (!groupedByTextOperate[textOperate]) {
+        groupedByTextOperate[textOperate] = [];
+      }
+
+      groupedByTextOperate[textOperate].push(item);
+    });
+
+    Object.values(groupedByTextOperate).forEach((subGroup) => {
+      let closestItem: ForcedUpdateManagementResponseIF | any = null;
+      let closestDateDiff = Infinity;
+
+      subGroup.forEach((item: ForcedUpdateManagementResponseIF) => {
+        const publishedDate = new Date(item.publishedDate);
+
+        if (publishedDate < currentDate) {
+          const dateDiff = Math.abs(
+            currentDate.getTime() - publishedDate.getTime()
+          );
+
+          if (dateDiff < closestDateDiff) {
+            closestDateDiff = dateDiff;
+            closestItem = item;
+          }
+        }
+      });
+
+      if (closestItem) {
+        console.log({ closestItem });
+        closestItem.status = STATUS_ACTIVE;
+      }
+    });
+  });
   return data;
 };

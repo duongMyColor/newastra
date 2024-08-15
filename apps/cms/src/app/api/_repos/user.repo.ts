@@ -32,7 +32,7 @@ class UserRepo {
 
   getOneById = async (id: number) => {
     const res = exclude(
-      await new BaseRepo(generateClient().user).getOneById(id),
+      await new BaseRepo(generateClient().user).getOneByIdHaveIsDeleted(id),
       ['password']
     );
 

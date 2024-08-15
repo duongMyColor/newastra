@@ -30,6 +30,13 @@ const UserEditForm = ({
 
   const handleUpdate = async (values: RecordValue) => {
     try {
+      const findUser = await dataProvider.getOneByEmail(resource, values.email);
+
+      if (findUser.data.email) {
+        return notify('エラー: メールアドレスはすでに存在します', {
+          type: 'warning',
+        });
+      }
       await dataProvider.update(resource, {
         id: record.id,
         data: values,

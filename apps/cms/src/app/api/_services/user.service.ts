@@ -45,7 +45,9 @@ class UserFactory {
   }
 
   static async findByEmail({ email }: { email: string }) {
-    return await UserRepo.getOneWithParam({ where: { email } });
+    return await UserRepo.getOneWithParam({
+      where: { email, isDeleted: false },
+    });
   }
 
   static async findByUsername({ username }: { username: string }) {

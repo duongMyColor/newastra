@@ -283,6 +283,21 @@ const baseDataProvider: DataProvider = {
       data: metadata,
     };
   },
+  getOneByEmail: async (
+    resource: string,
+    email: string
+  ): Promise<GetOneResult> => {
+    const url = `${apiUrl}/${resource}/email?email=${email}`;
+    console.log({ url });
+    const {
+      json: { metadata },
+    } = await httpClient(url);
+    console.log('metadata:', metadata);
+
+    return {
+      data: metadata,
+    };
+  },
   getIdLastest: async (resource: string) => {
     console.log({ resource });
     const url = `${apiUrl}/id-lastest?source=${MAP_RESOURE[resource]}`;

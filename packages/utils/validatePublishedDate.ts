@@ -12,7 +12,8 @@ export const validatePublishedDate = (values: RecordValue): boolean => {
   let publicDateEnd = listUpdateAllStorage
     .filter(
       (value: ForcedUpdateManagementResponseIF) =>
-        value?.operateSystem === values?.operateSystem
+        value?.operateSystem === values?.operateSystem &&
+        value?.appMasterId === values.appMasterId
     )
     .sort(
       (
