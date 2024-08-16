@@ -60,7 +60,7 @@ const forcedUpdateManagementCallbackHandlers = {
 
       response.data = newData.slice(0, 10);
     } else {
-      newData = listUpdateAllStorage;
+      newData = updateStatusAll(listUpdateAllStorage);
 
       if (SORT_BY_TYPE['number'].includes(listParams.sort)) {
         newData.sort((a: RecordValue, b: RecordValue) => {
