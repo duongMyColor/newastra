@@ -8,6 +8,7 @@ import {
   usePermissions,
   useNotify,
   useRecordContext,
+  DataProvider,
 } from 'react-admin';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { validateUserEdition } from './formValidator';
@@ -28,11 +29,23 @@ const UserEditForm = ({
   const navigate = useNavigate();
   const record = useRecordContext();
 
+  const checkUserEmailExists = async (
+    dataProvider: DataProvider,
+    resource: string,
+    email: string
+  ) => {
+    const findUser = await dataProvider.getOneByEmail(resource, email);
+    return findUser.data.email ? true : false;
+  };
+
   const handleUpdate = async (values: RecordValue) => {
     try {
-      const findUser = await dataProvider.getOneByEmail(resource, values.email);
+      const emailExists = await checkUserEmailExists(
+        dataProvider,resource,
+        values.email
+      );
 
-      if (findUser.data.email) {
+      if (emailExists) {
         return notify('エラー: メールアドレスはすでに存在します', {
           type: 'warning',
         });
