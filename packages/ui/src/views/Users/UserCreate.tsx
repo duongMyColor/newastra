@@ -24,7 +24,6 @@ const UserCreate = ({
   const navigate = useNavigate();
 
   const handleSave = async (values: RecordValue) => {
-    console.log({ values });
 
     try {
       const findUser = await dataProvider.getOneByEmail(resource, values.email);

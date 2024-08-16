@@ -88,7 +88,6 @@ export const updateStatusAll = (data: ForcedUpdateManagementResponseIF[]) => {
       });
 
       if (closestItem) {
-        console.log({ closestItem });
         closestItem.status = STATUS_ACTIVE;
       }
     });

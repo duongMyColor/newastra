@@ -41,6 +41,18 @@ class BaseRepo {
   getAllParen = async ({ include }: RecordValue) => {
     return await this.tableModel.findMany({ include });
   };
+  constructOrderByClause = (sortField: string, sortOrder: string) => {
+    return [
+      {
+        [String(sortField) === 'no' ||
+        String(sortField) === 'status' ||
+        String(sortField) === 'scanColors'
+          ? 'id'
+          : String(sortField)]: sortOrder?.toLowerCase() ?? '',
+      },
+      { id: sortOrder?.toLowerCase() },
+    ];
+  };
 
   getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
     const [sortField, sortOrder] = sort;
@@ -61,16 +73,10 @@ class BaseRepo {
     );
 
     const res = await this.tableModel.findMany({
-      orderBy: [
-        {
-          [String(sortField) === 'no' ||
-          String(sortField) === 'status' ||
-          String(sortField) === 'scanColors'
-            ? 'id'
-            : String(sortField)]: sortOrder?.toLowerCase() ?? '',
-        },
-        { id: sortOrder?.toLowerCase() },
-      ],
+      orderBy: this.constructOrderByClause(
+        sortField as string,
+        sortOrder as string
+      ),
       skip: start ?? 0,
       take: (end ?? 0) - (start ?? 0) + 1,
       where: whereClause,
@@ -105,14 +111,10 @@ class BaseRepo {
     );
 
     const res = await this.tableModel.findMany({
-      orderBy: [
-        {
-          [String(sortField) === 'no' || String(sortField) === 'status'
-            ? 'id'
-            : String(sortField)]: sortOrder?.toLowerCase() ?? '',
-        },
-        { id: sortOrder?.toLowerCase() },
-      ],
+      orderBy: this.constructOrderByClause(
+        sortField as string,
+        sortOrder as string
+      ),
       skip: start ?? 0,
       take: (end ?? 0) - (start ?? 0) + 1,
       where: { ...whereClause, isDeleted: isDeleted },
@@ -147,14 +149,10 @@ class BaseRepo {
     );
 
     const res = await this.tableModel.findMany({
-      orderBy: [
-        {
-          [String(sortField) === 'no' || String(sortField) === 'status'
-            ? 'id'
-            : String(sortField)]: sortOrder?.toLowerCase() ?? '',
-        },
-        { id: sortOrder?.toLowerCase() },
-      ],
+      orderBy: this.constructOrderByClause(
+        sortField as string,
+        sortOrder as string
+      ),
       skip: start ?? 0,
       take: (end ?? 0) - (start ?? 0) + 1,
       where: { ...whereClause },
@@ -187,13 +185,10 @@ class BaseRepo {
     );
 
     let res = await this.tableModel.findMany({
-      orderBy: [
-        {
-          [String(sortField) === 'no' ? 'id' : String(sortField)]:
-            sortOrder?.toLowerCase() ?? '',
-        },
-        { id: sortOrder?.toLowerCase() },
-      ],
+      orderBy: this.constructOrderByClause(
+        sortField as string,
+        sortOrder as string
+      ),
       skip: start ?? 0,
       take: (end ?? 0) - (start ?? 0) + 1,
       where: whereClause,
@@ -256,13 +251,10 @@ class BaseRepo {
     }
 
     const res = await this.tableModel.findMany({
-      orderBy: [
-        {
-          [String(sortField) === 'no' ? 'id' : String(sortField)]:
-            sortOrder?.toLowerCase() ?? '',
-        },
-        { id: sortOrder?.toLowerCase() },
-      ],
+      orderBy: this.constructOrderByClause(
+        sortField as string,
+        sortOrder as string
+      ),
       skip: start ?? 0,
       take: (end ?? 0) - (start ?? 0) + 1,
       where: whereClause,
@@ -319,13 +311,10 @@ class BaseRepo {
     );
 
     const res = await this.tableModel.findMany({
-      orderBy: [
-        {
-          [String(sortField) === 'no' ? 'id' : String(sortField)]:
-            sortOrder?.toLowerCase() ?? '',
-        },
-        { id: sortOrder?.toLowerCase() },
-      ],
+      orderBy: this.constructOrderByClause(
+        sortField as string,
+        sortOrder as string
+      ),
       skip: start ?? 0,
       take: (end ?? 0) - (start ?? 0) + 1,
       where: { ...whereClause, isDeleted: false },
@@ -360,16 +349,10 @@ class BaseRepo {
     );
 
     const res = await this.tableModel.findMany({
-      orderBy: [
-        {
-          [String(sortField) === 'no' ||
-          String(sortField) === 'status' ||
-          String(sortField) === 'scanColors'
-            ? 'id'
-            : String(sortField)]: sortOrder?.toLowerCase() ?? '',
-        },
-        { id: sortOrder?.toLowerCase() },
-      ],
+      orderBy: this.constructOrderByClause(
+        sortField as string,
+        sortOrder as string
+      ),
       skip: start ?? 0,
       take: (end ?? 0) - (start ?? 0) + 1,
       where: { ...whereClause, isDeleted: isDeleted },

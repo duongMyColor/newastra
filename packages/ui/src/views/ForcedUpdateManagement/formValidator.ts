@@ -57,8 +57,9 @@ const validateUserCreation = (values: RecordValue): RecordValue => {
   const validationMessages = { ...baseValidation };
 
   if (!validateVersions) {
-    validationMessages.version =
-      '数字と「.」を含む最大 8 文字、数字は「.」で区切られた最大 2 桁で、以前のバージョンよりも大きくなります';
+    validationMessages.version = validationMessages.version
+      ? '必須'
+      : '数字と「.」を含む最大 8 文字、数字は「.」で区切られた最大 2 桁で、以前のバージョンよりも大きくなります';
   }
 
   if (!validatePublishedDates) {
