@@ -195,7 +195,6 @@ class BaseRepo {
       where: whereClause,
     });
 
-    // ksjdfksdkf
     for (let i = 0; i < res.length; i++) {
       const queryOne = await this.getOneByIdPerformaceTypeMaster(res[i].id);
 
