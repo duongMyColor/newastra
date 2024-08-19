@@ -28,3 +28,7 @@ export interface AplicationMasterPostIF {
   outlineUrl: string;
   updatedAt?: string | Date;
 }
+export interface NameCheckType {
+  packageName?: string;
+  appName?: string;
+}
