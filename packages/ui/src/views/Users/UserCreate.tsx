@@ -5,6 +5,7 @@ import {
   Create,
   SelectInput,
   useNotify,
+  DataProvider,
 } from 'react-admin';
 
 import { validateUserCreation } from './formValidator';
@@ -23,8 +24,28 @@ const UserCreate = ({
   const notify = useNotify();
   const navigate = useNavigate();
 
+  const checkUserEmailExists = async (
+    dataProvider: DataProvider,
+    resource: string,
+    email: string
+  ) => {
+    const findUser = await dataProvider.getOneByEmail(resource, email);
+    return findUser.data.email ? true : false;
+  };
   const handleSave = async (values: RecordValue) => {
     try {
+      const emailExists = await checkUserEmailExists(
+        dataProvider,
+        resource,
+        values.email
+      );
+
+      if (emailExists) {
+        return notify('エラー: メールアドレスはすでに存在します', {
+          type: 'warning',
+        });
+      }
+
       await dataProvider.create(resource, {
         data: values,
       });
@@ -47,19 +68,14 @@ const UserCreate = ({
         showCancelButton={true}
         handleSave={handleSave}
       >
-        <TextInput
-          source="username"
-          label="管理ユーザーID "
-          isRequired
-          fullWidth
-        />
+        <TextInput source="username" label="CMS-ID " isRequired fullWidth />
 
         <SelectInput
           source="role"
           choices={userRoles}
           isRequired
           defaultValue={'GENERAL'}
-          label="椎限"
+          label="権限"
         />
         <TextInput source="email" label="メールアドレス" fullWidth isRequired />
         <PasswordInput

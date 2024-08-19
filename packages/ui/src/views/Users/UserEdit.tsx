@@ -8,6 +8,7 @@ import {
   usePermissions,
   useNotify,
   useRecordContext,
+  DataProvider,
 } from 'react-admin';
 import CustomForm from '@repo/ui/src/components/CustomForm';
 import { validateUserEdition } from './formValidator';
@@ -18,15 +19,37 @@ import { boxStyles } from '@repo/styles';
 import { useNavigate } from 'react-router-dom';
 import { UPDATED_SUCCESS } from '@repo/consts/general';
 
-const UserEditForm = ({ actions, resource,dataProvider }: BaseComponentProps) => {
+const UserEditForm = ({
+  actions,
+  resource,
+  dataProvider,
+}: BaseComponentProps) => {
   const resourcePath = `/${resource}`;
   const notify = useNotify();
   const navigate = useNavigate();
   const record = useRecordContext();
 
+  const checkUserEmailExists = async (
+    dataProvider: DataProvider,
+    resource: string,
+    email: string
+  ) => {
+    const findUser = await dataProvider.getOneByEmail(resource, email);
+    return findUser.data.email ? true : false;
+  };
+
   const handleUpdate = async (values: RecordValue) => {
-    try{
- 
+    try {
+      const emailExists = await checkUserEmailExists(
+        dataProvider,resource,
+        values.email
+      );
+
+      if (emailExists) {
+        return notify('エラー: メールアドレスはすでに存在します', {
+          type: 'warning',
+        });
+      }
       await dataProvider.update(resource, {
         id: record.id,
         data: values,
@@ -58,19 +81,14 @@ const UserEditForm = ({ actions, resource,dataProvider }: BaseComponentProps) =>
           showCancelButton={true}
           handleSave={handleUpdate}
         >
-          <TextInput
-            source="username"
-            label="管理ユーザーID "
-            isRequired
-            fullWidth
-          />
+          <TextInput source="username" label="CMS-ID " isRequired fullWidth />
 
           <SelectInput
             source="role"
             choices={userRoles}
             isRequired
             defaultValue={'GENERAL'}
-            label="椎限"
+            label="権限"
           />
           <TextInput
             source="email"
@@ -95,7 +113,6 @@ const UserEditForm = ({ actions, resource,dataProvider }: BaseComponentProps) =>
     </Box>
   );
 };
-
 
 const UserEdit = (props: BaseComponentProps) => {
   return (

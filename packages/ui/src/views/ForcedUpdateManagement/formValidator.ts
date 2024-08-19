@@ -57,12 +57,14 @@ const validateUserCreation = (values: RecordValue): RecordValue => {
   const validationMessages = { ...baseValidation };
 
   if (!validateVersions) {
-    validationMessages.version =
-      '数字と「.」を含む最大 8 文字、数字は「.」で区切られた最大 2 桁で、以前のバージョンよりも大きくなります';
+    validationMessages.version = validationMessages.version
+      ? '必須'
+      : '数字と「.」を含む最大 8 文字、数字は「.」で区切られた最大 2 桁で、以前のバージョンよりも大きくなります';
   }
 
   if (!validatePublishedDates) {
-    validationMessages.publishedDate = '発売開始日が前日より早い';
+    validationMessages.publishedDate =
+      '既存の強制アップデートより公開開始日を後にする必要があります';
   }
 
   return validationMessages;

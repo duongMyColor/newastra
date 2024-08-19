@@ -72,12 +72,21 @@ class AcstaRepo {
     payload,
   }: {
     id: number;
-    payload: AcstaPostIF;
+    payload: AcstaPostIF | any;
   }) => {
-    return await new BaseRepo(generateClient().acstaManagement).updateById({
-      id,
-      payload,
-    });
+    if (!payload.scanColors) {
+      payload.scanColors = null;
+      payload.scanHeight = null;
+      payload.scanOriginX = null;
+      payload.scanOriginY = null;
+      payload.scanWidth = null;
+    }
+    return await new BaseRepo(generateClient().acstaManagement).updateByIdAcsta(
+      {
+        id,
+        payload,
+      }
+    );
   };
 
   updateManyById = async (updates: AcstaPostIF[]) => {

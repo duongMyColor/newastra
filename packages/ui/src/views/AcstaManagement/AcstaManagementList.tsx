@@ -6,6 +6,8 @@ import {
   DeleteWithConfirmButton,
   FunctionField,
   useRecordContext,
+  useRefresh,
+  useNotify,
 } from 'react-admin';
 import { BaseComponentProps } from '@repo/types/general';
 import { validRole } from '../_core/permissions';
@@ -23,8 +25,16 @@ const AcstaManagementList = ({
   dataProvider,
 }: BaseComponentProps) => {
   const record = useRecordContext();
+  const refresh = useRefresh();
+  const notify = useNotify();
 
   console.log({ record });
+  const onSuccess = () => {
+    refresh();
+    notify('削除しました', {
+      type: 'success',
+    });
+  };
   return (
     <List
       title="アクスタ管理　一覧"
@@ -39,7 +49,8 @@ const AcstaManagementList = ({
           <FunctionField
             label="公開開始日"
             render={({ scanColors }: { scanColors: string }) => {
-              if (scanColors) return <Chip label="設定済み" sx={chipStyles.configured} />;
+              if (scanColors)
+                return <Chip label="設定済み" sx={chipStyles.configured} />;
               return <Chip label="設定なし" sx={chipStyles.notConfigured} />;
             }}
           />
@@ -54,15 +65,15 @@ const AcstaManagementList = ({
             }}
           />
         </BoxSortField>
-        <BoxSortField source="dateEnd" label="公開終了日">
+        <BoxSortField source="dateEnd" label="登録日">
           <FunctionField
-            label="公開終了日"
+            label="登録日"
             render={({ dateEnd }: { dateEnd: string }) => {
               return formatDateAcstar(dateEnd);
             }}
           />
         </BoxSortField>
-        <BoxSortField source="createdAt" label="公開終了日">
+        <BoxSortField source="createdAt" label="登録日">
           <FunctionField
             label="登録日"
             render={({ createdAt }: { createdAt: string }) => {
@@ -71,15 +82,28 @@ const AcstaManagementList = ({
           />
         </BoxSortField>
         {validRole('delete', actions) && (
-          <CustomButtonByRole source="role" label="削除" condition="status">
-            <DeleteWithConfirmButton
-              redirect="list"
-              confirmContent="よろしいですか?"
-              confirmTitle="削除"
-              label="削除"
-              confirmColor="warning"
-            ></DeleteWithConfirmButton>
-          </CustomButtonByRole>
+          <FunctionField
+            label="削除"
+            sortable={true}
+            render={() => {
+              return (
+                <CustomButtonByRole
+                  source="role"
+                  label="削除"
+                  condition="status"
+                >
+                  <DeleteWithConfirmButton
+                    redirect="list"
+                    confirmContent="よろしいですか?"
+                    confirmTitle="削除"
+                    label="削除"
+                    confirmColor="warning"
+                    mutationOptions={{ onSuccess }}
+                  ></DeleteWithConfirmButton>
+                </CustomButtonByRole>
+              );
+            }}
+          />
         )}
         {validRole('edit', actions) && <EditButton label="編集"></EditButton>}
       </Datagrid>

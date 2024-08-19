@@ -30,6 +30,14 @@ const EditForm = ({ actions, resource, dataProvider }: BaseComponentProps) => {
     console.log('values', values);
 
     const { thumbnailUrl, scanImageUrl } = values;
+
+    if (
+      scanImageUrl?.rawFile &&
+      record?.scanImageUrl?.title !== scanImageUrl?.title
+    ) {
+      values.scanColors = null;
+    }
+
     if (!thumbnailUrl?.rawFile) {
       delete values.thumbnailUrl;
     }
@@ -113,7 +121,7 @@ const EditForm = ({ actions, resource, dataProvider }: BaseComponentProps) => {
 
         <FileInput
           source="thumbnailUrl"
-          label="アクスタサムネイル"
+          label="アクスタサムネイル*"
           placeholder="アップロード"
           accept="image/png, image/jpeg, image/jpg"
         >
@@ -122,7 +130,7 @@ const EditForm = ({ actions, resource, dataProvider }: BaseComponentProps) => {
 
         <FileInput
           source="scanImageUrl"
-          label="スキャン用データ"
+          label="スキャン用データ*"
           placeholder="アップロード"
           accept="image/png, image/jpeg, image/jpg"
         >
@@ -134,7 +142,7 @@ const EditForm = ({ actions, resource, dataProvider }: BaseComponentProps) => {
           label="公開開始日"
           required
         />
-        <DateTimeInput source="dateEnd" fullWidth label="公開終了日" />
+        <DateTimeInput source="dateEnd" fullWidth label="登録日" />
 
         {/* <TextInput
           source="acstaBasicInfoId"

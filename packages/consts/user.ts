@@ -53,7 +53,7 @@ const userContentLength = {
   },
   password: {
     min: 8,
-    max: 20,
+    max: 128,
   },
   newPassword: {
     min: 0,

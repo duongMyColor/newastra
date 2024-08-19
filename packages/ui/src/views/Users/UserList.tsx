@@ -5,6 +5,8 @@ import {
   EditButton,
   DeleteWithConfirmButton,
   FunctionField,
+  useNotify,
+  useRefresh,
 } from 'react-admin';
 import { BaseComponentProps } from '@repo/types/general';
 import { validRole } from '../_core/permissions';
@@ -16,6 +18,15 @@ import { Role } from '@repo/types/user';
 import { BoxSortField } from '../../components/BoxSortField';
 
 const UserList = ({ actions, resource }: BaseComponentProps) => {
+  const refresh = useRefresh();
+  const notify = useNotify();
+
+  const onSuccess = () => {
+    refresh();
+    notify('削除しました', {
+      type: 'success',
+    });
+  };
   return (
     <List
       title="管理ユーザー管理　一覧"
@@ -43,14 +54,23 @@ const UserList = ({ actions, resource }: BaseComponentProps) => {
         </BoxSortField>
         <TextField source="email" label="メールアドレス" />
         {validRole('delete', actions) && (
-          <CustomButtonByRole source="role" label="削除">
-            <DeleteWithConfirmButton
-              confirmContent="よろしいですか?"
-              confirmTitle="削除"
-              label="削除"
-              confirmColor="warning"
-            ></DeleteWithConfirmButton>
-          </CustomButtonByRole>
+          <FunctionField
+            label="削除"
+            sortable={true}
+            render={() => {
+              return (
+                <CustomButtonByRole source="role" label="削除">
+                  <DeleteWithConfirmButton
+                    confirmContent="よろしいですか?"
+                    confirmTitle="削除"
+                    label="削除"
+                    confirmColor="warning"
+                    mutationOptions={{ onSuccess }}
+                  ></DeleteWithConfirmButton>
+                </CustomButtonByRole>
+              );
+            }}
+          />
         )}
         {validRole('edit', actions) && <EditButton label="編集"></EditButton>}
       </Datagrid>

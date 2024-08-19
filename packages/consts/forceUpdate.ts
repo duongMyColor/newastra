@@ -9,9 +9,12 @@ const OS_MAP = {
 };
 
 const SORT_BY_TYPE = {
-  number: ['version', 'no', 'id', 'appMasterId'],
+  number: ['no', 'id', 'appMasterId'],
   date: ['publishedDate', 'createdAt'],
-  text: ['managementName', 'operateSystem', 'status'],
+  text: ['operateSystem', 'status'],
+};
+const SORT_BY_TYPE_ACSTA = {
+  text: ['status', 'statusScanColors', 'scanColors'],
 };
 
 export {
@@ -21,4 +24,5 @@ export {
   STATUS_DEACTIVE,
   OS_MAP,
   SORT_BY_TYPE,
+  SORT_BY_TYPE_ACSTA,
 };
