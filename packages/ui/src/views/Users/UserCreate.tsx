@@ -75,16 +75,15 @@ const UserCreate = ({
       await dataProvider.create(resource, {
         data: values,
       });
-      setIsLoading(false);
 
       notify(CREATED_SUCCESS, { type: 'success' });
       navigate(resourcePath);
     } catch (error) {
-      setIsLoading(false);
       notify('エラー: 利用規約の作成に失敗しました:' + error, {
         type: 'warning',
       });
     }
+    setIsLoading(false);
   };
 
   const handleCancel = () => {

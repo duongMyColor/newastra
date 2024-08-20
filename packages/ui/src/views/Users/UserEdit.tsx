@@ -12,13 +12,7 @@ import { validRole } from '../_core/permissions';
 import { boxStyles } from '@repo/styles';
 import { useNavigate } from 'react-router-dom';
 import { UPDATED_SUCCESS } from '@repo/consts/general';
-import {
-  Box,
-  Stack,
-  Button,
-  IconButton,
-  InputAdornment,
-} from '@mui/material';
+import { Box, Stack, Button, IconButton, InputAdornment } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
@@ -92,17 +86,17 @@ const UserEditForm = ({
         data: values,
         previousData: record,
       });
-      setIsLoading(false);
+
       await notify(UPDATED_SUCCESS, {
         type: 'success',
       });
       navigate(resourcePath);
     } catch (error) {
-      setIsLoading(false);
       notify('エラー: 更新に失敗しました: ' + error, {
         type: 'warning',
       });
     }
+    setIsLoading(false);
   };
   useEffect(() => {
     if (confirmNewPassword) {

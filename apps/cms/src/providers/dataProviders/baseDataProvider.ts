@@ -274,11 +274,10 @@ const baseDataProvider: DataProvider = {
   },
   checkExistName: async (
     resource: string,
-    packetName: string | number,
+    nameField: string | number,
     type: string
   ) => {
-    console.log({ resource });
-    const url = `${apiUrl}/${resource}/queryName?${type}=${packetName}`;
+    const url = `${apiUrl}/${resource}/queryName?${type}=${nameField}`;
     const {
       json: { metadata },
     } = await httpClient(url);
