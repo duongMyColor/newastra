@@ -1,7 +1,7 @@
 import { userContentLength } from '@repo/consts/user';
-import validateForm, { ValidationRule } from '@repo/utils/formValidator';
-import { validatePassword } from '@repo/utils/password';
-import { RecordValue } from '@repo/types/general';
+
+import validateForm from './validateField';
+import { ValidationRule } from '@repo/utils/formValidator';
 
 const editionRules: ValidationRule[] = [
   {
@@ -23,17 +23,12 @@ const editionRules: ValidationRule[] = [
   {
     field: 'newPassword',
     required: false,
-    // match: 'confirmNewPassword',
     minLength: userContentLength.password.min,
     maxLength: userContentLength.password.max,
   },
   {
     field: 'confirmNewPassword',
     required: false,
-    // minLength: userContentLength.newPassword.min,
-    // maxLength: userContentLength.newPassword.max,
-    match: 'newPassword',
-    unMatchMessage: 'パスワードが一致しません',
   },
 ];
 
@@ -63,44 +58,39 @@ const creationRules: ValidationRule[] = [
   {
     field: 'confirmPassword',
     required: true,
-    // minLength: userContentLength.password.min,
-    // maxLength: userContentLength.password.max,
-    match: 'password',
-    unMatchMessage: 'パスワードが一致しません',
   },
 ];
 
-const validateUserCreation = (values: RecordValue): RecordValue => {
-  const baseValidation = validateForm(values, creationRules);
+const validateUserCreation = (
+  values: any,
+  field: string,
+  option?: { password?: string }
+): any => {
+  const ruleField = creationRules.find((element) => element.field === field);
 
-  const validPassword = validatePassword(values.password);
+  const baseValidation = validateForm(
+    values,
+    ruleField as ValidationRule,
+    option?.password as string
+  );
 
-  return validPassword
-    ? baseValidation
-    : {
-        ...baseValidation,
-        password:
-          'パスワードには少なくとも 1 つの大文字、1 つの小文字、1 つの数字が含まれている必要があります',
-      };
+  return baseValidation;
 };
 
-const validateUserEdition = (values: RecordValue): RecordValue => {
-  console.log('edit validate', values);
-  const baseValidation = validateForm(values, editionRules);
+const validateUserEdition = (
+  values: string,
+  field: string,
+  option?: { password?: string }
+): any => {
+  const ruleField = editionRules.find((element) => element.field === field);
 
-  const validPassword =
-    values.newPassword || values.confirmNewPassword
-      ? validatePassword(values.newPassword)
-      : true;
-  // const validPassword = validatePassword(values.newPassword);
+  const baseValidation = validateForm(
+    values,
+    ruleField as ValidationRule,
+    option?.password as string
+  );
 
-  return validPassword
-    ? baseValidation
-    : {
-        ...baseValidation,
-        newPassword:
-          'パスワードには少なくとも 1 つの大文字、1 つの小文字、1 つの数字が含まれている必要があります',
-      };
+  return baseValidation;
 };
 
 export { validateUserCreation, validateUserEdition };
