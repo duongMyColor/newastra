@@ -46,9 +46,7 @@ export const updateStatusAll = (data: ForcedUpdateManagementResponseIF[]) => {
   data.forEach((item) => {
     const key = `${item.appMasterId}_${item.textOperate}`;
 
-    if (!groupedData[key]) {
-      groupedData[key] = [];
-    }
+    groupedData[key] = groupedData[key] || [];
 
     groupedData[key]?.push(item);
   });
