@@ -44,7 +44,7 @@ export const updateStatusAll = (data: ForcedUpdateManagementResponseIF[]) => {
   const groupedData: { [key: string]: ForcedUpdateManagementResponseIF[] } = {};
 
   data.forEach((item) => {
-    const key = `${item.appMasterId}_${item.textOperate ?? 'default'}`;
+    const key = `${item.appMasterId}_${item.textOperate}`;
 
     if (!groupedData[key]) {
       groupedData[key] = [];
@@ -59,13 +59,15 @@ export const updateStatusAll = (data: ForcedUpdateManagementResponseIF[]) => {
     } = {};
 
     group.forEach((item: ForcedUpdateManagementResponseIF) => {
-      const textOperate = item.textOperate ?? 'default';
+      if (item.textOperate) {
+        const textOperate = item.textOperate;
 
-      if (!groupedByTextOperate[textOperate]) {
-        groupedByTextOperate[textOperate] = [];
+        if (!groupedByTextOperate[textOperate]) {
+          groupedByTextOperate[textOperate] = [];
+        }
+
+        groupedByTextOperate[textOperate]?.push(item);
       }
-
-      groupedByTextOperate[textOperate]?.push(item);
     });
 
     Object.values(groupedByTextOperate).forEach((subGroup) => {
