@@ -37,16 +37,36 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
   };
 
   const handleSave = async (values: RecordValue) => {
-    const check = await dataProvider.getPacketName(
-      'application-masters',
-      values.packageName
-    );
-    if (check.data?.packageName && values.packageName !== record.packageName) {
+    const [checkPackageName, checkAppName] = await Promise.all([
+      dataProvider.checkExistName(
+        'application-masters',
+        values.packageName,
+        'packageName'
+      ),
+      dataProvider.checkExistName(
+        'application-masters',
+        values.appName,
+        'appName'
+      ),
+    ]);
+
+    if (
+      checkPackageName.data?.packageName &&
+      values.packageName !== record.packageName
+    ) {
       notify('同一バンドルIDで登録ができない', {
         type: 'warning',
       });
       return false;
     }
+
+    if (checkAppName.data?.appName && values.appName !== record.appName) {
+      notify('アプリケーション名はすでに存在します', {
+        type: 'warning',
+      });
+      return false;
+    }
+
     const { assetDataIOS, assetDataAndroid, assetDataOutlineUrl, ...rest } =
       values;
 

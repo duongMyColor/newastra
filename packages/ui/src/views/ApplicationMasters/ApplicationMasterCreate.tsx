@@ -36,17 +36,32 @@ const MasterCreate = ({
   };
 
   const handleSave = async (values: RecordValue) => {
-    const check = await dataProvider.getPacketName(
-      'application-masters',
-      values.packageName
-    );
-    if (check.data.packageName) {
+    const [checkPackageName, checkAppName] = await Promise.all([
+      dataProvider.checkExistName(
+        'application-masters',
+        values.packageName,
+        'packageName'
+      ),
+      dataProvider.checkExistName(
+        'application-masters',
+        values.appName,
+        'appName'
+      ),
+    ]);
+
+    if (checkPackageName.data.packageName) {
       notify('バンドルID/パッケージ名はすでに存在します', {
         type: 'warning',
       });
       return false;
     }
 
+    if (checkAppName.data.appName) {
+      notify('アプリケーション名はすでに存在します', {
+        type: 'warning',
+      });
+      return false;
+    }
     const encryptKey = CryptoJS.lib.WordArray.random(16).toString();
 
     const { assetBundleIOS, assetBundleAndroid, ...rest } = values;

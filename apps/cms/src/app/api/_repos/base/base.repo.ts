@@ -8,6 +8,7 @@ import { STATUS_APP_MASTER, TypeStatusAppMaster } from '@repo/consts/product';
 import UploadFileService from '../../_services/upload.service';
 import { AcstaApiResponseIF } from '@repo/types/acsta';
 import { PerformanceApiResponseIF } from '@repo/types/performance';
+import { NameCheckType } from '@repo/types/applicationMaster';
 
 class BaseRepo {
   private tableModel: ModelDeligate;
@@ -213,14 +214,17 @@ class BaseRepo {
     const prisma = generateClient();
 
     const response = await prisma.performaceManagement.findFirst({
-      where: { performanceTypeMasterId: idPerformanceTypeMaster },
+      where: {
+        performanceTypeMasterId: idPerformanceTypeMaster,
+        isDeleted: false,
+      },
     });
 
     return response;
   };
-  getOneByPacketName = async (packageName: string) => {
+  getOneByName = async (nameCheck: NameCheckType) => {
     const response = await this.tableModel.findFirst({
-      where: { packageName },
+      where: { ...nameCheck, isDeleted: false },
     });
 
     return response;
