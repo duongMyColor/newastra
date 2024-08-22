@@ -25,7 +25,7 @@ export const getUpdateData = async (
 ) => {
   const prisma = getDb();
 
-  return await prisma.aplicationMaster.findUnique({
+  return await prisma.aplicationMaster.findFirst({
     where: {
       updatedAt: {
         gt: lastSyncDate,
