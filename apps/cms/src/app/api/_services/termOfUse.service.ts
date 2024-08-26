@@ -87,7 +87,6 @@ class TermOfUse implements TermOfUsePostIF {
     publishedDate,
     record,
   }: TermOfUsePostIF) {
-    console.log({ version, content, memo, publishedDate, record });
     this.version = version;
     this.content = content as string;
     this.memo = memo ? memo.toString() : null;

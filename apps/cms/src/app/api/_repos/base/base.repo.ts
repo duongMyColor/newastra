@@ -92,7 +92,6 @@ class BaseRepo {
   getAllInverseOrder = async ({ sort, range, filter }: GetAllQueryIF) => {
     const [sortField, sortOrder] = sort;
     const [start, end] = range;
-    console.log(':::filter getAllWithQuery', filter);
 
     const whereClause = Object.fromEntries(
       Object.entries(filter).map(([key, value]) => [
