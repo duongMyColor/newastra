@@ -46,14 +46,14 @@ class LicenseController {
     });
   };
 
-  getAllWithQuery = async (request: NextRequest) => {
+  getAllInverseOrder = async (request: NextRequest) => {
     const { searchParams } = new URL(request.url);
 
     const { filter, range, sort } = parseSearchParams(searchParams);
 
     return new OK({
       message: 'get all License success!',
-      metadata: await LicenseService.getAllWithQuery({
+      metadata: await LicenseService.getAllInverseOrder({
         filter,
         range,
         sort,

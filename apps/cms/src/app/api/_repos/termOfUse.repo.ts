@@ -13,8 +13,8 @@ class TermsOfUseRepo {
     return await new BaseRepo(generateClient().termsOfUse).countAll();
   };
 
-  getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
-    return await new BaseRepo(generateClient().termsOfUse).getAllWithQuery({
+  getAllInverseOrder = async ({ sort, range, filter }: GetAllQueryIF) => {
+    return await new BaseRepo(generateClient().termsOfUse).getAllInverseOrder({
       sort,
       range,
       filter,

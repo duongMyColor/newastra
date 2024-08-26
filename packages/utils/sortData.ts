@@ -1,10 +1,10 @@
 import { RecordValue } from '@repo/types/general';
 
-export const sortData = (res: any) => {
+export const sortData = (res: any, type?: number) => {
   let data = [];
   if (res.length > 0) {
     let position = res.map((value: any) => value.id);
-    res.sort((a: any, b: any) => a.id - b.id);
+    res.sort((a: any, b: any) => (type !== 1 ? a.id - b.id : b.id - a.id));
 
     for (let i = 0; i < res.length; i++) {
       res[i].no = i + 1;

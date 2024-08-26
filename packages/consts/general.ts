@@ -40,10 +40,10 @@ const chipStyles = {
   configured: { backgroundColor: '#41eb5d2b', color: 'green' },
   notConfigured: { backgroundColor: '#fcbaba78', color: 'red' },
 };
+const INVERSER_ORDER = 1;
 
-
-const CREATED_SUCCESS = '作成しました'
-const UPDATED_SUCCESS = '更新しました'
+const CREATED_SUCCESS = '作成しました';
+const UPDATED_SUCCESS = '更新しました';
 
 export {
   baseUploadFolder,
@@ -54,5 +54,6 @@ export {
   OPERATE_SYSTEM,
   MAP_ACCEPT_TYPE_FILE,
   CREATED_SUCCESS,
-  UPDATED_SUCCESS
+  UPDATED_SUCCESS,
+  INVERSER_ORDER,
 };

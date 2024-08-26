@@ -34,8 +34,8 @@ class LicenseFactory {
     return await LicenseRepo.getAll();
   }
 
-  static async getAllWithQuery({ filter, range, sort }: GetAllQueryIF) {
-    return await LicenseRepo.getAllWithQuery({ filter, range, sort });
+  static async getAllInverseOrder({ filter, range, sort }: GetAllQueryIF) {
+    return await LicenseRepo.getAllInverseOrder({ filter, range, sort });
   }
 
   static async getAllWithFilters({ filter, range, sort }: GetAllQueryIF) {
@@ -75,7 +75,7 @@ class LicenseFactory {
 class License implements LicensePostIF {
   public id?: number;
   public memo: string | number | null;
-  public version: string;
+  public version: number;
   public content: string;
   public publishedDate: string | Date;
   public updatedAt: string;
@@ -88,7 +88,7 @@ class License implements LicensePostIF {
     publishedDate,
     record,
   }: LicensePostIF) {
-    this.version = version.toString();
+    this.version = version;
     this.content = content as string;
     this.memo = memo ? memo.toString() : null;
     this.publishedDate = new Date(publishedDate).toISOString();
