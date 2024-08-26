@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { BaseComponentProps, RAFile, RecordValue } from '@repo/types/general';
 import { Box } from '@mui/material';
-import { boxStyles } from '@repo/styles';
+import { boxStyles, disabledInputBackgroundStyle } from '@repo/styles';
 import { LicenseResponseIF } from '@repo/types/license';
 import { TermOfUseResponseIF } from '@repo/types/termOfUse';
 import { useEffect, useState } from 'react';
@@ -37,28 +37,11 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
   };
 
   const handleSave = async (values: RecordValue) => {
-    const [checkPackageName, checkAppName] = await Promise.all([
-      dataProvider.checkExistName(
-        'application-masters',
-        values.packageName,
-        'packageName'
-      ),
-      dataProvider.checkExistName(
-        'application-masters',
-        values.appName,
-        'appName'
-      ),
-    ]);
-
-    if (
-      checkPackageName.data?.packageName &&
-      values.packageName !== record.packageName
-    ) {
-      notify('バンドルID/パッケージ名はすでに存在します', {
-        type: 'warning',
-      });
-      return false;
-    }
+    const checkAppName = await dataProvider.checkExistName(
+      'application-masters',
+      values.appName,
+      'appName'
+    );
 
     if (checkAppName.data?.appName && values.appName !== record.appName) {
       notify('アプリケーション名はすでに存在します', {
@@ -71,7 +54,7 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
       values;
 
     record.appName = values.appName;
-    record.packageName = values.packageName;
+    rest.packageName = record.packageName;
 
     if (assetDataIOS?.rawFile) {
       const assetBundleIOSFile = extractFile(assetDataIOS);
@@ -166,8 +149,10 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
         <TextInput
           source="packageName"
           label="バンドルID/パッケージ名"
+          disabled
+          value={record?.packageName}
+          sx={disabledInputBackgroundStyle}
           fullWidth
-          isRequired
         />
         <FileInput
           source="assetDataIOS"

@@ -16,10 +16,6 @@ const editionRules: ValidationRule[] = [
     required: true,
   },
   {
-    field: 'packageName',
-    required: true,
-  },
-  {
     field: 'assetDataIOS',
     required: true,
   },
