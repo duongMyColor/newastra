@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { BaseComponentProps, RAFile, RecordValue } from '@repo/types/general';
 import { Box } from '@mui/material';
-import { boxStyles } from '@repo/styles';
+import { boxStyles, disabledInputBackgroundStyle } from '@repo/styles';
 import { LicenseResponseIF } from '@repo/types/license';
 import { TermOfUseResponseIF } from '@repo/types/termOfUse';
 import { useEffect, useState } from 'react';
@@ -37,62 +37,45 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
   };
 
   const handleSave = async (values: RecordValue) => {
-    const [checkPackageName, checkAppName] = await Promise.all([
-      dataProvider.checkExistName(
-        'application-masters',
-        values.packageName,
-        'packageName'
-      ),
-      dataProvider.checkExistName(
+    try {
+      const checkAppName = await dataProvider.checkExistName(
         'application-masters',
         values.appName,
         'appName'
-      ),
-    ]);
+      );
 
-    if (
-      checkPackageName.data?.packageName &&
-      values.packageName !== record.packageName
-    ) {
-      notify('バンドルID/パッケージ名はすでに存在します', {
-        type: 'warning',
-      });
-      return false;
-    }
+      if (checkAppName.data?.appName && values.appName !== record.appName) {
+        notify('アプリケーション名はすでに存在します', {
+          type: 'warning',
+        });
+        return false;
+      }
 
-    if (checkAppName.data?.appName && values.appName !== record.appName) {
-      notify('アプリケーション名はすでに存在します', {
-        type: 'warning',
-      });
-      return false;
-    }
+      const { assetDataIOS, assetDataAndroid, assetDataOutlineUrl, ...rest } =
+        values;
 
-    const { assetDataIOS, assetDataAndroid, assetDataOutlineUrl, ...rest } =
-      values;
+      record.appName = values.appName;
+      rest.packageName = record.packageName;
 
-    record.appName = values.appName;
-    record.packageName = values.packageName;
+      if (assetDataIOS?.rawFile) {
+        const assetBundleIOSFile = extractFile(assetDataIOS);
+        const keyIOS = await uploadMuiltpart(assetBundleIOSFile);
+        rest.assetBundleIOS = keyIOS;
+        record.assetDataIOS = values.assetDataIOS;
+      }
 
-    if (assetDataIOS?.rawFile) {
-      const assetBundleIOSFile = extractFile(assetDataIOS);
-      const keyIOS = await uploadMuiltpart(assetBundleIOSFile);
-      rest.assetBundleIOS = keyIOS;
-      record.assetDataIOS = values.assetDataIOS;
-    }
+      if (assetDataAndroid?.rawFile) {
+        const assetBundleAndroidFile = extractFile(assetDataAndroid);
+        const keyAndroid = await uploadMuiltpart(assetBundleAndroidFile);
+        rest.assetBundleAndroid = keyAndroid;
 
-    if (assetDataAndroid?.rawFile) {
-      const assetBundleAndroidFile = extractFile(assetDataAndroid);
-      const keyAndroid = await uploadMuiltpart(assetBundleAndroidFile);
-      rest.assetBundleAndroid = keyAndroid;
+        record.assetDataAndroid = values.assetDataAndroid;
+      }
+      if (assetDataOutlineUrl?.rawFile) {
+        rest.outlineUrl = values.assetDataOutlineUrl;
+        record.assetDataOutlineUrl = values.assetDataOutlineUrl;
+      }
 
-      record.assetDataAndroid = values.assetDataAndroid;
-    }
-    if (assetDataOutlineUrl?.rawFile) {
-      rest.outlineUrl = values.assetDataOutlineUrl;
-      record.assetDataOutlineUrl = values.assetDataOutlineUrl;
-    }
-
-    try {
       const formData = convertToFormData(rest, ['outlineUrl']);
 
       await dataProvider.update(resource, {
@@ -166,8 +149,10 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
         <TextInput
           source="packageName"
           label="バンドルID/パッケージ名"
+          disabled
+          value={record?.packageName}
+          sx={disabledInputBackgroundStyle}
           fullWidth
-          isRequired
         />
         <FileInput
           source="assetDataIOS"
