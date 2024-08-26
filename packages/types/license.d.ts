@@ -20,7 +20,7 @@ export interface LicensePostIF {
   [key: string]: any;
   id?: number;
   memo: string | number | null;
-  version: string;
+  version: number;
   content: string | Buffer | File;
   publishedDate: string | Date;
   updatedAt?: string | Date;

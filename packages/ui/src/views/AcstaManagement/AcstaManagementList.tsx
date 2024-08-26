@@ -65,9 +65,9 @@ const AcstaManagementList = ({
             }}
           />
         </BoxSortField>
-        <BoxSortField source="dateEnd" label="登録日">
+        <BoxSortField source="dateEnd" label="公開終了日">
           <FunctionField
-            label="登録日"
+            label="公開終了日"
             render={({ dateEnd }: { dateEnd: string }) => {
               return formatDateAcstar(dateEnd);
             }}

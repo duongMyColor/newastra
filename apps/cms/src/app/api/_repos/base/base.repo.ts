@@ -9,6 +9,7 @@ import UploadFileService from '../../_services/upload.service';
 import { AcstaApiResponseIF } from '@repo/types/acsta';
 import { PerformanceApiResponseIF } from '@repo/types/performance';
 import { NameCheckType } from '@repo/types/applicationMaster';
+import { INVERSER_ORDER } from '@repo/consts/general';
 
 class BaseRepo {
   private tableModel: ModelDeligate;
@@ -84,6 +85,38 @@ class BaseRepo {
     });
 
     const data = sortData(res);
+
+    return data;
+  };
+
+  getAllInverseOrder = async ({ sort, range, filter }: GetAllQueryIF) => {
+    const [sortField, sortOrder] = sort;
+    const [start, end] = range;
+
+    const whereClause = Object.fromEntries(
+      Object.entries(filter).map(([key, value]) => [
+        key,
+        {
+          search: (value as string)
+            .trim()
+            .split(' ')
+            .map((word: string) => `${word} ${word}*`.toLowerCase())
+            .join(' '),
+        },
+      ])
+    );
+
+    const res = await this.tableModel.findMany({
+      orderBy: this.constructOrderByClause(
+        sortField as string,
+        sortOrder as string
+      ),
+      skip: start ?? 0,
+      take: (end ?? 0) - (start ?? 0) + 1,
+      where: whereClause,
+    });
+
+    const data = sortData(res, INVERSER_ORDER);
 
     return data;
   };

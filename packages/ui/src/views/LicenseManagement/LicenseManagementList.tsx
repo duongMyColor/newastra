@@ -10,6 +10,7 @@ const LicenseManagementList = ({ actions, resource }: BaseComponentProps) => {
     <List
       title="ライセンス管理　一覧"
       actions={<ListToolBar isShowCreate={validRole('create', actions)} />}
+      sort={{ field: 'version', order: 'DESC' }}
     >
       <Datagrid rowClick="show" bulkActionButtons={false}>
         <TextField source="no" label="No" />
@@ -24,7 +25,7 @@ const LicenseManagementList = ({ actions, resource }: BaseComponentProps) => {
             }}
           />
         </BoxSortField>
-        <BoxSortField source="createdAt" label="公開開始日">
+        <BoxSortField source="publishedDate" label="公開開始日">
           <FunctionField
             label="公開開始日"
             render={({ publishedDate }: { publishedDate: string }) => {

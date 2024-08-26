@@ -123,7 +123,7 @@ model PerformaceManagement {
 model TermsOfUse {
   id            Int      @id @default(autoincrement())
   memo          String?
-  version       String
+  version       Int
   content       String
   publishedDate DateTime
   createdAt     DateTime @default(now())
@@ -135,7 +135,7 @@ model TermsOfUse {
 model License {
   id            Int      @id @default(autoincrement())
   memo          String?
-  version       String
+  version       Int
   content       String
   publishedDate DateTime
   createdAt     DateTime @default(now())

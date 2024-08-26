@@ -54,7 +54,7 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
       checkPackageName.data?.packageName &&
       values.packageName !== record.packageName
     ) {
-      notify('同一バンドルIDで登録ができない', {
+      notify('バンドルID/パッケージ名はすでに存在します', {
         type: 'warning',
       });
       return false;

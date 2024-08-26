@@ -45,14 +45,14 @@ class TeamOfUseController {
     });
   };
 
-  getAllWithQuery = async (request: NextRequest) => {
+  getAllInverseOrder = async (request: NextRequest) => {
     const { searchParams } = new URL(request.url);
 
     const { filter, range, sort } = parseSearchParams(searchParams);
 
     return new OK({
       message: 'get all Term Of Use success!',
-      metadata: await TermOfUseService.getAllWithQuery({
+      metadata: await TermOfUseService.getAllInverseOrder({
         filter,
         range,
         sort,

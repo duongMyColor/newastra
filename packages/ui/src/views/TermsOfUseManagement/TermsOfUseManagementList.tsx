@@ -13,6 +13,7 @@ const TermsOfUseManagementList = ({
     <List
       title="利用規約管理　一覧"
       actions={<ListToolBar isShowCreate={validRole('create', actions)} />}
+      sort={{ field: 'version', order: 'DESC' }}
     >
       <Datagrid rowClick="show" bulkActionButtons={false}>
         <TextField source="no" label="No" />
@@ -27,7 +28,7 @@ const TermsOfUseManagementList = ({
             }}
           />
         </BoxSortField>
-        <BoxSortField source="createdAt" label="公開開始日">
+        <BoxSortField source="publishedDate" label="公開開始日">
           <FunctionField
             label="公開開始日"
             render={({ publishedDate }: { publishedDate: string }) => {

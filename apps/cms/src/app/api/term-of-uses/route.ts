@@ -5,7 +5,9 @@ import termOfUseController from '../_controllers/termOfUse.controller';
 import errorHandlerMiddleware from '@/middlewares/errorHandler'; // Import the errorHandlerMiddleware
 
 export const GET = errorHandlerMiddleware(async (request: NextRequest) => {
-  return NextResponse.json(await termOfUseController.getAllWithQuery(request));
+  return NextResponse.json(
+    await termOfUseController.getAllInverseOrder(request)
+  );
 });
 
 export const POST = errorHandlerMiddleware(async (request: NextRequest) => {
