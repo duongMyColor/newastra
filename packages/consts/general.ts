@@ -2,6 +2,7 @@ import { RecordValue } from '@repo/types/general';
 
 const baseUploadFolder = 'src/app/api/_uploads/';
 
+
 const REDIRECT_ROUTE = {
   list: 'list',
   show: 'show',

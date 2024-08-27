@@ -13,6 +13,8 @@ import {
 import { getDb } from '@/lib/globalObject';
 import { getOneByBundleId } from '@/repos/applicationMaster.repo';
 import { Authorization, securitySchemes } from '@/openapi';
+import { getCurrentDate } from '@repo/utils/currentDate';
+
 const app = new OpenAPIHono();
 
 app.openapi(
@@ -75,6 +77,7 @@ app.openapi(
       }
 
       const prisma = getDb();
+      const currentDate = getCurrentDate();
       // Find the latest mandatory update for the specified OS that is newer than the provided version
       const updateInfo = await prisma.forcedUpdateManagement.findFirst({
         where: {
@@ -82,10 +85,13 @@ app.openapi(
           version: {
             gt: version,
           },
+          publishedDate: {
+            lte: currentDate,
+          },
           appMasterId: application.id,
         },
         orderBy: {
-          version: 'asc',
+          version: 'desc',
         },
       });
 
