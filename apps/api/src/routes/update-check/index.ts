@@ -13,6 +13,8 @@ import {
 import { getDb } from '@/lib/globalObject';
 import { getOneByBundleId } from '@/repos/applicationMaster.repo';
 import { Authorization, securitySchemes } from '@/openapi';
+import {currentDate} from '@repo/consts/general'
+
 const app = new OpenAPIHono();
 
 app.openapi(
@@ -83,7 +85,7 @@ app.openapi(
             gt: version,
           },
           publishedDate:{
-            lte: new Date(),
+            lte: currentDate,
           },
           appMasterId: application.id,
         },

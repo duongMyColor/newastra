@@ -2,6 +2,8 @@ import { RecordValue } from '@repo/types/general';
 
 const baseUploadFolder = 'src/app/api/_uploads/';
 
+const currentDate = new Date();
+
 const REDIRECT_ROUTE = {
   list: 'list',
   show: 'show',
@@ -56,4 +58,5 @@ export {
   CREATED_SUCCESS,
   UPDATED_SUCCESS,
   INVERSER_ORDER,
+  currentDate,
 };
