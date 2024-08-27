@@ -149,7 +149,7 @@ const AcstaManagementCreate = ({
         <TooltipCustom width="fix-content">
           <DateTimeInput source="dateStart" label="公開開始日*" />
         </TooltipCustom>
-        <DateTimeInput source="dateEnd" label="登録日" />
+        <DateTimeInput source="dateEnd" label="公開終了日" />
         {/* <TextInput
           source="acstaBasicInfoId"
           label="力士基本情報ID"
