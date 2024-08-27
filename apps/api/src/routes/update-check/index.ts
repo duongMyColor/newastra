@@ -82,10 +82,13 @@ app.openapi(
           version: {
             gt: version,
           },
+          publishedDate:{
+            lte: new Date(),
+          },
           appMasterId: application.id,
         },
         orderBy: {
-          version: 'asc',
+          version: 'desc',
         },
       });
 

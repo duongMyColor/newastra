@@ -18,6 +18,21 @@ export const getAllByAppId = async (applicationId: number) => {
       [child]: true,
     },
     where: {
+      dateStart: {
+        lte: new Date(),
+      },
+      OR: [
+        {
+          dateEnd: {
+            gte: new Date(),
+          },
+        },
+        {
+          dateEnd: {
+            equals: null,
+          },
+        },
+      ],
       applicationId: applicationId,
       isDeleted: false,
     },
@@ -89,6 +104,21 @@ export const getUpdateData = async (
 
   return await prisma.acstaManagement.findMany({
     where: {
+      dateStart: {
+        lte: new Date(),
+      },
+      OR: [
+        {
+          dateEnd: {
+            gte: new Date(),
+          },
+        },
+        {
+          dateEnd: {
+            equals: null,
+          },
+        },
+      ],
       updatedAt: {
         gt: lastSyncDate,
       },
