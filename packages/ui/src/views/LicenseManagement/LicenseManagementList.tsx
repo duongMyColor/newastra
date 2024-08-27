@@ -17,19 +17,19 @@ const LicenseManagementList = ({ actions, resource }: BaseComponentProps) => {
         <TextField source="id" label="ライセンスID" />
         <TextField source="memo" label="メモ" />
         <TextField source="version" label="バージョン" />
-        <BoxSortField source="createdAt" label="登録日">
-          <FunctionField
-            label="登録日"
-            render={({ createdAt }: { createdAt: string }) => {
-              return formatDateAcstar(createdAt);
-            }}
-          />
-        </BoxSortField>
         <BoxSortField source="publishedDate" label="公開開始日">
           <FunctionField
             label="公開開始日"
             render={({ publishedDate }: { publishedDate: string }) => {
               return formatDateAcstar(publishedDate);
+            }}
+          />
+        </BoxSortField>
+        <BoxSortField source="createdAt" label="登録日">
+          <FunctionField
+            label="登録日"
+            render={({ createdAt }: { createdAt: string }) => {
+              return formatDateAcstar(createdAt);
             }}
           />
         </BoxSortField>

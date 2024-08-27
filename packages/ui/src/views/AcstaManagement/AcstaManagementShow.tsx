@@ -112,15 +112,8 @@ const AcstaManagementShow = ({ actions, resource }: BaseComponentProps) => {
               ></ScanDataField>
               <StatusTextField source="status"></StatusTextField>
               <FormatInputDateShow label="公開開始日" source="dateStart" />
-              <FormatInputDateShow label="登録日" source="dateEnd" />
+              <FormatInputDateShow label="公開終了日" source="dateEnd" />
               <FormatInputDateShow label="登録日時" source="createdAt" />
-              {/* <TextInput
-                source="acstaBasicInfoId"
-                label="力士基本情報ID"
-                disabled
-                sx={disabledInputBackgroundStyle}
-                fullWidth
-              /> */}
             </CustomForm>
           )}
         </>

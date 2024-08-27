@@ -142,7 +142,7 @@ const EditForm = ({ actions, resource, dataProvider }: BaseComponentProps) => {
           label="公開開始日"
           required
         />
-        <DateTimeInput source="dateEnd" fullWidth label="登録日" />
+        <DateTimeInput source="dateEnd" fullWidth label="公開終了日" />
 
         {/* <TextInput
           source="acstaBasicInfoId"
