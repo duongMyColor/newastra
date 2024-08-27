@@ -1,6 +1,6 @@
 import { getDb } from '@/lib/globalObject';
 import { BaseRepo } from './base/base.repo';
-import {currentDate} from '@repo/consts/general'
+import {getCurrentDate} from '@repo/utils/currentDate'
 
 
 const child = 'performace';
@@ -21,12 +21,12 @@ export const getAllByAppId = async (applicationId: number) => {
     },
     where: {
       dateStart: {
-        lte: currentDate,
+        lte: getCurrentDate(),
       },
       OR: [
         {
           dateEnd: {
-            gte: currentDate,
+            gte: getCurrentDate(),
           },
         },
         {
@@ -107,12 +107,12 @@ export const getUpdateData = async (
   return await prisma.acstaManagement.findMany({
     where: {
       dateStart: {
-        lte: currentDate,
+        lte: getCurrentDate(),
       },
       OR: [
         {
           dateEnd: {
-            gte: currentDate,
+            gte: getCurrentDate(),
           },
         },
         {
