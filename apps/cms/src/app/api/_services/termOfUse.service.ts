@@ -33,8 +33,8 @@ class TermOfUseFactory {
     return await TermsOfUseRepo.getAll();
   }
 
-  static async getAllInverseOrder({ filter, range, sort }: GetAllQueryIF) {
-    return await TermsOfUseRepo.getAllInverseOrder({ filter, range, sort });
+  static async getAllWithQuery({ filter, range, sort }: GetAllQueryIF) {
+    return await TermsOfUseRepo.getAllWithQuery({ filter, range, sort });
   }
 
   static async getAllWithFilters({ filter, range, sort }: GetAllQueryIF) {
