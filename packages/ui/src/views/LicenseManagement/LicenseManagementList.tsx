@@ -10,7 +10,6 @@ const LicenseManagementList = ({ actions, resource }: BaseComponentProps) => {
     <List
       title="ライセンス管理　一覧"
       actions={<ListToolBar isShowCreate={validRole('create', actions)} />}
-      sort={{ field: 'version', order: 'DESC' }}
     >
       <Datagrid rowClick="show" bulkActionButtons={false}>
         <TextField source="no" label="No" />

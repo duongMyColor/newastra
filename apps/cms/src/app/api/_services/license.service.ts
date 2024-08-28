@@ -34,8 +34,8 @@ class LicenseFactory {
     return await LicenseRepo.getAll();
   }
 
-  static async getAllInverseOrder({ filter, range, sort }: GetAllQueryIF) {
-    return await LicenseRepo.getAllInverseOrder({ filter, range, sort });
+  static async getAllWithQuery({ filter, range, sort }: GetAllQueryIF) {
+    return await LicenseRepo.getAllWithQuery({ filter, range, sort });
   }
 
   static async getAllWithFilters({ filter, range, sort }: GetAllQueryIF) {

@@ -13,7 +13,6 @@ const TermsOfUseManagementList = ({
     <List
       title="利用規約管理　一覧"
       actions={<ListToolBar isShowCreate={validRole('create', actions)} />}
-      sort={{ field: 'version', order: 'DESC' }}
     >
       <Datagrid rowClick="show" bulkActionButtons={false}>
         <TextField source="no" label="No" />

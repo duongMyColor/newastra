@@ -84,6 +84,7 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
         previousData: record,
       });
 
+      localStorage.removeItem('listUpdateAll');
       await notify(UPDATED_SUCCESS, {
         type: 'success',
       });

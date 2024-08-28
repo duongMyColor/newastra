@@ -89,37 +89,6 @@ class BaseRepo {
     return data;
   };
 
-  getAllInverseOrder = async ({ sort, range, filter }: GetAllQueryIF) => {
-    const [sortField, sortOrder] = sort;
-    const [start, end] = range;
-
-    const whereClause = Object.fromEntries(
-      Object.entries(filter).map(([key, value]) => [
-        key,
-        {
-          search: (value as string)
-            .trim()
-            .split(' ')
-            .map((word: string) => `${word} ${word}*`.toLowerCase())
-            .join(' '),
-        },
-      ])
-    );
-
-    const res = await this.tableModel.findMany({
-      orderBy: this.constructOrderByClause(
-        sortField as string,
-        sortOrder as string
-      ),
-      skip: start ?? 0,
-      take: (end ?? 0) - (start ?? 0) + 1,
-      where: whereClause,
-    });
-
-    const data = sortData(res, INVERSER_ORDER);
-
-    return data;
-  };
 
   getAllWithParm = async ({ sort, range, filter, include }: GetAllQueryIF) => {
     const [sortField, sortOrder] = sort;

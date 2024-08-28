@@ -13,8 +13,8 @@ class LicenseRepo {
     return await new BaseRepo(generateClient().license).countAll();
   };
 
-  getAllInverseOrder = async ({ sort, range, filter }: GetAllQueryIF) => {
-    return await new BaseRepo(generateClient().license).getAllInverseOrder({
+  getAllWithQuery = async ({ sort, range, filter }: GetAllQueryIF) => {
+    return await new BaseRepo(generateClient().license).getAllWithQuery({
       sort,
       range,
       filter,
