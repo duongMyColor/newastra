@@ -13,14 +13,14 @@ function getCategory(char: string) {
   return 10;
 }
 
-function sortStrings(
+function sortDataForcedUpdate(
   items: ForcedUpdateManagementPostIF[],
   orderBy: string
 ): ForcedUpdateManagementPostIF[] {
   const data = [...items];
 
   if (items) {
-    const test = data.sort((a, b) => {
+    const sortedData = data.sort((a, b) => {
       const categoryA = getCategory(a.managementName);
 
       const categoryB = getCategory(b.managementName);
@@ -37,10 +37,10 @@ function sortStrings(
         : b.managementName.localeCompare(a.managementName);
     });
 
-    return test;
+    return sortedData;
   }
 
   return [];
 }
 
-export { getCategory, sortStrings };
+export { getCategory, sortDataForcedUpdate };
