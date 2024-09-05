@@ -23,14 +23,17 @@ export const sortData = (res: any, type?: number) => {
   return data;
 };
 
-export const sortDataByManagementName = (res: any, order: string[]) => {
+export const sortDataByManagementName = (res: any, order: any[]) => {
   let data = [];
   if (res.length > 0) {
     res.sort((a: any, b: any) => a.id - b.id);
 
     for (let i = 0; i < order.length; i++) {
       for (let j = 0; j < res.length; j++) {
-        if (order[i] === res[j].managementName) {
+        if (
+          order[i].managementName === res[j].managementName &&
+          order[i].id === res[j].id
+        ) {
           data.push(res[j]);
           break;
         }

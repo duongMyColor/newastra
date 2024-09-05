@@ -112,11 +112,7 @@ const forcedUpdateManagementCallbackHandlers = {
         });
       }
       if (listParams.sort === 'managementName') {
-        let data = newData.map((value: ForcedUpdateManagementPostIF) => {
-          return value.managementName;
-        });
-
-        const sortData = sortStrings(data, listParams.order);
+        const sortData = sortStrings(newData, listParams.order);
 
         const result = sortDataByManagementName(newData, sortData);
 
