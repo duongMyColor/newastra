@@ -8,7 +8,7 @@ import type {
 import { RecordValue } from '@repo/types/general';
 import { updateStatusAll } from '@repo/utils/updateStatus';
 import { OPERATE_IOS, SORT_BY_TYPE } from '@repo/consts/forceUpdate';
-import { sortStrings } from '@repo/utils/getCategory';
+import { sortDataForcedUpdate } from '@repo/utils/getCategory';
 import {
   sortDataByManagementName,
   sortDataByVersion,
@@ -112,11 +112,7 @@ const forcedUpdateManagementCallbackHandlers = {
         });
       }
       if (listParams.sort === 'managementName') {
-        let data = newData.map((value: ForcedUpdateManagementPostIF) => {
-          return value.managementName;
-        });
-
-        const sortData = sortStrings(data, listParams.order);
+        const sortData = sortDataForcedUpdate(newData, listParams.order);
 
         const result = sortDataByManagementName(newData, sortData);
 

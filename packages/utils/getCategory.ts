@@ -1,3 +1,5 @@
+import { ForcedUpdateManagementPostIF } from '@repo/types/forceUpdateManagement';
+
 function getCategory(char: string) {
   if (/\d/.test(char)) return 1;
   if (/[A-Z]/.test(char)) return 2;
@@ -11,15 +13,34 @@ function getCategory(char: string) {
   return 10;
 }
 
-function sortStrings(items: string[], orderBy: string): string[] {
-  return items.sort((a, b) => {
-    const categoryA = getCategory(a);
-    const categoryB = getCategory(b);
-    if (categoryA !== categoryB) {
-      return orderBy === 'ASC' ? categoryA - categoryB : categoryB - categoryA;
-    }
-    return orderBy === 'ASC' ? a.localeCompare(b) : b.localeCompare(a);
-  });
+function sortDataForcedUpdate(
+  items: ForcedUpdateManagementPostIF[],
+  orderBy: string
+): ForcedUpdateManagementPostIF[] {
+  const data = [...items];
+
+  if (items) {
+    const sortedData = data.sort((a, b) => {
+      const categoryA = getCategory(a.managementName);
+
+      const categoryB = getCategory(b.managementName);
+      if (categoryA !== categoryB) {
+        return orderBy === 'ASC'
+          ? categoryA - categoryB
+          : categoryB - categoryA;
+      }
+
+      if (a.managementName === b.managementName && a.id && b.id)
+        return orderBy === 'ASC' ? a.id - b.id : b.id - a.id;
+      return orderBy === 'ASC'
+        ? a.managementName.localeCompare(b.managementName)
+        : b.managementName.localeCompare(a.managementName);
+    });
+
+    return sortedData;
+  }
+
+  return [];
 }
 
-export { getCategory, sortStrings };
+export { getCategory, sortDataForcedUpdate };

@@ -58,21 +58,25 @@ const creationRules: ValidationRule[] = [
 ];
 
 const validateAcstaCreation = (values: RecordValue): RecordValue => {
-  console.log({ values });
   const baseValidation = validateForm(values, creationRules);
   const validatePublicDateEnd = validatePublicDateAcsta(values);
   const validationMessages = { ...baseValidation };
 
-  console.log({ validatePublicDateEnd });
   if (!validatePublicDateEnd) {
-    validationMessages.dateEnd =
-      '終了時間は開始時間より大きくなければなりません';
+    validationMessages.dateEnd = '公開終了日は公開開始日より前に設定できません';
   }
   return validationMessages;
 };
 
 const validateAcstaEdition = (values: RecordValue): RecordValue => {
-  return validateForm(values, editionRules);
+  const baseValidation = validateForm(values, editionRules);
+  const validatePublicDateEnd = validatePublicDateAcsta(values);
+  const validationMessages = { ...baseValidation };
+
+  if (!validatePublicDateEnd) {
+    validationMessages.dateEnd = '公開終了日は公開開始日より前に設定できません';
+  }
+  return validationMessages;
 };
 
 export { validateAcstaCreation, validateAcstaEdition };

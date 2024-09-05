@@ -54,6 +54,8 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
       const { assetDataIOS, assetDataAndroid, assetDataOutlineUrl, ...rest } =
         values;
 
+      const preAppName = record.appName;
+
       record.appName = values.appName;
       rest.packageName = record.packageName;
 
@@ -84,7 +86,29 @@ const MasterEditForm = ({ resource, dataProvider }: BaseComponentProps) => {
         previousData: record,
       });
 
-      localStorage.removeItem('listUpdateAll');
+      if (preAppName !== record.appName) {
+        let listUpdateAllStorage = JSON.parse(
+          localStorage.getItem('listUpdateAll') as string
+        );
+
+        if (listUpdateAllStorage) {
+          listUpdateAllStorage = listUpdateAllStorage.map(
+            (item: RecordValue) => {
+              if (item.aplicationMaster.appName === preAppName) {
+                item.aplicationMaster.appName = record.appName;
+              }
+
+              return item;
+            }
+          );
+
+          localStorage.setItem(
+            'listUpdateAll',
+            JSON.stringify(listUpdateAllStorage)
+          );
+        }
+      }
+
       await notify(UPDATED_SUCCESS, {
         type: 'success',
       });

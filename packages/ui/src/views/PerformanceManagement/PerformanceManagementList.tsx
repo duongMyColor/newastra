@@ -7,6 +7,7 @@ import {
   FunctionField,
   useNotify,
   useRefresh,
+  useRecordContext,
 } from 'react-admin';
 import { BaseComponentProps } from '@repo/types/general';
 import { validRole } from '../_core/permissions';
@@ -16,12 +17,10 @@ import { AcstaResponseIF } from '@repo/types/acsta';
 import { BoxSortField } from '../../components/BoxSortField';
 import { formatDateAcstar } from '@repo/utils/dateFormat';
 
-const PerformanceManagementList = ({
-  actions,
-  resource,
-}: BaseComponentProps) => {
+const ButtonDeleteCustom = () => {
   const refresh = useRefresh();
   const notify = useNotify();
+  const record = useRecordContext();
 
   const onSuccess = () => {
     refresh();
@@ -29,6 +28,25 @@ const PerformanceManagementList = ({
       type: 'success',
     });
   };
+  return (
+    <>
+      {record && record.acstaId === null && (
+        <DeleteWithConfirmButton
+          confirmContent="よろしいですか?"
+          confirmTitle="削除"
+          label="削除"
+          confirmColor="warning"
+          mutationOptions={{ onSuccess }}
+        ></DeleteWithConfirmButton>
+      )}
+    </>
+  );
+};
+
+const PerformanceManagementList = ({
+  actions,
+  resource,
+}: BaseComponentProps) => {
   return (
     <List
       title="演出管理　一覧"
@@ -68,15 +86,7 @@ const PerformanceManagementList = ({
             }}
           />
         </BoxSortField>
-        {validRole('delete', actions) && (
-          <DeleteWithConfirmButton
-            confirmContent="よろしいですか?"
-            confirmTitle="削除"
-            label="削除"
-            confirmColor="warning"
-            mutationOptions={{ onSuccess }}
-          ></DeleteWithConfirmButton>
-        )}
+        {validRole('delete', actions) && <ButtonDeleteCustom />}
         {validRole('edit', actions) && <EditButton label="編集"></EditButton>}
       </Datagrid>
     </List>
