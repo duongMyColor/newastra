@@ -59,12 +59,12 @@ const validateUserCreation = (values: RecordValue): RecordValue => {
   if (!validateVersions) {
     validationMessages.version = validationMessages.version
       ? '必須'
-      : '数字と「.」を含む最大 8 文字、数字は「.」で区切られた最大 2 桁で、以前のバージョンよりも大きくなります';
+      : '1.2.34のようにセマンティックバージョニング形式で設定してください';
   }
 
   if (!validatePublishedDates) {
     validationMessages.publishedDate =
-      '既存の強制アップデートより公開開始日を後にする必要があります';
+      '公開開始日は現在以降にする必要があります';
   }
 
   return validationMessages;
