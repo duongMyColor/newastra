@@ -7,7 +7,11 @@ export const validatePublishedDate = (values: RecordValue): boolean => {
     localStorage.getItem('listUpdateAll') || 'null'
   );
 
-  if (dayjs(values.publishedDate).valueOf() < dayjs().valueOf()) return false;
+  if (
+    dayjs(values.publishedDate).format('YY/MM/DD hh:mm').valueOf() <
+    dayjs().format('YY/MM/DD hh:mm').valueOf()
+  )
+    return false;
 
   let publicDateEnd = listUpdateAllStorage
     .filter(

@@ -10,7 +10,8 @@ const getVersionEnd = (
   let versionEnd = listUpdateAllStorage
     .filter(
       (value: ForcedUpdateManagementResponseIF) =>
-        value?.operateSystem === values?.operateSystem && value?.appMasterId === values.appMasterId
+        value?.operateSystem === values?.operateSystem &&
+        value?.appMasterId === values.appMasterId
     )
     .sort(
       (
@@ -24,7 +25,7 @@ const getVersionEnd = (
 };
 
 export const validateVersion = (values: RecordValue): boolean => {
-  const regex = /^(?:\d{1,2}\.\d{1,2}\.\d{1,2}|\d{1,2}\.\d{1,2}|\d{1,2})$/;
+  const regex = /^([1-9][0-9]?|0)\.([1-9][0-9]?|0)\.([1-9][0-9]?|0)$/;
 
   if (!regex.test(values?.version)) return false;
 
