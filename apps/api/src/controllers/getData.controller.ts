@@ -73,7 +73,7 @@ class DataController {
         termOfUse: await TermOfUseService.getCurrentTermOfUse(),
         applicationMaster:
           await ApplicationMasterService.getUpdateData(lastSyncDate),
-        acsta: await AcstaService.getUpdateData(lastSyncDate),
+        acsta: await AcstaService.getUpdateData(),
         performance: await PerformanceService.getUpdateData(lastSyncDate),
       },
       // metadata: updatedData,

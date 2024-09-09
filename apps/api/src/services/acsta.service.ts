@@ -70,10 +70,10 @@ class AcstaFactory {
     return await this.convertArrayData(acstas);
   }
 
-  static async getUpdateData(lastSyncDate: Date | string) {
+  static async getUpdateData() {
     const applicationId = await getApplicationId();
 
-    const acstas = await getUpdateData(lastSyncDate, applicationId);
+    const acstas = await getUpdateData(applicationId);
 
     if (!acstas?.length) {
       return [];

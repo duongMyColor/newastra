@@ -99,7 +99,6 @@ export const getManyByIdsAndChildren = async (
 };
 
 export const getUpdateData = async (
-  lastSyncDate: Date | string,
   applicationId: number
 ) => {
   const prisma = getDb();
@@ -121,9 +120,6 @@ export const getUpdateData = async (
           },
         },
       ],
-      updatedAt: {
-        gt: lastSyncDate,
-      },
       applicationId: applicationId,
       isDeleted: false,
     },
