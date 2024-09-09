@@ -1,6 +1,4 @@
 import { z } from '@hono/zod-openapi';
-import { metadata as ResponseSchemaLicense } from '../license';
-import { metadata as ResponseSchemaTerm } from '../terms-of-use';
 import { metadata as ResponseSchemaArrayAcsta } from '../acsta';
 import { metadata as ResponseSchemaArrayApp } from '../application-master';
 import { metadata as ResponseSchemaPerformance } from '../product';
@@ -10,8 +8,6 @@ export const ResponseSchema = z.object({
   status: z.number().openapi({ example: 200 }),
   reason: z.string().openapi({ example: 'OK' }),
   metadata: z.object({
-    license: ResponseSchemaLicense,
-    termOfUse: ResponseSchemaTerm,
     applicationMaster: ResponseSchemaArrayApp,
     acsta: z.array(ResponseSchemaArrayAcsta),
     performance: z.array(ResponseSchemaPerformance),

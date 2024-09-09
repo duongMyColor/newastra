@@ -35,6 +35,17 @@ export const metadata = z.object({
   outlineUrl: z.string().openapi({
     example: 'application-master/1716160642682/image.png',
   }),
+  license: z.object({
+    contentUrl: z.string().openapi({
+      example: 'license/1724657576633/利用規約ダミーテキスト (1).htm',
+    }),
+  }),
+
+  termOfUse: z.object({
+    contentUrl: z.string().openapi({
+      example: 'term-of-use/1724657576633/利用規約ダミーテキスト (1).htm',
+    }),
+  }),
 });
 
 export const ResponseSchemaObject = z.object({

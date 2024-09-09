@@ -1,6 +1,4 @@
 import { OK } from '../core/success.response';
-import LicenseService from '../services/license.service';
-import TermOfUseService from '@/services/termOfUse.service';
 import ApplicationMasterService from '@/services/applicationMaster.sercvice';
 import AcstaService from '@/services/acsta.service';
 import PerformanceService from '@/services/performance.service';
@@ -24,8 +22,6 @@ class DataController {
     return new OK({
       message: 'get all License success!',
       metadata: {
-        license: await LicenseService.getCurrentLicense(),
-        termOfUse: await TermOfUseService.getCurrentTermOfUse(),
         applicationMaster: await ApplicationMasterService.getOneByBundleId(),
         acsta: await AcstaService.getAllByBundleId(),
         performance: await PerformanceService.getAllByBundleId(),
@@ -69,8 +65,6 @@ class DataController {
     return new OK({
       message: 'get updated data success!',
       metadata: {
-        license: await LicenseService.getCurrentLicense(),
-        termOfUse: await TermOfUseService.getCurrentTermOfUse(),
         applicationMaster:
           await ApplicationMasterService.getUpdateData(lastSyncDate),
         acsta: await AcstaService.getUpdateData(),

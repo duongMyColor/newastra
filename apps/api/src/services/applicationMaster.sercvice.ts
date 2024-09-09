@@ -12,6 +12,8 @@ import {
   AplicationMasterResponseIF,
 } from '@repo/types/applicationMaster';
 import { getBundleId } from '@/lib/globalObject';
+import LicenseService from './license.service';
+import TermOfUseService from './termOfUse.service';
 class ApplicationMasterFactory {
   static async getAll() {
     const applicationMasters = await getAll();
@@ -35,13 +37,18 @@ class ApplicationMasterFactory {
     if (!bundleId) {
       throw new NotFoundError('bundleId not found');
     }
-
-    const application = await getOneByBundleId(bundleId);
+    const [license, termOfUse, application] = await Promise.all([
+      LicenseService.getCurrentLicense(),
+      TermOfUseService.getCurrentTermOfUse(),
+      getOneByBundleId(bundleId),
+    ]);
     if (!application) {
       return {};
     }
 
-    return await new ApplicationMaster().convertData(application);
+    const dataApp = await new ApplicationMaster().convertData(application);
+
+    return { ...dataApp, license, termOfUse };
   }
 
   static async getManyByIds(ids: number[]) {
@@ -58,14 +65,19 @@ class ApplicationMasterFactory {
     if (!bundleId) {
       throw new NotFoundError('bundleId not found');
     }
-
-    const app = await getUpdateData(lastSyncDate, bundleId);
+    const [license, termOfUse, app] = await Promise.all([
+      LicenseService.getCurrentLicense(),
+      TermOfUseService.getCurrentTermOfUse(),
+      getUpdateData(lastSyncDate, bundleId),
+    ]);
 
     if (!app) {
       return {};
     }
 
-    return await new ApplicationMaster().convertData(app);
+    const dataApp = await new ApplicationMaster().convertData(app);
+
+    return { ...dataApp, license, termOfUse };
   }
 
   static async convertArrayData(apps: AplicationMasterResponseIF[]) {
