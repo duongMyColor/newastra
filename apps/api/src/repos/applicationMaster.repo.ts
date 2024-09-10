@@ -16,7 +16,9 @@ export const getOneById = async (id: number) => {
 export const getManyByIds = async (ids: number[]) => {
   const prisma = getDb();
 
-  return await new BaseRepo(prisma.aplicationMaster).getManyActiveRecordByIds(ids);
+  return await new BaseRepo(prisma.aplicationMaster).getManyActiveRecordByIds(
+    ids
+  );
 };
 
 export const getUpdateData = async (
@@ -28,10 +30,26 @@ export const getUpdateData = async (
   return await prisma.aplicationMaster.findFirst({
     where: {
       updatedAt: {
-        gt: lastSyncDate,
+        gt: new Date(lastSyncDate),
       },
       packageName: bundleId,
-      isDeleted: false
+      isDeleted: false,
+    },
+    include: {
+      license: {
+        select: {
+          id: true,
+          content: true,
+          version: true,
+        },
+      },
+      termOfUse: {
+        select: {
+          id: true,
+          content: true,
+          version: true,
+        },
+      },
     },
   });
 };

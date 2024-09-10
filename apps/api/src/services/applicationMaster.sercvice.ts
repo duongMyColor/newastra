@@ -41,42 +41,42 @@ class ApplicationMasterFactory {
     if (!application) {
       return {};
     }
-    const licensePromise = prisma.license.findFirst({
-      where: {
-        id: application.licenseId,
-      },
-    });
+    // const licensePromise = prisma.license.findFirst({
+    //   where: {
+    //     id: application.licenseId,
+    //   },
+    // });
 
-    const termsOfUsePromise = prisma.termsOfUse.findFirst({
-      where: {
-        id: application.termsOfUseId,
-      },
-    });
+    // const termsOfUsePromise = prisma.termsOfUse.findFirst({
+    //   where: {
+    //     id: application.termsOfUseId,
+    //   },
+    // });
 
-    const [currentLicense, currentTermsOfUse] = await Promise.all([
-      licensePromise,
-      termsOfUsePromise,
-    ]);
+    // const [currentLicense, currentTermsOfUse] = await Promise.all([
+    //   licensePromise,
+    //   termsOfUsePromise,
+    // ]);
 
-    if (!currentLicense) {
-      throw new NotFoundError('License not found');
-    }
+    // if (!currentLicense) {
+    //   throw new NotFoundError('License not found');
+    // }
 
-    if (!currentTermsOfUse) {
-      throw new NotFoundError('Term of use not found');
-    }
+    // if (!currentTermsOfUse) {
+    //   throw new NotFoundError('Term of use not found');
+    // }
 
-    const [contentUrlLicense, contentUrlTermsOfUse] = await Promise.all([
-      getPresignedUrl(currentLicense.content as string),
-      getPresignedUrl(currentTermsOfUse.content as string),
-    ]);
+    // const [contentUrlLicense, contentUrlTermsOfUse] = await Promise.all([
+    //   getPresignedUrl(currentLicense.content as string),
+    //   getPresignedUrl(currentTermsOfUse.content as string),
+    // ]);
 
     const dataApp = await new ApplicationMaster().convertData(application);
 
     return {
       ...dataApp,
-      license: { contentUrl: contentUrlLicense },
-      termOfUse: { contentUrl: contentUrlTermsOfUse },
+      // license: { contentUrl: contentUrlLicense },
+      // termOfUse: { contentUrl: contentUrlTermsOfUse },
     };
   }
 
@@ -97,45 +97,48 @@ class ApplicationMasterFactory {
     }
 
     const app = await getUpdateData(lastSyncDate, bundleId);
+    console.log({app})
+
+    console.log('licence la:',app.license)
     if (!app) {
       return {};
     }
-    const licensePromise = prisma.license.findFirst({
-      where: {
-        id: app.licenseId,
-      },
-    });
+    // const licensePromise = prisma.license.findFirst({
+    //   where: {
+    //     id: app.licenseId,
+    //   },
+    // });
 
-    const termsOfUsePromise = prisma.termsOfUse.findFirst({
-      where: {
-        id: app.termsOfUseId,
-      },
-    });
+    // const termsOfUsePromise = prisma.termsOfUse.findFirst({
+    //   where: {
+    //     id: app.termsOfUseId,
+    //   },
+    // });
 
-    const [currentLicense, currentTermsOfUse] = await Promise.all([
-      licensePromise,
-      termsOfUsePromise,
-    ]);
+    // const [currentLicense, currentTermsOfUse] = await Promise.all([
+    //   licensePromise,
+    //   termsOfUsePromise,
+    // ]);
 
-    if (!currentLicense) {
-      throw new NotFoundError('License not found');
-    }
+    // if (!currentLicense) {
+    //   throw new NotFoundError('License not found');
+    // }
 
-    if (!currentTermsOfUse) {
-      throw new NotFoundError('Term of use not found');
-    }
+    // if (!currentTermsOfUse) {
+    //   throw new NotFoundError('Term of use not found');
+    // }
 
-    const [contentUrlLicense, contentUrlTermsOfUse] = await Promise.all([
-      getPresignedUrl(currentLicense.content as string),
-      getPresignedUrl(currentTermsOfUse.content as string),
-    ]);
+    // const [contentUrlLicense, contentUrlTermsOfUse] = await Promise.all([
+    //   getPresignedUrl(currentLicense.content as string),
+    //   getPresignedUrl(currentTermsOfUse.content as string),
+    // ]);
 
     const dataApp = await new ApplicationMaster().convertData(app);
 
     return {
       ...dataApp,
-      license: { contentUrl: contentUrlLicense },
-      termOfUse: { contentUrl: contentUrlTermsOfUse },
+      // license: { contentUrl: contentUrlLicense },
+      // termOfUse: { contentUrl: contentUrlTermsOfUse },
     };
   }
 

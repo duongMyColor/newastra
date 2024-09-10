@@ -22,7 +22,7 @@ CREATE TABLE "new_ForcedUpdateManagement" (
 INSERT INTO "new_ForcedUpdateManagement" ("createdAt", "id", "managementName", "operateSystem", "publishedDate", "updatedAt", "version") SELECT "createdAt", "id", "managementName", "operateSystem", "publishedDate", "updatedAt", "version" FROM "ForcedUpdateManagement";
 DROP TABLE "ForcedUpdateManagement";
 ALTER TABLE "new_ForcedUpdateManagement" RENAME TO "ForcedUpdateManagement";
-PRAGMA foreign_key_check("ForcedUpdateManagement");
+-- PRAGMA foreign_key_check("ForcedUpdateManagement");
 PRAGMA foreign_keys=ON;
 
 -- CreateIndex

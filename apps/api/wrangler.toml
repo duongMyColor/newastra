@@ -20,6 +20,8 @@ bucket_name = 'da-acsta-bucket-develop'
 name = "da-acsta-api-develop"
 
 [env.develop.vars]
+USERNAME = "username"
+PASSWORD = "password"
 CLOUDFLARE_BUCKET_NAME = "da-acsta-bucket-develop"
 
 [[env.develop.d1_databases]]

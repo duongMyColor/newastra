@@ -152,23 +152,23 @@ const ListObjects = async (): Promise<ListObjectsV2CommandOutput> => {
  */
 const getPresignedUrl = async (key: string) => {
   const bucketName = getBucketName();
-  try {
-    const s3Client = getS3Client();
+  // try {
+  //   const s3Client = getS3Client();
 
-    if (!s3Client) {
-      throw new Error('S3 client not found');
-    }
+  //   if (!s3Client) {
+  //     throw new Error('S3 client not found');
+  //   }
 
-    return await getSignedUrl(
-      s3Client,
-      new GetObjectCommand({ Bucket: bucketName, Key: key }),
-      { expiresIn: 7200 }
-    );
-  } catch (error) {
-    console.error('Failed to get presigned URL: ' + bucketName + key, error);
-    throw new Error('Error getting presigned URL');
-  }
-  // return key;
+  //   return await getSignedUrl(
+  //     s3Client,
+  //     new GetObjectCommand({ Bucket: bucketName, Key: key }),
+  //     { expiresIn: 7200 }
+  //   );
+  // } catch (error) {
+  //   console.error('Failed to get presigned URL: ' + bucketName + key, error);
+  //   throw new Error('Error getting presigned URL');
+  // }
+  return key;
 };
 
 // You can also create links for operations such as putObject to allow temporary write access to a specific key.

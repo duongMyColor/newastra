@@ -4,9 +4,9 @@ Note: Create .env file base on .sample.env
 
 # 2. Run app in local machine without Docker
 
-## 2.1 Generate DB (at `apps/cms` folder)
+## 2.1 Generate DB (at `apps/api` folder)
 
-`$ yarn db:migrate apply`
+`$ yarn db:migrate apply --env develop`
 
 ## 2.2 For developer
 ### If you modify schema you shoud run
